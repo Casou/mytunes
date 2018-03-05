@@ -1,7 +1,6 @@
 package com.bparent.repository;
 
 import com.bparent.model.Musique;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -26,7 +25,9 @@ public interface MusiqueRepository extends CrudRepository<Musique, BigInteger> {
 //    List<Musique> findByName(@Param("name") String name);
 
     Musique save(Musique playlist);
+
     void delete(Musique playlist);
+
     void delete(BigInteger itunesId);
 
 }
