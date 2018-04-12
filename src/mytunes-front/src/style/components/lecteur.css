@@ -1,0 +1,20 @@
+:root {
+    --lecteur-height: 100px;
+}
+
+.lecteur {
+    display : inline-block;
+    height : var(--lecteur-height);
+    width : 100%;
+    text-align : center;
+}
+
+.lecteur div.lecteurDiv {
+    display: inline-block;
+    width : 75%;
+    margin-top : calc(var(--lecteur-height) * 0.12);
+    height : calc(var(--lecteur-height) - 25%);
+    background-color: #eeeeee;
+    border : 1px solid gray;
+    border-radius : 15px;
+}
