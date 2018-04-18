@@ -1,0 +1,35 @@
+import React from 'react';
+import { musiquePropType } from "../../types/Musique";
+
+export const PlaylistItem = props => {
+  const { musique } = props;
+  
+  const formate10 = number => {
+    return number >= 10 ? number : "0" + number;
+  };
+  
+  const formateDuree = duree => {
+    const sec_num = parseInt(duree / 1000, 10);
+    const hours   = Math.floor(sec_num / 3600) % 24;
+    const minutes = Math.floor(sec_num / 60) % 60;
+    const seconds = sec_num % 60;
+    return ((hours > 0) ? formate10(hours) + ":" : "")
+      + formate10(minutes) + ":"
+      + formate10(seconds);
+
+  };
+  
+  return (
+    <li>
+      <span className="play">►</span>
+      <span className="titre">{ musique.nom }</span>
+      <span className="duree">{ musique.duree ? formateDuree(musique.duree) : "-" }</span>
+    </li>
+  )
+};
+
+PlaylistItem.propTypes = {
+  musique : musiquePropType.isRequired
+};
+
+export default PlaylistItem;

@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class ListeMusiqueHeader extends Component {
-  render() {
-    return (
+export const ListeMusiqueHeader = () => (
       <tr>
         <th> </th>
         <th>Titre</th>
@@ -13,6 +11,6 @@ export default class ListeMusiqueHeader extends Component {
         <th>Classement</th>
         <th>Commentaire</th>
       </tr>
-    );
-  }
-}
+);
+
+export default ListeMusiqueHeader;

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './style/App.css';
 import './style/components/lecteur.css';
 import './style/components/listeMusiques.css';
+import './style/components/playlist.css';
 import Lecteur from "./app/common/components/lecteur/Lecteur";
 import ListeMusique from "./app/common/components/listeMusique/ListeMusique";
+import Playlist from "./app/common/components/playlist/Playlist";
 
 class App extends Component {
   musiques = [
@@ -90,6 +92,7 @@ class App extends Component {
       <div className="App">
           <Lecteur />
           <ListeMusique musiques={ this.musiques } />
+          <Playlist musiques={ this.musiques } />
       </div>
     );
   }

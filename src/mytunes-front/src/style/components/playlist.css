@@ -1,0 +1,51 @@
+:root {
+    --playlist-top: var(--lecteur-height);
+    --playlist-tab-width: 400px;
+}
+
+#playlistAnchor {
+    position : absolute;
+    top : calc(var(--playlist-top) - 3px);
+    right : 422px;
+    color : black;
+    border-radius: 10px 10px 0 0;
+    padding: 2px 10px;
+    z-index: 9999;
+    transform: rotate(-90deg);
+    transform-origin: right 3px;
+    border : 1px solid black;
+    border-bottom : none;
+    cursor : pointer;
+    transform: rotate(-90deg);
+
+    width: 150px;
+    height : 20px;
+    text-align: center;
+
+    transition:all ease 0.3s;
+
+}
+
+#playlistAnchor.collapsed { transform: translateX(var(--playlist-tab-width)) rotate(-90deg); }
+#playlistTab.collapsed { transform: translateX(var(--playlist-tab-width)); }
+
+#playlistTab {
+    position : fixed;
+    top : var(--playlist-top);
+    right : -2px;
+    width : var(--playlist-tab-width);
+    height : 550px;
+    background-color : white;
+    border : 1px solid black;
+    border-bottom-left-radius: 5px;
+    transition:all ease 0.3s;
+}
+
+#playlistTab li { border-bottom : 1px solid lightgrey; }
+#playlistTab li:nth-child(odd) { background-color : white; }
+#playlistTab li:nth-child(even) { background-color : #ececec; }
+
+#playlistTab li span { display : inline-block; }
+#playlistTab li span.play { width : 25px; text-align : center; cursor : pointer; }
+#playlistTab li span.titre { width : calc(var(--playlist-tab-width) - 65px); }
+#playlistTab li span.duree { width : 35px; color : grey; font-size : 12px; line-height : var(--general-font-size); text-align : right; padding-right : 3px; }
