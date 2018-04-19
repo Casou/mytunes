@@ -27,8 +27,8 @@ public class Musique extends ItunesPropertyEntity {
     protected BigInteger itunesId;
 
     @ItunesProperty("Name")
-    @Column(name="nom")
-    protected String nom;
+    @Column(name="titre")
+    protected String titre;
 
     @ItunesProperty("Artist")
     @Column(name="artiste")
@@ -97,7 +97,7 @@ public class Musique extends ItunesPropertyEntity {
         return "Musique ["
                 + StringUtils.getStringMaxLengthPadLeft(String.valueOf(this.itunesId), 5, false) + ", "
                 + this.getBpmFormated()
-                + " - " + StringUtils.getStringMaxLengthPadRight(this.nom, 30)
+                + " - " + StringUtils.getStringMaxLengthPadRight(this.titre, 30)
                 + " (" + this.getDureeFormatee() + ")"
                 + " / " + StringUtils.getStringMaxLengthPadRight(this.genre, 25) + "]"
                 + "    Classement [" + this.getClassementFormated() + "] "

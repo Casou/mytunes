@@ -58,7 +58,7 @@ public class ItunesParserTest {
 
         Musique m = musiques.get(0);
         assertEquals(BigInteger.valueOf(1), m.getItunesId());
-        assertEquals("Shiny Stockings", m.getNom());
+        assertEquals("Shiny Stockings", m.getTitre());
         assertEquals("??", m.getArtiste());
         assertEquals(BigInteger.valueOf(120), m.getBpm());
         assertEquals(BigInteger.valueOf(80), m.getClassement());

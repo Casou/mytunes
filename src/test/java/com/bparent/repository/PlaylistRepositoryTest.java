@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -31,17 +30,17 @@ public class PlaylistRepositoryTest {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(2, allPlaylist.size());
 
-        assertEquals("pl1-nom", allPlaylist.get(0).getNom());
-        assertEquals("pl2-nom", allPlaylist.get(1).getNom());
+        assertEquals("pl1-titre", allPlaylist.get(0).getNom());
+        assertEquals("pl2-titre", allPlaylist.get(1).getNom());
     }
 
     @Test
     public void shouldReturnOnePlaylist() {
         Playlist p = playlistDao.findByItunesId(BigInteger.valueOf(1));
-        assertEquals("pl1-nom", p.getNom());
+        assertEquals("pl1-titre", p.getNom());
         assertEquals(2, p.getMusiques().size());
-        assertEquals("mus1-nom", p.getMusiques().get(0).getNom());
-        assertEquals("mus2-nom", p.getMusiques().get(1).getNom());
+        assertEquals("mus1-titre", p.getMusiques().get(0).getTitre());
+        assertEquals("mus2-titre", p.getMusiques().get(1).getTitre());
     }
 
     @Test
@@ -57,7 +56,7 @@ public class PlaylistRepositoryTest {
 
         Playlist p = new Playlist();
         p.setItunesId(BigInteger.valueOf(3));
-        p.setNom("pl3-nom");
+        p.setNom("pl3-titre");
 
         playlistDao.save(p);
 

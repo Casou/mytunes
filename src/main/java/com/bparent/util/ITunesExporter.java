@@ -39,14 +39,14 @@ public class ITunesExporter {
         try {
             shell.exec(ITunesExporter.ffmpegCommand + " -i " + sourceFilePath + options + " " + destinationPath);
         } catch (IOException e) {
-            log.error("Error while exporting track " + track.getNom(), e);
+            log.error("Error while exporting track " + track.getTitre(), e);
         }
     }
 
     private String buildOptions(Musique track, ExportProperties properties) {
         StringBuilder optionsBuilder = new StringBuilder();
         optionsBuilder
-                .append(buildOption("title", track.getNom()))
+                .append(buildOption("title", track.getTitre()))
                 .append(buildOption("artist", track.getArtiste()))
                 .append(buildOption("album", properties.getAlbum()))
                 .append(buildOption("TBPM", track.getBpm()))
@@ -68,7 +68,7 @@ public class ITunesExporter {
             bpm = track.getBpm().divide(BigInteger.valueOf(4)) + " - ";
         }
 
-        String fileName = pathToFolder + "/" + bpm + track.getNom() + ".mp3";
+        String fileName = pathToFolder + "/" + bpm + track.getTitre() + ".mp3";
         fileName = fileName.replace("\\", "/");
         return fileUtils.findUnexistingFileName(fileName);
     }

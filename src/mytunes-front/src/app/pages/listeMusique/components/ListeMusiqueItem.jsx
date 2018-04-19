@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { musiquePropType } from "../../types/Musique";
+import { musiquePropType } from "../../../common/types/Musique";
+import Classement from "./Classement";
 
 export const ListeMusiqueItem = props => {
-  const { addMusiqueToPlaylist, musique } = props;
+  const { addMusiqueToPlaylist, musique, updateRating } = props;
   
   const formate10 = number => {
     return number >= 10 ? number : "0" + number;
@@ -19,34 +20,15 @@ export const ListeMusiqueItem = props => {
       + formate10(seconds);
   };
   
-  const formateClassement = classement => {
-    const stars = [0, 1, 2, 3, 4];
-    const rating = classement ? classement / 20 : 0;
-    return (
-      <span className={ "rating" }>
-        { stars.map(star => (
-            <span className={ "ratingStar" } onClick={ () => updateRating(star + 1, musique) }>
-              { star >= rating ? "☆" : "★" }
-            </span>
-          ))
-        }
-      </span>
-    );
-  };
-  
-  const updateRating = (rating, musique) => {
-    alert(musique.nom + " : new rating = " + rating);
-  };
-  
   return (
     <tr>
-      <td className={ "action" }><span onClick={ addMusiqueToPlaylist }>►+</span></td>
-      <td className={ "titre" }>{ musique.nom }</td>
+      <td className={ "action" }><span onClick={ () => addMusiqueToPlaylist(musique) }>►+</span></td>
+      <td className={ "titre" }>{ musique.titre }</td>
       <td className={ "artiste" }>{ musique.artiste }</td>
       <td className={ "duree" }>{ formateDuree(musique.duree) }</td>
       <td className={ "bpm" }>{ musique.bpm ? musique.bpm / 4 : "" }</td>
       <td className={ "genre" }>{ musique.genre }</td>
-      <td className={ "classement" }>{ formateClassement(musique.classement) }</td>
+      <td className={ "classement" }><Classement key={ "classement_" + musique.itunesId } musique={ musique } updateRating={ updateRating } /></td>
       <td className={ "commentaire" }>{ musique.commentaire }</td>
     </tr>
   )
@@ -54,7 +36,8 @@ export const ListeMusiqueItem = props => {
 
 ListeMusiqueItem.propTypes = {
   musique : musiquePropType.isRequired,
-  addMusiqueToPlaylist : PropTypes.func.isRequired
+  addMusiqueToPlaylist : PropTypes.func.isRequired,
+  updateRating : PropTypes.func.isRequired
 };
 
 export default ListeMusiqueItem;

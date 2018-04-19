@@ -21,9 +21,10 @@
     width: 150px;
     height : 20px;
     text-align: center;
+    font-size : 18px;
+    line-height : 18px;
 
     transition:all ease 0.3s;
-
 }
 
 #playlistAnchor.collapsed { transform: translateX(var(--playlist-tab-width)) rotate(-90deg); }

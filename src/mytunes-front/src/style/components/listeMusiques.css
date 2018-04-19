@@ -3,6 +3,7 @@
     overflow: auto;
     width: 100%;
     height: calc(100vh - var(--lecteur-height));
+    border-top : 1px solid grey;
 }
 
 .listeMusiques table {
@@ -16,14 +17,15 @@
 .listeMusiques table tr td { border : none; white-space: nowrap; border-left : 1px dotted lightgrey; padding : 1px 5px; }
 .listeMusiques table tr { border : 1px solid lightgrey; }
 
-.listeMusiques table tr td.action       { width : 5%;   text-align : center; cursor : pointer; }
-.listeMusiques table tr td.titre        { width : 16%;  text-align : left; }
-.listeMusiques table tr td.artiste      { width : 16%;  text-align : left; }
+.listeMusiques table tr td.action       { width : 3%;   text-align : center; cursor : pointer; }
+.listeMusiques table tr td.titre        { width : 17%;  text-align : left; }
+.listeMusiques table tr td.artiste      { width : 17%;  text-align : left; }
 .listeMusiques table tr td.duree        { width : 5%;   text-align : center; }
-.listeMusiques table tr td.bpm          { width : 8%;   text-align : center; }
+.listeMusiques table tr td.bpm          { width : 4%;   text-align : center; }
 .listeMusiques table tr td.genre        { width : 15%;  text-align : left; }
-.listeMusiques table tr td.classement   { width : 10%;  text-align : center; }
-.listeMusiques table tr td.commentaire  { width : 25%;  text-align : left; }
+.listeMusiques table tr td.classement   { width : 8%;  text-align : center; }
+.listeMusiques table tr td.classement span.ratingStar   { margin : 0 1px; font-size : calc(var(--general-font-size) + 2px); }
+.listeMusiques table tr td.commentaire  { width : 31%;  text-align : left; }
 
 .listeMusiques .ratingStar { cursor : pointer; }
 

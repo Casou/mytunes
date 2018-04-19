@@ -22,7 +22,7 @@ export const PlaylistItem = props => {
   return (
     <li>
       <span className="play">►</span>
-      <span className="titre">{ musique.nom }</span>
+      <span className="titre">{ musique.titre }</span>
       <span className="duree">{ musique.duree ? formateDuree(musique.duree) : "-" }</span>
     </li>
   )

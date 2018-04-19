@@ -20,7 +20,7 @@ public class Playlist extends ItunesPropertyEntity {
     protected BigInteger itunesId;
 
     @ItunesProperty("Name")
-    @Column(name="nom")
+    @Column(name="titre")
     protected String nom;
 
     @ItunesProperty("Folder")
