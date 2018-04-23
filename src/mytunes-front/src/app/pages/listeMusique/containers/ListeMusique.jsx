@@ -31,6 +31,10 @@ export default class ListeMusique extends React.Component {
     // });
   };
   
+  updateProperty = (musique) => {
+    console.log("updateProperty", musique);
+  };
+  
   addMusiqueToPlaylist = (musique) => {
     console.log("addMusiqueToPlaylist " + musique.titre);
   };
@@ -62,7 +66,9 @@ export default class ListeMusique extends React.Component {
               <ListeMusiqueItem musique={ musique }
                                 key={ musique.itunesId }
                                 addMusiqueToPlaylist={ this.addMusiqueToPlaylist }
-                                updateRating={ this.updateRating }/>
+                                updateRating={ this.updateRating }
+                                updateProperty={ this.updateProperty }
+              />
             ))
           }
           </tbody>

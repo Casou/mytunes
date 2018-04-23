@@ -35,3 +35,7 @@ ul { list-style-type : none; }
   background-size: 10px 10px, 10px 10px, 100% 100%;
   background-position: 1px 1px, 0px 0px, center center;
 }
+
+div.textField input {
+  font-family: Tahoma, sans-serif !important;
+}

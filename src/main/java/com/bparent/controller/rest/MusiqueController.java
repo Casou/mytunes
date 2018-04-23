@@ -15,7 +15,7 @@ public class MusiqueController {
     @GetMapping("/all-musiques")
     public List<MusiqueDTO> getAllMusiques() {
         return Arrays.asList(
-                MusiqueDTO.toDto(Musique.builder().itunesId(BigInteger.valueOf(1)).titre("Song 1").artiste("Artiste 1").bpm(BigInteger.valueOf(220)).duree(BigInteger.valueOf(182437)).classement(BigInteger.valueOf(60)).genre("Lindy").path("/path").build()),
+                MusiqueDTO.toDto(Musique.builder().itunesId(BigInteger.valueOf(1)).titre("Song 1 Song 1 Song 1 Song 1 Song 1 Song 1 Song 1 Song 1").artiste("Artiste 1").bpm(BigInteger.valueOf(220)).duree(BigInteger.valueOf(182437)).classement(BigInteger.valueOf(60)).genre("Lindy").path("/path").build()),
                 MusiqueDTO.toDto(Musique.builder().itunesId(BigInteger.valueOf(2)).titre("Song 2").artiste("Artiste 2").bpm(BigInteger.valueOf(140)).duree(BigInteger.valueOf(142365)).classement(BigInteger.valueOf(100)).genre("Lindy, Boogie").path("/path").build()),
                 MusiqueDTO.toDto(Musique.builder().itunesId(BigInteger.valueOf(3)).titre("Song 3").artiste("Artiste 3").bpm(BigInteger.valueOf(180)).duree(BigInteger.valueOf(94532)).classement(BigInteger.valueOf(80)).genre("Rock 4 temps").path("/path").commentaire("Un commentaire").build()),
                 MusiqueDTO.toDto(Musique.builder().itunesId(BigInteger.valueOf(4)).titre("Song 4").artiste("Artiste 4").bpm(BigInteger.valueOf(220)).duree(BigInteger.valueOf(182437)).classement(BigInteger.valueOf(60)).genre("Lindy").path("/path").build()),

@@ -1,3 +1,9 @@
+.listeMusiques table {
+    width : 100%;
+}
+
+.listeMusiques table th { background-color : #c5c5c5; }
+
 .listeMusiques {
     display: inline-block;
     overflow: auto;
@@ -5,12 +11,6 @@
     height: calc(100vh - var(--lecteur-height));
     border-top : 1px solid grey;
 }
-
-.listeMusiques table {
-    width : 100%;
-}
-
-.listeMusiques table th { background-color : #c5c5c5; }
 
 .listeMusiques table tr:nth-child(odd) { background-color : white; }
 .listeMusiques table tr:nth-child(even) { background-color : #ececec; }
@@ -21,12 +21,26 @@
 .listeMusiques table tr td.titre        { width : 17%;  text-align : left; }
 .listeMusiques table tr td.artiste      { width : 17%;  text-align : left; }
 .listeMusiques table tr td.duree        { width : 5%;   text-align : center; }
-.listeMusiques table tr td.bpm          { width : 4%;   text-align : center; }
+.listeMusiques table tr td.bpm          { width : 4%; }
+.listeMusiques table tr td.bpm input    { text-align : center; }
 .listeMusiques table tr td.genre        { width : 15%;  text-align : left; }
 .listeMusiques table tr td.classement   { width : 8%;  text-align : center; }
 .listeMusiques table tr td.classement span.ratingStar   { margin : 0 1px; font-size : calc(var(--general-font-size) + 2px); }
 .listeMusiques table tr td.commentaire  { width : 31%;  text-align : left; }
 
+.listeMusiques table tr td.action svg      { height : 16px !important; width : 16px !important; }
+
 .listeMusiques .ratingStar { cursor : pointer; }
+
+.listeMusiques .textField {
+    font-size : var(--general-font-size) !important;
+    line-height : var(--general-font-size) !important;
+    height : calc(var(--general-font-size) + 6px) !important;
+}
+
+.listeMusiques .textField input:focus {
+    border : 1px solid grey !important;
+    background : white !important;
+}
 
 
