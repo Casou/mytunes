@@ -1,7 +1,7 @@
 import React from 'react';
 import ListeMusiqueHeader from "../components/ListeMusiqueHeader";
 import ListeMusiqueItem from "../components/ListeMusiqueItem";
-import { __SERVER_URL__ } from "/App";
+import { __SERVER_URL__ } from "../../../../App";
 
 export default class ListeMusique extends React.Component {
   
@@ -10,15 +10,29 @@ export default class ListeMusique extends React.Component {
     
     this.state = {
       musiques : []
-    }
+    };
+  
+    this.addMusiqueToPlaylist = this.addMusiqueToPlaylist.bind(this);
+    this.updateRating = this.updateRating.bind(this);
   }
   
   updateRating = (rating, musique) => {
-    alert(musique.titre + " : new rating = " + rating);
+    console.log(musique.titre + " : new rating = " + rating);
+    
+    // const payload = {
+    //   musique: musique,
+    //   newClassement: rating
+    // };
+    // axios.put(__SERVER_URL__ + "/classement", payload);
+  
+    // this.stompClient.send({
+    //     musique: musique,
+    //     newClassement: rating
+    // });
   };
   
   addMusiqueToPlaylist = (musique) => {
-    alert("addMusiqueToPlaylist " + musique.titre);
+    console.log("addMusiqueToPlaylist " + musique.titre);
   };
   
   componentDidMount() {
@@ -47,8 +61,8 @@ export default class ListeMusique extends React.Component {
             this.state.musiques.map(musique => (
               <ListeMusiqueItem musique={ musique }
                                 key={ musique.itunesId }
-                                addMusiqueToPlaylist={ this.addMusiqueToPlaylist.bind(this) }
-                                updateRating={ this.updateRating.bind(this) }/>
+                                addMusiqueToPlaylist={ this.addMusiqueToPlaylist }
+                                updateRating={ this.updateRating }/>
             ))
           }
           </tbody>
@@ -56,7 +70,7 @@ export default class ListeMusique extends React.Component {
       </section>
     );
   }
-};
+}
 
 ListeMusique.propTypes = {
 };

@@ -1,4 +1,4 @@
-package com.bparent.controller;
+package com.bparent.controller.rest;
 
 import com.bparent.dto.MusiqueDTO;
 import com.bparent.model.Musique;
