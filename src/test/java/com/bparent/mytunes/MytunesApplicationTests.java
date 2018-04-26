@@ -1,4 +1,4 @@
-package com.bparent;
+package com.bparent.mytunes;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
