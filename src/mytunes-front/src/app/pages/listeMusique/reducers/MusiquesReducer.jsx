@@ -1,19 +1,12 @@
 export const musiques = (state = { }, action) => {
-  console.log("Musique Reducer", action);
   switch (action.type) {
     case "GET_ALL_MUSIQUES" :
       console.log("GET_ALL_MUSIQUES", action.payload);
       return action.payload;
     case "UPDATE_CLASSEMENT" :
-      return {
-        ...state,
-        musiques : state.musiques.map(m => updateClassmentReducer(m, action))
-      };
+      return state.map(m => updateClassmentReducer(m, action));
     case "UPDATE_PROPERTY" :
-      return {
-        ...state,
-        musiques : state.musiques.map(m => updateClassmentReducer(m, action))
-      };
+      return state.map(m => updatePropertyReducer(m, action));
     default :
       return state;
   }
