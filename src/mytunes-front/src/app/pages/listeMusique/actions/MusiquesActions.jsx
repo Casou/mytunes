@@ -1,4 +1,5 @@
 import {__SERVER_URL__} from "../../../../App";
+import RequestUtil from "../../../common/util/RequestUtil";
 
 export default {
   
@@ -16,11 +17,27 @@ export default {
       });
   },
   
-  updateClassement: (musique, newClassement) => (dispatch, getState) => {
+  updateMusique: (musique, property, value) => (dispatch, getState) => {
+    dispatch({
+      type : "FETCH_MUSIQUE",
+      payload : { ...musique, isFetching : { ...musique.isFetching, [property] : true } }
+    });
+    
+    const updatedMusique = { ...musique, [property] : value };
+    RequestUtil.put("musique", updatedMusique)
+    .then(() => {
       dispatch({
-        type : "UPDATE_CLASSEMENT",
-        payload : { itunesId : musique.itunesId, classement : newClassement }
+        type : "UPDATE_MUSIQUE",
+        payload : updatedMusique
       });
+    })
+    .catch(() => {
+      dispatch({
+        type : "FETCH_MUSIQUE",
+        payload : { ...musique, isFetching : { ...musique.isFetching, [property] : false } }
+      });
+    });
+    
   }
   
 };
