@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import './style/App.css';
 import './style/components/lecteur.css';
+import './style/components/header.css';
 import './style/components/listeMusiques.css';
 import './style/components/playlist.css';
-import Lecteur from "./app/common/components/lecteur/Lecteur";
+import Header from "./app/common/components/header/Header";
 import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
 import Playlist from "./app/common/components/playlist/Playlist";
 import WebSocketClient from "./app/common/components/websocket/WebSocketClient";
 import {MuiThemeProvider} from "material-ui";
-import {connect, Provider} from "react-redux";
-import {createStore} from "redux";
 import {assign} from "lodash";
 import MusiquesActions from "./app/pages/listeMusique/actions/MusiquesActions";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+
 
 const _BASIC_URL__ = "localhost:8000/";
 export const __SERVER_URL__ = "http://" + _BASIC_URL__;
@@ -45,10 +46,10 @@ class App extends Component {
   
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={ getMuiTheme() }>
         <div className="App">
             <WebSocketClient />
-            <Lecteur />
+            <Header />
             <ListeMusique />
             <Playlist />
         </div>
