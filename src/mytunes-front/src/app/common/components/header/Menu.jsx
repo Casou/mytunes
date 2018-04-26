@@ -1,6 +1,7 @@
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import {Drawer, IconButton, MenuItem} from "material-ui";
+import {Link} from "react-router-dom";
 
 export default class Menu extends React.Component {
   constructor(props) {
@@ -21,7 +22,6 @@ export default class Menu extends React.Component {
     })
   }
   setMenuOpeness(open) {
-    console.log("close");
     this.setState({
       ...this.state,
       open
@@ -44,8 +44,8 @@ export default class Menu extends React.Component {
           className={ "menuDrawer" }
           onRequestChange={ this.setMenuOpeness }
         >
-          <MenuItem onClick={ () => { console.log("item 1"); this.closeMenu(); } }>Menu Item 1</MenuItem>
-          <MenuItem onClick={ () => { console.log("item 2"); this.closeMenu(); } }>Menu Item 2</MenuItem>
+          <MenuItem containerElement={<Link to="/" />} onClick={ this.closeMenu }>Liste musiques</MenuItem>
+          <MenuItem containerElement={<Link to="/genres" />} onClick={ this.closeMenu }>Liste par genre</MenuItem>
         </Drawer>
       </div>
     );
