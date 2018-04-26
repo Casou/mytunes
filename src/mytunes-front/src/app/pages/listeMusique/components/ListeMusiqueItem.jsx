@@ -42,8 +42,8 @@ export default class ListeMusiqueItem extends React.Component {
         <td className={ "titre" }>
           <TextField
             className="textField" name="artisteMusique" fullWidth={true} underlineShow={ false } onBlur={ () => updateProperty(musique) }
-            value={ musique.titre }
-            onChange={ (e) => this.onPropertyChange("titre", e.target.value) }
+            defaultValue={ musique.titre }
+            
           />
         </td>
         <td className={ "artiste" }>

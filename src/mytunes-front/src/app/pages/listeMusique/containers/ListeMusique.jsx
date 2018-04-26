@@ -1,22 +1,16 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import ListeMusiqueHeader from "../components/ListeMusiqueHeader";
 import ListeMusiqueItem from "../components/ListeMusiqueItem";
-import { __SERVER_URL__ } from "../../../../App";
+import { musiquePropType } from "../../../common/types/Musique";
+import { connect } from "react-redux";
+import { assign } from "lodash";
 
-export default class ListeMusique extends React.Component {
+
+// class ListeMusique extends React.Component {
+const ListeMusique = (props) => {
   
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      musiques : []
-    };
-  
-    this.addMusiqueToPlaylist = this.addMusiqueToPlaylist.bind(this);
-    this.updateRating = this.updateRating.bind(this);
-  }
-  
-  updateRating = (rating, musique) => {
+  const updateRating = (rating, musique) => {
     console.log(musique.titre + " : new rating = " + rating);
     
     // const payload = {
@@ -31,52 +25,48 @@ export default class ListeMusique extends React.Component {
     // });
   };
   
-  updateProperty = (musique) => {
+  const updateProperty = (musique) => {
     console.log("updateProperty", musique);
   };
   
-  addMusiqueToPlaylist = (musique) => {
+  const addMusiqueToPlaylist = (musique) => {
     console.log("addMusiqueToPlaylist " + musique.titre);
   };
   
-  componentDidMount() {
-    fetch(__SERVER_URL__ + "all-musiques") //, { mode: 'no-cors' })
-    .then(response => response.json())
-    .then(musiqueList => {
-      this.setState({
-        ...this.state,
-        musiques : musiqueList
-      });
-    })
-    .catch(e => {
-      console.error(e);
-    });
-  }
-  
-  render() {
-    return (
-      <section className="listeMusiques">
-        <table>
-          <thead>
-          <ListeMusiqueHeader />
-          </thead>
-          <tbody>
-          {
-            this.state.musiques.map(musique => (
-              <ListeMusiqueItem musique={ musique }
-                                key={ musique.itunesId }
-                                addMusiqueToPlaylist={ this.addMusiqueToPlaylist }
-                                updateRating={ this.updateRating }
-                                updateProperty={ this.updateProperty }
-              />
-            ))
-          }
-          </tbody>
-        </table>
-      </section>
-    );
-  }
-}
+  return (
+    <section className="listeMusiques">
+      <table>
+        <thead>
+        <ListeMusiqueHeader />
+        </thead>
+        <tbody>
+        {
+          !props.musiques ? "" :
+          props.musiques.map(musique => (
+            <ListeMusiqueItem musique={ musique }
+                              key={ musique.itunesId }
+                              addMusiqueToPlaylist={ addMusiqueToPlaylist }
+                              updateRating={ updateRating }
+                              updateProperty={ updateProperty }
+            />
+          ))
+        }
+        </tbody>
+      </table>
+    </section>
+  );
+};
 
 ListeMusique.propTypes = {
+  musiques: PropTypes.arrayOf(musiquePropType).isRequired
 };
+
+export default connect(state => assign({}, {
+  musiques: state.musiques
+}), null
+//     dispatch => ({
+//   globalActions: bindActionCreators(GlobalActions, dispatch)
+// })
+)(ListeMusique);
+
+// export default ListeMusique;
