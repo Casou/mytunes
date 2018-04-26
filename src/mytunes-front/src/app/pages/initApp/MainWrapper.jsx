@@ -13,7 +13,6 @@ class MainWrapper extends React.Component {
   }
   
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps", nextProps);
     if (this.props.isLoading && nextProps.isLoading && this.isApplicationLoaded(nextProps)) {
       this.props.loadingActions.setIsLoading(false);
     }
@@ -51,7 +50,3 @@ export default connect(state => assign({}, {
     musiquesActions: bindActionCreators(MusiquesActions, dispatch),
     loadingActions: bindActionCreators(LoadingActions, dispatch)
 }))(MainWrapper);
-
-//     dispatch => ({
-//   globalActions: bindActionCreators(GlobalActions, dispatch)
-// })

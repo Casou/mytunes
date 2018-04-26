@@ -14,6 +14,13 @@ export default {
       .catch(e => {
         console.error(e);
       });
+  },
+  
+  updateClassement: (musique, newClassement) => (dispatch, getState) => {
+      dispatch({
+        type : "UPDATE_CLASSEMENT",
+        payload : { itunesId : musique.itunesId, classement : newClassement }
+      });
   }
   
 };
