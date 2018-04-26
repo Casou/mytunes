@@ -63,10 +63,10 @@ ListeMusique.propTypes = {
 
 export default connect(state => assign({}, {
   musiques: state.musiques
-}), null
+}), null)(ListeMusique);
+
 //     dispatch => ({
 //   globalActions: bindActionCreators(GlobalActions, dispatch)
 // })
-)(ListeMusique);
 
 // export default ListeMusique;

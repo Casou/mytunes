@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { musiquesReducer } from "./pages/listeMusique/reducers/MusiquesReducer";
+import { musiques } from "./pages/listeMusique/reducers/MusiquesReducer";
+import { isLoading } from "./common/reducers/loadingReducer";
 
 export default combineReducers({
-  musiquesReducer
+  musiques,
+  isLoading
 });

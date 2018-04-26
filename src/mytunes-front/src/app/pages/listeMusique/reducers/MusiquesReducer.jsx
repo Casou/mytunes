@@ -1,11 +1,10 @@
-export const musiquesReducer = (state = [], action) => {
+export const musiques = (state = { }, action) => {
+  console.log("Musique Reducer", action);
   switch (action.type) {
     case "GET_ALL_MUSIQUES" :
-      return {
-        ...state,
-        musiques : action.payload
-      };
-      case "UPDATE_CLASSEMENT" :
+      console.log("GET_ALL_MUSIQUES", action.payload);
+      return action.payload;
+    case "UPDATE_CLASSEMENT" :
       return {
         ...state,
         musiques : state.musiques.map(m => updateClassmentReducer(m, action))
