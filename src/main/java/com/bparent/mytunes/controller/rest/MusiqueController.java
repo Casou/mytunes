@@ -1,4 +1,4 @@
-package com.bparent.mytunes;
+package com.bparent.mytunes.controller.rest;
 
 import com.bparent.mytunes.dto.MusiqueDTO;
 import com.bparent.mytunes.model.Musique;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,7 +35,11 @@ public class MusiqueController {
     @PutMapping("/musique")
     @CrossOrigin
     public void updateMusique(@RequestBody MusiqueDTO updatedMusique) {
-        System.out.println("Update " + updatedMusique);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ALL_MUSIQUES = ALL_MUSIQUES.stream()
                 .map(musiqueDTO -> {
                     if (musiqueDTO.getItunesId().equals(updatedMusique.getItunesId())) {
