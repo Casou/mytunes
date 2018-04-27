@@ -4,8 +4,11 @@ import { musiquePropType } from "../../../common/types/Musique";
 import Classement from "./Classement";
 import {SvgIcon, TextField} from "material-ui";
 import { isEqual } from "lodash";
+import {bindActionCreators} from "redux";
+import MusiquesActions from "../actions/MusiquesActions";
+import {connect} from "react-redux";
 
-export default class ListeMusiqueItem extends React.Component {
+class ListeMusiqueItem extends React.Component {
   
   constructor(props) {
     super(props);
@@ -84,7 +87,9 @@ export default class ListeMusiqueItem extends React.Component {
           />
         </td>
         <td className={ "classement" }>
-          <Classement key={ "classement_" + musique.itunesId } musique={ musique } />
+          <Classement key={ "classement_" + musique.itunesId }
+                      musique={ musique }
+                      onChange={ (value) => this.onPropertyChange("classement", value) }/>
         </td>
         <td className={ "commentaire" }>
           <TextField
@@ -100,13 +105,46 @@ export default class ListeMusiqueItem extends React.Component {
   
   onPropertyChange(property, newValue) {
     const { musique } = this.state;
-    musique[property] = newValue;
+    
+    // Grey
     this.setState({
       ...this.state,
-      musique
+      musique: {
+        ...musique,
+        isFetching: {
+          ...musique.isFetching,
+          [property]: true
+        }
+      }
+    }, () => {
+      this.props.musiquesActions.updateMusique(musique, property, newValue)
+      .then(()=> {
+        this.setState({
+          ...this.state,
+          musique: {
+            ...musique,
+            [property]: newValue,
+            isFetching: {
+              ...musique.isFetching,
+              [property]: false
+            }
+          }
+        });
+      })
+      .catch(() => {
+        this.setState({
+          ...this.state,
+          musique: {
+            ...musique,
+            isFetching: {
+              ...musique.isFetching,
+              [property]: false
+            }
+          }
+        });
+      });
     });
   }
-  
 }
 
 ListeMusiqueItem.propTypes = {
@@ -115,3 +153,8 @@ ListeMusiqueItem.propTypes = {
   updateRating : PropTypes.func.isRequired,
   updateProperty : PropTypes.func.isRequired
 };
+
+export default connect(null,
+  dispatch => ({
+    musiquesActions: bindActionCreators(MusiquesActions, dispatch)
+  }))(ListeMusiqueItem);

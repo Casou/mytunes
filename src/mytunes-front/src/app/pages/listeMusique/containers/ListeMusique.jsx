@@ -51,17 +51,17 @@ class ListeMusique extends React.Component {
     const { searchText } = this.state;
     const { musiques } = this.props;
     
-    if (searchText) {
-      return musiques.filter(musique => musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
-    }
+    // if (searchText) {
+    //   return musiques.filter(musique => musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
+    // }
     return musiques;
   }
   
   render() {
-    let filteredMusiques = [];
-    if (this.props.musiques) {
-      filteredMusiques = this.getFilteredMusiques();
-    }
+    // let filteredMusiques = [];
+    // if (this.props.musiques) {
+    //   filteredMusiques = this.getFilteredMusiques();
+    // }
     
     return (
       <section className="listeMusiques">
@@ -69,9 +69,9 @@ class ListeMusique extends React.Component {
           <ListeMusiqueHeader onSearch={ this.searchMusique.bind(this) } />
           <tbody>
           {
-            filteredMusiques.map(musique => (
-              <ListeMusiqueItem musique={ musique }
-                                key={ musique.itunesId }
+            Object.keys(this.props.musiques).map(index => (
+              <ListeMusiqueItem musique={ this.props.musiques[index] }
+                                key={ this.props.musiques[index].itunesId }
                                 addMusiqueToPlaylist={ this.addMusiqueToPlaylist.bind(this) }
                                 updateRating={ this.updateRating.bind(this) }
                                 updateProperty={ this.updateProperty.bind(this) }
@@ -86,7 +86,8 @@ class ListeMusique extends React.Component {
 }
 
 ListeMusique.propTypes = {
-  musiques: PropTypes.arrayOf(musiquePropType).isRequired
+  // musiques: PropTypes.arrayOf(musiquePropType).isRequired
+  musiques: PropTypes.object.isRequired
 };
 
 export default connect(state => assign({}, {

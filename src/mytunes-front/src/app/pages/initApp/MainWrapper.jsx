@@ -38,7 +38,7 @@ class MainWrapper extends React.Component {
   }
   
   isApplicationLoaded(nextProps) {
-    return nextProps.musiques.length;
+    return nextProps.musiques;
   }
 }
 

@@ -4,6 +4,7 @@ import './style/components/lecteur.css';
 import './style/components/header.css';
 import './style/components/listeMusiques.css';
 import './style/components/playlist.css';
+import './style/material-icons.css';
 import 'react-notifications/lib/notifications.css';
 
 import Header from "./app/common/components/header/Header";

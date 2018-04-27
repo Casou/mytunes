@@ -1,40 +1,57 @@
-export const musiques = (state = { }, action) => {
+export const musiques = (stateMusiques = { }, action) => {
   switch (action.type) {
     case "GET_ALL_MUSIQUES" :
       return mapMusiques(action.payload);
-    case "FETCH_MUSIQUE" :
-      return state.map(m => updateFetchReducer(m, action.payload)).slice();
     case "UPDATE_MUSIQUE" :
-      return state.map(m => updateMusiqueReducer(m, action.payload)).slice();
+      // return updateMusiqueReducer(stateMusiques, action.payload);
+      console.log({
+        ...stateMusiques,
+        [action.payload.itunesId] : action.payload
+      });
+      return {
+        ...stateMusiques,
+        [action.payload.itunesId] : action.payload
+      };
     default :
-      return state;
+      return stateMusiques;
   }
 };
 
 const mapMusiques = (musiques) => {
-  return musiques.map(musique => {
-    return { ...musique,
-            isFetching : [],
-            searchText : [musique.titre.toLowerCase(),
-                          musique.artiste.toLowerCase(),
-                          musique.commentaire.toLowerCase()].join(" ")
-    }
+  const musiqueArray = {};
+  musiques.forEach(musique => {
+    musiqueArray[musique.itunesId] = { ...musique,
+      isFetching : [],
+      searchText : [musique.titre.toLowerCase(),
+        musique.artiste.toLowerCase(),
+        musique.commentaire.toLowerCase()].join(" ")
+    };
   });
+  
+  return musiqueArray;
+  
+  // return musiques.map(musique => {
+  //   return { ...musique,
+  //           isFetching : [],
+  //           searchText : [musique.titre.toLowerCase(),
+  //                         musique.artiste.toLowerCase(),
+  //                         musique.commentaire.toLowerCase()].join(" ")
+  //   }
+  // });
 };
 
-const updateFetchReducer = (musique, payload) => {
-  if (musique.itunesId === payload.itunesId) {
-    return payload;
-  }
-  return musique;
-};
-
-const updateMusiqueReducer = (musique, payload) => {
-  if (musique.itunesId === payload.itunesId) {
-    payload.isFetching["classement"] = false;
-    return payload;
-  }
-  return musique;
+const updateMusiqueReducer = (musiques, payload) => {
+  const newMusiques = musiques.slice();
+  newMusiques[payload.itunesId] = { ...payload,
+    isFetching : { ...payload.isFetching, "classement" : false }
+  };
+  return newMusiques;
+  
+  // if (musique.itunesId === payload.itunesId) {
+  //   payload.isFetching["classement"] = false;
+  //   return payload;
+  // }
+  // return musique;
 };
 
 // const updatePropertyReducer = (musique, action) => {

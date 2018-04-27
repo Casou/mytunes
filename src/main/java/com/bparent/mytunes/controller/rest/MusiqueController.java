@@ -28,7 +28,7 @@ public class MusiqueController {
 
     private static List<MusiqueDTO> init() {
         List<MusiqueDTO> init = new ArrayList<>();
-        for (int i = 1; i <= 300; i++) {
+        for (int i = 1; i <= 1000; i++) {
             init.add(MusiqueDTO.builder().
                         itunesId(BigInteger.valueOf(i)).
                         titre("Song " + i).
@@ -54,11 +54,11 @@ public class MusiqueController {
     @PutMapping("/musique")
     @CrossOrigin
     public void updateMusique(@RequestBody MusiqueDTO updatedMusique) {
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            TimeUnit.SECONDS.sleep(1);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         ALL_MUSIQUES = ALL_MUSIQUES.stream()
                 .map(musiqueDTO -> {
                     if (musiqueDTO.getItunesId().equals(updatedMusique.getItunesId())) {
