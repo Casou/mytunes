@@ -19,11 +19,11 @@ public class MusiqueDTO {
     private String titre;
     private String artiste;
     private String genre;
-    private BigInteger duree;
-    private BigInteger timerDebut;
-    private BigInteger timerFin;
-    private BigInteger bpm;
-    private BigInteger classement;
+    private Integer duree;
+    private Integer timerDebut;
+    private Integer timerFin;
+    private Integer bpm;
+    private Integer classement;
     private String commentaire;
     private String path;
 
