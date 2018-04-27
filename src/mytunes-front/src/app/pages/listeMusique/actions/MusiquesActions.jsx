@@ -26,7 +26,6 @@ export default {
     const updatedMusique = { ...musique, [property] : value };
     return RequestUtil.put("musique", updatedMusique)
     .then(() => {
-      console.log("toto");
       dispatch({
         type : "UPDATE_MUSIQUE",
         payload : updatedMusique

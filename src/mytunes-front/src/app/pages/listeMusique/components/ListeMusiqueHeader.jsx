@@ -1,5 +1,5 @@
 import React from 'react';
-import {Checkbox, TextField} from "material-ui";
+import {TextField} from "material-ui";
 import PropTypes from "prop-types";
 import {__KEYCODE_ENTER__} from "../../../../App";
 

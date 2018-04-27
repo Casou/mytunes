@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import FontIcon from 'material-ui/FontIcon';
-import { IconButton } from "material-ui";
 
 export const Lecteur = (props) => (
   <section className="lecteur">

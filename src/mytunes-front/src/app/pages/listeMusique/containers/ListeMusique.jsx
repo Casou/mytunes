@@ -13,19 +13,13 @@ class ListeMusique extends React.Component {
     super(props);
     
     this.state = {
-      searchText : ''
+      searchText : '',
+      musiques : this.props.musiques
     };
   }
   
   updateRating (rating, musique) {
       console.log(musique.titre + " : new rating = " + rating);
-      
-      // const payload = {
-      //   musique: musique,
-      //   newClassement: rating
-      // };
-      // axios.put(__SERVER_URL__ + "/classement", payload);
-  
       // this.stompClient.send({
       //     musique: musique,
       //     newClassement: rating
@@ -41,19 +35,26 @@ class ListeMusique extends React.Component {
   };
   
   searchMusique(text) {
+    const { musiques } = this.state;
+    const musiquesFiltered = [...musiques].filter(musique => musique);
+    console.log(musiquesFiltered);
+    musiquesFiltered.forEach(musique => {
+      musique.isHidden = musique.searchText.indexOf(text.toLowerCase()) < 0;
+    });
+    
     this.setState({
       ...this.state,
-      searchText : text
+      searchText : text,
+      musiques : musiquesFiltered
     });
   }
   
   getFilteredMusiques() {
-    const { searchText } = this.state;
-    const { musiques } = this.props;
+    const { musiques, searchText } = this.state;
     
-    // if (searchText) {
-    //   return musiques.filter(musique => musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
-    // }
+    if (searchText) {
+      return musiques.filter(musique => musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
+    }
     return musiques;
   }
   
@@ -69,9 +70,9 @@ class ListeMusique extends React.Component {
           <ListeMusiqueHeader onSearch={ this.searchMusique.bind(this) } />
           <tbody>
           {
-            Object.keys(this.props.musiques).map(index => (
-              <ListeMusiqueItem musique={ this.props.musiques[index] }
-                                key={ this.props.musiques[index].itunesId }
+            this.props.musiques.map(musique => (
+              <ListeMusiqueItem musique={ musique }
+                                key={ musique.itunesId }
                                 addMusiqueToPlaylist={ this.addMusiqueToPlaylist.bind(this) }
                                 updateRating={ this.updateRating.bind(this) }
                                 updateProperty={ this.updateProperty.bind(this) }
@@ -86,8 +87,8 @@ class ListeMusique extends React.Component {
 }
 
 ListeMusique.propTypes = {
-  // musiques: PropTypes.arrayOf(musiquePropType).isRequired
-  musiques: PropTypes.object.isRequired
+  musiques: PropTypes.arrayOf(musiquePropType).isRequired
+  // musiques: PropTypes.object.isRequired
 };
 
 export default connect(state => assign({}, {

@@ -1,7 +1,11 @@
 #menuIcon {
     position : absolute;
-    top : 10px;
+    top : 18px;
     left : 10px;
+}
+
+#menuIcon button span{
+    font-size : 45px !important;
 }
 
 .menuDrawer > div {

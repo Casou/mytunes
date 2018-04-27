@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { musiquePropType } from "../../../common/types/Musique";
 import Classement from "./Classement";
-import {SvgIcon, TextField} from "material-ui";
+import {FontIcon, IconButton, TextField} from "material-ui";
 import { isEqual } from "lodash";
 import {bindActionCreators} from "redux";
 import MusiquesActions from "../actions/MusiquesActions";
@@ -46,13 +46,11 @@ class ListeMusiqueItem extends React.Component {
     const { musique } = this.state;
     
     return (
-      <tr>
+      <tr className={ musique.isHidden ? "hidden" : "" }>
         <td className={ "action" }>
-          <span onClick={ () => addMusiqueToPlaylist(musique) }>
-            <SvgIcon>
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-            </SvgIcon>
-          </span>
+          <IconButton onClick={ () => addMusiqueToPlaylist(musique) }>
+            <FontIcon className="material-icons">playlist_add</FontIcon>
+          </IconButton>
         </td>
         <td className={ "titre" }>
           <TextField

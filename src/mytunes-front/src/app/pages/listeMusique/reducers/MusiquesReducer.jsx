@@ -4,21 +4,14 @@ export const musiques = (stateMusiques = { }, action) => {
       return mapMusiques(action.payload);
     case "UPDATE_MUSIQUE" :
       // return updateMusiqueReducer(stateMusiques, action.payload);
-      console.log({
-        ...stateMusiques,
-        [action.payload.itunesId] : action.payload
-      });
-      return {
-        ...stateMusiques,
-        [action.payload.itunesId] : action.payload
-      };
+      return updateMusiqueReducer(stateMusiques, action.payload);
     default :
       return stateMusiques;
   }
 };
 
 const mapMusiques = (musiques) => {
-  const musiqueArray = {};
+  const musiqueArray = [];
   musiques.forEach(musique => {
     musiqueArray[musique.itunesId] = { ...musique,
       isFetching : [],
@@ -42,23 +35,10 @@ const mapMusiques = (musiques) => {
 
 const updateMusiqueReducer = (musiques, payload) => {
   const newMusiques = musiques.slice();
-  newMusiques[payload.itunesId] = { ...payload,
-    isFetching : { ...payload.isFetching, "classement" : false }
-  };
+  newMusiques[payload.itunesId] = payload;
   return newMusiques;
-  
-  // if (musique.itunesId === payload.itunesId) {
-  //   payload.isFetching["classement"] = false;
-  //   return payload;
-  // }
-  // return musique;
+  // {
+  //   ...musiques,
+  //   [payload.itunesId] : payload
+  // };
 };
-
-// const updatePropertyReducer = (musique, action) => {
-//   if (musique.itunesId === action.itunesId) {
-//     const musiqueUpdated = { ...musique };
-//     musiqueUpdated[action.property] = action.value;
-//     return musiqueUpdated;
-//   }
-//   return musique;
-// };

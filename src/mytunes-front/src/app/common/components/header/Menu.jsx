@@ -35,7 +35,7 @@ export default class Menu extends React.Component {
     return (
       <div id={"menuIcon"}>
         <IconButton onClick={ this.toggleMenu }>
-          <FontIcon className="material-icons">home</FontIcon>
+          <FontIcon className="material-icons">menu</FontIcon>
         </IconButton>
         <Drawer
           docked={false}
