@@ -8,54 +8,82 @@ import { assign } from "lodash";
 
 
 // class ListeMusique extends React.Component {
-const ListeMusique = (props) => {
-  
-  const updateRating = (rating, musique) => {
-    console.log(musique.titre + " : new rating = " + rating);
+class ListeMusique extends React.Component {
+  constructor(props) {
+    super(props);
     
-    // const payload = {
-    //   musique: musique,
-    //   newClassement: rating
-    // };
-    // axios.put(__SERVER_URL__ + "/classement", payload);
+    this.state = {
+      searchText : ''
+    };
+  }
   
-    // this.stompClient.send({
-    //     musique: musique,
-    //     newClassement: rating
-    // });
-  };
+  updateRating (rating, musique) {
+      console.log(musique.titre + " : new rating = " + rating);
+      
+      // const payload = {
+      //   musique: musique,
+      //   newClassement: rating
+      // };
+      // axios.put(__SERVER_URL__ + "/classement", payload);
   
-  const updateProperty = (musique) => {
+      // this.stompClient.send({
+      //     musique: musique,
+      //     newClassement: rating
+      // });
+  }
+  
+  updateProperty = (musique) => {
     console.log("updateProperty", musique);
   };
   
-  const addMusiqueToPlaylist = (musique) => {
+  addMusiqueToPlaylist = (musique) => {
     console.log("addMusiqueToPlaylist " + musique.titre);
   };
   
-  return (
-    <section className="listeMusiques">
-      <table>
-        <thead>
-        <ListeMusiqueHeader />
-        </thead>
-        <tbody>
-        {
-          !props.musiques ? "" :
-          props.musiques.map(musique => (
-            <ListeMusiqueItem musique={ musique }
-                              key={ musique.itunesId }
-                              addMusiqueToPlaylist={ addMusiqueToPlaylist }
-                              updateRating={ updateRating }
-                              updateProperty={ updateProperty }
-            />
-          ))
-        }
-        </tbody>
-      </table>
-    </section>
-  );
-};
+  searchMusique(text) {
+    this.setState({
+      ...this.state,
+      searchText : text
+    });
+  }
+  
+  getFilteredMusiques() {
+    const { searchText } = this.state;
+    const { musiques } = this.props;
+    
+    if (searchText) {
+      return musiques.filter(musique => musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
+    }
+    return musiques;
+  }
+  
+  render() {
+    let filteredMusiques = [];
+    if (this.props.musiques) {
+      filteredMusiques = this.getFilteredMusiques();
+    }
+    
+    return (
+      <section className="listeMusiques">
+        <table>
+          <ListeMusiqueHeader onSearch={ this.searchMusique.bind(this) } />
+          <tbody>
+          {
+            filteredMusiques.map(musique => (
+              <ListeMusiqueItem musique={ musique }
+                                key={ musique.itunesId }
+                                addMusiqueToPlaylist={ this.addMusiqueToPlaylist.bind(this) }
+                                updateRating={ this.updateRating.bind(this) }
+                                updateProperty={ this.updateProperty.bind(this) }
+              />
+            ))
+          }
+          </tbody>
+        </table>
+      </section>
+    );
+  }
+}
 
 ListeMusique.propTypes = {
   musiques: PropTypes.arrayOf(musiquePropType).isRequired
@@ -64,9 +92,3 @@ ListeMusique.propTypes = {
 export default connect(state => assign({}, {
   musiques: state.musiques
 }), null)(ListeMusique);
-
-//     dispatch => ({
-//   globalActions: bindActionCreators(GlobalActions, dispatch)
-// })
-
-// export default ListeMusique;

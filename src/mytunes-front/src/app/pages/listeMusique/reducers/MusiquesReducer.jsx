@@ -12,8 +12,15 @@ export const musiques = (state = { }, action) => {
 };
 
 const mapMusiques = (musiques) => {
-  return musiques.map(musique => { return { ...musique, isFetching : [] } });
-}
+  return musiques.map(musique => {
+    return { ...musique,
+            isFetching : [],
+            searchText : [musique.titre.toLowerCase(),
+                          musique.artiste.toLowerCase(),
+                          musique.commentaire.toLowerCase()].join(" ")
+    }
+  });
+};
 
 const updateFetchReducer = (musique, payload) => {
   if (musique.itunesId === payload.itunesId) {

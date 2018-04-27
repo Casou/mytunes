@@ -18,7 +18,6 @@ class Classement extends React.Component {
   }
   
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps", nextProps);
     if (!isEqual(this.props.musique, nextProps.musique)) {
       this.setState({
         ...this.state,

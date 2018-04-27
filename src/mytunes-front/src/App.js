@@ -16,9 +16,10 @@ import { MuiThemeProvider } from "material-ui";
 import { Route, BrowserRouter } from "react-router-dom";
 import {NotificationContainer} from "react-notifications";
 
-const _BASIC_URL__ = "localhost:8000/";
-export const __SERVER_URL__ = "http://" + _BASIC_URL__;
-export const __WEBSOCKET_URL__ = "http://" + _BASIC_URL__ + "/ws";
+const __BASIC_URL__ = "localhost:8000/";
+export const __SERVER_URL__ = "http://" + __BASIC_URL__;
+export const __WEBSOCKET_URL__ = "http://" + __BASIC_URL__ + "/ws";
+export const __KEYCODE_ENTER__ = 13;
 
 const App = () => (
   <MuiThemeProvider>
