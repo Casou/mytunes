@@ -7,9 +7,7 @@ import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from "redux";
 import reducers from "./app/reducers";
 import thunk from "redux-thunk";
-import { Route, BrowserRouter } from "react-router-dom";
-import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
-import ListeGenres from "./app/pages/listeGenres/ListeGenres";
+import { BrowserRouter } from "react-router-dom"
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -23,11 +21,8 @@ const store = createStore(reducers, initialStore,
 
 ReactDOM.render(
   <Provider store={ store }>
-      <BrowserRouter>
-          <App>
-              <Route exact path="/" component={ListeMusique} />
-              <Route exact path="/genres" component={ListeGenres} />
-          </App>
-      </BrowserRouter>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
   </Provider>, document.getElementById('root'));
 registerServiceWorker();

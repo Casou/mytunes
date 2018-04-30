@@ -14,6 +14,10 @@ import MainWrapper from "./app/pages/initApp/MainWrapper";
 import { MuiThemeProvider } from "material-ui";
 import {NotificationContainer} from "react-notifications";
 
+import { Route } from "react-router-dom";
+import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
+import ListeGenres from "./app/pages/listeGenres/ListeGenres";
+
 const __BASIC_URL__ = "localhost:8000/";
 export const __SERVER_URL__ = "http://" + __BASIC_URL__;
 export const __WEBSOCKET_URL__ = "http://" + __BASIC_URL__ + "/ws";
@@ -46,17 +50,18 @@ class App extends React.Component {
 
   render() {
     return (
-        <MuiThemeProvider>
-          <div className="App">
-            <WebSocketClient />
-            <Header />
-            <Playlist />
-            <MainWrapper>
-                { this.props.children }
-            </MainWrapper>
-            <NotificationContainer/>
-          </div>
-        </MuiThemeProvider>
+      <MuiThemeProvider>
+        <div className="App">
+          <WebSocketClient />
+          <Header />
+          <Playlist />
+          <MainWrapper>
+            <Route exact path="/" component={ListeMusique} />
+            <Route exact path="/genres" component={ListeGenres} />
+          </MainWrapper>
+          <NotificationContainer/>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
