@@ -7,6 +7,7 @@ import { isEqual } from "lodash";
 import {bindActionCreators} from "redux";
 import MusiquesActions from "../actions/MusiquesActions";
 import {connect} from "react-redux";
+import {__KEYCODE_ENTER__} from "../../../../App";
 
 class ListeMusiqueItem extends React.Component {
   
@@ -53,8 +54,15 @@ class ListeMusiqueItem extends React.Component {
           </IconButton>
         </td>
         <td className={ "titre" }>
+
           <TextField
-            className="textField" fullWidth={true} underlineShow={ false } onBlur={ () => updateProperty(musique) }
+            className="textField" fullWidth={ true } underlineShow={ false }
+            onBlur={ e => this.onPropertyChange("titre", e.target.value) }
+            onKeyPress={ e => {
+              if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
+                this.onPropertyChange("titre", e.target.value)
+              }
+            } }
             name={"titre"}
             defaultValue={ musique.titre }
           />

@@ -15,9 +15,9 @@ const mapMusiques = (musiques) => {
   musiques.forEach(musique => {
     musiqueArray[musique.itunesId] = { ...musique,
       isFetching : [],
-      searchText : [musique.titre.toLowerCase(),
-        musique.artiste.toLowerCase(),
-        musique.commentaire.toLowerCase()].join(" ")
+      searchText : [musique.titre === null ? "" : musique.titre.toLowerCase(),
+        musique.artiste === null ? "" : musique.artiste.toLowerCase(),
+        musique.commentaire === null ? "" : musique.commentaire.toLowerCase()].join(" ")
     };
   });
   

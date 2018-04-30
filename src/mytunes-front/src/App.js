@@ -13,7 +13,7 @@ import ListeGenres from "./app/pages/listeGenres/ListeGenres";
 import Playlist from "./app/common/components/playlist/Playlist";
 import WebSocketClient from "./app/common/components/websocket/WebSocketClient";
 import MainWrapper from "./app/pages/initApp/MainWrapper";
-import { MuiThemeProvider } from "material-ui";
+import { MuiThemeProvider } from "material-ui";git
 import { Route, BrowserRouter } from "react-router-dom";
 import {NotificationContainer} from "react-notifications";
 

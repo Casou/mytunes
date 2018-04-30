@@ -22,3 +22,8 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+datas/**.db
+datas/h2db-datas.trace.db
+package-lock.json
+**/package-lock.json

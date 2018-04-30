@@ -28,7 +28,7 @@ public class MusiqueController {
 
     private static List<MusiqueDTO> init() {
         List<MusiqueDTO> init = new ArrayList<>();
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 100; i++) {
             init.add(MusiqueDTO.builder().
                         itunesId(BigInteger.valueOf(i)).
                         titre("Song " + i).
