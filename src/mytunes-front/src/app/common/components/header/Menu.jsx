@@ -39,13 +39,19 @@ export default class Menu extends React.Component {
         </IconButton>
         <Drawer
           docked={false}
-          width={200}
+          width={250}
           open={this.state.open}
           className={ "menuDrawer" }
           onRequestChange={ this.setMenuOpeness }
         >
-          <MenuItem containerElement={<Link to="/" />} onClick={ this.closeMenu }>Liste musiques</MenuItem>
-          <MenuItem containerElement={<Link to="/genres" />} onClick={ this.closeMenu }>Liste par genre</MenuItem>
+          <MenuItem containerElement={<Link to="/" />} onClick={ this.closeMenu }>
+            <FontIcon className="material-icons">library_music</FontIcon>
+            Liste musiques
+          </MenuItem>
+          <MenuItem containerElement={<Link to="/genres" />} onClick={ this.closeMenu }>
+            <FontIcon className="material-icons">dashboard</FontIcon>
+            Liste par genre
+          </MenuItem>
         </Drawer>
       </div>
     );

@@ -11,3 +11,9 @@
 .menuDrawer > div {
     top : var(--lecteur-height) !important;
 }
+
+.menuDrawer span.material-icons {
+    color : #585858 !important;
+    margin-right : 10px !important;
+    vertical-align : middle;
+}
