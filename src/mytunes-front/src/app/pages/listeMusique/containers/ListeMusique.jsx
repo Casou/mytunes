@@ -7,10 +7,11 @@ import { connect } from "react-redux";
 import { assign } from "lodash";
 
 
-// class ListeMusique extends React.Component {
 class ListeMusique extends React.Component {
   constructor(props) {
     super(props);
+
+    console.log(props);
     
     this.state = {
       searchText : '',
