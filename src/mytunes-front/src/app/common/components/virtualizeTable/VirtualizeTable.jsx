@@ -26,8 +26,7 @@ export default class VirtualizeTable extends React.PureComponent {
             height: 300,
             overscanColumnCount: 0,
             overscanRowCount: 5,
-            rowHeight: 30,
-            rowCount: 100
+            rowHeight: 30
         };
 
         this._renderBodyCell = this._renderBodyCell.bind(this);
@@ -39,9 +38,10 @@ export default class VirtualizeTable extends React.PureComponent {
             columnCount,
             overscanColumnCount,
             overscanRowCount,
-            rowHeight,
-            rowCount,
+            rowHeight
         } = this.state;
+        
+        const rowCount = this.props.data.length;
 
         return (
             <div>
@@ -118,7 +118,7 @@ export default class VirtualizeTable extends React.PureComponent {
         const headerData = this.props.headers[columnIndex];
         const rowClass = rowIndex % 2 === 0 ? "evenRow" : "oddRow";
         const classNames = cn(rowClass, styles.cell, "tableCell", headerData.className);
-
+        
         return (
             <div className={classNames}
                  key={"body_" + key}

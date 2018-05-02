@@ -12,9 +12,13 @@
 .VirtualizeTable .ratingStar { cursor : pointer; }
 
 .VirtualizeTable .headerLine { border-top : 1px solid grey; }
+
 .VirtualizeTable .tableHeader { background-color: #c9c9c9; font-weight: bold; }
+.VirtualizeTable .tableHeader,
+.VirtualizeTable .tableCell { display : flex; }
 .VirtualizeTable .tableHeader span,
-.VirtualizeTable .tableCell span { vertical-align: middle; }
+.VirtualizeTable .tableCell span { margin : auto 0; width : 100%; }
+
 .VirtualizeTable .evenRow { background-color: white; }
 .VirtualizeTable .oddRow { background-color: #e5e5e5; }
 
@@ -45,4 +49,30 @@
 .VirtualizeTable .textField input:focus {
     border : 1px solid grey !important;
     background : white !important;
+    width: 96% !important;
+}
+
+
+#listeMusiques #searchMusique {
+    display : inline-block;
+    width : 100%;
+    text-align : right;
+    margin-bottom : 3px;
+}
+
+#listeMusiques #searchMusique span.material-icons {
+    font-size : calc(var(--general-font-size) + 4px) !important;
+    color : #686868 !important;
+    vertical-align: middle;
+}
+
+#listeMusiques #searchMusique .textField {
+    font-size : var(--general-font-size) !important;
+    line-height : var(--general-font-size) !important;
+    height : calc(var(--general-font-size) + 6px) !important;
+    width : 25% !important;
+}
+
+#listeMusiques #searchMusique .textField hr {
+    bottom : -1px !important;
 }
