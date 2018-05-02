@@ -2,11 +2,14 @@
 .VirtualizeTable div.titre        { text-align : left; }
 .VirtualizeTable div.artiste      { text-align : left; }
 .VirtualizeTable div.duree        { text-align : center; }
-.VirtualizeTable div.bpm          { text-align : center; }
+.VirtualizeTable div.bpm,
+.VirtualizeTable div.bpm input    { text-align : center; }
 .VirtualizeTable div.genre        { text-align : left; }
 .VirtualizeTable div.classement   { text-align : center; }
 .VirtualizeTable div.commentaire  { text-align : left; }
 
+.VirtualizeTable .fetching { color : grey; }
+.VirtualizeTable .ratingStar { cursor : pointer; }
 
 .VirtualizeTable .headerLine { border-top : 1px solid grey; }
 .VirtualizeTable .tableHeader { background-color: #c9c9c9; font-weight: bold; }

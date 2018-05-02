@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import { FontIcon, IconButton, TextField } from "material-ui";
 import { musiquePropType } from "../../../common/types/Musique";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { assign } from "lodash";
 import VirtualizeTable from "../../../common/components/virtualizeTable/VirtualizeTable";
 import Classement from "../components/Classement";
+import ListeMusiqueTextProperty from "../components/ListeMusiqueTextProperty";
+import MusiquesActions from "../actions/MusiquesActions";
 
 
 class ListeMusique extends React.Component {
@@ -16,14 +19,6 @@ class ListeMusique extends React.Component {
       searchText : '',
       musiques : this.props.musiques
     };
-  }
-  
-  updateRating(rating, musique) {
-      console.log(musique.titre + " : new rating = " + rating);
-      // this.stompClient.send({
-      //     musique: musique,
-      //     newClassement: rating
-      // });
   }
   
   updateProperty = (musique) => {
@@ -57,6 +52,21 @@ class ListeMusique extends React.Component {
     }
     return musiques;
   }
+  
+  formate10 = number => {
+    return number >= 10 ? number : "0" + number;
+  };
+  
+  formateDuree = duree => {
+    const sec_num = parseInt(duree / 1000, 10);
+    const hours   = Math.floor(sec_num / 3600) % 24;
+    const minutes = Math.floor(sec_num / 60) % 60;
+    const seconds = sec_num % 60;
+    return ((hours > 0) ? this.formate10(hours) + ":" : "")
+      + this.formate10(minutes) + ":"
+      + this.formate10(seconds);
+  };
+  
 
   render() {
     // let filteredMusiques = [];
@@ -78,13 +88,13 @@ class ListeMusique extends React.Component {
       return (
         <section className="listeMusiques">
           <VirtualizeTable headers={ headers }
-                           data={ this.mapMusiques(this.props.musiques) } />
+                           data={ this.mapMusiques(this.state.musiques) } />
         </section>
       );
   }
 
     mapMusiques(musiques) {
-        return musiques.map(musique => { return {...musique,
+        return musiques.map((musique, index) => { return {...musique,
             renderCell: (column) => {
                 switch (column) {
                     case 0 :
@@ -93,39 +103,39 @@ class ListeMusique extends React.Component {
                                 <FontIcon className="material-icons">playlist_add</FontIcon>
                             </IconButton>
                         );
-                        break;
                     case 1 :
                         return (
-                            <TextField
-                                className="textField" fullWidth={ true } underlineShow={ false }
-                                name={"titre"}
+                            <ListeMusiqueTextProperty
+                                uniqueKey={"titre_" + index}
                                 defaultValue={ musique.titre }
+                                name={"titre"}
+                                isFetching={ musique.isFetching["titre"] }
+                                onChange={ (e) => this.onPropertyChange("titre", musique, e.target.value, index) }
                             />
                         );
-                        break;
                     case 2 :
                         return (
-                            <TextField
-                                className="textField" fullWidth={true} underlineShow={ false }
-                                name={"artiste"}
+                            <ListeMusiqueTextProperty
+                                uniqueKey={"artiste_" + index}
                                 defaultValue={ musique.artiste ? musique.artiste : "" }
+                                name={"artiste"}
+                                isFetching={ musique.isFetching["artiste"] }
+                                onChange={ (e) => this.onPropertyChange("artiste", musique, e.target.value, index) }
                             />
                         );
-                        break;
                     case 3 :
-                        return (
-                            musique.duree
-                        );
-                        break;
+                        return ( this.formateDuree(musique.duree) );
                     case 4 :
                         return (
-                            <TextField
-                                className="textField" fullWidth={true} underlineShow={ false }
-                                name={"bpm"}
-                                defaultValue={ musique.bpm ? musique.bpm / 4 : "" }
+                            <ListeMusiqueTextProperty
+                              uniqueKey={"bpm_" + index}
+                              defaultValue={ musique.bpm ? Math.round(musique.bpm / 4) : "" }
+                              name={"bpm"}
+                              isFetching={ musique.isFetching["bpm"] }
+                              onlyNumbers
+                              onChange={ (e) => this.onPropertyChange("bpm", musique, e.target.value * 4, index) }
                             />
                         );
-                        break;
                     case 5 :
                         return (
                             <TextField
@@ -134,29 +144,79 @@ class ListeMusique extends React.Component {
                                 defaultValue={ musique.genre ? musique.genre : "" }
                             />
                         );
-                        break;
                     case 6 :
                         return (
                             <Classement key={ "classement_" + musique.itunesId }
                                         musique={ musique }
+                                        isFetching={ musique.isFetching["classement"] }
+                                        onChange={ (value) => this.onPropertyChange("classement", musique, value, index) }
                             />
                         );
-                        break;
                     case 7 :
                         return (
-                            <TextField
-                                className="textField" fullWidth={true} underlineShow={ false }
-                                name={"commentaire"}
+                            <ListeMusiqueTextProperty
+                                uniqueKey={"commentaire_" + index}
                                 defaultValue={ musique.commentaire ? musique.commentaire : "" }
+                                name={"commentaire"}
+                                isFetching={ musique.isFetching["commentaire"] }
+                                onChange={ (e) => this.onPropertyChange("commentaire", musique, e.target.value, index) }
                             />
                         );
-                        break;
                     default :
                         throw new RangeError("Numéro de colonne inconnu pour le renderCell : " + column);
-                        break;
                 }
             }
         } });
+    }
+  
+    onPropertyChange(property, musique, newValue, index) {
+      if (musique.isFetching[property] || musique[property] === newValue) {
+        return;
+      }
+    
+      const modifiedMusiques = [ ...this.state.musiques ];
+      modifiedMusiques[index] = {
+        ...musique,
+        isFetching: {
+          ...musique.isFetching,
+          [property]: true
+        }
+      };
+      
+      // Grey
+      this.setState({
+        ...this.state,
+        musiques: modifiedMusiques
+      }, () => {
+        this.props.musiquesActions.updateMusique(musique, property, newValue)
+        .then(()=> {
+          modifiedMusiques[index] = {
+            ...musique,
+            [property]: newValue,
+            isFetching: {
+              ...musique.isFetching,
+              [property]: false
+            }
+          };
+  
+          this.setState({
+            ...this.state,
+            musiques: modifiedMusiques
+          });
+        })
+        .catch(() => {
+          this.setState({
+            ...this.state,
+            musique: {
+              ...musique,
+              isFetching: {
+                ...musique.isFetching,
+                [property]: false
+              }
+            }
+          });
+        });
+      });
     }
 
 }
@@ -167,4 +227,6 @@ ListeMusique.propTypes = {
 
 export default connect(state => assign({}, {
   musiques: state.musiques
-}), null)(ListeMusique);
+}), dispatch => ({
+  musiquesActions: bindActionCreators(MusiquesActions, dispatch)
+}))(ListeMusique);

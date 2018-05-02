@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ContentBox } from './demo/ContentBox';
 import { ScrollSync, Grid, AutoSizer } from 'react-virtualized';
 import cn from 'classnames';
 import styles from './ScrollSync.example.css';
@@ -38,8 +37,6 @@ export default class VirtualizeTable extends React.PureComponent {
     render() {
         const {
             columnCount,
-            columnWidth,
-            height,
             overscanColumnCount,
             overscanRowCount,
             rowHeight,
@@ -47,7 +44,7 @@ export default class VirtualizeTable extends React.PureComponent {
         } = this.state;
 
         return (
-            <ContentBox>
+            <div>
                 <ScrollSync>
                     {({
                           clientHeight,
@@ -112,7 +109,7 @@ export default class VirtualizeTable extends React.PureComponent {
                         );
                     }}
                 </ScrollSync>
-            </ContentBox>
+            </div>
         );
     }
 
