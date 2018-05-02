@@ -1,25 +1,24 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import ListeMusiqueHeader from "../components/ListeMusiqueHeader";
-import ListeMusiqueItem from "../components/ListeMusiqueItem";
+import { FontIcon, IconButton, TextField } from "material-ui";
 import { musiquePropType } from "../../../common/types/Musique";
 import { connect } from "react-redux";
 import { assign } from "lodash";
+import VirtualizeTable from "../../../common/components/virtualizeTable/VirtualizeTable";
+import Classement from "../components/Classement";
 
 
 class ListeMusique extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(props);
-    
     this.state = {
       searchText : '',
       musiques : this.props.musiques
     };
   }
   
-  updateRating (rating, musique) {
+  updateRating(rating, musique) {
       console.log(musique.titre + " : new rating = " + rating);
       // this.stompClient.send({
       //     musique: musique,
@@ -58,38 +57,112 @@ class ListeMusique extends React.Component {
     }
     return musiques;
   }
-  
+
   render() {
     // let filteredMusiques = [];
     // if (this.props.musiques) {
     //   filteredMusiques = this.getFilteredMusiques();
     // }
-    
-    return (
-      <section className="listeMusiques">
-        <table>
-          <ListeMusiqueHeader onSearch={ this.searchMusique.bind(this) } />
-          <tbody>
-          {
-            this.props.musiques.map(musique => (
-              <ListeMusiqueItem musique={ musique }
-                                key={ musique.itunesId }
-                                addMusiqueToPlaylist={ this.addMusiqueToPlaylist.bind(this) }
-                                updateRating={ this.updateRating.bind(this) }
-                                updateProperty={ this.updateProperty.bind(this) }
-              />
-            ))
-          }
-          </tbody>
-        </table>
-      </section>
-    );
+
+      const headers = [
+          { name : "",            className : "action",       widthPercentage : 5 / 100 },
+          { name : "Titre",       className : "titre",        widthPercentage : 16 / 100 },
+          { name : "Artiste",     className : "artiste",      widthPercentage : 15 / 100 },
+          { name : "Durée",       className : "duree",        widthPercentage : 7 / 100 },
+          { name : "BPM",         className : "bpm",          widthPercentage : 5 / 100 },
+          { name : "Genre",       className : "genre",        widthPercentage : 15 / 100 },
+          { name : "Class.",      className : "classement",   widthPercentage : 8 / 100 },
+          { name : "Commentaire", className : "commentaire",  widthPercentage : 29 / 100 }
+      ];
+
+      return (
+        <section className="listeMusiques">
+          <VirtualizeTable headers={ headers }
+                           data={ this.mapMusiques(this.props.musiques) } />
+        </section>
+      );
   }
+
+    mapMusiques(musiques) {
+        return musiques.map(musique => { return {...musique,
+            renderCell: (column) => {
+                switch (column) {
+                    case 0 :
+                        return (
+                            <IconButton>
+                                <FontIcon className="material-icons">playlist_add</FontIcon>
+                            </IconButton>
+                        );
+                        break;
+                    case 1 :
+                        return (
+                            <TextField
+                                className="textField" fullWidth={ true } underlineShow={ false }
+                                name={"titre"}
+                                defaultValue={ musique.titre }
+                            />
+                        );
+                        break;
+                    case 2 :
+                        return (
+                            <TextField
+                                className="textField" fullWidth={true} underlineShow={ false }
+                                name={"artiste"}
+                                defaultValue={ musique.artiste ? musique.artiste : "" }
+                            />
+                        );
+                        break;
+                    case 3 :
+                        return (
+                            musique.duree
+                        );
+                        break;
+                    case 4 :
+                        return (
+                            <TextField
+                                className="textField" fullWidth={true} underlineShow={ false }
+                                name={"bpm"}
+                                defaultValue={ musique.bpm ? musique.bpm / 4 : "" }
+                            />
+                        );
+                        break;
+                    case 5 :
+                        return (
+                            <TextField
+                                className="textField" fullWidth={true} underlineShow={ false }
+                                name={"genre"}
+                                defaultValue={ musique.genre ? musique.genre : "" }
+                            />
+                        );
+                        break;
+                    case 6 :
+                        return (
+                            <Classement key={ "classement_" + musique.itunesId }
+                                        musique={ musique }
+                            />
+                        );
+                        break;
+                    case 7 :
+                        return (
+                            <TextField
+                                className="textField" fullWidth={true} underlineShow={ false }
+                                name={"commentaire"}
+                                defaultValue={ musique.commentaire ? musique.commentaire : "" }
+                            />
+                        );
+                        break;
+                    default :
+                        throw new RangeError("Numéro de colonne inconnu pour le renderCell : " + column);
+                        break;
+                }
+            }
+        } });
+    }
+
 }
 
 ListeMusique.propTypes = {
   musiques: PropTypes.arrayOf(musiquePropType).isRequired
-  // musiques: PropTypes.object.isRequired
 };
 
 export default connect(state => assign({}, {

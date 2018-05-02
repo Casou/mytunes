@@ -52,6 +52,10 @@ export default class Menu extends React.Component {
             <FontIcon className="material-icons">dashboard</FontIcon>
             Liste par genre
           </MenuItem>
+          <MenuItem containerElement={<Link to="/test" />} onClick={ this.closeMenu }>
+            <FontIcon className="material-icons">dashboard</FontIcon>
+            Test tableau
+          </MenuItem>
         </Drawer>
       </div>
     );

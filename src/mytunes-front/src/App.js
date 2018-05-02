@@ -17,6 +17,7 @@ import {NotificationContainer} from "react-notifications";
 import { Route } from "react-router-dom";
 import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
 import ListeGenres from "./app/pages/listeGenres/ListeGenres";
+import VirtualizeTable from "./app/common/components/virtualizeTable/VirtualizeTable";
 
 const __BASIC_URL__ = "localhost:8000/";
 export const __SERVER_URL__ = "http://" + __BASIC_URL__;
@@ -24,46 +25,20 @@ export const __WEBSOCKET_URL__ = "http://" + __BASIC_URL__ + "/ws";
 export const __KEYCODE_ENTER__ = 13;
 
 
-// const App = (props) => (
-//     <MuiThemeProvider>
-//       <div className="App">
-//         <WebSocketClient />
-//         <Header />
-//         <Playlist />
-//         <MainWrapper>
-//             { props.children }
-//         </MainWrapper>
-//         <NotificationContainer/>
-//       </div>
-//     </MuiThemeProvider>
-// );
-
-class App extends React.Component {
-    constructor(props) {
-      super(props);
-      console.log("App", props);
-  }
-
-    componentWillReceiveProps(nextProps) {
-      console.log("nextProps", nextProps);
-  }
-
-  render() {
-    return (
-      <MuiThemeProvider>
-        <div className="App">
-          <WebSocketClient />
-          <Header />
-          <Playlist />
-          <MainWrapper>
-            <Route exact path="/" component={ListeMusique} />
-            <Route exact path="/genres" component={ListeGenres} />
-          </MainWrapper>
-          <NotificationContainer/>
-        </div>
-      </MuiThemeProvider>
-    );
-  }
-}
+const App = () => (
+    <MuiThemeProvider>
+      <div className="App">
+        <WebSocketClient />
+        <Header />
+        <Playlist />
+        <MainWrapper>
+          <Route exact path="/" component={ListeMusique} />
+          <Route exact path="/genres" component={ListeGenres} />
+          <Route exact path="/test" component={VirtualizeTable} />
+        </MainWrapper>
+        <NotificationContainer/>
+      </div>
+    </MuiThemeProvider>
+);
 
 export default App;

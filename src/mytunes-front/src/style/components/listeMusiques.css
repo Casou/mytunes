@@ -1,97 +1,45 @@
-.listeMusiques {
-    display: inline-block;
-    overflow: hidden;
-    width: 100%;
-    height: calc(100vh - var(--lecteur-height));
+.VirtualizeTable div.action       { text-align : center; cursor : pointer; }
+.VirtualizeTable div.titre        { text-align : left; }
+.VirtualizeTable div.artiste      { text-align : left; }
+.VirtualizeTable div.duree        { text-align : center; }
+.VirtualizeTable div.bpm          { text-align : center; }
+.VirtualizeTable div.genre        { text-align : left; }
+.VirtualizeTable div.classement   { text-align : center; }
+.VirtualizeTable div.commentaire  { text-align : left; }
+
+
+.VirtualizeTable .headerLine { border-top : 1px solid grey; }
+.VirtualizeTable .tableHeader { background-color: #c9c9c9; font-weight: bold; }
+.VirtualizeTable .tableHeader span,
+.VirtualizeTable .tableCell span { vertical-align: middle; }
+.VirtualizeTable .evenRow { background-color: white; }
+.VirtualizeTable .oddRow { background-color: #e5e5e5; }
+
+
+.VirtualizeTable .tableCell.action {
+    margin : 0 1px;
+    font-size : calc(var(--general-font-size) + 2px);
 }
 
-
-.listeMusiques table {
-    width : 100%;
-}
-
-.listeMusiques thead {
-    display:block;
-}
-.listeMusiques tbody {
-    display:block;
-    height:50em; /* 5 times the equivalent of a text "size". */
-    overflow-y:scroll;
-}
-
-.listeMusiques table th { background-color : #c5c5c5; }
-
-.listeMusiques table tbody tr.hidden { display : none; }
-.listeMusiques table tbody tr:not(.hidden):nth-child(odd) { background-color : white; }
-.listeMusiques table tbody tr:not(.hidden):nth-child(even) { background-color : #ececec; }
-.listeMusiques th, .listeMusiques td { border : none; white-space: nowrap; border-left : 1px dotted black; padding : 1px 5px; }
-.listeMusiques table tr { border : 1px solid lightgrey; }
-
-.listeMusiques table thead tr { width : calc(100% - 20px); }
-
-.listeMusiques table th.action, .listeMusiques table tr td.action       { width : 5%;   text-align : center; cursor : pointer; }
-.listeMusiques table th.titre, .listeMusiques table tr td.titre        { width : 16%;  text-align : left; }
-.listeMusiques table th.artiste, .listeMusiques table tr td.artiste      { width : 15%;  text-align : left; }
-.listeMusiques table th.duree, .listeMusiques table tr td.duree        { width : 7%;   text-align : center; }
-.listeMusiques table th.bpm, .listeMusiques table tr td.bpm          { width : 5%; }
-.listeMusiques table th.genre, .listeMusiques table tr td.genre        { width : 15%;  text-align : left; }
-.listeMusiques table th.classement, .listeMusiques table tr td.classement   { width : 8%;  text-align : center; }
-.listeMusiques table th.commentaire, .listeMusiques table tr td.commentaire  { width : 29%;  text-align : left; }
-
-.listeMusiques table tr th.action, .listeMusiques table tr td.classement span.ratingStar   { margin : 0 1px; font-size : calc(var(--general-font-size) + 2px); }
-.listeMusiques table tr td.bpm input    { text-align : center; }
-
-/*.listeMusiques table tr td.action svg      { height : 16px !important; width : 16px !important; }*/
-.listeMusiques table tr td.action button {
+.VirtualizeTable .tableCell.action button {
     margin : 0 !important;
     padding : 0 !important;
     height : 18px !important;
     width : 18px !important;
+    vertical-align: middle;
 }
 
-.listeMusiques table tr td.action button span {
+.VirtualizeTable .tableCell.action button span {
     font-size : 18px !important;
 }
 
-.listeMusiques .fetching { color : grey; }
-.listeMusiques .ratingStar { cursor : pointer; }
-
-.listeMusiques tbody .textField {
+.VirtualizeTable .textField {
     font-size : var(--general-font-size) !important;
     line-height : var(--general-font-size) !important;
     height : calc(var(--general-font-size) + 6px) !important;
 }
 
-.listeMusiques tbody .textField input:focus {
+.VirtualizeTable .textField input:focus {
     border : 1px solid grey !important;
     background : white !important;
 }
-
-
-
-
-tr#searchBar {
-    border-bottom : 1px solid grey;
-    height : 25px;
-}
-
-tr#searchBar th {
-    background : transparent;
-    border : none;
-}
-
-tr#searchBar svg {
-    vertical-align : middle;
-}
-
-tr#searchBar .textField {
-    font-size : var(--general-font-size) !important;
-    line-height : var(--general-font-size) !important;
-    height : calc(var(--general-font-size) + 6px) !important;
-}
-
-tr#searchBar .textField hr {
-    bottom : -1px !important;
-}
-
-

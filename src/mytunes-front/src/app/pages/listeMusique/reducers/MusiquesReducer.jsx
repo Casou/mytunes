@@ -11,26 +11,26 @@ export const musiques = (stateMusiques = { }, action) => {
 };
 
 const mapMusiques = (musiques) => {
-  const musiqueArray = [];
-  musiques.forEach(musique => {
-    musiqueArray[musique.itunesId] = { ...musique,
-      isFetching : [],
-      searchText : [musique.titre === null ? "" : musique.titre.toLowerCase(),
-        musique.artiste === null ? "" : musique.artiste.toLowerCase(),
-        musique.commentaire === null ? "" : musique.commentaire.toLowerCase()].join(" ")
-    };
-  });
-  
-  return musiqueArray;
-  
-  // return musiques.map(musique => {
-  //   return { ...musique,
-  //           isFetching : [],
-  //           searchText : [musique.titre.toLowerCase(),
-  //                         musique.artiste.toLowerCase(),
-  //                         musique.commentaire.toLowerCase()].join(" ")
-  //   }
+  // const musiqueArray = [];
+  // musiques.forEach(musique => {
+  //   musiqueArray[musique.itunesId] = { ...musique,
+  //     isFetching : [],
+  //     searchText : [musique.titre === null ? "" : musique.titre.toLowerCase(),
+  //       musique.artiste === null ? "" : musique.artiste.toLowerCase(),
+  //       musique.commentaire === null ? "" : musique.commentaire.toLowerCase()].join(" ")
+  //   };
   // });
+  //
+  // return musiqueArray;
+  
+  return musiques.map(musique => {
+    return { ...musique,
+            isFetching : [],
+            searchText : [musique.titre.toLowerCase(),
+                          musique.artiste.toLowerCase(),
+                          musique.commentaire.toLowerCase()].join(" ")
+    }
+  });
 };
 
 const updateMusiqueReducer = (musiques, payload) => {
