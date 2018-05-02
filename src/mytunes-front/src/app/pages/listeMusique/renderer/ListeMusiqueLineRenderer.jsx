@@ -2,28 +2,15 @@ import React from "react";
 import { FontIcon, IconButton, TextField } from "material-ui";
 import ListeMusiqueTextProperty from "../components/ListeMusiqueTextProperty";
 import Classement from "../components/Classement";
+import {formateDuree} from "../../../common/util/Formatters";
 
-const formate10 = number => {
-  return number >= 10 ? number : "0" + number;
-};
-
-const formateDuree = duree => {
-  const sec_num = parseInt(duree / 1000, 10);
-  const hours   = Math.floor(sec_num / 3600) % 24;
-  const minutes = Math.floor(sec_num / 60) % 60;
-  const seconds = sec_num % 60;
-  return ((hours > 0) ? formate10(hours) + ":" : "")
-    + formate10(minutes) + ":"
-    + formate10(seconds);
-};
-
-export const addRenderMusiqueLine = (musiques, onPropertyChange) => {
+export const addRenderMusiqueLine = (musiques, { onPropertyChange, onPlaylistAdd }) => {
   return musiques.map((musique, index) => { return {...musique,
     renderCell: (column) => {
       switch (column) {
         case 0 :
           return (
-            <IconButton>
+            <IconButton onClick={ () => onPlaylistAdd(musique) }>
               <FontIcon className="material-icons">playlist_add</FontIcon>
             </IconButton>
           );

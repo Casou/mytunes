@@ -6,9 +6,11 @@ import { assign } from "lodash";
 import { FontIcon, TextField } from "material-ui";
 
 import { musiquePropType } from "../../../common/types/Musique";
+import { addRenderMusiqueLine } from "../renderer/ListeMusiqueLineRenderer";
 import VirtualizeTable from "../../../common/components/virtualizeTable/VirtualizeTable";
 import MusiquesActions from "../actions/MusiquesActions";
-import { addRenderMusiqueLine } from "../renderer/ListeMusiqueLineRenderer";
+import PlaylistActions from "../../../common/actions/PlaylistActions";
+
 import {__KEYCODE_ENTER__} from "../../../../App";
 
 import '../../../../style/components/listeMusiques.css';
@@ -31,7 +33,10 @@ class ListeMusique extends React.Component {
 
     this.state = {
       searchText : '',
-      musiques : addRenderMusiqueLine(this.props.musiques, this.onPropertyChange.bind(this))
+      musiques : addRenderMusiqueLine(this.props.musiques, {
+        onPropertyChange : this.onPropertyChange.bind(this),
+        onPlaylistAdd : props.playlistActions.addMusiqueToPlaylist
+      })
     };
   }
   
@@ -61,8 +66,6 @@ class ListeMusique extends React.Component {
         filteredMusiques = this.getFilteredMusiques();
       }
       
-      console.log(filteredMusiques);
-
       return (
         <section id="listeMusiques">
           <section id="searchMusique">
@@ -141,5 +144,6 @@ ListeMusique.propTypes = {
 export default connect(state => assign({}, {
   musiques: state.musiques
 }), dispatch => ({
-  musiquesActions: bindActionCreators(MusiquesActions, dispatch)
+  musiquesActions: bindActionCreators(MusiquesActions, dispatch),
+  playlistActions: bindActionCreators(PlaylistActions, dispatch)
 }))(ListeMusique);

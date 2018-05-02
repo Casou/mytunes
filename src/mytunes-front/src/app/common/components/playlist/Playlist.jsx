@@ -1,31 +1,48 @@
 import React from 'react';
 import * as classnames from "classnames";
-import PlaylistItem from "./PlaylistItem";
+import { connect } from "react-redux";
+import { assign } from "lodash";
+import PropTypes from "prop-types";
 
-export default class Playlist extends React.Component {
+import PlaylistItem from "./PlaylistItem";
+import {playlistMusiquePropType} from "../../types/PlaylistMusique";
+
+import '../../../../style/components/playlist.css';
+
+class Playlist extends React.Component {
   
   constructor(props) {
     super(props);
+    
     this.state = {
       collapsed : true,
-      musiques : []
-    }
+      musiquePlaying : null
+    };
+  
+    this.toggle = this.toggle.bind(this)
   }
   
   render() {
+    const { collapsed, musiquePlaying } = this.state;
+    const { playlist } = this.props;
+    
     return (
       <section id="playlist">
         <div id="playlistAnchor"
-             className={ classnames("metal-bg", this.state.collapsed ? "collapsed" : "") }
-             onClick={ this.toggle.bind(this) }>
+             className={ classnames("metal-bg", collapsed ? "collapsed" : "") }
+             onClick={ this.toggle }>
           Playlist
         </div>
         <div id="playlistTab"
-             className={ this.state.collapsed ? "collapsed" : "" }>
+             className={ collapsed ? "collapsed" : "" }>
           <ul className="playlistMusiqueList">
-            { this.state.musiques.map(musique => {
+            { playlist.map(musique => {
               return (
-                <PlaylistItem key={ "playlist_" + musique.itunesId } musique={ musique } />
+                <PlaylistItem key={ "playlist_" + musique.itunesId }
+                              musique={ musique }
+                              isPlaying={ musique === musiquePlaying }
+                              alreadyPlayed={ musique.alreadyPlayed }
+                />
               );
             })}
           </ul>
@@ -40,5 +57,12 @@ export default class Playlist extends React.Component {
       collapsed : !this.state.collapsed
     })
   }
-  
 }
+
+Playlist.propTypes = {
+  playlist: PropTypes.arrayOf(playlistMusiquePropType).isRequired
+};
+
+export default connect(state => assign({}, {
+  playlist: state.playlist
+}), null)(Playlist);

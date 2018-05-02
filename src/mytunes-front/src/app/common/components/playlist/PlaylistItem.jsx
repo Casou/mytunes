@@ -1,31 +1,25 @@
 import React from 'react';
-import { musiquePropType } from "../../types/Musique";
 import {FontIcon, IconButton} from "material-ui";
+import PropTypes from "prop-types";
+
+import { musiquePropType } from "../../types/Musique";
+import {formateDuree} from "../../util/Formatters";
 
 export const PlaylistItem = props => {
-  const { musique } = props;
-  
-  const formate10 = number => {
-    return number >= 10 ? number : "0" + number;
-  };
-  
-  const formateDuree = duree => {
-    const sec_num = parseInt(duree / 1000, 10);
-    const hours   = Math.floor(sec_num / 3600) % 24;
-    const minutes = Math.floor(sec_num / 60) % 60;
-    const seconds = sec_num % 60;
-    return ((hours > 0) ? formate10(hours) + ":" : "")
-      + formate10(minutes) + ":"
-      + formate10(seconds);
-
-  };
+  const { musique, isPlaying } = props;
   
   return (
     <li>
       <span className="play">
-        <IconButton onClick={ () => null }>
-          <FontIcon className="material-icons">playlist_arrow</FontIcon>
-        </IconButton>
+        { isPlaying ?
+          <IconButton onClick={ () => null }>
+            <FontIcon className="material-icons">equalizer</FontIcon>
+          </IconButton>
+          :
+          <IconButton onClick={ () => null }>
+            <FontIcon className="material-icons">play_arrow</FontIcon>
+          </IconButton>
+        }
       </span>
       <span className="titre">{ musique.titre }</span>
       <span className="duree">{ musique.duree ? formateDuree(musique.duree) : "-" }</span>
@@ -34,7 +28,9 @@ export const PlaylistItem = props => {
 };
 
 PlaylistItem.propTypes = {
-  musique : musiquePropType.isRequired
+  musique : musiquePropType.isRequired,
+  isPlaying : PropTypes.bool.isRequired,
+  alreadyPlayed : PropTypes.bool.isRequired
 };
 
 export default PlaylistItem;

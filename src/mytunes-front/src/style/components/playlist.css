@@ -40,13 +40,14 @@
     border : 1px solid black;
     border-bottom-left-radius: 5px;
     transition:all ease 0.3s;
+    z-index : 10;
 }
 
-#playlistTab li { border-bottom : 1px solid lightgrey; }
+#playlistTab li { display : flex; border-bottom : 1px solid lightgrey; }
 #playlistTab li:nth-child(odd) { background-color : white; }
 #playlistTab li:nth-child(even) { background-color : #ececec; }
 
-#playlistTab li span { display : inline-block; }
+#playlistTab li span { display : inline-block; margin : auto 0; }
 #playlistTab li span.play { width : 25px; text-align : center; cursor : pointer; }
 #playlistTab li span.titre { width : calc(var(--playlist-tab-width) - 65px); }
 #playlistTab li span.duree { width : 35px; color : grey; font-size : 12px; line-height : var(--general-font-size); text-align : right; padding-right : 3px; }
