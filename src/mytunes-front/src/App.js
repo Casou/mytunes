@@ -15,7 +15,6 @@ import {NotificationContainer} from "react-notifications";
 import { Route } from "react-router-dom";
 import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
 import ListeGenres from "./app/pages/listeGenres/ListeGenres";
-import VirtualizeTable from "./app/common/components/virtualizeTable/VirtualizeTable";
 
 const __BASIC_URL__ = "localhost:8000/";
 export const __SERVER_URL__ = "http://" + __BASIC_URL__;

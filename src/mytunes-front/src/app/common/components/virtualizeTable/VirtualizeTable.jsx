@@ -118,6 +118,11 @@ export default class VirtualizeTable extends React.PureComponent {
         const headerData = this.props.headers[columnIndex];
         const rowClass = rowIndex % 2 === 0 ? "evenRow" : "oddRow";
         const classNames = cn(rowClass, styles.cell, "tableCell", headerData.className);
+  
+        if (!datum || typeof datum.renderCell !== 'function') {
+            console.log(rowIndex, datum);
+            console.log(this.props.data);
+        }
         
         return (
             <div className={classNames}

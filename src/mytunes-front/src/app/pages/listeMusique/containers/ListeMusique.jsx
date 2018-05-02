@@ -84,12 +84,13 @@ class ListeMusique extends React.Component {
       );
   }
 
-    onPropertyChange(property, musique, newValue, index) {
+    onPropertyChange(property, newValue, index) {
+      const musique = this.state.musiques[index];
       if (musique.isFetching[property] || musique[property] === newValue) {
         return;
       }
     
-      const modifiedMusiques = [ ...this.state.musiques ];
+      const modifiedMusiques = [...this.state.musiques];
       modifiedMusiques[index] = {
         ...musique,
         isFetching: {
@@ -97,7 +98,13 @@ class ListeMusique extends React.Component {
           [property]: true
         }
       };
-      
+  
+      this.setState({
+        ...this.state,
+        musiques: modifiedMusiques
+      });
+  
+      /*
       // Grey
       this.setState({
         ...this.state,
@@ -134,6 +141,7 @@ class ListeMusique extends React.Component {
           });
         });
       });
+      */
     }
 }
 

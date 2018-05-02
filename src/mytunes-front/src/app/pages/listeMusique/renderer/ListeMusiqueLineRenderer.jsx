@@ -10,7 +10,7 @@ export const addRenderMusiqueLine = (musiques, { onPropertyChange, onPlaylistAdd
       switch (column) {
         case 0 :
           return (
-            <IconButton onClick={ () => onPlaylistAdd(musique) }>
+            <IconButton onClick={ () => onPlaylistAdd(index) }>
               <FontIcon className="material-icons">playlist_add</FontIcon>
             </IconButton>
           );
@@ -21,7 +21,7 @@ export const addRenderMusiqueLine = (musiques, { onPropertyChange, onPlaylistAdd
               defaultValue={ musique.titre }
               name={"titre"}
               isFetching={ musique.isFetching["titre"] }
-              onChange={ (e) => onPropertyChange("titre", musique, e.target.value, index) }
+              onChange={ (e) => onPropertyChange("titre", e.target.value, index) }
             />
           );
         case 2 :
@@ -31,7 +31,7 @@ export const addRenderMusiqueLine = (musiques, { onPropertyChange, onPlaylistAdd
               defaultValue={ musique.artiste ? musique.artiste : "" }
               name={"artiste"}
               isFetching={ musique.isFetching["artiste"] }
-              onChange={ (e) => onPropertyChange("artiste", musique, e.target.value, index) }
+              onChange={ (e) => onPropertyChange("artiste", e.target.value, index) }
             />
           );
         case 3 :
@@ -44,7 +44,7 @@ export const addRenderMusiqueLine = (musiques, { onPropertyChange, onPlaylistAdd
               name={"bpm"}
               isFetching={ musique.isFetching["bpm"] }
               onlyNumbers
-              onChange={ (e) => onPropertyChange("bpm", musique, e.target.value * 4, index) }
+              onChange={ (e) => onPropertyChange("bpm", e.target.value * 4, index) }
             />
           );
         case 5 :
@@ -60,7 +60,7 @@ export const addRenderMusiqueLine = (musiques, { onPropertyChange, onPlaylistAdd
             <Classement key={ "classement_" + musique.itunesId }
                         musique={ musique }
                         isFetching={ musique.isFetching["classement"] }
-                        onChange={ (value) => onPropertyChange("classement", musique, value, index) }
+                        onChange={ (value) => onPropertyChange("classement", value, index) }
             />
           );
         case 7 :
@@ -70,7 +70,7 @@ export const addRenderMusiqueLine = (musiques, { onPropertyChange, onPlaylistAdd
               defaultValue={ musique.commentaire ? musique.commentaire : "" }
               name={"commentaire"}
               isFetching={ musique.isFetching["commentaire"] }
-              onChange={ (e) => onPropertyChange("commentaire", musique, e.target.value, index) }
+              onChange={ (e) => onPropertyChange("commentaire", e.target.value, index) }
             />
           );
         default :
