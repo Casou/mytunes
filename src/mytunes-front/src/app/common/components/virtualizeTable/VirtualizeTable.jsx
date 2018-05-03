@@ -42,7 +42,7 @@ export default class VirtualizeTable extends React.PureComponent {
         } = this.state;
         
         const rowCount = this.props.data.length;
-
+  
         return (
             <div>
                 <ScrollSync>
@@ -114,22 +114,17 @@ export default class VirtualizeTable extends React.PureComponent {
     }
 
     _renderBodyCell({columnIndex, key, rowIndex, style}, totalWidth) {
-        const datum = this.props.data[rowIndex];
+        const datumRenderer = this.props.data[rowIndex];
         const headerData = this.props.headers[columnIndex];
         const rowClass = rowIndex % 2 === 0 ? "evenRow" : "oddRow";
         const classNames = cn(rowClass, styles.cell, "tableCell", headerData.className);
-  
-        if (!datum || typeof datum.renderCell !== 'function') {
-            console.log(rowIndex, datum);
-            console.log(this.props.data);
-        }
         
         return (
             <div className={classNames}
                  key={"body_" + key}
                  style={ {...style, width : this._getColumnWidth({ index : columnIndex }, totalWidth)} }>
                 <span>
-                    { datum.renderCell(columnIndex) }
+                    { datumRenderer.renderCell(columnIndex) }
                 </span>
             </div>
         );

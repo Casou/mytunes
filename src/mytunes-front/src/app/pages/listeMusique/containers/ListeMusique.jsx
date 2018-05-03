@@ -6,7 +6,6 @@ import { assign } from "lodash";
 import { FontIcon, TextField } from "material-ui";
 
 import { musiquePropType } from "../../../common/types/Musique";
-import { addRenderMusiqueLine } from "../renderer/ListeMusiqueLineRenderer";
 import VirtualizeTable from "../../../common/components/virtualizeTable/VirtualizeTable";
 import MusiquesActions from "../actions/MusiquesActions";
 import PlaylistActions from "../../../common/actions/PlaylistActions";
@@ -14,6 +13,7 @@ import PlaylistActions from "../../../common/actions/PlaylistActions";
 import {__KEYCODE_ENTER__} from "../../../../App";
 
 import '../../../../style/components/listeMusiques.css';
+import {MusiqueRenderer} from "../renderer/MusiqueRenderer";
 
 
 class ListeMusique extends React.Component {
@@ -33,12 +33,18 @@ class ListeMusique extends React.Component {
 
     this.state = {
       searchText : '',
-      musiques : addRenderMusiqueLine(this.props.musiques, {
+      musiqueRenderers : this.mapMusiqueRenderer(this.props.musiques, {
         onPropertyChange : this.onPropertyChange.bind(this),
         onPlaylistAdd : props.playlistActions.addMusiqueToPlaylist
       })
     };
   }
+  
+  mapMusiqueRenderer = (musiques, { onPropertyChange, onPlaylistAdd }) => {
+    return musiques.map((musique, index) => {
+      return new MusiqueRenderer(musique, index, {onPropertyChange,onPlaylistAdd})
+    });
+  };
   
   addMusiqueToPlaylist = (musique) => {
     console.log("TODO addMusiqueToPlaylist " + musique.titre);
@@ -52,20 +58,20 @@ class ListeMusique extends React.Component {
   }
   
   getFilteredMusiques() {
-    const { musiques, searchText } = this.state;
+    const { musiqueRenderers, searchText } = this.state;
     
     if (searchText) {
-      return musiques.filter(musique => musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
+      return musiqueRenderers.filter(musiqueRenderer => musiqueRenderer.musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
     }
-    return musiques;
+    return musiqueRenderers;
   }
   
   render() {
-      let filteredMusiques = [];
-      if (this.state.musiques) {
-        filteredMusiques = this.getFilteredMusiques();
+      let filteredMusiqueRenderers = [];
+      if (this.state.musiqueRenderers) {
+        filteredMusiqueRenderers = this.getFilteredMusiques();
       }
-      
+  
       return (
         <section id="listeMusiques">
           <section id="searchMusique">
@@ -79,69 +85,48 @@ class ListeMusique extends React.Component {
             />
           </section>
           <VirtualizeTable headers={ this.headers }
-                           data={ filteredMusiques } />
+                           data={ filteredMusiqueRenderers } />
         </section>
       );
   }
 
     onPropertyChange(property, newValue, index) {
-      const musique = this.state.musiques[index];
-      if (musique.isFetching[property] || musique[property] === newValue) {
+      const musiqueRenderers = this.state.musiqueRenderers;
+      const musiqueRenderer = musiqueRenderers[index];
+      
+      if (musiqueRenderer.musique.isFetching[property] || musiqueRenderer.musique[property] === newValue) {
         return;
       }
     
-      const modifiedMusiques = [...this.state.musiques];
-      modifiedMusiques[index] = {
-        ...musique,
-        isFetching: {
-          ...musique.isFetching,
-          [property]: true
-        }
-      };
+      const modifiedMusiqueRenderers = [...musiqueRenderers];
+      modifiedMusiqueRenderers[index].fetching(property, true);
   
+      // Fetching (grey)
       this.setState({
         ...this.state,
-        musiques: modifiedMusiques
-      });
-  
-      /*
-      // Grey
-      this.setState({
-        ...this.state,
-        musiques: modifiedMusiques
+        musiqueRenderers: modifiedMusiqueRenderers
       }, () => {
+        const musique = musiqueRenderer.musique;
         this.props.musiquesActions.updateMusique(musique, property, newValue)
         .then(()=> {
-          modifiedMusiques[index] = {
-            ...musique,
-            [property]: newValue,
-            isFetching: {
-              ...musique.isFetching,
-              [property]: false
-            }
-          };
+          const modifiedMusiqueRenderers = [...this.state.musiqueRenderers];
+          modifiedMusiqueRenderers[index].changeProperty(property, newValue);
+          modifiedMusiqueRenderers[index].fetching(property, false);
   
           this.setState({
             ...this.state,
-            musiques: modifiedMusiques
+            musiqueRenderers: modifiedMusiqueRenderers
           });
         })
         .catch(() => {
-          modifiedMusiques[index] = {
-            ...musique,
-            isFetching: {
-              ...musique.isFetching,
-              [property]: false
-            }
-          };
+          modifiedMusiqueRenderers[index].fetching(property, false);
   
           this.setState({
             ...this.state,
-            musiques: modifiedMusiques
+            musiqueRenderers: modifiedMusiqueRenderers
           });
         });
       });
-      */
     }
 }
 
