@@ -53,6 +53,10 @@
 }
 
 
+#listeMusiques {
+    width : calc(100% - var(--volume-slider-width));
+}
+
 #listeMusiques #searchMusique {
     display : inline-block;
     width : 100%;

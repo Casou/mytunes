@@ -1,10 +1,11 @@
 :root {
   --general-font-size: 12px;
   --playlist-tab-width: 400px;
+  --background-color : #dbdbdb;
 }
 
 html {
-  background-color : lightgray;
+  background-color : var(--background-color);
   height: 100%;
 }
 

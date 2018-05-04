@@ -1,5 +1,6 @@
 :root {
     --lecteur-height: 100px;
+    --volume-slider-width : 100px;
 }
 
 .lecteur {
@@ -28,4 +29,22 @@
     text-align : center;
     font-size : 12px;
     color : grey;
+}
+
+
+
+
+aside#volumeSlider {
+    position : fixed;
+    right : 0;
+    top : var(--lecteur-height);
+    width : var(--volume-slider-width);
+    height : calc(100vh - var(--lecteur-height));
+    z-index : 100;
+    background-color : var(--background-color);
+    border-left : 1px grey dotted;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

@@ -1,0 +1,74 @@
+:root {
+    --slider-width : 12px;
+    --slider-active-color : #4B6FA2;
+    --slider-unknown-color : red;
+    --slider-inactive-color : darkgray;
+}
+
+.VolumeSlider {
+    position: relative;
+    background: var(--slider-inactive-color);
+    border-radius: 8px;
+
+    left : 50%;
+    margin-left : calc(var(--slider-width) / 3 * -1);
+    top : 3%;
+    height : 92%;
+    width: var(--slider-width);
+    transition: width 0.05s, height 0.3s;
+}
+
+.VolumeSlider .VolumeSlider-elapsed,
+.VolumeSlider .VolumeSlider-value {
+    background: var(--slider-unknown-color);
+    border-radius: 8px;
+}
+
+.VolumeSlider .VolumeSlider-value {
+    background: var(--slider-active-color);
+}
+
+.VolumeSlider .VolumeSlider-value {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.VolumeSlider .VolumeSlider-seek {
+    position: absolute;
+    cursor: pointer;
+}
+
+.VolumeSlider .VolumeSlider-handle {
+    position: absolute;
+    left: 0;
+    margin: 0 0 calc(var(--slider-width) * -1) calc(var(--slider-width) / 2 * -1);
+    width: calc(var(--slider-width) * 2);
+    height: calc(var(--slider-width) * 2);
+    background: var(--slider-active-color);
+    border-radius: 100%;
+    transform: scale(0);
+    transition: transform 0.2s;
+    cursor : pointer;
+}
+
+.VolumeSlider:hover .VolumeSlider-handle {
+    transform: scale(1);
+}
+
+.VolumeSlider .VolumeSlider-intent {
+    display : none;
+    position: absolute;
+    background: rgba(0,0,0,0.1);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.VolumeSlider-seek {
+    left: -6px;
+    top: 0;
+    right: -6px;
+    bottom: 0;
+}
+
