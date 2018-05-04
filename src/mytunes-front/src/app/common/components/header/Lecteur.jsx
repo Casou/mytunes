@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import { PlayButton, PrevButton, NextButton } from "react-player-controls";
 import AsideVolumeSlider from "./AsideVolumeSlider";
 
 class Lecteur extends React.Component {
@@ -13,10 +14,29 @@ class Lecteur extends React.Component {
 
     render() {
         return (
-            <section className="lecteur">
-                <div className="lecteurDiv">
-                    <h1>{ this.props.titre ? this.props.titre : "Aucun titre" }</h1>
-                    <h2>{ this.props.artiste ? this.props.artiste : "-" }</h2>
+            <section id="lecteurWrapper">
+                <div id="lecteurDiv">
+                    <div id="lecteurAction">
+                        <PrevButton
+                            id={"prevButton"}
+                            isEnabled={ true }
+                            onClick={() => console.log('Prev!')}
+                        />
+                        <PlayButton
+                            id={"playButton"}
+                            isEnabled={ true }
+                            onClick={() => console.log('Play!')}
+                        />
+                        <NextButton
+                            id={"nextButton"}
+                            isEnabled={ true }
+                            onClick={() => console.log('Next!')}
+                        />
+                    </div>
+                    <div id="lecteurDisplay">
+                        <h1>{ this.props.titre ? this.props.titre : "Aucun titre" }</h1>
+                        <h2>{ this.props.artiste ? this.props.artiste : "Aucun artiste" }</h2>
+                    </div>
                 </div>
                 <AsideVolumeSlider volume={this.state.volume}
                                    onVolumeChange={(volume) => this.setState({...this.state, volume }) } />

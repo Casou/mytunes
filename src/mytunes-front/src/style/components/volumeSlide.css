@@ -3,7 +3,113 @@
     --slider-active-color : #4B6FA2;
     --slider-unknown-color : red;
     --slider-inactive-color : darkgray;
+
+    --button-main-color : black;
+    --button-hover-color : #5a86c4;
+    --button-active-color : #375278;
+    --icon-size : 26px;
 }
+
+
+
+/* ******************************
+**********   Buttons   **********
+********************************* */
+
+.PlayButton,
+.PauseButton,
+.PrevButton,
+.NextButton,
+.SoundOnButton,
+.SoundOffButton {
+    margin-right: 10px;
+    padding: 8px;
+    background: transparent;
+    border: 2px solid var(--button-main-color);
+    border-radius: 100%;
+    outline: none;
+}
+
+.PlayButton[disabled],
+.PauseButton[disabled],
+.PrevButton[disabled],
+.NextButton[disabled],
+.SoundOnButton[disabled],
+.SoundOffButton[disabled] {
+    opacity: 0.5;
+}
+
+.PlayButton.isEnabled,
+.PauseButton.isEnabled,
+.PrevButton.isEnabled,
+.NextButton.isEnabled,
+.SoundOnButton.isEnabled,
+.SoundOffButton.isEnabled {
+    cursor: pointer;
+}
+
+.PlayButton .Icon-shape,
+.PauseButton .Icon-shape,
+.PrevButton .Icon-shape,
+.NextButton .Icon-shape,
+.SoundOnButton .Icon-shape,
+.SoundOffButton .Icon-shape {
+    fill: var(--button-main-color);
+}
+
+.PlayButton:hover,
+.PauseButton:hover,
+.PrevButton:hover,
+.NextButton:hover,
+.SoundOnButton:hover,
+.SoundOffButton:hover {
+    border-color: var(--button-hover-color);
+}
+
+.PlayButton:hover .Icon-shape,
+.PauseButton:hover .Icon-shape,
+.PrevButton:hover .Icon-shape,
+.NextButton:hover .Icon-shape,
+.SoundOnButton:hover .Icon-shape,
+.SoundOffButton:hover .Icon-shape {
+    fill: var(--button-hover-color);
+}
+
+.PlayButton:active,
+.PauseButton:active,
+.PrevButton:active,
+.NextButton:active,
+.SoundOnButton:active,
+.SoundOffButton:active {
+    border-color: var(--button-active-color);
+}
+
+.PlayButton:active .Icon-shape,
+.PauseButton:active .Icon-shape,
+.PrevButton:active .Icon-shape,
+.NextButton:active .Icon-shape,
+.SoundOnButton:active .Icon-shape,
+.SoundOffButton:active .Icon-shape {
+    fill: var(--button-active-color);
+}
+
+.Icon {
+    display: block;
+    width: var(--icon-size);
+    height: var(--icon-size);
+}
+
+.Icon-shape {
+    fill: green;
+}
+
+
+
+
+
+/* ******************************
+**********   Sliders   **********
+********************************* */
 
 .VolumeSlider {
     position: relative;
