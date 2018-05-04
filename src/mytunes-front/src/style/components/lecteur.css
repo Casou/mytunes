@@ -77,6 +77,12 @@
 
 
 
+#lecteurWrapper #lecteurDisplay #lecteurProgress {
+    padding-left: 180px;
+}
+
+
+
 aside#volumeSlider {
     position : fixed;
     right : 0;

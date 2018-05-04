@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { VolumeSlider } from "react-player-controls";
 
 import '../../../../style/components/volumeSlide.css';
+import '../../../../style/components/progressBar.css';
 
 const AsideVolumeSlider = props => (
     <aside id={"volumeSlider"}>

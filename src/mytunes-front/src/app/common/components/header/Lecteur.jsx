@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { PlayButton, PrevButton, NextButton } from "react-player-controls";
+import { PlayButton, PrevButton, NextButton, ProgressBar } from "react-player-controls";
 import AsideVolumeSlider from "./AsideVolumeSlider";
 
 class Lecteur extends React.Component {
@@ -36,6 +36,18 @@ class Lecteur extends React.Component {
                     <div id="lecteurDisplay">
                         <h1>{ this.props.titre ? this.props.titre : "Aucun titre" }</h1>
                         <h2>{ this.props.artiste ? this.props.artiste : "Aucun artiste" }</h2>
+                        <div id="lecteurProgress">
+                            <ProgressBar
+                                totalTime={ 90000 }
+                                currentTime={ 45000 }
+                                bufferedTime={ 0 }
+                                isSeekable={ true }
+                                onSeek={time => console.log("seek", time)}
+                                onSeekStart={time => console.log("seek start", time)}
+                                onSeekEnd={time => console.log("seek end", time)}
+                                onIntent={time => console.log("seek intent", time)}
+                            />
+                        </div>
                     </div>
                 </div>
                 <AsideVolumeSlider volume={this.state.volume}
