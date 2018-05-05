@@ -19,6 +19,7 @@ class Lecteur extends React.Component {
         this._seek = this._seek.bind(this);
         this._updateTime = this._updateTime.bind(this);
         this._updateCurrentTime = this._updateCurrentTime.bind(this);
+        this._updateVolume = this._updateVolume.bind(this);
     }
 
     componentDidMount() {
@@ -88,7 +89,7 @@ class Lecteur extends React.Component {
                     }
                 </audio>
                 <AsideVolumeSlider volume={this.state.volume}
-                                   onVolumeChange={(volume) => this.setState({...this.state, volume }) } />
+                                   onVolumeChange={ this._updateVolume } />
             </section>
         );
     }
@@ -98,7 +99,6 @@ class Lecteur extends React.Component {
     }
 
     _updateCurrentTime(time) {
-        console.log("updateCurrentTime", time);
         this.setState({
             ...this.state,
             currentTime : time
@@ -123,6 +123,11 @@ class Lecteur extends React.Component {
             ...this.state,
             isPlaying : false
         });
+    }
+
+    _updateVolume(volume) {
+        this.audio.volume = volume;
+        this.setState({...this.state, volume });
     }
 
 }
