@@ -6,7 +6,6 @@ import './style/material-icons.css';
 import 'react-notifications/lib/notifications.css';
 
 import Header from "./app/common/components/header/Header";
-import Playlist from "./app/common/components/playlist/Playlist";
 import WebSocketClient from "./app/common/components/websocket/WebSocketClient";
 import MainWrapper from "./app/pages/initApp/MainWrapper";
 import { MuiThemeProvider } from "material-ui";
@@ -28,7 +27,6 @@ const App = () => (
       <div className="App">
         <WebSocketClient />
         <Header />
-        <Playlist />
         <MainWrapper>
           <Route exact path="/" component={ListeMusique} />
           <Route exact path="/genres" component={ListeGenres} />

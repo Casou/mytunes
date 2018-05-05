@@ -41,7 +41,7 @@ export default class Menu extends React.Component {
           docked={false}
           width={250}
           open={this.state.open}
-          className={ "menuDrawer" }
+          className={ "mainMenu menuDrawer" }
           onRequestChange={ this.setMenuOpeness }
         >
           <MenuItem containerElement={<Link to="/" />} onClick={ this.closeMenu }>

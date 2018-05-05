@@ -1,19 +1,37 @@
 #menuIcon {
     position : absolute;
     top : 18px;
-    left : 10px;
+    left : 5px;
 }
 
-#menuIcon button span{
+#playlistMenuIcon {
+    position : absolute;
+    top : 18px;
+    right : 5px;
+}
+
+#playlistMenuIcon button,
+#menuIcon button {
+    height : 65px !important;
+    width : 65px !important;
+}
+
+#playlistMenuIcon button span,
+#menuIcon button span {
     font-size : 45px !important;
 }
 
-.menuDrawer > div {
+.playlistMenu.menuDrawer > div,
+.mainMenu.menuDrawer > div {
     top : var(--lecteur-height) !important;
 }
 
-.menuDrawer span.material-icons {
+.playlistMenu.menuDrawer span.material-icons,
+.mainMenu.menuDrawer span.material-icons {
     color : #585858 !important;
-    margin-right : 10px !important;
     vertical-align : middle;
+}
+
+.mainMenu.menuDrawer span.material-icons {
+    margin-right: 10px !important;
 }

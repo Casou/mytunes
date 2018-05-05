@@ -1,0 +1,57 @@
+:root {
+    --playlist-top: var(--lecteur-height);
+    --playlist-tab-width: 400px;
+}
+
+#playlistMenu header {
+    display : inline-block;
+    width : 100%;
+    height : 40px;
+    line-height : 40px;
+    background-color: var(--background-color);
+    padding-left : 10px;
+}
+
+#playlistMenu header button {
+    margin : 0 !important;
+    padding : 0 !important;
+    height : 40px !important;
+    width : 40px !important;
+    vertical-align: middle;
+}
+
+#playlistMenu header button span {
+    font-size: 30px !important;
+}
+
+#playlistMenu header button span.active {
+    color : #7575fd !important;
+    text-shadow : 0 0 4px #FFF;
+}
+
+#playlistMenu li { display : flex; border-bottom : 1px solid lightgrey; }
+#playlistMenu li:nth-child(odd) { background-color : white; }
+#playlistMenu li:nth-child(even) { background-color : #ececec; }
+
+#playlistMenu li span { display : inline-block; margin : auto 0; }
+#playlistMenu li span.play { width : 25px; text-align : center; cursor : pointer; }
+#playlistMenu li span.titre { width : calc(var(--playlist-tab-width) - 65px); }
+#playlistMenu li span.duree { width : 35px; color : grey; font-size : 12px; line-height : var(--general-font-size); text-align : right; padding-right : 3px; }
+
+/*#playlistMenu li svg      { height : 16px !important; width : 16px !important; }*/
+
+#playlistMenu span.play button {
+    margin : 0 !important;
+    padding : 0 !important;
+    height : 18px !important;
+    width : 18px !important;
+}
+
+#playlistMenu span.play button span {
+    font-size : 18px !important;
+}
+
+#playlistMenu .clearPlaylist {
+    float : right;
+    margin-right : 10px !important;
+}

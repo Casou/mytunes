@@ -25,7 +25,7 @@ export class MusiqueRenderer {
     switch (column) {
       case 0 :
         return (
-          <IconButton onClick={ () => this.onPlaylistAdd(this.index) }>
+          <IconButton onClick={ () => this.onPlaylistAdd(this.musique) }>
             <FontIcon className="material-icons">playlist_add</FontIcon>
           </IconButton>
         );

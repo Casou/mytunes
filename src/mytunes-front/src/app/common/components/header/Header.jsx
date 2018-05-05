@@ -2,6 +2,7 @@ import React from "react";
 import Menu from "./Menu";
 import Lecteur from "./Lecteur";
 import {__AUDIO_URL__} from "../../../../App";
+import PlaylistMenu from "../playlist/PlaylistMenu";
 
 const Header = (props) => (
   <header>
@@ -19,6 +20,7 @@ const Header = (props) => (
         commentaire: "Commentaire",
         path: __AUDIO_URL__ + "test.mp3"
     } } />
+    <PlaylistMenu />
   </header>
 );
 

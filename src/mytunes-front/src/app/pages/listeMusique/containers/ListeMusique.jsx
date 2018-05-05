@@ -46,10 +46,6 @@ class ListeMusique extends React.Component {
     });
   };
   
-  addMusiqueToPlaylist = (musique) => {
-    console.log("TODO addMusiqueToPlaylist " + musique.titre);
-  };
-  
   searchMusique(text) {
     this.setState({
       ...this.state,
