@@ -13,6 +13,12 @@ class Lecteur extends React.Component {
             isPlaying : false
         };
         this.audio = null;
+
+        this._play = this._play.bind(this);
+        this._pause = this._pause.bind(this);
+        this._seek = this._seek.bind(this);
+        this._updateTime = this._updateTime.bind(this);
+        this._updateCurrentTime = this._updateCurrentTime.bind(this);
     }
 
     componentDidMount() {
@@ -73,7 +79,7 @@ class Lecteur extends React.Component {
                         </div>
                     </div>
                 </div>
-                <audio id={"lecteur"}>
+                <audio id={"lecteur"} onTimeUpdate={ this._updateTime }>
                     {
                         this.props.musique ?
                         <source src={ this.props.musique.path } type="audio/mp3"/>
@@ -87,12 +93,21 @@ class Lecteur extends React.Component {
         );
     }
 
-    _seek(time) {
-        console.log("seek", time);
+    _updateTime() {
+        this._updateCurrentTime(this.audio.currentTime);
+    }
+
+    _updateCurrentTime(time) {
+        console.log("updateCurrentTime", time);
         this.setState({
             ...this.state,
             currentTime : time
         });
+    }
+
+    _seek(time) {
+        this.audio.currentTime = time;
+        this._updateCurrentTime(time);
     }
 
     _play() {
