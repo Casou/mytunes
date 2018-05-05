@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { PlayButton, PrevButton, NextButton, ProgressBar } from "react-player-controls";
+import { PlayButton, PrevButton, NextButton, ProgressBar, TimeMarker } from "react-player-controls";
 import AsideVolumeSlider from "./AsideVolumeSlider";
+import { musiquePropType } from "../../../common/types/Musique";
 
 class Lecteur extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            volume : 1
+            volume : 1,
+            currentTime : 0
         }
     }
 
@@ -18,34 +20,41 @@ class Lecteur extends React.Component {
                 <div id="lecteurDiv">
                     <div id="lecteurAction">
                         <PrevButton
-                            id={"prevButton"}
                             isEnabled={ true }
                             onClick={() => console.log('Prev!')}
                         />
                         <PlayButton
-                            id={"playButton"}
                             isEnabled={ true }
                             onClick={() => console.log('Play!')}
                         />
                         <NextButton
-                            id={"nextButton"}
                             isEnabled={ true }
                             onClick={() => console.log('Next!')}
                         />
                     </div>
                     <div id="lecteurDisplay">
-                        <h1>{ this.props.titre ? this.props.titre : "Aucun titre" }</h1>
-                        <h2>{ this.props.artiste ? this.props.artiste : "Aucun artiste" }</h2>
+                        <h1>{ this.props.musique ? this.props.musique.titre : "Aucun titre" }</h1>
+                        <h2>{ this.props.musique && this.props.musique.artiste ?
+                            this.props.musique.artiste :
+                            "Aucun artiste" }
+                        </h2>
                         <div id="lecteurProgress">
                             <ProgressBar
-                                totalTime={ 90000 }
-                                currentTime={ 45000 }
-                                bufferedTime={ 0 }
+                                totalTime={ this.props.musique ? this.props.musique.duree : 0 }
+                                currentTime={ this.state.currentTime }
+                                bufferedTime={ 15 }
                                 isSeekable={ true }
-                                onSeek={time => console.log("seek", time)}
-                                onSeekStart={time => console.log("seek start", time)}
-                                onSeekEnd={time => console.log("seek end", time)}
-                                onIntent={time => console.log("seek intent", time)}
+                                onSeek={time => this._seek(time)}
+                                onSeekStart={time => null }
+                                onSeekEnd={time => null }
+                                onIntent={time => null }
+                            />
+                            <TimeMarker
+                                totalTime={ this.props.musique ? this.props.musique.duree : 0 }
+                                currentTime={ this.state.currentTime }
+                                markerSeparator={ "/" }
+                                firstMarkerType={ "ELAPSED" }
+                                secondMarkerType={ "DURATION" }
                             />
                         </div>
                     </div>
@@ -56,11 +65,17 @@ class Lecteur extends React.Component {
         );
     }
 
+    _seek(time) {
+        console.log("seek", time);
+        this.setState({
+            ...this.state,
+            currentTime : time
+        });
+    }
 }
 
 Lecteur.propTypes = {
-  titre:PropTypes.string,
-  artiste:PropTypes.string
+    musique : musiquePropType
 };
 
 export default Lecteur;

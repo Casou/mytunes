@@ -53,6 +53,7 @@
 #lecteurWrapper #lecteurAction button.PlayButton {
     height : var(--play-button-size);
     width : var(--play-button-size);
+    border-width : 3px;
 }
 
 #lecteurWrapper #lecteurAction button.PrevButton,
@@ -78,7 +79,24 @@
 
 
 #lecteurWrapper #lecteurDisplay #lecteurProgress {
+    margin-top : 10px;
     padding-left: 180px;
+    text-align : left;
+}
+
+#lecteurWrapper #lecteurDisplay #lecteurProgress .ProgressBar,
+#lecteurWrapper #lecteurDisplay #lecteurProgress .TimeMarker {
+    display : inline-block;
+}
+
+#lecteurWrapper #lecteurDisplay #lecteurProgress .ProgressBar {
+    width : calc(100% - 75px);
+    margin : 0;
+}
+
+#lecteurWrapper #lecteurDisplay #lecteurProgress .TimeMarker {
+    width : 75px;
+    text-align : center;
 }
 
 

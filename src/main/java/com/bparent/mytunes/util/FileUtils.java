@@ -24,4 +24,10 @@ public class FileUtils {
                 + originalFilePath.substring(originalFilePath.lastIndexOf('.'));
     }
 
+    public static String getFileExtension(String fileName) {
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            return fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+        else return "";
+    }
+
 }

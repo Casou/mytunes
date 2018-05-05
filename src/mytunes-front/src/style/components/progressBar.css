@@ -1,12 +1,12 @@
 .ProgressBar {
     position: relative;
-    background: #d4d4d4;
+    background: var(--slider-inactive-color);
     border-radius: 4px;
 }
 
 .ProgressBar-elapsed,
 .ProgressBar-value {
-    background: #404040;
+    background: var(--slider-active-color);
     border-radius: 4px;
 }
 
@@ -19,7 +19,7 @@
     position: absolute;
     width: 16px;
     height: 16px;
-    background: green;
+    background: var(--slider-active-color);
     border-radius: 100%;
     transform: scale(0);
     transition: transform 0.2s;
@@ -38,7 +38,7 @@
 
 .ProgressBar.isSeekable:hover .ProgressBar-elapsed,
 .ProgressBar.isEnabled:hover .ProgressBar-elapsed {
-    background: green;
+    background: var(--slider-active-color);
 }
 
 
@@ -57,7 +57,7 @@
 .ProgressBar-buffered {
      height: 100%;
      border-radius: 4px;
-     background: lightgray;
+     background: var(--slider-inactive-color);
 }
 
 .ProgressBar-seek {
@@ -84,6 +84,6 @@
 
 .ProgressBar.isLoading {
     opacity: 0.5;
-    background: #ccc;
+    background: var(--slider-loading-color);
     animation: barLoading 2s infinite;
 }
