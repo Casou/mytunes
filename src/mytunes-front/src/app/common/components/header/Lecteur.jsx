@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from "prop-types";
-import { PlayButton, PrevButton, NextButton, ProgressBar, TimeMarker } from "react-player-controls";
+import { PlayButton, PrevButton, NextButton, ProgressBar, TimeMarker, PauseButton } from "react-player-controls";
 import AsideVolumeSlider from "./AsideVolumeSlider";
 import { musiquePropType } from "../../../common/types/Musique";
 
@@ -10,8 +9,14 @@ class Lecteur extends React.Component {
 
         this.state = {
             volume : 1,
-            currentTime : 0
-        }
+            currentTime : 0,
+            isPlaying : false
+        };
+        this.audio = null;
+    }
+
+    componentDidMount() {
+        this.audio = document.getElementById('lecteur');
     }
 
     render() {
@@ -23,10 +28,19 @@ class Lecteur extends React.Component {
                             isEnabled={ true }
                             onClick={() => console.log('Prev!')}
                         />
-                        <PlayButton
-                            isEnabled={ true }
-                            onClick={() => console.log('Play!')}
-                        />
+                        {
+                            this.state.isPlaying ?
+                            <PauseButton
+                                isEnabled={ true }
+                                onClick={() => this._pause() }
+                            />
+                            :
+                            <PlayButton
+                                isEnabled={ true }
+                                onClick={() => this._play() }
+                            />
+                        }
+
                         <NextButton
                             isEnabled={ true }
                             onClick={() => console.log('Next!')}
@@ -59,6 +73,14 @@ class Lecteur extends React.Component {
                         </div>
                     </div>
                 </div>
+                <audio id={"lecteur"}>
+                    {
+                        this.props.musique ?
+                        <source src={ this.props.musique.path } type="audio/mp3"/>
+                        :
+                        ""
+                    }
+                </audio>
                 <AsideVolumeSlider volume={this.state.volume}
                                    onVolumeChange={(volume) => this.setState({...this.state, volume }) } />
             </section>
@@ -72,6 +94,22 @@ class Lecteur extends React.Component {
             currentTime : time
         });
     }
+
+    _play() {
+        this.audio.play();
+        this.setState({
+            ...this.state,
+            isPlaying : true
+        });
+    }
+    _pause() {
+        this.audio.pause();
+        this.setState({
+            ...this.state,
+            isPlaying : false
+        });
+    }
+
 }
 
 Lecteur.propTypes = {

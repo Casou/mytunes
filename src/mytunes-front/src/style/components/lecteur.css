@@ -50,7 +50,8 @@
     margin : auto;
 }
 
-#lecteurWrapper #lecteurAction button.PlayButton {
+#lecteurWrapper #lecteurAction button.PlayButton,
+#lecteurWrapper #lecteurAction button.PauseButton {
     height : var(--play-button-size);
     width : var(--play-button-size);
     border-width : 3px;
