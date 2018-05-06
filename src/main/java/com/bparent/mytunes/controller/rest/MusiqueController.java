@@ -43,7 +43,7 @@ public class MusiqueController {
                         titre(musique.getName()).
                         artiste("Artiste").
                         bpm(Long.valueOf((Math.round(Math.random() * 30) + 30) * 4).intValue()).
-                        duree(Long.valueOf(Math.round(Math.random() * 90000) + 110000).intValue()).
+                        duree(Long.valueOf(Math.round(Math.random() * 90) + 120).intValue()).
                         classement(Long.valueOf((Math.round(Math.random() * 4) + 1) * 20).intValue()).
                         genre("Lindy").
                         path(IConstants.IHandler.MUSIQUES_HANDLER + musique.getName()).

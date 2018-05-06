@@ -14,7 +14,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 const initialStore = {
   isLoading : true,
   musiques : [],
-  playlist : []
+  playlist : {
+      musiquePlaying : null,
+      musiques : []
+  }
 };
 const store = createStore(reducers, initialStore,
     composeWithDevTools(applyMiddleware(thunk)));

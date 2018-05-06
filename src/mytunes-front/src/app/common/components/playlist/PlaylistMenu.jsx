@@ -1,33 +1,24 @@
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import {Drawer, IconButton} from "material-ui";
-import {connect} from "react-redux";
-import {assign} from "lodash";
-import PropTypes from "prop-types";
-import cn from "classnames";
-
-import PlaylistItem from "./PlaylistItem";
 
 import '../../../../style/components/playlistMenu.css';
-import {playlistMusiquePropType} from "../../types/PlaylistMusique";
+import PlaylistContainer from "./PlaylistContainer";
 
 class PlaylistMenu extends React.Component {
     constructor(props) {
         super(props);
 
         this._toggleMenu = this._toggleMenu.bind(this);
-        this._toggleShuffle = this._toggleShuffle.bind(this);
         this._closeMenu = this._closeMenu.bind(this);
         this._setMenuOpeness = this._setMenuOpeness.bind(this);
         this.state = {
-            open: false,
-            shuffle: false
+            open: false
         };
     }
 
     render() {
-        const {open, musiquePlaying, shuffle} = this.state;
-        const {playlist} = this.props;
+        const { open } = this.state;
 
         return (
             <div id={"playlistMenuIcon"}>
@@ -44,28 +35,7 @@ class PlaylistMenu extends React.Component {
                     onRequestChange={this._setMenuOpeness}
                     openSecondary={true}
                 >
-                    <div id="playlistMenu">
-                        <header>
-                            <IconButton onClick={this._toggleShuffle}>
-                                <FontIcon className={cn("material-icons", { "active" : shuffle})}>shuffle</FontIcon>
-                            </IconButton>
-                            <IconButton className="clearPlaylist">
-                                <FontIcon className={ "material-icons" }>delete_sweep</FontIcon>
-                            </IconButton>
-
-                        </header>
-                        <ul className="playlistMusiqueList">
-                            {playlist.map(musique => {
-                                return (
-                                    <PlaylistItem key={"playlist_" + musique.itunesId}
-                                                  musique={musique}
-                                                  isPlaying={musique === musiquePlaying}
-                                                  alreadyPlayed={musique.alreadyPlayed}
-                                    />
-                                );
-                            })}
-                        </ul>
-                    </div>
+                    <PlaylistContainer />
                 </Drawer>
             </div>
         );
@@ -75,13 +45,6 @@ class PlaylistMenu extends React.Component {
         this.setState({
             ...this.state,
             open: !this.state.open
-        })
-    }
-
-    _toggleShuffle() {
-        this.setState({
-            ...this.state,
-            shuffle: !this.state.shuffle
         })
     }
 
@@ -99,9 +62,6 @@ class PlaylistMenu extends React.Component {
 }
 
 PlaylistMenu.propTypes = {
-    playlist: PropTypes.arrayOf(playlistMusiquePropType).isRequired
 };
 
-export default connect(state => assign({}, {
-    playlist: state.playlist
-}), null)(PlaylistMenu);
+export default PlaylistMenu;

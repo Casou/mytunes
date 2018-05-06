@@ -40,6 +40,8 @@
 
 /*#playlistMenu li svg      { height : 16px !important; width : 16px !important; }*/
 
+#playlistMenu li.alreadyPlayed { color : gray; font-style: italic; }
+
 #playlistMenu span.play button {
     margin : 0 !important;
     padding : 0 !important;
