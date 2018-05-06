@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 
-import {playlistPropType} from "../../types/PlaylistMusique";
+import {playlistManagerPropType} from "../../types/PlaylistMusique";
 import PlaylistItem from "./PlaylistItem";
 import PlaylistActions from "../../actions/PlaylistActions";
 
@@ -20,9 +20,9 @@ class PlaylistContainer extends React.Component {
     }
 
     render() {
-        const { playlist } = this.props;
+        const { playlistManager } = this.props;
         const { shuffle } = this.state;
-        const musiquePlaying = playlist.musiquePlaying;
+        const musiquePlaying = playlistManager.musiquePlaying;
 
         return (
             <div id="playlistMenu">
@@ -36,7 +36,7 @@ class PlaylistContainer extends React.Component {
 
                 </header>
                 <ul className="playlistMusiqueList">
-                    {playlist.musiques.map(musique => {
+                    {playlistManager.musiques.map(musique => {
                         return (
                             <PlaylistItem key={"playlist_" + musique.itunesId}
                                           musique={musique}
@@ -64,11 +64,11 @@ class PlaylistContainer extends React.Component {
 }
 
 PlaylistContainer.propTypes = {
-    playlist: playlistPropType.isRequired
+    playlistManager: playlistManagerPropType.isRequired
 };
 
 export default connect(state => assign({}, {
-    playlist: state.playlist
+    playlistManager: state.playlistManager
 }), dispatch => ({
     playlistActions: bindActionCreators(PlaylistActions, dispatch)
 }))(PlaylistContainer);

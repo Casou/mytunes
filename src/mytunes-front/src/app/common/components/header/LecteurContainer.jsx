@@ -2,9 +2,11 @@ import React from 'react';
 import AsideVolumeSlider from "./AsideVolumeSlider";
 import {connect} from "react-redux";
 import {assign} from "lodash";
+import {bindActionCreators} from "redux";
 
-import {playlistPropType} from "../../types/PlaylistMusique";
+import {playlistManagerPropType} from "../../types/PlaylistMusique";
 import LecteurDisplay from "./LecteurDisplay";
+import PlaylistActions from "../../actions/PlaylistActions";
 
 class LecteurContainer extends React.Component {
     constructor(props) {
@@ -18,6 +20,8 @@ class LecteurContainer extends React.Component {
         this.audio = null;
 
         this._updateVolume = this._updateVolume.bind(this);
+        this._playNextSong = this._playNextSong.bind(this);
+        this._playPrevSong = this._playPrevSong.bind(this);
     }
 
     componentDidMount() {
@@ -26,13 +30,16 @@ class LecteurContainer extends React.Component {
 
     render() {
         const { volume } = this.state;
-        const { playlist } = this.props;
-        const musique = playlist.musiquePlaying;
-        console.log(musique);
+        const { playlistManager } = this.props;
+        const musique = playlistManager.musiquePlaying;
 
         return (
             <section id="lecteurWrapper">
-                <LecteurDisplay musique={ musique } volume={ volume } />
+                <LecteurDisplay musique={ musique }
+                                volume={ volume }
+                                playNextSong={ this._playNextSong }
+                                playPrevSong={ this._playPrevSong }
+                                onSongEnd={ this._playNextSong } />
                 <AsideVolumeSlider volume={volume}
                                    onVolumeChange={ this._updateVolume } />
             </section>
@@ -43,12 +50,24 @@ class LecteurContainer extends React.Component {
         this.setState({...this.state, volume });
     }
 
+    _playNextSong() {
+        const nextSong = this.props.playlistManager.getNextSong();
+        this.props.playlistActions.playMusique(nextSong);
+    }
+
+    _playPrevSong() {
+        const prevSong = this.props.playlistManager.getPrevSong();
+        this.props.playlistActions.playMusique(prevSong);
+    }
+
 }
 
 LecteurContainer.propTypes = {
-    playlist : playlistPropType
+    playlistManager : playlistManagerPropType
 };
 
 export default connect(state => assign({}, {
-    playlist: state.playlist
-}), null)(LecteurContainer);
+    playlistManager: state.playlistManager
+}), dispatch => ({
+    playlistActions: bindActionCreators(PlaylistActions, dispatch)
+}))(LecteurContainer);

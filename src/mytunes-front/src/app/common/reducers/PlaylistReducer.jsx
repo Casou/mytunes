@@ -1,32 +1,18 @@
 import {NotificationManager} from "react-notifications";
+import ObjectUtil from "../util/ObjectUtil";
 
-export const playlist = (state = {}, action) => {
+export const playlistManager = (state = {}, action) => {
+    let playlistManager;
     switch (action.type) {
         case "ADD_MUSIQUE_TO_PLAYLIST" :
+            playlistManager = state;
             NotificationManager.info("Musique ajoutée à la playlist", "Playlist", 1500);
-            return {
-                ...state,
-                musiques: [...state.musiques,
-                    {...action.payload, alreadyPlayed: false}
-                ]
-            };
+            playlistManager.addMusique({...action.payload, alreadyPlayed: false});
+            return ObjectUtil.clone(playlistManager);
         case "PLAYING_MUSIQUE" :
-            const musiquePlaying = action.payload;
-            const musiques = [...state.musiques ];
-            let found = false;
-            for (let musique of musiques) {
-                if (musiquePlaying.itunesId === musique.itunesId) {
-                    found = true;
-                    musique.alreadyPlayed = false;
-                } else {
-                    musique.alreadyPlayed = !found;
-                }
-            }
-            return {
-                ...state,
-                musiques,
-                musiquePlaying
-            };
+            playlistManager = state;
+            playlistManager.setMusiquePlaying(action.payload);
+            return ObjectUtil.clone(playlistManager);
         default :
             return state;
     }

@@ -30,7 +30,6 @@ class LecteurDisplay extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.musique !== nextProps.musique) {
-            console.log("change musique");
             this._pause();
             this.audioSource.src = __SERVER_URL__ + nextProps.musique.path;
             this.audio.load();
@@ -43,14 +42,14 @@ class LecteurDisplay extends React.Component {
 
     render() {
         const { isPlaying, currentTime } = this.state;
-        const { musique } = this.props;
+        const { musique, onSongEnd } = this.props;
 
         return (
             <div id="lecteurDiv">
                 <div id="lecteurAction">
                     <PrevButton
                         isEnabled={ true }
-                        onClick={() => console.log('Prev!')}
+                        onClick={ this.props.playPrevSong }
                     />
                     {
                         isPlaying ?
@@ -67,7 +66,7 @@ class LecteurDisplay extends React.Component {
 
                     <NextButton
                         isEnabled={ true }
-                        onClick={() => console.log('Next!')}
+                        onClick={ this.props.playNextSong }
                     />
                 </div>
                 <div id="lecteurDisplay">
@@ -97,7 +96,7 @@ class LecteurDisplay extends React.Component {
                     </div>
                 </div>
 
-                <audio id="lecteur" onTimeUpdate={ this._updateTime }>
+                <audio id="lecteur" onTimeUpdate={ this._updateTime } onEnded={ onSongEnd }>
                     <source id="lecteurSource" src=""></source>
                 </audio>
             </div>
@@ -140,7 +139,10 @@ class LecteurDisplay extends React.Component {
 
 LecteurDisplay.propTypes = {
     musique : musiquePropType,
-    volume : PropTypes.number.isRequired
+    volume : PropTypes.number.isRequired,
+    onSongEnd : PropTypes.func.isRequired,
+    playNextSong : PropTypes.func.isRequired,
+    playPrevSong : PropTypes.func.isRequired
 };
 
 export default LecteurDisplay;

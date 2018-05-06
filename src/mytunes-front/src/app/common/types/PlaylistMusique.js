@@ -17,7 +17,7 @@ const playlistMusiquePropType = PropTypes.shape({
     alreadyPlayed: PropTypes.bool.isRequired
 });
 
-export const playlistPropType = PropTypes.shape({
+export const playlistManagerPropType = PropTypes.shape({
     musiquePlaying: musiquePropType,
     musiques: PropTypes.arrayOf(playlistMusiquePropType).isRequired
 });

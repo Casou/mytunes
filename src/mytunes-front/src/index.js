@@ -11,13 +11,12 @@ import { BrowserRouter } from "react-router-dom"
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+import PlaylistManager from "./app/common/beans/PlaylistManager";
+
 const initialStore = {
   isLoading : true,
   musiques : [],
-  playlist : {
-      musiquePlaying : null,
-      musiques : []
-  }
+  playlistManager : new PlaylistManager()
 };
 const store = createStore(reducers, initialStore,
     composeWithDevTools(applyMiddleware(thunk)));
