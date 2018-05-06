@@ -12,23 +12,18 @@ import PlaylistActions from "../../actions/PlaylistActions";
 class PlaylistContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            shuffle: false
-        };
-        this._toggleShuffle = this._toggleShuffle.bind(this);
         this._playMusique = this._playMusique.bind(this);
     }
 
     render() {
         const { playlistManager } = this.props;
-        const { shuffle } = this.state;
         const musiquePlaying = playlistManager.musiquePlaying;
 
         return (
             <div id="playlistMenu">
                 <header>
-                    <IconButton onClick={this._toggleShuffle}>
-                        <FontIcon className={cn("material-icons", { "active" : shuffle})}>shuffle</FontIcon>
+                    <IconButton onClick={ this._toggleShuffle.bind(this) }>
+                        <FontIcon className={cn("material-icons", { "active" : playlistManager.shuffle})}>shuffle</FontIcon>
                     </IconButton>
                     <IconButton className="clearPlaylist">
                         <FontIcon className={ "material-icons" }>delete_sweep</FontIcon>
@@ -51,16 +46,15 @@ class PlaylistContainer extends React.Component {
         );
     }
 
-    _toggleShuffle() {
-        this.setState({
-            ...this.state,
-            shuffle: !this.state.shuffle
-        })
-    }
-
     _playMusique(musique) {
         this.props.playlistActions.playMusique(musique);
     }
+
+    _toggleShuffle() {
+        this.props.playlistManager.toggleShuffle();
+        this.forceUpdate();
+    }
+
 }
 
 PlaylistContainer.propTypes = {

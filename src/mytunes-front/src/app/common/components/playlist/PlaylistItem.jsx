@@ -9,9 +9,11 @@ import {formateDuree} from "../../util/Formatters";
 export const PlaylistItem = props => {
     const {musique, isPlaying, playMusique, alreadyPlayed} = props;
 
-    console.log("add", musique);
     return (
-        <li className={ cn({ "alreadyPlayed" : alreadyPlayed }) }>
+        <li className={
+            cn({ "alreadyPlayed" : alreadyPlayed },
+                { "isPlaying" : isPlaying })
+        }>
             <span className="play">
                 {isPlaying ?
                     <FontIcon className="material-icons">equalizer</FontIcon>
