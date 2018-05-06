@@ -11,7 +11,7 @@ export const playlistManager = (state = {}, action) => {
             return ObjectUtil.clone(playlistManager);
         case "PLAYING_MUSIQUE" :
             playlistManager = state;
-            playlistManager.setMusiquePlaying(action.payload);
+            playlistManager.setMusiquePlaying(action.payload.musique, action.payload.addMusique);
             return ObjectUtil.clone(playlistManager);
         default :
             return state;

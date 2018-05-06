@@ -6,10 +6,13 @@ export default {
         });
     },
 
-    playMusique: (musique) => (dispatch, getState) => {
+    playMusique: (musique, addMusique) => (dispatch, getState) => {
         dispatch({
             type: "PLAYING_MUSIQUE",
-            payload: musique
+            payload: {
+                musique,
+                addMusique
+            }
         });
     }
 

@@ -47,7 +47,7 @@ class PlaylistContainer extends React.Component {
     }
 
     _playMusique(musique) {
-        this.props.playlistActions.playMusique(musique);
+        this.props.playlistActions.playMusique(musique, true);
     }
 
     _toggleShuffle() {

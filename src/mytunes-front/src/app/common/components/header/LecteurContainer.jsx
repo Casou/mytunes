@@ -52,12 +52,16 @@ class LecteurContainer extends React.Component {
 
     _playNextSong() {
         const nextSong = this.props.playlistManager.getNextSong();
-        this.props.playlistActions.playMusique(nextSong);
+        if (nextSong) {
+            this.props.playlistActions.playMusique(nextSong, true);
+        }
     }
 
     _playPrevSong() {
         const prevSong = this.props.playlistManager.getPrevSong();
-        this.props.playlistActions.playMusique(prevSong);
+        if (prevSong) {
+            this.props.playlistActions.playMusique(prevSong, false);
+        }
     }
 
 }
