@@ -1,22 +1,15 @@
 package com.bparent.mytunes.controller.rest;
 
 import com.bparent.mytunes.dto.MusiqueDTO;
-import com.bparent.mytunes.model.Musique;
 import com.bparent.mytunes.util.FileUtils;
 import com.bparent.mytunes.util.IConstants;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.math.BigInteger;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
