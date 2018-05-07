@@ -10,16 +10,6 @@ export default class VirtualizeTable extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        const listArray = [];
-        const rowCount = 500;
-        for (let i = 0; i < rowCount; i++) {
-            listArray.push({
-                color : 'red',
-                size : 50,
-                name : "name " + i
-            });
-        }
-
         this.state = {
             columnWidth: 75,
             columnCount: props.headers ? props.headers.length : 0,
@@ -42,7 +32,7 @@ export default class VirtualizeTable extends React.PureComponent {
         } = this.state;
         
         const rowCount = this.props.data.length;
-  
+
         return (
             <div>
                 <ScrollSync>

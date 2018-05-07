@@ -26,9 +26,9 @@ const mapMusiques = (musiques) => {
   return musiques.map(musique => {
     return { ...musique,
             isFetching : [],
-            searchText : [musique.titre.toLowerCase(),
-                          musique.artiste.toLowerCase(),
-                          musique.commentaire.toLowerCase()].join(" ")
+            searchText : [  musique.titre ? musique.titre.toLowerCase() : "",
+                            musique.artiste ? musique.artiste.toLowerCase() : "",
+                            musique.commentaire ? musique.commentaire.toLowerCase() : ""].join(" ")
     }
   });
 };

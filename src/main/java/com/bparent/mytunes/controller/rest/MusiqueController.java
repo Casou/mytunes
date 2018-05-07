@@ -9,6 +9,7 @@ import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -40,9 +41,9 @@ public class MusiqueController {
                         classement(Long.valueOf((Math.round(Math.random() * 4) + 1) * 20).intValue()).
                         genre("Lindy").
                         path(IConstants.IHandler.MUSIQUES_HANDLER + musique.getName()).
-                        commentaire(randomWords.get(Math.min(randomWords.size() - 1, (int) Math.round(Math.random() * randomWords.size())))).
+//                        commentaire(randomWords.get(Math.min(randomWords.size() - 1, (int) Math.round(Math.random() * randomWords.size())))).
                         build()));
-
+        init.sort(Comparator.comparing(MusiqueDTO::getTitre));
         return init;
     }
 
