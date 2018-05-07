@@ -1,6 +1,4 @@
 import React from "react";
-import { FontIcon, IconButton } from "material-ui";
-import cn from "classnames";
 import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
@@ -8,11 +6,14 @@ import {bindActionCreators} from "redux";
 import {playlistManagerPropType} from "../../types/PlaylistMusique";
 import PlaylistItem from "./PlaylistItem";
 import PlaylistActions from "../../actions/PlaylistActions";
+import PlaylistHeader from "./PlaylistHeader";
 
 class PlaylistContainer extends React.Component {
     constructor(props) {
         super(props);
         this._playMusique = this._playMusique.bind(this);
+        this._clearPlaylist = this._clearPlaylist.bind(this);
+        this._toggleShuffle = this._toggleShuffle.bind(this);
     }
 
     render() {
@@ -21,15 +22,11 @@ class PlaylistContainer extends React.Component {
 
         return (
             <div id="playlistMenu">
-                <header>
-                    <IconButton onClick={ this._toggleShuffle.bind(this) }>
-                        <FontIcon className={cn("material-icons", { "active" : playlistManager.shuffle})}>shuffle</FontIcon>
-                    </IconButton>
-                    <IconButton className="clearPlaylist">
-                        <FontIcon className={ "material-icons" }>delete_sweep</FontIcon>
-                    </IconButton>
+                <PlaylistHeader shuffle={ this.props.playlistManager.shuffle }
+                                onToggleShuffle={ this._toggleShuffle }
+                                onClearPlaylist={ this._clearPlaylist }
+                />
 
-                </header>
                 <ul className="playlistMusiqueList">
                     {playlistManager.musiques.map(musique => {
                         return (
@@ -52,6 +49,11 @@ class PlaylistContainer extends React.Component {
 
     _toggleShuffle() {
         this.props.playlistManager.toggleShuffle();
+        this.forceUpdate();
+    }
+
+    _clearPlaylist() {
+        this.props.playlistManager.clearPlaylist();
         this.forceUpdate();
     }
 

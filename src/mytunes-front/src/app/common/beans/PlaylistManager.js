@@ -80,4 +80,9 @@ export default class PlaylistManager {
         this.shuffle = !this.shuffle;
     }
 
+    clearPlaylist() {
+        this.musiques = [];
+        this.history = [];
+    }
+
 }

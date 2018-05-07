@@ -9,11 +9,10 @@
     height : 40px;
     line-height : 40px;
     background-color: var(--background-color);
-    padding-left : 10px;
+    padding-left : 5px;
 }
 
 #playlistMenu header button {
-    margin : 0 !important;
     padding : 0 !important;
     height : 40px !important;
     width : 40px !important;
@@ -54,7 +53,10 @@
     font-size : 18px !important;
 }
 
-#playlistMenu .clearPlaylist {
-    float : right;
-    margin-right : 10px !important;
+#playlistMenuHeaderLeftButtons { float : left; }
+#playlistMenuHeaderRightButtons { float : right; margin-right : 7px; }
+
+#playlistMenuHeaderLeftButtons button,
+#playlistMenuHeaderRightButtons button {
+    margin-right : 7px !important;
 }
