@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PlaylistDTO {
+public class PlaylistDTO extends EntityDTO<Playlist> {
 
     protected BigInteger itunesId;
     protected String nom;
@@ -30,4 +30,8 @@ public class PlaylistDTO {
         return mapper.map(playlist, PlaylistDTO.class);
     }
 
+    @Override
+    public Class getEntityClass() {
+        return Playlist.class;
+    }
 }

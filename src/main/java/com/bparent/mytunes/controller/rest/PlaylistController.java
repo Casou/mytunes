@@ -3,8 +3,7 @@ package com.bparent.mytunes.controller.rest;
 import com.bparent.mytunes.dto.PlaylistDTO;
 import com.bparent.mytunes.repository.PlaylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,5 +22,10 @@ public class PlaylistController {
                 .collect(Collectors.toList());
     }
 
+    @PutMapping("/playlist")
+    @CrossOrigin
+    public void savePlaylist(@RequestBody PlaylistDTO playlistDTO) {
+        playlistRepository.save(playlistDTO.toEntity());
+    }
 
 }

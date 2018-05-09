@@ -1,8 +1,10 @@
 package com.bparent.mytunes.controller.rest;
 
 import com.bparent.mytunes.dto.MusiqueDTO;
+import com.bparent.mytunes.repository.MusiqueRepository;
 import com.bparent.mytunes.util.FileUtils;
 import com.bparent.mytunes.util.IConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -16,6 +18,9 @@ import java.util.stream.Collectors;
 
 @RestController
 public class MusiqueController {
+
+    @Autowired
+    private MusiqueRepository musiqueRepository;
 
     private static List<String> randomWords = Arrays.asList("Commentaire", "Ardisson", "Patisson", "Lamarque",
             "Les dessous de Palm Beach", "Dinde", "Blablacar", "Ma bite c'est du béton", "La bohème",
@@ -55,22 +60,25 @@ public class MusiqueController {
 
     @PutMapping("/musique")
     @CrossOrigin
-    public void updateMusique(@RequestBody MusiqueDTO updatedMusique) {
+    public void updateMusique(@RequestBody MusiqueDTO musiqueDTO) {
 //        try {
 //            TimeUnit.SECONDS.sleep(2);
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        ALL_MUSIQUES = ALL_MUSIQUES.stream()
-                .map(musiqueDTO -> {
-                    if (musiqueDTO.getItunesId().equals(updatedMusique.getItunesId())) {
-                        return updatedMusique;
-                    } else {
-                        return musiqueDTO;
-                    }
-                })
-                .collect(Collectors.toList());
+        if (musiqueDTO.getItunesId() != null) {
+            ALL_MUSIQUES = ALL_MUSIQUES.stream()
+                    .map(dto -> {
+                        if (dto.getItunesId().equals(musiqueDTO.getItunesId())) {
+                            return musiqueDTO;
+                        } else {
+                            return dto;
+                        }
+                    })
+                    .collect(Collectors.toList());
+        } else {
+            musiqueRepository.save(musiqueDTO.toEntity());
+        }
     }
-
 
 }

@@ -23,6 +23,7 @@ dist/
 nbdist/
 .nb-gradle/
 
+datas/
 datas/**.db
 datas/h2db-datas.trace.db
 package-lock.json

@@ -5,15 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 @Entity
-@Table(name="MUSIQUE")
+@Table(name="GENRE")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,10 +19,12 @@ public class Genre {
 
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GENRE_SEQ")
+    @SequenceGenerator(name="GENRE_SEQ", sequenceName="GENRE_SEQ", allocationSize=1)
     protected BigInteger id;
 
     @NotNull
-    @Column(name="label")
+    @Column(name="label", unique = true)
     protected String label;
 
 }

@@ -13,7 +13,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MusiqueDTO {
+public class MusiqueDTO extends EntityDTO<Musique> {
 
     private BigInteger itunesId;
     private String titre;
@@ -32,4 +32,8 @@ public class MusiqueDTO {
         return mapper.map(musique, MusiqueDTO.class);
     }
 
+    @Override
+    public Class getEntityClass() {
+        return Musique.class;
+    }
 }

@@ -22,11 +22,13 @@ public class Musique extends ItunesPropertyEntity {
 
     @Id
     @ItunesProperty("Track ID")
-    @Column(name="itunes_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MUSIQUE_SEQ")
+    @SequenceGenerator(name="MUSIQUE_SEQ", sequenceName="MUSIQUE_SEQ", allocationSize=1)
+    @Column(name="itunes_id", nullable = false)
     protected BigInteger itunesId;
 
     @ItunesProperty("Name")
-    @Column(name="titre")
+    @Column(name="titre", nullable = false)
     protected String titre;
 
     @ItunesProperty("Artist")

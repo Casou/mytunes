@@ -16,11 +16,13 @@ public class Playlist extends ItunesPropertyEntity {
 
     @Id
     @ItunesProperty("Playlist ID")
-    @Column(name="itunes_id")
+    @Column(name="itunes_id", nullable = false)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PLAYLIST_SEQ")
+    @SequenceGenerator(name="PLAYLIST_SEQ", sequenceName="PLAYLIST_SEQ", allocationSize=1)
     protected BigInteger itunesId;
 
     @ItunesProperty("Name")
-    @Column(name="nom")
+    @Column(name="nom", nullable = false)
     protected String nom;
 
     @ItunesProperty("Folder")
