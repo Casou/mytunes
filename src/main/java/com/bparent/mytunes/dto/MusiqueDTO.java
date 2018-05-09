@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 import java.math.BigInteger;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public class MusiqueDTO extends EntityDTO<Musique> {
     private BigInteger itunesId;
     private String titre;
     private String artiste;
-    private String genre;
+    private List<BigInteger> genreIds;
     private Integer duree;
     private Integer timerDebut;
     private Integer timerFin;
@@ -29,7 +31,9 @@ public class MusiqueDTO extends EntityDTO<Musique> {
 
     public static MusiqueDTO toDto(Musique musique) {
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(musique, MusiqueDTO.class);
+        MusiqueDTO dto = mapper.map(musique, MusiqueDTO.class);
+        dto.setGenreIds(musique.getGenres().stream().map(genre -> genre.getId()).collect(Collectors.toList()));
+        return dto;
     }
 
     @Override

@@ -37,7 +37,7 @@ class ListeMusique extends React.Component {
             musiqueRenderers: this._mapMusiqueRenderer(this.props.musiques, {
                 onPropertyChange: this._onPropertyChange.bind(this),
                 onPlaylistAdd: props.playlistActions.addMusiqueToPlaylist
-            })
+            }, this.props.genres)
         };
     }
 
@@ -65,9 +65,9 @@ class ListeMusique extends React.Component {
         );
     }
 
-    _mapMusiqueRenderer = (musiques, {onPropertyChange, onPlaylistAdd}) => {
+    _mapMusiqueRenderer = (musiques, {onPropertyChange, onPlaylistAdd}, genres) => {
         return musiques.map((musique, index) => {
-            return new MusiqueRenderer(musique, index, {onPropertyChange, onPlaylistAdd})
+            return new MusiqueRenderer(musique, index, {onPropertyChange, onPlaylistAdd}, genres)
         });
     };
 
@@ -133,7 +133,8 @@ ListeMusique.propTypes = {
 };
 
 export default connect(state => assign({}, {
-    musiques: state.musiques
+    musiques: state.musiques,
+    genres: state.genres
 }), dispatch => ({
     musiquesActions: bindActionCreators(MusiquesActions, dispatch),
     playlistActions: bindActionCreators(PlaylistActions, dispatch)

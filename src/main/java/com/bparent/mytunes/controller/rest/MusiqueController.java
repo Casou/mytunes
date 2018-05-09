@@ -44,7 +44,7 @@ public class MusiqueController {
                         bpm(Long.valueOf((Math.round(Math.random() * 30) + 30) * 4).intValue()).
                         duree(283).
                         classement(Long.valueOf((Math.round(Math.random() * 4) + 1) * 20).intValue()).
-                        genre("Lindy").
+                        genreIds(Arrays.asList(BigInteger.valueOf(1))).
                         path(IConstants.IHandler.MUSIQUES_HANDLER + musique.getName()).
 //                        commentaire(randomWords.get(Math.min(randomWords.size() - 1, (int) Math.round(Math.random() * randomWords.size())))).
                         build()));
@@ -54,7 +54,10 @@ public class MusiqueController {
 
     @GetMapping("/musiques")
     public List<MusiqueDTO> getAllMusiques() {
-        return ALL_MUSIQUES;
+//        return ALL_MUSIQUES;
+        return musiqueRepository.findAll()
+                .stream().map(MusiqueDTO::toDto)
+                .collect(Collectors.toList());
     }
 
 

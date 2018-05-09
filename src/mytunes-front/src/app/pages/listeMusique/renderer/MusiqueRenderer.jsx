@@ -1,15 +1,16 @@
 import React from "react";
-import { FontIcon, IconButton, TextField } from "material-ui";
+import { FontIcon, IconButton, SelectField, MenuItem } from "material-ui";
 import ListeMusiqueTextProperty from "../components/ListeMusiqueTextProperty";
 import Classement from "../components/Classement";
 import {formateDuree} from "../../../common/util/Formatters";
 
 export class MusiqueRenderer {
-  constructor(musique, index, actionMethods) {
+  constructor(musique, index, actionMethods, genres) {
     this.musique = musique;
     this.onPropertyChange = actionMethods.onPropertyChange;
     this.onPlaylistAdd = actionMethods.onPlaylistAdd;
     this.index = index;
+    this.genres = genres;
   }
   
   fetching(property, isFetching) {
@@ -19,6 +20,20 @@ export class MusiqueRenderer {
   changeProperty(property, value) {
     this.musique[property] = value;
   }
+
+    selectFieldGenres(values) {
+        return this.genres ? this.genres.map((genre) => (
+            <MenuItem
+                key={"genre_" + genre.id + "_" + this.musique.itunesId }
+                insetChildren={true}
+                checked={values && values.indexOf(genre.id) > -1}
+                value={genre.id}
+                primaryText={genre.label}
+            />
+        ))
+            :
+            "";
+    }
   
   renderCell = (column) => {
     
@@ -64,11 +79,13 @@ export class MusiqueRenderer {
         );
       case 5 :
         return (
-          <TextField
-            className="textField" fullWidth={true} underlineShow={ false }
-            name={"genre"}
-            defaultValue={ this.genre ? this.genre : "" }
-          />
+            <SelectField
+                multiple={true}
+                value={this.musique.genreIds}
+                onChange={(e) => this.onPropertyChange("genreIds", e.target.value, this.index)}
+            >
+                { this.selectFieldGenres(this.musique.genreIds) }
+            </SelectField>
         );
       case 6 :
         return (

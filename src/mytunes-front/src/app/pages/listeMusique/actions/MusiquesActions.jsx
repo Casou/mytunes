@@ -4,7 +4,7 @@ import RequestUtil from "../../../common/util/RequestUtil";
 export default {
   
   getAllMusiques: () => (dispatch, getState) => {
-    return fetch(__SERVER_URL__ + "all-musiques") //, { mode: 'no-cors' })
+    return fetch(__SERVER_URL__ + "musiques") //, { mode: 'no-cors' })
       .then(response => response.json())
       .then(musiques => {
         dispatch({
