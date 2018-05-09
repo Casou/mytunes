@@ -7,11 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="MUSIQUE")
@@ -34,9 +33,14 @@ public class Musique extends ItunesPropertyEntity {
     @Column(name="artiste")
     protected String artiste;
 
-    @ItunesProperty("Genre")
-    @Column(name="genre")
-    protected String genre;
+//    @ItunesProperty("Genre")
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "MUSIQUE_GENRES",
+            joinColumns = { @JoinColumn(name = "musique_id", referencedColumnName = "itunes_id") },
+            inverseJoinColumns = { @JoinColumn(name = "genre_id", referencedColumnName = "id") }
+    )
+    protected List<Genre> genres;
 
     @ItunesProperty("Total Time")
     @Column(name="duree")
@@ -99,7 +103,9 @@ public class Musique extends ItunesPropertyEntity {
                 + this.getBpmFormated()
                 + " - " + StringUtils.getStringMaxLengthPadRight(this.titre, 30)
                 + " (" + this.getDureeFormatee() + ")"
-                + " / " + StringUtils.getStringMaxLengthPadRight(this.genre, 25) + "]"
+                + " / " + StringUtils.getStringMaxLengthPadRight(this.genres.stream()
+                        .map(genre -> genre.getLabel())
+                        .collect(Collectors.joining(", ")), 25) + "]"
                 + "    Classement [" + this.getClassementFormated() + "] "
                 + "    Path [" + this.path + "]";
     }

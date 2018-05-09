@@ -66,7 +66,7 @@ public class ItunesParserTest {
         assertEquals(BigInteger.valueOf(131552), m.getDuree());
         assertNull(m.getTimerDebut());
         assertNull(m.getTimerFin());
-        assertEquals("Lindy", m.getGenre());
+        assertEquals("Lindy", m.getGenres().get(0).getLabel());
         assertEquals("file://localhost/E:/wamp/www/dancetunes/songs/test-upload/30 - Shiny Stockings.mp3", m.getPath());
         assertEquals("30", m.getCommentaire());
 
