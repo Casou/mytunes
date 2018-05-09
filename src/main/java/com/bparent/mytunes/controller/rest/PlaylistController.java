@@ -16,7 +16,7 @@ public class PlaylistController {
     private PlaylistRepository playlistRepository;
 
 
-    @GetMapping("/all-playlists")
+    @GetMapping("/playlists")
     public List<PlaylistDTO> getAllPlaylist() {
         return playlistRepository.findAll().stream().
                 map(PlaylistDTO::toDto)

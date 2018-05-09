@@ -47,7 +47,7 @@ public class MusiqueController {
         return init;
     }
 
-    @GetMapping("/all-musiques")
+    @GetMapping("/musiques")
     public List<MusiqueDTO> getAllMusiques() {
         return ALL_MUSIQUES;
     }
