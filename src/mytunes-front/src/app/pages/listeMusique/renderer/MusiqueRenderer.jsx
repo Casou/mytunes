@@ -86,6 +86,7 @@ export class MusiqueRenderer {
             >
                 { this.selectFieldGenres(this.musique.genreIds) }
             </SelectField>
+
         );
       case 6 :
         return (
