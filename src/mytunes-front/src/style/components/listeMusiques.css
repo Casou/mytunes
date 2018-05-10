@@ -12,6 +12,7 @@
 .VirtualizeTable .ratingStar { cursor : pointer; }
 
 .VirtualizeTable .headerLine { border-top : 1px solid grey; }
+.VirtualizeTable .headerLine .ReactVirtualized__Grid { overflow: hidden !important; }
 
 .VirtualizeTable .tableHeader { background-color: #c9c9c9; font-weight: bold; }
 .VirtualizeTable .tableHeader,
@@ -20,7 +21,7 @@
 .VirtualizeTable .tableCell span { margin : auto 0; width : 100%; }
 
 .VirtualizeTable .evenRow { background-color: white; }
-.VirtualizeTable .oddRow { background-color: #e5e5e5; }
+.VirtualizeTable .oddRow { background-color: #e9e9e9; }
 
 
 .VirtualizeTable .tableCell.action {
@@ -86,8 +87,8 @@
 
 #listeMusiques .genre > span > div,
 #listeMusiques .genre > span > div > div {
-    height : 33px !important;
-    line-height : 33px !important;
+    height : 30px !important;
+    line-height : 30px !important;
     font-size : 12px !important;
 }
 
@@ -101,12 +102,15 @@
 }
 
 #listeMusiques .genre > span > div > div > div > div {
-    top : -11px !important;
+    top : -30px !important;
+    height : 30px !important;
+    line-height : 30px !important;
 }
 
-#listeMusiques .genre.oddRow svg {
-    fill : #a0a0a0 !important;
-}
+#listeMusiques .genre.oddRow svg { fill : #a0a0a0 !important; }
+
+#listeMusiques .genre hr { bottom : 5px !important; }
+#listeMusiques .genre.oddRow hr { border-color : #a0a0a0 !important; }
 
 div[role=menu] span[role=menuitem].disabled { color : grey !important; }
 div[role=menu] span[role=menuitem].disabled.checked { color : #966090 !important; }

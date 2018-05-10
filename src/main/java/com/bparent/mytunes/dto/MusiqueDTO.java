@@ -1,6 +1,7 @@
 package com.bparent.mytunes.dto;
 
 import com.bparent.mytunes.model.Musique;
+import com.bparent.mytunes.util.IConstants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +38,7 @@ public class MusiqueDTO extends EntityDTO<Musique> {
         dto.setGenreIds(musique.getGenres() == null ?
                 new ArrayList<>()
                 : musique.getGenres().stream().map(genre -> genre.getId()).collect(Collectors.toList()));
+        dto.setPath(IConstants.IHandler.MUSIQUES_HANDLER + dto.getPath());
         return dto;
     }
 

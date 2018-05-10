@@ -22,8 +22,6 @@ export default class PlaylistManager {
 
         this.musiques.filter(musique => musiquePlaying.id === musique.id)
             .forEach(musique => musique.alreadyPlayed = true);
-
-        console.log(this.history);
     }
 
     getNextSong() {
