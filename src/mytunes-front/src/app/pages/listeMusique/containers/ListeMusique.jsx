@@ -136,7 +136,7 @@ class ListeMusique extends React.Component {
         let filteredMusiques = [...musiqueRenderers];
 
         if (searchText) {
-            filteredMusiques.filter(musiqueRenderer => musiqueRenderer.musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
+            filteredMusiques = filteredMusiques.filter(musiqueRenderer => musiqueRenderer.musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
         }
 
         if (sortProperties) {
