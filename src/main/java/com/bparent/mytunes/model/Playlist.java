@@ -15,11 +15,14 @@ import java.util.List;
 public class Playlist extends ItunesPropertyEntity {
 
     @Id
-    @ItunesProperty("Playlist ID")
-    @Column(name="itunes_id", nullable = false)
+    @Column(name="id", nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PLAYLIST_SEQ")
     @SequenceGenerator(name="PLAYLIST_SEQ", sequenceName="PLAYLIST_SEQ", allocationSize=1)
-    protected BigInteger itunesId;
+    protected BigInteger id;
+
+    @ItunesProperty("Playlist ID")
+    @Column(name="itunes_id", nullable = false)
+    protected Integer itunesId;
 
     @ItunesProperty("Name")
     @Column(name="nom", nullable = false)

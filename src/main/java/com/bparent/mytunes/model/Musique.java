@@ -21,11 +21,14 @@ import java.util.stream.Collectors;
 public class Musique extends ItunesPropertyEntity {
 
     @Id
-    @ItunesProperty("Track ID")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MUSIQUE_SEQ")
     @SequenceGenerator(name="MUSIQUE_SEQ", sequenceName="MUSIQUE_SEQ", allocationSize=1)
-    @Column(name="itunes_id", nullable = false)
-    protected BigInteger itunesId;
+    @Column(name="id", nullable = false)
+    protected BigInteger id;
+
+    @ItunesProperty("Track ID")
+    @Column(name="itunes_id")
+    protected Integer itunesId;
 
     @ItunesProperty("Name")
     @Column(name="titre", nullable = false)

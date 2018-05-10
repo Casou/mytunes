@@ -15,8 +15,8 @@ import PlaylistManager from "./app/common/beans/PlaylistManager";
 
 const initialStore = {
     isLoading: true,
-    musiques: [],
-    genres: [],
+    musiques: null,
+    genres: null,
     playlistManager: new PlaylistManager()
 };
 const store = createStore(reducers, initialStore,

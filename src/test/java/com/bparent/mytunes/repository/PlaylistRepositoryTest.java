@@ -55,7 +55,7 @@ public class PlaylistRepositoryTest {
         assertEquals(2, allPlaylist.size());
 
         Playlist p = new Playlist();
-        p.setItunesId(BigInteger.valueOf(3));
+        p.setItunesId(3);
         p.setNom("pl3-titre");
 
         playlistDao.save(p);
@@ -83,7 +83,7 @@ public class PlaylistRepositoryTest {
         assertEquals(2, allPlaylist.size());
 
         Playlist p = new Playlist();
-        p.setItunesId(BigInteger.valueOf(1));
+        p.setItunesId(1);
 
         playlistDao.delete(p);
 

@@ -16,7 +16,8 @@ import java.util.List;
 @Builder
 public class PlaylistDTO extends EntityDTO<Playlist> {
 
-    protected BigInteger itunesId;
+    protected BigInteger id;
+    protected Integer itunesId;
     protected String nom;
     protected Boolean isFolder = Boolean.FALSE;
     protected String persistentId;

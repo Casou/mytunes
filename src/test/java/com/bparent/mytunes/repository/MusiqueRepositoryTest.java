@@ -88,7 +88,7 @@ public class MusiqueRepositoryTest {
 
     @Test
     public void save_shouldSaveNewEntity() {
-        musiqueDao.save(Musique.builder().itunesId(BigInteger.valueOf(9999)).titre("Musique Test").build());
+        musiqueDao.save(Musique.builder().itunesId(9999).titre("Musique Test").build());
         List<Musique> allMusiques = musiqueDao.findAll();
         assertEquals(4, allMusiques.size());
     }

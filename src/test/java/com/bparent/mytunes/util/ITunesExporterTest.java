@@ -62,8 +62,8 @@ public class ITunesExporterTest {
 
     private List<Musique> buildMusiques() {
         return Arrays.asList(
-                new Musique(BigInteger.valueOf(1234), "Song", "Artiste", null, BigInteger.valueOf(240), null, null, BigInteger.valueOf(120), BigInteger.valueOf(5), "Commentaire", "path/to/Song.mp3"),
-                new Musique(BigInteger.valueOf(1234), "Another Song", null, null, BigInteger.valueOf(260), null, null, null, BigInteger.valueOf(4), "Commentaire Another Song", "second/path/to/Another Song.mp3")
+                new Musique(BigInteger.valueOf(1234), 4321, "Song", "Artiste", null, BigInteger.valueOf(240), null, null, BigInteger.valueOf(120), BigInteger.valueOf(5), "Commentaire", "path/to/Song.mp3"),
+                new Musique(BigInteger.valueOf(2234), 4322, "Another Song", null, null, BigInteger.valueOf(260), null, null, null, BigInteger.valueOf(4), "Commentaire Another Song", "second/path/to/Another Song.mp3")
         );
     }
 
