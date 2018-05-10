@@ -20,7 +20,7 @@ export default class PlaylistManager {
 
         this.musiquePlaying = musiquePlaying;
 
-        this.musiques.filter(musique => musiquePlaying.itunesId === musique.itunesId)
+        this.musiques.filter(musique => musiquePlaying.id === musique.id)
             .forEach(musique => musique.alreadyPlayed = true);
 
         console.log(this.history);
@@ -49,7 +49,7 @@ export default class PlaylistManager {
         let musique;
         for (let i = 0; i < this.musiques.length; i++) {
             musique = this.musiques[i];
-            if (this.musiquePlaying.itunesId === musique.itunesId) {
+            if (this.musiquePlaying.id === musique.id) {
                 i++;
                 if (i < this.musiques.length) {
                     nextSong = this.musiques[i];
@@ -65,11 +65,11 @@ export default class PlaylistManager {
             return null;
         }
 
-        this.musiques.filter(musique => this.musiquePlaying.itunesId === musique.itunesId)
+        this.musiques.filter(musique => this.musiquePlaying.id === musique.id)
             .forEach(musique => musique.alreadyPlayed = false);
 
         let prevSong = this.history[this.history.length - 1];
-        if (prevSong.itunesId === this.musiquePlaying.itunesId) {
+        if (prevSong.id === this.musiquePlaying.id) {
             prevSong = this.history[this.history.length - 2];
         }
 

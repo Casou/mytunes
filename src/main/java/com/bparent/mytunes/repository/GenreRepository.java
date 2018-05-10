@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface GenreRepository extends CrudRepository<Genre, BigInteger> {
     List<Genre> findAll();
+    List<Genre> findByIdIn(List<BigInteger> idList);
 }

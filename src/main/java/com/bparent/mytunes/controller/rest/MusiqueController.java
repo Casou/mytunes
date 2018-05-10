@@ -1,7 +1,9 @@
 package com.bparent.mytunes.controller.rest;
 
 import com.bparent.mytunes.dto.MusiqueDTO;
+import com.bparent.mytunes.model.Musique;
 import com.bparent.mytunes.repository.MusiqueRepository;
+import com.bparent.mytunes.service.MusiqueService;
 import com.bparent.mytunes.util.FileUtils;
 import com.bparent.mytunes.util.IConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
 public class MusiqueController {
+
+    @Autowired
+    private MusiqueService musiqueService;
 
     @Autowired
     private MusiqueRepository musiqueRepository;
@@ -38,7 +44,7 @@ public class MusiqueController {
         AtomicInteger i = new AtomicInteger(1);
         musiques.forEach(musique ->
                 init.add(MusiqueDTO.builder().
-                        itunesId(BigInteger.valueOf(i.getAndIncrement())).
+                        itunesId(i.getAndIncrement()).
                         titre(musique.getName()).
                         artiste("Artiste").
                         bpm(Long.valueOf((Math.round(Math.random() * 30) + 30) * 4).intValue()).
@@ -69,19 +75,18 @@ public class MusiqueController {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        if (musiqueDTO.getItunesId() != null) {
-            ALL_MUSIQUES = ALL_MUSIQUES.stream()
-                    .map(dto -> {
-                        if (dto.getItunesId().equals(musiqueDTO.getItunesId())) {
-                            return musiqueDTO;
-                        } else {
-                            return dto;
-                        }
-                    })
-                    .collect(Collectors.toList());
-        } else {
-            musiqueRepository.save(musiqueDTO.toEntity());
-        }
+
+//        ALL_MUSIQUES = ALL_MUSIQUES.stream()
+//                .map(dto -> {
+//                    if (dto.getItunesId().equals(musiqueDTO.getItunesId())) {
+//                        return musiqueDTO;
+//                    } else {
+//                        return dto;
+//                    }
+//                })
+//                .collect(Collectors.toList());
+
+        musiqueService.saveMusique(musiqueDTO);
     }
 
 }

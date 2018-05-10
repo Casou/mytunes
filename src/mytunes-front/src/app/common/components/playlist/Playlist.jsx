@@ -38,7 +38,7 @@ class Playlist extends React.Component {
           <ul className="playlistMusiqueList">
             { playlist.map(musique => {
               return (
-                <PlaylistItem key={ "playlist_" + musique.itunesId }
+                <PlaylistItem key={ "playlist_" + musique.id }
                               musique={ musique }
                               isPlaying={ musique === musiquePlaying }
                               alreadyPlayed={ musique.alreadyPlayed }

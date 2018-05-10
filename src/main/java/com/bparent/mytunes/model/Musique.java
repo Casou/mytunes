@@ -42,7 +42,7 @@ public class Musique extends ItunesPropertyEntity {
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "MUSIQUE_GENRES",
-            joinColumns = { @JoinColumn(name = "musique_id", referencedColumnName = "itunes_id") },
+            joinColumns = { @JoinColumn(name = "musique_id", referencedColumnName = "id") },
             inverseJoinColumns = { @JoinColumn(name = "genre_id", referencedColumnName = "id") }
     )
     protected List<Genre> genres;

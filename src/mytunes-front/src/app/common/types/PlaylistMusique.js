@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 import {musiquePropType} from "./Musique";
 
 const playlistMusiquePropType = PropTypes.shape({
-    itunesId: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    itunesId: PropTypes.number,
     titre: PropTypes.string.isRequired,
     // artiste: PropTypes.string,
     duree: PropTypes.number.isRequired,

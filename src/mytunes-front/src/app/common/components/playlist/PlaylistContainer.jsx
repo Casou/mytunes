@@ -30,7 +30,7 @@ class PlaylistContainer extends React.Component {
                 <ul className="playlistMusiqueList">
                     {playlistManager.musiques.map(musique => {
                         return (
-                            <PlaylistItem key={"playlist_" + musique.itunesId}
+                            <PlaylistItem key={"playlist_" + musique.id}
                                           musique={musique}
                                           isPlaying={musique === musiquePlaying}
                                           alreadyPlayed={musique.alreadyPlayed}

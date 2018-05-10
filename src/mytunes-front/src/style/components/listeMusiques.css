@@ -80,3 +80,33 @@
 #listeMusiques #searchMusique .textField hr {
     bottom : -1px !important;
 }
+
+
+
+
+#listeMusiques .genre > span > div,
+#listeMusiques .genre > span > div > div {
+    height : 33px !important;
+    line-height : 33px !important;
+    font-size : 12px !important;
+}
+
+#listeMusiques .genre > span > div {
+    width : 100% !important;
+}
+
+#listeMusiques .genre > span > div > div > div > button {
+    height : 30px !important;
+    padding : 0 !important;
+}
+
+#listeMusiques .genre > span > div > div > div > div {
+    top : -11px !important;
+}
+
+#listeMusiques .genre.oddRow svg {
+    fill : #a0a0a0 !important;
+}
+
+div[role=menu] span[role=menuitem].disabled { color : grey !important; }
+div[role=menu] span[role=menuitem].disabled.checked { color : #966090 !important; }

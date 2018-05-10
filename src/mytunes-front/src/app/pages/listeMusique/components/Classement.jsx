@@ -12,7 +12,7 @@ export const Classement = ({ musique, onChange, isFetching }) => {
     return (
       <div className={ className }>
         {stars.map(star => (
-          <span key={"classement_" + musique.itunesId + "_star_" + star}
+          <span key={"classement_" + musique.id + "_star_" + star}
                 className={"ratingStar"}
                 onClick={ () => onChange((star + 1) * 20) }>
                 {star >= rating ? "☆" : "★"}

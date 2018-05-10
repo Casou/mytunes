@@ -22,14 +22,14 @@ class ListeMusique extends React.Component {
         super(props);
 
         this.headers = [
-            {name: "", className: "action", widthPercentage: 5 / 100},
-            {name: "Titre", className: "titre", widthPercentage: 16 / 100},
-            {name: "Artiste", className: "artiste", widthPercentage: 15 / 100},
-            {name: "Durée", className: "duree", widthPercentage: 7 / 100},
-            {name: "BPM", className: "bpm", widthPercentage: 5 / 100},
-            {name: "Genres", className: "genre", widthPercentage: 15 / 100},
-            {name: "Class.", className: "classement", widthPercentage: 8 / 100},
-            {name: "Commentaire", className: "commentaire", widthPercentage: 29 / 100}
+            {name: "",              className: "action",        fixedWidth: 40 },
+            {name: "Titre",         className: "titre",             widthPercentage: 25 / 100},
+            {name: "Artiste",       className: "artiste",           widthPercentage: 20 / 100},
+            {name: "Durée",         className: "duree",         fixedWidth: 50 },
+            {name: "BPM",           className: "bpm",           fixedWidth: 50 },
+            {name: "Genres",        className: "genre",             widthPercentage: 20 / 100},
+            {name: "Class.",        className: "classement",    fixedWidth: 75 },
+            {name: "Commentaire",   className: "commentaire",       widthPercentage: 35 / 100}
         ];
 
         this.state = {
@@ -52,15 +52,15 @@ class ListeMusique extends React.Component {
                 <section id="searchMusique">
                     <FontIcon className="material-icons">search</FontIcon>
                     <TextField className="textField" name={"search"} placeholder={"Recherche"}
-                               onKeyPress={ e => {
+                               onKeyPress={e => {
                                    if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
                                        this._searchMusique(e.target.value);
                                    }
                                }}
                     />
                 </section>
-                <VirtualizeTable headers={ this.headers }
-                                 data={ filteredMusiqueRenderers }/>
+                <VirtualizeTable headers={this.headers}
+                                 data={filteredMusiqueRenderers}/>
             </section>
         );
     }
@@ -125,7 +125,7 @@ class ListeMusique extends React.Component {
             searchText: text
         });
     }
-    
+
 }
 
 ListeMusique.propTypes = {
