@@ -23,11 +23,11 @@ class ListeMusique extends React.Component {
 
         this.headers = [
             {name: "",              className: "action",        fixedWidth: 40 },
-            {name: "Titre",         className: "titre",             widthPercentage: 25 / 100},
-            {name: "Artiste",       className: "artiste",           widthPercentage: 20 / 100},
+            {name: "Titre",         className: "titre",             widthPercentage: 27 / 100},
+            {name: "Artiste",       className: "artiste",           widthPercentage: 23 / 100},
             {name: "Durée",         className: "duree",         fixedWidth: 50 },
             {name: "BPM",           className: "bpm",           fixedWidth: 50 },
-            {name: "Genres",        className: "genre",             widthPercentage: 20 / 100},
+            {name: "Genres",        className: "genre",             widthPercentage: 15 / 100},
             {name: "Class.",        className: "classement",    fixedWidth: 75 },
             {name: "Commentaire",   className: "commentaire",       widthPercentage: 35 / 100}
         ];

@@ -61,8 +61,9 @@ public class MusiqueController {
     @GetMapping("/musiques")
     public List<MusiqueDTO> getAllMusiques() {
 //        return ALL_MUSIQUES;
-        return musiqueRepository.findAll()
-                .stream().map(MusiqueDTO::toDto)
+        return musiqueRepository.findAll().stream()
+                .map(MusiqueDTO::toDto)
+                .sorted(Comparator.comparing(MusiqueDTO::getTitre))
                 .collect(Collectors.toList());
     }
 

@@ -77,14 +77,14 @@ export default class VirtualizeTable extends React.PureComponent {
                                                         </div>
                                                         <div
                                                             style={{
-                                                                height : childrenParam.height,
+                                                                height : childrenParam.height - 5,
                                                                 width : childrenParam.width,
                                                             }}>
                                                             <Grid
                                                                 className={styles.BodyGrid}
                                                                 columnWidth={(index) => this._getColumnWidth(index, totalWidthToDivide)}
                                                                 columnCount={columnCount}
-                                                                height={childrenParam.height}
+                                                                height={childrenParam.height - 5}
                                                                 onScroll={onScroll}
                                                                 overscanColumnCount={overscanColumnCount}
                                                                 overscanRowCount={overscanRowCount}
