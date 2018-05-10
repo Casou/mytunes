@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { ScrollSync, Grid, AutoSizer } from 'react-virtualized';
+import { FontIcon } from 'material-ui';
 import cn from 'classnames';
 import styles from './ScrollSync.example.css';
 import scrollbarSize from 'dom-helpers/util/scrollbarSize';
 import PropTypes from "prop-types";
+import hash from "js-hash-code";
 
 
 export default class VirtualizeTable extends React.PureComponent {
@@ -16,11 +18,15 @@ export default class VirtualizeTable extends React.PureComponent {
             height: 300,
             overscanColumnCount: 0,
             overscanRowCount: 5,
-            rowHeight: 30
+            rowHeight: 30,
+            sortableColumnsProperties : props.sortableColumnsProperties ? props.sortableColumnsProperties : [],
+            sortedColumn : props.sortedColumn ? props.sortedColumn : undefined,
+            sortOrder : props.sortOrder ? props.sortOrder : "ASC"
         };
 
         this._renderBodyCell = this._renderBodyCell.bind(this);
         this._renderHeaderCell = this._renderHeaderCell.bind(this);
+        this._sortDatas = this._sortDatas.bind(this);
     }
 
     render() {
@@ -81,6 +87,7 @@ export default class VirtualizeTable extends React.PureComponent {
                                                                 width : childrenParam.width,
                                                             }}>
                                                             <Grid
+                                                                key={ hash(this.props.data) }
                                                                 className={styles.BodyGrid}
                                                                 columnWidth={(index) => this._getColumnWidth(index, totalWidthToDivide)}
                                                                 columnCount={columnCount}
@@ -127,17 +134,58 @@ export default class VirtualizeTable extends React.PureComponent {
 
     _renderHeaderCell({columnIndex, key, rowIndex, style}, totalWidthToDivide) {
         const headerData = this.props.headers[columnIndex];
-        const classNames = cn(styles.headerCell, "tableHeader", headerData.className);
+        const sortable = this.props.sortableColumnsProperties[columnIndex].sortable;
+        const sorted = this.state.sortedColumn === columnIndex;
+        const sortOrder = this.state.sortOrder;
+        const classNames = cn(
+            styles.headerCell,
+            "tableHeader",
+            headerData.className,
+            { "sortable" : sortable },
+            { "sorted" : sorted });
 
         return (
             <div className={classNames}
                  key={"header_" + key}
-                 style={ {...style, width : this._getColumnWidth({ index : columnIndex }, totalWidthToDivide)} }>
+                 style={ {...style, width : this._getColumnWidth({ index : columnIndex }, totalWidthToDivide)} }
+                 onClick={() => {
+                     if (sortable) {
+                         this._sortDatas(columnIndex)
+                     }
+                 }}>
                 <span>
                     { headerData.name }
                 </span>
+                {
+                    sortable ?
+                        sortOrder === "ASC" ?
+                            <FontIcon className="material-icons sortIcon">arrow_drop_up</FontIcon>
+                            :
+                            <FontIcon className="material-icons sortIcon">arrow_drop_down</FontIcon>
+                        : ""
+                }
             </div>
         );
+    }
+
+    _sortDatas(columnIndex) {
+        const sortedColumn = columnIndex;
+        const columnSortProperty = this.props.sortableColumnsProperties[sortedColumn];
+        let sortOrder = "ASC";
+
+        if (this.state.sortedColumn === columnIndex) {
+            sortOrder = this.state.sortOrder === "ASC" ? "DESC" : "ASC";
+        }
+
+        const property = columnSortProperty.property;
+
+        this.setState({
+            ...this.state,
+            sortOrder,
+            sortedColumn
+        });
+
+        this.props.onSortDatas(property, sortOrder);
     }
 
     _getColumnWidth(indexObject, totalWidthToDivide) {
@@ -150,5 +198,9 @@ export default class VirtualizeTable extends React.PureComponent {
 
 VirtualizeTable.propTypes = {
     headers: PropTypes.array.isRequired,
-    data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
+    sortableColumnsProperties: PropTypes.array,
+    sortedColumn: PropTypes.number,
+    sortOrder: PropTypes.string,
+    onSortDatas: PropTypes.func
 };

@@ -14,6 +14,7 @@ import {__KEYCODE_ENTER__} from "../../../../App";
 
 import '../../../../style/components/listeMusiques.css';
 import {MusiqueRenderer} from "../renderer/MusiqueRenderer";
+import {compareProperty} from "../../../common/util/Comparator";
 
 
 class ListeMusique extends React.Component {
@@ -25,11 +26,21 @@ class ListeMusique extends React.Component {
             {name: "",              className: "action",        fixedWidth: 40 },
             {name: "Titre",         className: "titre",             widthPercentage: 27 / 100},
             {name: "Artiste",       className: "artiste",           widthPercentage: 23 / 100},
-            {name: "Durée",         className: "duree",         fixedWidth: 50 },
-            {name: "BPM",           className: "bpm",           fixedWidth: 50 },
+            {name: "Durée",         className: "duree",         fixedWidth: 60 },
+            {name: "BPM",           className: "bpm",           fixedWidth: 60 },
             {name: "Genres",        className: "genre",             widthPercentage: 15 / 100},
             {name: "Class.",        className: "classement",    fixedWidth: 75 },
             {name: "Commentaire",   className: "commentaire",       widthPercentage: 35 / 100}
+        ];
+        this.sortableColumnsProperties = [ 
+            { property : "action",      sortable : false }, 
+            { property : "titre",       sortable : true },
+            { property : "artiste",     sortable : true },
+            { property : "duree",       sortable : true },
+            { property : "bpm",         sortable : true },
+            { property : "genre",       sortable : false },
+            { property : "classement",  sortable : true },
+            { property : "commentaire", sortable : false }
         ];
 
         this.state = {
@@ -37,8 +48,14 @@ class ListeMusique extends React.Component {
             musiqueRenderers: this._mapMusiqueRenderer(this.props.musiques, {
                 onPropertyChange: this._onPropertyChange.bind(this),
                 onPlaylistAdd: props.playlistActions.addMusiqueToPlaylist
-            }, this.props.genres)
+            }, this.props.genres),
+            sortProperties : {
+                order : "ASC",
+                property : "titre"
+            }
         };
+
+        this._sortProperty = this._sortProperty.bind(this);
     }
 
     render() {
@@ -60,7 +77,11 @@ class ListeMusique extends React.Component {
                     />
                 </section>
                 <VirtualizeTable headers={this.headers}
-                                 data={filteredMusiqueRenderers}/>
+                                 data={filteredMusiqueRenderers}
+                                 sortableColumnsProperties={this.sortableColumnsProperties}
+                                 sortedColumn={1}
+                                 onSortDatas={ (property, order) => this._sortProperty(property, order) }
+                />
             </section>
         );
     }
@@ -111,18 +132,36 @@ class ListeMusique extends React.Component {
     }
 
     _getFilteredMusiques() {
-        const {musiqueRenderers, searchText} = this.state;
+        const {musiqueRenderers, searchText, sortProperties} = this.state;
+        let filteredMusiques = [...musiqueRenderers];
 
         if (searchText) {
-            return musiqueRenderers.filter(musiqueRenderer => musiqueRenderer.musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
+            filteredMusiques.filter(musiqueRenderer => musiqueRenderer.musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
         }
-        return musiqueRenderers;
+
+        if (sortProperties) {
+            filteredMusiques = filteredMusiques.sort((a, b) => {
+                return compareProperty(a.musique, b.musique, sortProperties.property, sortProperties.order);
+            });
+        }
+
+        return filteredMusiques;
     }
 
     _searchMusique(text) {
         this.setState({
             ...this.state,
             searchText: text
+        });
+    }
+
+    _sortProperty(property, order) {
+        this.setState({
+            ...this.state,
+            sortProperties : {
+                order,
+                property
+            }
         });
     }
 
