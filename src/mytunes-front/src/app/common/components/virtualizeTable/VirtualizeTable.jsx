@@ -24,6 +24,8 @@ export default class VirtualizeTable extends React.PureComponent {
             sortOrder : props.sortOrder ? props.sortOrder : "ASC"
         };
 
+        this.renderTime = 0;
+
         this._renderBodyCell = this._renderBodyCell.bind(this);
         this._renderHeaderCell = this._renderHeaderCell.bind(this);
         this._sortDatas = this._sortDatas.bind(this);
@@ -39,6 +41,7 @@ export default class VirtualizeTable extends React.PureComponent {
         
         const rowCount = this.props.data.length;
         const fixedWidth = this.props.headers.map(header => header.fixedWidth ? header.fixedWidth : 0).reduce((acc, val) => acc + val);
+        this.renderTime++;
 
         return (
             <div>
@@ -154,6 +157,7 @@ export default class VirtualizeTable extends React.PureComponent {
                      }
                  }}>
                 <span>
+                    { columnIndex === 0 ? this.renderTime : "" }
                     { headerData.name }
                 </span>
                 {
