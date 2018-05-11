@@ -1,0 +1,22 @@
+#listeGenres {
+    width : calc(100% - var(--volume-slider-width));
+    text-align : center;
+}
+
+.genre_card {
+    display : inline-block;
+    width : 200px;
+    height : 75px !important;
+    margin : 15px !important;
+    text-align : center;
+    cursor : pointer;
+}
+
+.genre_card * {
+    text-transform: none !important;
+}
+
+#listeGenres .genre_card > button > div > div > span {
+    font-size : 24px !important;
+    font-weight: bold !important;
+}

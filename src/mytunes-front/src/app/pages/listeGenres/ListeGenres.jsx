@@ -1,25 +1,26 @@
 import React from "react";
+import {connect} from "react-redux";
+import {assign} from "lodash";
+import {RaisedButton} from "material-ui";
 
-class ListeGenres extends React.Component {
-    constructor(props) {
-        super(props);
+import '../../../style/components/listeGenres.css';
 
-        console.log(props);
-    }
+const ListeGenres = (props) => {
 
-    render() {
-        return (
-            <h1>
-                Liste par genres
-            </h1>
-        );
-    }
-}
+    return (
+        <section id={"listeGenres"}>
+            {props.genres.map(genre => (
+                <RaisedButton key={'ripple_card_' + genre.id}
+                              className={"genre_card"}
+                              label={genre.label}
+                              style={ { height : 75 } }
+                />
+            ))}
+        </section>
+    );
+};
 
-// const ListeGenres = () => (
-//   <h1>
-//     Liste par genres
-//   </h1>
-// );
-
-export default ListeGenres;
+export default connect(state => assign({}, {
+    musiques: state.musiques,
+    genres: state.genres
+}), null)(ListeGenres);
