@@ -13,7 +13,7 @@ import {NotificationContainer} from "react-notifications";
 
 import { Route } from "react-router-dom";
 import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
-import ListeGenres from "./app/pages/listeGenres/ListeGenres";
+import ListeGenres from "./app/pages/listeGenres/containers/ListeGenres";
 
 const __BASIC_URL__ = "localhost:8000/";
 export const __SERVER_URL__ = "http://" + __BASIC_URL__;
@@ -28,7 +28,7 @@ const App = () => (
         <Header />
         <MainWrapper>
           <Route exact path="/" component={ListeMusique} />
-          <Route exact path="/genres" component={ListeGenres} />
+          <Route exact path="/genres/:genreId?" component={ListeGenres} />
         </MainWrapper>
         <NotificationContainer/>
       </div>

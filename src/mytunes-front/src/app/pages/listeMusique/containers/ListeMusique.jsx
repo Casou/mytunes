@@ -15,6 +15,7 @@ import {__KEYCODE_ENTER__} from "../../../../App";
 import '../../../../style/components/listeMusiques.css';
 import {MusiqueRenderer} from "../renderer/MusiqueRenderer";
 import {compareProperty} from "../../../common/util/Comparator";
+import {genrePropType} from "../../../common/types/Genre";
 
 
 class ListeMusique extends React.Component {
@@ -168,7 +169,8 @@ class ListeMusique extends React.Component {
 }
 
 ListeMusique.propTypes = {
-    musiques: PropTypes.arrayOf(musiquePropType).isRequired
+    musiques: PropTypes.arrayOf(musiquePropType).isRequired,
+    genres: PropTypes.arrayOf(genrePropType).isRequired
 };
 
 export default connect(state => assign({}, {

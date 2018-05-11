@@ -1,5 +1,8 @@
 #listeGenres {
     width : calc(100% - var(--volume-slider-width));
+}
+
+#listeGenres #chooseGenre {
     text-align : center;
 }
 
