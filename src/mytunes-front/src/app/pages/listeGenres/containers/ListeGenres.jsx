@@ -13,7 +13,7 @@ class ListeGenres extends React.Component {
 
     render() {
         const { genreId } = this.props.match.params;
-        const genre = genreId ? this.props.genres.filter(genre => genre.id === parseInt(genreId))[0] : null;
+        const genre = genreId ? this.props.genres.filter(genre => genre.id === parseInt(genreId, 10))[0] : null;
 
         return (
             <section id={"listeGenres"}>

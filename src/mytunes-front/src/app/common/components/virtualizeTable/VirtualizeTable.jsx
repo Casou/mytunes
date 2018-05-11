@@ -17,7 +17,7 @@ export default class VirtualizeTable extends React.PureComponent {
             columnCount: props.headers ? props.headers.length : 0,
             height: 300,
             overscanColumnCount: 0,
-            overscanRowCount: 5,
+            overscanRowCount: 20,
             rowHeight: 30,
             sortableColumnsProperties : props.sortableColumnsProperties ? props.sortableColumnsProperties : [],
             sortedColumn : props.sortedColumn ? props.sortedColumn : undefined,
@@ -86,7 +86,7 @@ export default class VirtualizeTable extends React.PureComponent {
                                                         </div>
                                                         <div
                                                             style={{
-                                                                height : childrenParam.height - 5,
+                                                                height : childrenParam.height - 40,
                                                                 width : childrenParam.width,
                                                             }}>
                                                             <Grid
@@ -94,7 +94,7 @@ export default class VirtualizeTable extends React.PureComponent {
                                                                 className={styles.BodyGrid}
                                                                 columnWidth={(index) => this._getColumnWidth(index, totalWidthToDivide)}
                                                                 columnCount={columnCount}
-                                                                height={childrenParam.height - 5}
+                                                                height={childrenParam.height - 40}
                                                                 onScroll={onScroll}
                                                                 overscanColumnCount={overscanColumnCount}
                                                                 overscanRowCount={overscanRowCount}

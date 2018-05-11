@@ -14,9 +14,16 @@ import {__KEYCODE_ENTER__} from "../../../../App";
 
 import '../../../../style/components/listeMusiques.css';
 import {MusiqueRenderer} from "../renderer/MusiqueRenderer";
-import {compareProperty} from "../../../common/util/Comparator";
+import {compareProperty} from "../../../common/util/Comparators";
 import {genrePropType} from "../../../common/types/Genre";
+import {formateDuree} from "../../../common/util/Formatters";
+import StateBar from "../../../common/components/stateBar/StateBar";
 
+Object.defineProperty(Array.prototype, "sum", {
+    value: function() {
+        return this.reduce(function(sum, item) { return sum + item; }, 0);
+    }
+});
 
 class ListeMusique extends React.Component {
 
@@ -83,6 +90,10 @@ class ListeMusique extends React.Component {
                                  sortedColumn={1}
                                  onSortDatas={ (property, order) => this._sortProperty(property, order) }
                 />
+                <StateBar>
+                    { filteredMusiqueRenderers.length } musique{ filteredMusiqueRenderers.length > 1 ? "s" : "" }
+                    &nbsp;-&nbsp;Durée totale : { formateDuree(filteredMusiqueRenderers.map(musiqueRenderer => musiqueRenderer.musique.duree).sum()) }
+                </StateBar>
             </section>
         );
     }
