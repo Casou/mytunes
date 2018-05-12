@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {assign} from "lodash";
 import {FontIcon, TextField} from "material-ui";
 import VirtualizeTable from "../../../common/components/virtualizeTable/VirtualizeTable";
 
 import {__KEYCODE_ENTER__} from "../../../../App";
 
-import '../../../../style/components/listeMusiques.css';
+import '../../../../style/components/tableMusiques.css';
 import {compareProperty} from "../../../common/util/Comparators";
 import {formateDuree} from "../../../common/util/Formatters";
 import StateBar from "../../../common/components/stateBar/StateBar";
-import {musiqueRendererPropType} from "../../types/MusiqueRendererType";
+import {MusiqueRenderer} from "../../renderer/MusiqueRenderer";
+import {musiquePropType} from "../../types/MusiqueType";
+import {genrePropType} from "../../types/GenreType";
+import MusiquesActions from "../../../pages/listeMusique/actions/MusiquesActions";
+import PlaylistActions from "../../actions/PlaylistActions";
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
 Object.defineProperty(Array.prototype, "sum", {
@@ -25,6 +32,10 @@ class TableMusique extends React.Component {
 
         this.state = {
             searchText: '',
+            musiqueRenderers: this._mapMusiqueRenderer(this.props.musiques, {
+                onPropertyChange: this._onPropertyChange.bind(this),
+                onPlaylistAdd: props.playlistActions.addMusiqueToPlaylist
+            }, this.props.genres),
             sortProperties : {
                 order : "ASC",
                 property : "titre"
@@ -37,12 +48,12 @@ class TableMusique extends React.Component {
 
     render() {
         let filteredMusiqueRenderers = [];
-        if (this.props.musiqueRenderers) {
+        if (this.state.musiqueRenderers) {
             filteredMusiqueRenderers = this._getFilteredMusiques();
         }
 
         return (
-            <section id="listeMusiques">
+            <section id="tableMusiques">
                 <section id="searchMusique">
                     <FontIcon className="material-icons">search</FontIcon>
                     <TextField className="textField" name={"search"} placeholder={"Recherche"}
@@ -68,8 +79,7 @@ class TableMusique extends React.Component {
     }
 
     _getFilteredMusiques() {
-        const {searchText, sortProperties} = this.state;
-        const {musiqueRenderers} = this.props;
+        const {musiqueRenderers, searchText, sortProperties} = this.state;
         let filteredMusiques = [...musiqueRenderers];
 
         if (searchText) {
@@ -102,12 +112,64 @@ class TableMusique extends React.Component {
         });
     }
 
+    _mapMusiqueRenderer = (musiques, {onPropertyChange, onPlaylistAdd}, genres) => {
+        return musiques.map((musique, index) => {
+            return new MusiqueRenderer(musique, index, {onPropertyChange, onPlaylistAdd}, genres)
+        });
+    };
+
+    _onPropertyChange(property, newValue, index) {
+        const musiqueRenderers = this.state.musiqueRenderers;
+        const musiqueRenderer = musiqueRenderers[index];
+
+        if (musiqueRenderer.musique.isFetching[property] || musiqueRenderer.musique[property] === newValue) {
+            return;
+        }
+
+        const modifiedMusiqueRenderers = [...musiqueRenderers];
+        modifiedMusiqueRenderers[index].fetching(property, true);
+
+        // Fetching (grey)
+        this.setState({
+            ...this.state,
+            musiqueRenderers: modifiedMusiqueRenderers
+        }, () => {
+            const musique = musiqueRenderer.musique;
+            this.props.musiquesActions.updateMusique(musique, property, newValue)
+                .then(() => {
+                    const modifiedMusiqueRenderers = [...this.state.musiqueRenderers];
+                    modifiedMusiqueRenderers[index].changeProperty(property, newValue);
+                    modifiedMusiqueRenderers[index].fetching(property, false);
+
+                    this.setState({
+                        ...this.state,
+                        musiqueRenderers: modifiedMusiqueRenderers
+                    });
+                })
+                .catch(() => {
+                    modifiedMusiqueRenderers[index].fetching(property, false);
+
+                    this.setState({
+                        ...this.state,
+                        musiqueRenderers: modifiedMusiqueRenderers
+                    });
+                });
+        });
+    }
+
 }
 
 TableMusique.propTypes = {
-    musiqueRenderers: PropTypes.arrayOf(musiqueRendererPropType).isRequired,
+    musiques: PropTypes.arrayOf(musiquePropType).isRequired,
+    genres: PropTypes.arrayOf(genrePropType).isRequired,
     headers: PropTypes.array.isRequired,
     sortableColumnsProperties: PropTypes.array.isRequired
 };
 
-export default TableMusique;
+
+export default connect(state => assign({}, {
+    genres: state.genres
+}), dispatch => ({
+    musiquesActions: bindActionCreators(MusiquesActions, dispatch),
+    playlistActions: bindActionCreators(PlaylistActions, dispatch)
+}))(TableMusique);

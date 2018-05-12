@@ -1,7 +1,3 @@
-#listeGenres {
-    width : calc(100% - var(--volume-slider-width));
-}
-
 #listeGenres #chooseGenre {
     text-align : center;
 }
@@ -22,4 +18,13 @@
 #listeGenres .genre_card > button > div > div > span {
     font-size : 24px !important;
     font-weight: bold !important;
+}
+
+#listeGenres #musiqueGenres header h1 {
+    text-align : center;
+    font-size : 25px;
+}
+#listeGenres #musiqueGenres header h1 a {
+    color : var(--button-active-color);
+    text-decoration: none;
 }
