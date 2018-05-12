@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
 import '../../../../style/components/listeGenres.css';
-import {musiquePropType} from "../../../common/types/Musique";
-import {genrePropType} from "../../../common/types/Genre";
+import {musiquePropType} from "../../../common/types/MusiqueType";
+import {genrePropType} from "../../../common/types/GenreType";
 
 class ListeGenres extends React.Component {
 

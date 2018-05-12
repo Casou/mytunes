@@ -3,7 +3,7 @@ import {FontIcon, IconButton} from "material-ui";
 import PropTypes from "prop-types";
 import cn from "classnames";
 
-import {musiquePropType} from "../../types/Musique";
+import {musiquePropType} from "../../types/MusiqueType";
 import {formateDuree} from "../../util/Formatters";
 
 export const PlaylistItem = props => {

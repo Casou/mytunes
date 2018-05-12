@@ -120,10 +120,8 @@
     margin-top : -30px;
 }
 
-#listeMusiques .genre.oddRow svg { fill : #a0a0a0 !important; }
-
-#listeMusiques .genre hr { bottom : 5px !important; }
-#listeMusiques .genre.oddRow hr { border-color : #a0a0a0 !important; }
+#listeMusiques .genre svg { fill : #a0a0a0 !important; }
+#listeMusiques .genre hr { bottom : 5px !important; border-color : #a0a0a0 !important; }
 
 div[role=menu] span[role=menuitem].disabled { color : grey !important; }
 div[role=menu] span[role=menuitem].disabled.checked { color : #966090 !important; }

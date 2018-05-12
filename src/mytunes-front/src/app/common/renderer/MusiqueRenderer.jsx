@@ -1,9 +1,9 @@
 import React from "react";
-import {FontIcon, IconButton, SelectField, MenuItem} from "material-ui";
-import cn from "classnames";
-import ListeMusiqueTextProperty from "../components/ListeMusiqueTextProperty";
-import Classement from "../components/Classement";
-import {formateDuree} from "../../../common/util/Formatters";
+import {FontIcon, IconButton} from "material-ui";
+import ListeMusiqueTextProperty from "../../pages/listeMusique/components/ListeMusiqueTextProperty";
+import Classement from "../../pages/listeMusique/components/Classement";
+import {formateDuree} from "../util/Formatters";
+import SelectGenres from "../components/musiqueTable/SelectGenres";
 
 export class MusiqueRenderer {
     constructor(musique, index, actionMethods, genres) {
@@ -20,23 +20,6 @@ export class MusiqueRenderer {
 
     changeProperty(property, value) {
         this.musique[property] = value;
-    }
-
-    selectFieldGenres(values, isDisabled) {
-        return !this.genres ? "" :
-            this.genres.map((genre) => {
-                const checked = values && values.indexOf(genre.id) > -1;
-                return (
-                    <MenuItem
-                        className={cn({"disabled": isDisabled}, {"checked": checked})}
-                        key={"genre_" + genre.id + "_" + this.musique.id}
-                        insetChildren={true}
-                        checked={checked}
-                        value={genre.id}
-                        primaryText={genre.label}
-                    />
-                )
-            });
     }
 
     renderCell = (column) => {
@@ -83,14 +66,11 @@ export class MusiqueRenderer {
                 );
             case 5 :
                 return (
-                    <SelectField
-                        multiple={true}
-                        value={this.musique.genreIds}
-                        onChange={(e, key, payload) => this.onPropertyChange("genreIds", payload, this.index)}
-                        disabled={this.musique.isFetching["genreIds"]}
-                    >
-                        {this.selectFieldGenres(this.musique.genreIds, this.musique.isFetching["genreIds"])}
-                    </SelectField>
+                    <SelectGenres genres={ this.genres }
+                                  selectedGenreIds={ this.musique.genreIds }
+                                  isFetching={ this.musique.isFetching["genreIds"] }
+                                  onChange={ (selectedGenreIds) => this.onPropertyChange("genreIds", selectedGenreIds, this.index) }
+                    />
                 );
             case 6 :
                 return (

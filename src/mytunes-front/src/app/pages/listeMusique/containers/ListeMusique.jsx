@@ -3,27 +3,15 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {assign} from "lodash";
-import {FontIcon, TextField} from "material-ui";
 
-import {musiquePropType} from "../../../common/types/Musique";
-import VirtualizeTable from "../../../common/components/virtualizeTable/VirtualizeTable";
+import {musiquePropType} from "../../../common/types/MusiqueType";
 import MusiquesActions from "../actions/MusiquesActions";
 import PlaylistActions from "../../../common/actions/PlaylistActions";
 
-import {__KEYCODE_ENTER__} from "../../../../App";
-
 import '../../../../style/components/listeMusiques.css';
-import {MusiqueRenderer} from "../renderer/MusiqueRenderer";
-import {compareProperty} from "../../../common/util/Comparators";
-import {genrePropType} from "../../../common/types/Genre";
-import {formateDuree} from "../../../common/util/Formatters";
-import StateBar from "../../../common/components/stateBar/StateBar";
-
-Object.defineProperty(Array.prototype, "sum", {
-    value: function() {
-        return this.reduce(function(sum, item) { return sum + item; }, 0);
-    }
-});
+import {MusiqueRenderer} from "../../../common/renderer/MusiqueRenderer";
+import {genrePropType} from "../../../common/types/GenreType";
+import TableMusique from "../../../common/components/musiqueTable/TableMusique";
 
 class ListeMusique extends React.Component {
 
@@ -52,49 +40,19 @@ class ListeMusique extends React.Component {
         ];
 
         this.state = {
-            searchText: '',
             musiqueRenderers: this._mapMusiqueRenderer(this.props.musiques, {
                 onPropertyChange: this._onPropertyChange.bind(this),
                 onPlaylistAdd: props.playlistActions.addMusiqueToPlaylist
-            }, this.props.genres),
-            sortProperties : {
-                order : "ASC",
-                property : "titre"
-            }
+            }, this.props.genres)
         };
 
-        this._sortProperty = this._sortProperty.bind(this);
     }
 
     render() {
-        let filteredMusiqueRenderers = [];
-        if (this.state.musiqueRenderers) {
-            filteredMusiqueRenderers = this._getFilteredMusiques();
-        }
-
         return (
-            <section id="listeMusiques">
-                <section id="searchMusique">
-                    <FontIcon className="material-icons">search</FontIcon>
-                    <TextField className="textField" name={"search"} placeholder={"Recherche"}
-                               onKeyPress={e => {
-                                   if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
-                                       this._searchMusique(e.target.value);
-                                   }
-                               }}
-                    />
-                </section>
-                <VirtualizeTable headers={this.headers}
-                                 data={filteredMusiqueRenderers}
-                                 sortableColumnsProperties={this.sortableColumnsProperties}
-                                 sortedColumn={1}
-                                 onSortDatas={ (property, order) => this._sortProperty(property, order) }
-                />
-                <StateBar>
-                    { filteredMusiqueRenderers.length } musique{ filteredMusiqueRenderers.length > 1 ? "s" : "" }
-                    &nbsp;-&nbsp;Durée totale : { formateDuree(filteredMusiqueRenderers.map(musiqueRenderer => musiqueRenderer.musique.duree).sum()) }
-                </StateBar>
-            </section>
+            <TableMusique musiqueRenderers={ this.state.musiqueRenderers }
+                          headers={ this.headers }
+                          sortableColumnsProperties={ this.sortableColumnsProperties } />
         );
     }
 
@@ -140,40 +98,6 @@ class ListeMusique extends React.Component {
                         musiqueRenderers: modifiedMusiqueRenderers
                     });
                 });
-        });
-    }
-
-    _getFilteredMusiques() {
-        const {musiqueRenderers, searchText, sortProperties} = this.state;
-        let filteredMusiques = [...musiqueRenderers];
-
-        if (searchText) {
-            filteredMusiques = filteredMusiques.filter(musiqueRenderer => musiqueRenderer.musique.searchText.indexOf(searchText.toLowerCase()) >= 0);
-        }
-
-        if (sortProperties) {
-            filteredMusiques = filteredMusiques.sort((a, b) => {
-                return compareProperty(a.musique, b.musique, sortProperties.property, sortProperties.order);
-            });
-        }
-
-        return filteredMusiques;
-    }
-
-    _searchMusique(text) {
-        this.setState({
-            ...this.state,
-            searchText: text
-        });
-    }
-
-    _sortProperty(property, order) {
-        this.setState({
-            ...this.state,
-            sortProperties : {
-                order,
-                property
-            }
         });
     }
 

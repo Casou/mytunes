@@ -2,7 +2,7 @@ import React from 'react';
 import { PlayButton, PrevButton, NextButton, ProgressBar, TimeMarker, PauseButton } from "react-player-controls";
 import PropTypes from "prop-types";
 
-import {musiquePropType} from "../../types/Musique";
+import {musiquePropType} from "../../types/MusiqueType";
 import {__SERVER_URL__} from "../../../../App";
 
 class LecteurDisplay extends React.Component {

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {musiquePropType} from "./Musique";
+import {musiquePropType} from "./MusiqueType";
 
 const playlistMusiquePropType = PropTypes.shape({
     id: PropTypes.number.isRequired,

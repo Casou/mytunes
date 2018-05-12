@@ -5,7 +5,7 @@ import { assign } from "lodash";
 import PropTypes from "prop-types";
 
 import PlaylistItem from "./PlaylistItem";
-import {playlistMusiquePropType} from "../../types/PlaylistMusique";
+import {playlistMusiquePropType} from "../../types/PlaylistMusiqueType";
 
 import '../../../../style/components/playlist.css';
 

@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 
-import {playlistManagerPropType} from "../../types/PlaylistMusique";
+import {playlistManagerPropType} from "../../types/PlaylistMusiqueType";
 import LecteurDisplay from "./LecteurDisplay";
 import PlaylistActions from "../../actions/PlaylistActions";
 

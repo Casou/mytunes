@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 
-import {playlistManagerPropType} from "../../types/PlaylistMusique";
+import {playlistManagerPropType} from "../../types/PlaylistMusiqueType";
 import PlaylistItem from "./PlaylistItem";
 import PlaylistActions from "../../actions/PlaylistActions";
 import PlaylistHeader from "./PlaylistHeader";

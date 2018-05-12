@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {musiquePropType} from "../../../common/types/Musique";
+import {musiquePropType} from "../../../common/types/MusiqueType";
 import * as classnames from "classnames";
 
 export const Classement = ({ musique, onChange, isFetching }) => {
