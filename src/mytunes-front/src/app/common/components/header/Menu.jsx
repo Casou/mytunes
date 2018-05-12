@@ -1,6 +1,6 @@
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
-import {Drawer, IconButton, MenuItem} from "material-ui";
+import {Drawer, IconButton, MenuItem, Divider} from "material-ui";
 import {Link} from "react-router-dom";
 
 export default class Menu extends React.Component {
@@ -49,8 +49,22 @@ export default class Menu extends React.Component {
             Liste musiques
           </MenuItem>
           <MenuItem containerElement={<Link to="/genres" />} onClick={ this.closeMenu }>
-            <FontIcon className="material-icons">dashboard</FontIcon>
+            <FontIcon className="material-icons">view_module</FontIcon>
             Liste par genre
+          </MenuItem>
+          <Divider />
+          <MenuItem onClick={ this.closeMenu }>
+              <FontIcon className="material-icons">list</FontIcon>
+              Playlists
+          </MenuItem>
+          <MenuItem onClick={ this.closeMenu }>
+              <FontIcon className="material-icons">playlist_add_check</FontIcon>
+              Playlists intelligentes
+          </MenuItem>
+          <Divider />
+          <MenuItem onClick={ this.closeMenu }>
+              <FontIcon className="material-icons">settings</FontIcon>
+              Paramètres
           </MenuItem>
         </Drawer>
       </div>
