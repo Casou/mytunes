@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {FontIcon, IconButton} from "material-ui";
 import cn from 'classnames';
-import ConfirmDialog from "../confirm/ConfirmDialog";
+import ConfirmDialog from "../../confirm/ConfirmDialog";
 
 const PlaylistHeader = (props) => (
     <header>

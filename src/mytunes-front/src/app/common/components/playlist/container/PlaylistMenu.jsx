@@ -2,7 +2,7 @@ import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import {Drawer, IconButton} from "material-ui";
 
-import '../../../../style/components/playlistMenu.css';
+import '../../../../../style/components/playlistMenu.css';
 import PlaylistContainer from "./PlaylistContainer";
 
 class PlaylistMenu extends React.Component {

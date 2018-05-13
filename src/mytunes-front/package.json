@@ -17,6 +17,7 @@
     "react-player-controls": "^0.5.20",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "react-sortable-hoc": "^0.6.8",
     "react-stomp": "^3.0.1",
     "react-virtualized": "^9.18.5",
     "redux": "^4.0.0",

@@ -3,10 +3,10 @@ import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 
-import {playlistManagerPropType} from "../../types/PlaylistMusiqueType";
-import PlaylistItem from "./PlaylistItem";
-import PlaylistActions from "../../actions/PlaylistActions";
-import PlaylistHeader from "./PlaylistHeader";
+import {playlistManagerPropType} from "../../../types/PlaylistMusiqueType";
+import PlaylistItem from "../components/PlaylistItem";
+import PlaylistActions from "../../../actions/PlaylistActions";
+import PlaylistHeader from "../components/PlaylistHeader";
 
 class PlaylistContainer extends React.Component {
     constructor(props) {

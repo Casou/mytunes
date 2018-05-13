@@ -57,7 +57,7 @@ class ListeGenres extends React.Component {
                         <header>
                             <h1><Link to={ '/genres' }>{ genre.label }</Link></h1>
                         </header>
-                        <TableMusique musiques={ this.props.musiques.filter(musique => musique.genreIds.includes(parseInt(genreId)) ) }
+                        <TableMusique musiques={ this.props.musiques.filter(musique => musique.genreIds.includes(parseInt(genreId, 10)) ) }
                                       headers={ headers }
                                       sortableColumnsProperties={ sortableColumnsProperties } />
                     </div>
