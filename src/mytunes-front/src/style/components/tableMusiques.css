@@ -60,7 +60,7 @@
 
 
 #tableMusiques {
-    width : calc(100% - var(--volume-slider-width));
+    width : 100%;
 }
 
 #tableMusiques #searchMusique {
