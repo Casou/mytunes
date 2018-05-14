@@ -15,9 +15,9 @@ public interface MusiqueRepository extends CrudRepository<Musique, BigInteger> {
     List<Musique> findAll();
 
     // http://localhost:8000/musiques/1
-    // http://localhost:8000/musiques/search/by-id?id=1
-    @RestResource(path = "by-id")
-    Musique findByItunesId(@Param("id") BigInteger itunesId);
+    // http://localhost:8000/musiques/search/by-itunes-id?id=1
+    @RestResource(path = "by-itunes-id")
+    Musique findByItunesId(@Param("id") Integer itunesId);
 
     // http://localhost:8000/musiques/search/by-name?name=Test
 //    @Query("Select m from Musique m where m.titre like %:name%")
@@ -28,6 +28,6 @@ public interface MusiqueRepository extends CrudRepository<Musique, BigInteger> {
 
     void delete(Musique playlist);
 
-    void delete(BigInteger itunesId);
+    void delete(BigInteger id);
 
 }

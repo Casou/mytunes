@@ -29,14 +29,14 @@ public class MusiqueRepositoryTest {
 
     @Test
     public void findByItunesId_shouldFindOneMusique() {
-        Musique m1 = musiqueDao.findByItunesId(BigInteger.valueOf(1));
+        Musique m1 = musiqueDao.findByItunesId(1);
         assertNotNull(m1);
         assertEquals("mus1-titre", m1.getTitre());
     }
 
     @Test
     public void findByItunesId_shouldReturnNullIfIdDoesntExist() {
-        Musique m1 = musiqueDao.findByItunesId(BigInteger.valueOf(12345));
+        Musique m1 = musiqueDao.findByItunesId(12345);
         assertNull(m1);
     }
 
@@ -81,28 +81,29 @@ public class MusiqueRepositoryTest {
 
     @Test
     public void deleteByEntity_shouldDeleteOneRecord() {
-        musiqueDao.delete(musiqueDao.findByItunesId(BigInteger.valueOf(1)));
+        musiqueDao.delete(musiqueDao.findByItunesId(1));
         List<Musique> allMusiques = musiqueDao.findAll();
         assertEquals(2, allMusiques.size());
     }
 
     @Test
     public void save_shouldSaveNewEntity() {
-        musiqueDao.save(Musique.builder().itunesId(9999).titre("Musique Test").build());
+        Musique newMusique = Musique.builder().id(BigInteger.valueOf(9999)).titre("Musique Add Test").build();
+        musiqueDao.save(newMusique);
         List<Musique> allMusiques = musiqueDao.findAll();
         assertEquals(4, allMusiques.size());
     }
 
     @Test
     public void save_shouldUpdateExistingEntity() {
-        Musique musique = musiqueDao.findByItunesId(BigInteger.valueOf(1));
+        Musique musique = musiqueDao.findByItunesId(1);
         musique.setTitre("Changed name");
         musiqueDao.save(musique);
 
         List<Musique> allMusiques = musiqueDao.findAll();
         assertEquals(3, allMusiques.size());
 
-        Musique changedMusique = musiqueDao.findByItunesId(BigInteger.valueOf(1));
+        Musique changedMusique = musiqueDao.findByItunesId(1);
         assertEquals("Changed name", changedMusique.getTitre());
     }
 

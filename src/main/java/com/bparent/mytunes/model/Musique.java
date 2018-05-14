@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Musique extends ItunesPropertyEntity {
+public class Musique extends ItunesPropertyEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MUSIQUE_SEQ")
@@ -49,23 +50,23 @@ public class Musique extends ItunesPropertyEntity {
 
     @ItunesProperty("Total Time")
     @Column(name="duree")
-    protected BigInteger duree;
+    protected Integer duree;
 
     @ItunesProperty("Start Time")
     @Column(name="timer_debut")
-    protected BigInteger timerDebut;
+    protected Integer timerDebut;
 
     @ItunesProperty("Stop Time")
     @Column(name="timer_fin")
-    protected BigInteger timerFin;
+    protected Integer timerFin;
 
     @ItunesProperty("BPM")
     @Column(name="bpm")
-    protected BigInteger bpm;
+    protected Integer bpm;
 
     @ItunesProperty("Rating")
     @Column(name="classement")
-    protected BigInteger classement;
+    protected Integer classement;
 
     @ItunesProperty("Comments")
     @Column(name="commentaire")

@@ -1,9 +1,12 @@
-INSERT INTO MUSIQUE(itunes_id, titre) VALUES (1, 'mus1-titre');
-INSERT INTO MUSIQUE(itunes_id, titre) VALUES (2, 'mus2-titre');
-INSERT INTO MUSIQUE(itunes_id, titre) VALUES (3, 'mus3-titre');
+INSERT INTO MUSIQUE(id, itunes_id, titre) VALUES (1, 1, 'mus1-titre');
+INSERT INTO MUSIQUE(id, itunes_id, titre) VALUES (2, 2, 'mus2-titre');
+INSERT INTO MUSIQUE(id, itunes_id, titre) VALUES (3, 3, 'mus3-titre');
 
-INSERT INTO PLAYLIST(itunes_id, nom) VALUES (1, 'pl1-titre');
-INSERT INTO PLAYLIST(itunes_id, nom) VALUES (2, 'pl2-titre');
+INSERT INTO PLAYLIST(id, itunes_id, nom) VALUES (1, 1, 'pl1-titre');
+INSERT INTO PLAYLIST(id, itunes_id, nom) VALUES (2, 2, 'pl2-titre');
 
 INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (1, 1);
 INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (1, 2);
+
+ALTER SEQUENCE IF EXISTS MUSIQUE_SEQ RESTART WITH 4;
+ALTER SEQUENCE IF EXISTS PLAYLIST_SEQ RESTART WITH 3;

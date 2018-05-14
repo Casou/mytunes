@@ -65,7 +65,7 @@ public class ITunesExporter {
     private String buildDestinationFilePath(Musique track, String pathToFolder) {
         String bpm = "";
         if (track.getBpm() != null) {
-            bpm = track.getBpm().divide(BigInteger.valueOf(4)) + " - ";
+            bpm = (track.getBpm() / 4) + " - ";
         }
 
         String fileName = pathToFolder + "/" + bpm + track.getTitre() + ".mp3";

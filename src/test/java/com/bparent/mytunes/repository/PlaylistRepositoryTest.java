@@ -24,19 +24,20 @@ public class PlaylistRepositoryTest {
     @Autowired
     private PlaylistRepository playlistDao;
 
-
     @Test
     public void shouldReturnAllPlaylists() {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(2, allPlaylist.size());
 
+        assertEquals(BigInteger.valueOf(1), allPlaylist.get(0).getId());
         assertEquals("pl1-titre", allPlaylist.get(0).getNom());
+        assertEquals(BigInteger.valueOf(2), allPlaylist.get(1).getId());
         assertEquals("pl2-titre", allPlaylist.get(1).getNom());
     }
 
     @Test
     public void shouldReturnOnePlaylist() {
-        Playlist p = playlistDao.findByItunesId(BigInteger.valueOf(1));
+        Playlist p = playlistDao.findByItunesId(1);
         assertEquals("pl1-titre", p.getNom());
         assertEquals(2, p.getMusiques().size());
         assertEquals("mus1-titre", p.getMusiques().get(0).getTitre());
@@ -45,7 +46,7 @@ public class PlaylistRepositoryTest {
 
     @Test
     public void shouldReturnNoPlaylist() {
-        Playlist p = playlistDao.findByItunesId(BigInteger.valueOf(12345));
+        Playlist p = playlistDao.findByItunesId(12345);
         assertNull(p);
     }
 
@@ -54,11 +55,7 @@ public class PlaylistRepositoryTest {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(2, allPlaylist.size());
 
-        Playlist p = new Playlist();
-        p.setItunesId(3);
-        p.setNom("pl3-titre");
-
-        playlistDao.save(p);
+        playlistDao.save(Playlist.builder().nom("pl3-titre").build());
 
         allPlaylist = playlistDao.findAll();
         assertEquals(3, allPlaylist.size());
@@ -69,7 +66,7 @@ public class PlaylistRepositoryTest {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(2, allPlaylist.size());
 
-        Playlist p = playlistDao.findByItunesId(BigInteger.valueOf(1));
+        Playlist p = playlistDao.findByItunesId(1);
 
         playlistDao.delete(p);
 
@@ -83,7 +80,7 @@ public class PlaylistRepositoryTest {
         assertEquals(2, allPlaylist.size());
 
         Playlist p = new Playlist();
-        p.setItunesId(1);
+        p.setId(BigInteger.valueOf(1));
 
         playlistDao.delete(p);
 

@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface PlaylistRepository extends CrudRepository<Playlist, BigInteger> {
     List<Playlist> findAll();
-    Playlist findByItunesId(BigInteger itunesId);
+    Playlist findByItunesId(Integer itunesId);
 
     Playlist save(Playlist playlist);
     void delete(Playlist playlist);
-    void delete(BigInteger itunesId);
+    void delete(BigInteger id);
 }

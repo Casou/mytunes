@@ -48,7 +48,11 @@ public abstract class ItunesPropertyEntity {
         }
 
         try {
-            fieldProperty.set(this, value);
+            if (fieldProperty.getType().equals(Integer.class)) {
+                fieldProperty.set(this, Integer.valueOf(value.toString()));
+            } else {
+                fieldProperty.set(this, value);
+            }
         } catch (IllegalAccessException | IllegalArgumentException e) {
             throw new WrongTrackPropertyTypeException("La propriété " + fieldProperty.getName() +
                     " n'a pas pu être renseignée avec la valeur '" + value + "'", e);

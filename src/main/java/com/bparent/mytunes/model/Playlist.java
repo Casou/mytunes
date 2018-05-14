@@ -2,17 +2,22 @@ package com.bparent.mytunes.model;
 
 import com.bparent.mytunes.annotations.ItunesProperty;
 import com.bparent.mytunes.util.StringUtils;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper=true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name="PLAYLIST")
-public class Playlist extends ItunesPropertyEntity {
+public class Playlist extends ItunesPropertyEntity implements Serializable {
 
     @Id
     @Column(name="id", nullable = false)
@@ -21,7 +26,7 @@ public class Playlist extends ItunesPropertyEntity {
     protected BigInteger id;
 
     @ItunesProperty("Playlist ID")
-    @Column(name="itunes_id", nullable = false)
+    @Column(name="itunes_id")
     protected Integer itunesId;
 
     @ItunesProperty("Name")
