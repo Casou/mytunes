@@ -21,8 +21,6 @@ class PlaylistContainer extends React.Component {
         const { playlistManager } = this.props;
         const musiquePlaying = playlistManager.musiquePlaying;
 
-        console.log("render", playlistManager);
-
         return (
             <div id="playlistMenu">
                 <PlaylistHeader shuffle={ this.props.playlistManager.shuffle }

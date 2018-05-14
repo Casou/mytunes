@@ -23,7 +23,7 @@
 .VirtualizeTable .tableCell { display : flex; }
 .VirtualizeTable .tableHeader span { padding-left : 5px; }
 .VirtualizeTable .tableHeader span,
-.VirtualizeTable .tableCell span { margin : auto 0; width : 100%; }
+.VirtualizeTable .tableCell span { line-height : 30px; width : 100%; }
 
 .VirtualizeTable .evenRow { background-color: white; }
 .VirtualizeTable .oddRow { background-color: #f3f3f3; }
@@ -37,8 +37,8 @@
 .VirtualizeTable .tableCell.action button {
     margin : 0 !important;
     padding : 0 !important;
-    height : 18px !important;
-    width : 18px !important;
+    height : 30px !important;
+    width : 40px !important;
     vertical-align: middle;
 }
 

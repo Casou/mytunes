@@ -28,13 +28,15 @@
     text-shadow : 0 0 4px #FFF;
 }
 
-#playlistMenu li { display : flex; border-bottom : 1px solid lightgrey; cursor : grab; }
+#playlistMenu ul { margin-top: -3px; }
+
+#playlistMenu li { display : flex; border-bottom : 1px solid lightgrey; cursor : grab; height : 25px; }
 #playlistMenu li:nth-child(odd) { background-color : white; }
 #playlistMenu li:nth-child(even) { background-color : #f3f3f3; }
 
 #playlistMenu li span { display : inline-block; margin : auto 0; }
-#playlistMenu li span.play { width : 25px; text-align : center; cursor : pointer; }
-#playlistMenu li span.titre { width : calc(var(--playlist-tab-width) - 65px); }
+#playlistMenu li span.play { width : 30px; text-align : center; cursor : pointer; }
+#playlistMenu li span.titre { width : calc(var(--playlist-tab-width) - 70px); }
 #playlistMenu li span.duree { width : 35px; color : grey; font-size : 12px; line-height : var(--general-font-size); text-align : right; padding-right : 3px; }
 
 /*#playlistMenu li svg      { height : 16px !important; width : 16px !important; }*/
@@ -45,12 +47,13 @@
 #playlistMenu span.play button {
     margin : 0 !important;
     padding : 0 !important;
-    height : 18px !important;
-    width : 18px !important;
+    height : 25px !important;
+    width : 25px !important;
 }
 
 #playlistMenu span.play button span {
-    font-size : 18px !important;
+    font-size : 25px !important;
+    line-height : 25px !important;
 }
 
 #playlistMenuHeaderLeftButtons { float : left; }
