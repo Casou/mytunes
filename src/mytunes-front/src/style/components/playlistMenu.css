@@ -30,7 +30,7 @@
 
 #playlistMenu li { display : flex; border-bottom : 1px solid lightgrey; cursor : grab; }
 #playlistMenu li:nth-child(odd) { background-color : white; }
-#playlistMenu li:nth-child(even) { background-color : #ececec; }
+#playlistMenu li:nth-child(even) { background-color : #f3f3f3; }
 
 #playlistMenu li span { display : inline-block; margin : auto 0; }
 #playlistMenu li span.play { width : 25px; text-align : center; cursor : pointer; }

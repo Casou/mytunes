@@ -14,6 +14,28 @@ export default {
                 addMusique
             }
         });
+    },
+
+    clearPlaylist: () => (dispatch, getState) => {
+        dispatch({
+            type: "CLEAR_PLAYLIST"
+        });
+    },
+
+    toggleShuffle: () => (dispatch, getState) => {
+        dispatch({
+            type: "TOGGLE_SHUFFLE"
+        });
+    },
+
+    reorderPlaylist: (oldIndex, newIndex) => (dispatch, getState) => {
+        dispatch({
+            type: "REORDER_PLAYLIST",
+            payload: {
+                oldIndex,
+                newIndex
+            }
+        });
     }
 
 }

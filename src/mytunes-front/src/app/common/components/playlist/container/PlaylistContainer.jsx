@@ -44,19 +44,15 @@ class PlaylistContainer extends React.Component {
     }
 
     _toggleShuffle() {
-        this.props.playlistManager.toggleShuffle();
-        this.forceUpdate();
+        this.props.playlistActions.toggleShuffle();
     }
 
     _clearPlaylist() {
-        this.props.playlistManager.clearPlaylist();
-        this.forceUpdate();
+        this.props.playlistActions.clearPlaylist();
     }
 
     _sortEnd({oldIndex, newIndex}) {
-        this.props.playlistManager.reorderMusique(oldIndex, newIndex);
-        console.log("_sortEnd", this.props.playlistManager);
-        this.forceUpdate();
+        this.props.playlistActions.reorderPlaylist(oldIndex, newIndex);
     }
 
 }

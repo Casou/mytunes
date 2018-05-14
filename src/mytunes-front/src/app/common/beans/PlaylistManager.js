@@ -27,9 +27,8 @@ export default class PlaylistManager {
     }
 
     reorderMusique = (oldIndex, newIndex) => {
-        console.log("reorder", oldIndex, newIndex);
-        console.log(arrayMove(this.musiques, oldIndex, newIndex));
         this.musiques = arrayMove(this.musiques, oldIndex, newIndex);
+        return this;
     };
 
     getNextSong() {
