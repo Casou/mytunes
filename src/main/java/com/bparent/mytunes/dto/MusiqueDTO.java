@@ -42,6 +42,16 @@ public class MusiqueDTO extends EntityDTO<Musique> {
         return dto;
     }
 
+
+    @Override
+    public Musique toEntity() {
+        Musique entity = super.toEntity();
+        if (entity.getPath().startsWith(IConstants.IHandler.MUSIQUES_HANDLER)) {
+            entity.setPath(entity.getPath().substring(IConstants.IHandler.MUSIQUES_HANDLER.length()));
+        }
+        return entity;
+    }
+
     @Override
     public Class getEntityClass() {
         return Musique.class;

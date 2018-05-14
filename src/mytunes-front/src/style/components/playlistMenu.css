@@ -28,7 +28,7 @@
     text-shadow : 0 0 4px #FFF;
 }
 
-#playlistMenu li { display : flex; border-bottom : 1px solid lightgrey; }
+#playlistMenu li { display : flex; border-bottom : 1px solid lightgrey; cursor : grab; }
 #playlistMenu li:nth-child(odd) { background-color : white; }
 #playlistMenu li:nth-child(even) { background-color : #ececec; }
 

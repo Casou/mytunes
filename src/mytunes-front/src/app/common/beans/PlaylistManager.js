@@ -1,3 +1,5 @@
+import {arrayMove} from 'react-sortable-hoc';
+
 export default class PlaylistManager {
 
     constructor() {
@@ -23,6 +25,12 @@ export default class PlaylistManager {
         this.musiques.filter(musique => musiquePlaying.id === musique.id)
             .forEach(musique => musique.alreadyPlayed = true);
     }
+
+    reorderMusique = (oldIndex, newIndex) => {
+        console.log("reorder", oldIndex, newIndex);
+        console.log(arrayMove(this.musiques, oldIndex, newIndex));
+        this.musiques = arrayMove(this.musiques, oldIndex, newIndex);
+    };
 
     getNextSong() {
         if (this.shuffle) {

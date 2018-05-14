@@ -2,16 +2,17 @@ import React from 'react';
 import {FontIcon, IconButton} from "material-ui";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import { SortableElement } from 'react-sortable-hoc';
 
 import {musiquePropType} from "../../../types/MusiqueType";
 import {formateDuree} from "../../../util/Formatters";
 
-export const PlaylistItem = props => {
-    const {musique, isPlaying, playMusique, alreadyPlayed} = props;
+const PlaylistItem = SortableElement((props) => {
+    const {musique, isPlaying, playMusique} = props;
 
     return (
         <li className={
-            cn({ "alreadyPlayed" : alreadyPlayed },
+            cn({ "alreadyPlayed" : musique.alreadyPlayed },
                 { "isPlaying" : isPlaying })
         }>
             <span className="play">
@@ -27,12 +28,12 @@ export const PlaylistItem = props => {
             <span className="duree">{musique.duree ? formateDuree(musique.duree) : "-"}</span>
         </li>
     )
-};
+});
+
 
 PlaylistItem.propTypes = {
     musique: musiquePropType.isRequired,
     isPlaying: PropTypes.bool.isRequired,
-    alreadyPlayed: PropTypes.bool.isRequired,
     playMusique: PropTypes.func.isRequired
 };
 
