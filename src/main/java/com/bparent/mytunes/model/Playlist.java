@@ -61,7 +61,7 @@ public class Playlist extends ItunesPropertyEntity implements Serializable {
 
 
     @Transient
-    private List<BigInteger> tempMusiqueId;
+    private List<Integer> tempMusiqueITunesId;
 
 
 
@@ -73,7 +73,7 @@ public class Playlist extends ItunesPropertyEntity implements Serializable {
                 + " (" + StringUtils.getStringMaxLengthPadLeft(String.valueOf(this.persistentId), 6) + ")"
                 + " - " + StringUtils.getStringMaxLengthPadRight(this.nom, 30)+ "] "
                 + "[" + (isFolder ? "F" : " ") + (parent != null ? "C" : " ") + "] "
-                + "Musiques : " + (tempMusiqueId == null ? "0" : tempMusiqueId.size());
+                + "Musiques : " + (tempMusiqueITunesId == null ? "0" : tempMusiqueITunesId.size());
     }
 
 }

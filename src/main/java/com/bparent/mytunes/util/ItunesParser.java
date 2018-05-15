@@ -246,7 +246,7 @@ public class ItunesParser {
                 }
                 childKey = null;
             } else if (ELEMENT_ARRAY.equals(child.getNodeName()) && childKey != null && childKey.getTextContent().equals("Playlist Items")) {
-                playlist.setTempMusiqueId(extractMusiqueIdsForPlaylist(child));
+                playlist.setTempMusiqueITunesId(extractMusiqueIdsForPlaylist(child));
             }
 
         }
@@ -254,13 +254,13 @@ public class ItunesParser {
     }
 
 
-    private List<BigInteger> extractMusiqueIdsForPlaylist(Node arrayNode) {
-        List<BigInteger> musiqueIds = new ArrayList<>();
+    private List<Integer> extractMusiqueIdsForPlaylist(Node arrayNode) {
+        List<Integer> musiqueIds = new ArrayList<>();
         NodeList arrayChildren = arrayNode.getChildNodes();
         for (int i = 0; i < arrayChildren.getLength(); i++) {
             Node childNode = arrayChildren.item(i);
             if (ELEMENT_DICT.equals(childNode.getNodeName())) {
-                musiqueIds.add(extractMusiqueId(childNode));
+                musiqueIds.add(extractMusiqueId(childNode).intValue());
             }
         }
         return musiqueIds;
@@ -291,18 +291,18 @@ public class ItunesParser {
                 }
             }
 
-            if (playlist.getTempMusiqueId() == null) {
+            if (playlist.getTempMusiqueITunesId() == null) {
                 return;
             }
             playlist.setMusiques(
-                    playlist.getTempMusiqueId().stream()
+                    playlist.getTempMusiqueITunesId().stream()
                             .map(musiqueId -> musiques.stream()
                                     .filter(musique -> musique.getItunesId().equals(musiqueId))
                                     .findFirst()
                                     .orElse(null))
                             .filter(musique -> musique != null)
                             .collect(Collectors.toList()));
-            playlist.setTempMusiqueId(null);
+            playlist.setTempMusiqueITunesId(null);
         });
     }
 
