@@ -16,11 +16,11 @@
 		<dict>
 			<key>Track ID</key><integer>1</integer>
 			<key>Name</key><string>Shiny Stockings</string>
-			<key>Artist</key><string>??</string>
+			<key>Artist</key><string>Ella Fitzgerald</string>
 			<key>Album Artist</key><string>??</string>
 			<key>Composer</key><string>??</string>
 			<key>Album</key><string>??</string>
-			<key>Genre</key><string>Lindy</string>
+			<key>Genre</key><string>Lindy / Boogie</string>
 			<key>Kind</key><string>Fichier audio MPEG</string>
 			<key>Size</key><integer>2798233</integer>
 			<key>Total Time</key><integer>131552</integer>
@@ -31,7 +31,7 @@
 			<key>Date Added</key><date>2012-07-15T13:38:38Z</date>
 			<key>Bit Rate</key><integer>165</integer>
 			<key>Sample Rate</key><integer>44100</integer>
-			<key>Comments</key><string>30</string>
+			<key>Comments</key><string>30 - Some comment</string>
 			<key>Play Count</key><integer>2</integer>
 			<key>Play Date</key><integer>3426768449</integer>
 			<key>Play Date UTC</key><date>2012-08-02T14:07:29Z</date>

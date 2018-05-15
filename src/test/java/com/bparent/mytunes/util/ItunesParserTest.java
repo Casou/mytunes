@@ -23,7 +23,11 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ItunesParserTest {
@@ -40,26 +44,25 @@ public class ItunesParserTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
+        when(musiqueDao.save(any(Musique.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
     }
 
     @Test
-    public void shouldParseFile() throws IOException, SAXException, ParserConfigurationException {
-        ArgumentCaptor<List> playlistsCaptor = ArgumentCaptor.forClass(List.class);
-        ArgumentCaptor<List> musiquesCaptor = ArgumentCaptor.forClass(List.class);
+    public void parseFile_shouldSaveMusiqueIfNotExisting() throws IOException, SAXException, ParserConfigurationException {
+        ArgumentCaptor<Musique> musiquesCaptor = ArgumentCaptor.forClass(Musique.class);
 
         File f = new File("src/test/resources/xml/itunes_library_test.xml");
         this.itunesParser.load(f.getAbsolutePath());
 
-        verify(playlistDao).save(playlistsCaptor.capture());
-        verify(musiqueDao).save(musiquesCaptor.capture());
+        verify(musiqueDao, times(4)).save(musiquesCaptor.capture());
 
-        List<Musique> musiques = musiquesCaptor.getValue();
+        List<Musique> musiques = musiquesCaptor.getAllValues();
         assertEquals(4, musiques.size());
 
         Musique m = musiques.get(0);
         assertEquals(Integer.valueOf(1), m.getItunesId());
         assertEquals("Shiny Stockings", m.getTitre());
-        assertEquals("??", m.getArtiste());
+        assertEquals("Ella Fitzgerald", m.getArtiste());
         assertEquals(Integer.valueOf(120), m.getBpm());
         assertEquals(Integer.valueOf(80), m.getClassement());
         assertEquals(Integer.valueOf(131552), m.getDuree());
@@ -68,10 +71,21 @@ public class ItunesParserTest {
         // TODO Parse genres
 //        assertEquals("Lindy", m.getGenres().get(0).getLabel());
         assertEquals("file://localhost/E:/wamp/www/dancetunes/songs/test-upload/30 - Shiny Stockings.mp3", m.getPath());
-        assertEquals("30", m.getCommentaire());
+        assertEquals("30 - Some comment", m.getCommentaire());
 
         assertEquals(Integer.valueOf(0), musiques.get(3).getTimerDebut());
         assertEquals(Integer.valueOf(131552), musiques.get(3).getTimerFin());
+
+    }
+
+    @Test
+    public void parseFile_shouldSavePlaylists() throws IOException, SAXException, ParserConfigurationException {
+        ArgumentCaptor<List> playlistsCaptor = ArgumentCaptor.forClass(List.class);
+
+        File f = new File("src/test/resources/xml/itunes_library_test.xml");
+        this.itunesParser.load(f.getAbsolutePath());
+
+        verify(playlistDao).save(playlistsCaptor.capture());
 
         List<Playlist> playlists = playlistsCaptor.getValue();
         assertEquals(2, playlists.size());
@@ -94,7 +108,42 @@ public class ItunesParserTest {
         assertEquals(Integer.valueOf(14525), child.getParent().getItunesId());
         assertEquals(0, child.getChildren().size());
         assertEquals(2, child.getMusiques().size());
+    }
 
+
+    @Test
+    public void parseFile_shouldUpdateMusiqueIfExisting() throws IOException, SAXException, ParserConfigurationException {
+        Musique musiqueToUpdate = Musique.builder()
+                .id(BigInteger.valueOf(1)).itunesId(1)
+                .titre("to update")
+                .artiste("to update")
+                .classement(20)
+                .commentaire("to update")
+                .bpm(240)
+                .path("to update")
+                .timerDebut(10)
+                .timerFin(50)
+                .updateDate(DateUtils.parseDate("2012-12-24T14:54:43Z", "yyyy-MM-dd'T'HH:mm:ss'Z'"))
+                .duree(125) // should not be updated
+                .build();
+        when(musiqueDao.findByItunesId(eq(1))).thenReturn(musiqueToUpdate);
+
+        File f = new File("src/test/resources/xml/itunes_library_test.xml");
+        this.itunesParser.load(f.getAbsolutePath());
+
+        assertEquals("Shiny Stockings", musiqueToUpdate.getTitre());
+        assertEquals("Ella Fitzgerald", musiqueToUpdate.getArtiste());
+        assertEquals("30 - Some comment", musiqueToUpdate.getCommentaire());
+//        assertEquals("file://localhost/E:/wamp/www/dancetunes/songs/test-upload/30 - Shiny Stockings.mp3", musiqueToUpdate.getPath());
+        assertEquals(Integer.valueOf(80), musiqueToUpdate.getClassement());
+        assertEquals(Integer.valueOf(120), musiqueToUpdate.getBpm());
+        assertNull(musiqueToUpdate.getTimerDebut());
+        assertNull(musiqueToUpdate.getTimerFin());
+//        assertEquals(Integer.valueOf(120), musiqueToUpdate.getUpdateDate());
+        // TODO Parse genres
+//        assertEquals("Lindy", m.getGenres().get(0).getLabel());
+
+        assertEquals(Integer.valueOf(125), musiqueToUpdate.getDuree());
     }
 
 }

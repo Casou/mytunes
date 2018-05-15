@@ -23,8 +23,7 @@ public class Genre {
     @SequenceGenerator(name="GENRE_SEQ", sequenceName="GENRE_SEQ", allocationSize=1)
     protected BigInteger id;
 
-    @NotNull
-    @Column(name="label", unique = true)
+    @Column(name="label", nullable = false, unique = true)
     protected String label;
 
 }

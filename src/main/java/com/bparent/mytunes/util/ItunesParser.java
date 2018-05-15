@@ -1,5 +1,6 @@
 package com.bparent.mytunes.util;
 
+import com.bparent.mytunes.repository.GenreRepository;
 import com.bparent.mytunes.repository.MusiqueRepository;
 import com.bparent.mytunes.repository.PlaylistRepository;
 import com.bparent.mytunes.exception.IllegalTrackPropertyException;
@@ -21,7 +22,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +36,7 @@ public class ItunesParser {
     private static final String ELEMENT_KEY = "key";
     private static final String ELEMENT_KEY_TRACKS = "Tracks";
     private static final String ELEMENT_KEY_PLAYLISTS = "Playlists";
+    private static final String ELEMENT_KEY_GENRE = "Genre";
     private static final String ELEMENT_DICT = "dict";
     private static final String ELEMENT_ARRAY = "array";
 
@@ -41,11 +46,16 @@ public class ItunesParser {
     private static final String TYPE_BOOLEAN_TRUE = "true";
     private static final String TYPE_BOOLEAN_FALSE = "false";
 
+    private static final String DATE_TIME_FORMATTER = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
     @Autowired
     private MusiqueRepository musiqueRepository;
 
     @Autowired
     private PlaylistRepository playlistRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
 
 
     public void load(String filePath) throws ParserConfigurationException, IOException, SAXException {
@@ -130,10 +140,7 @@ public class ItunesParser {
             }
         }
 
-        completeReferences(playlists, musiques);
-
-        musiqueRepository.save(musiques);
-        playlistRepository.save(playlists);
+        this.completeReferencesAndSave(playlists, musiques);
     }
 
 
@@ -174,28 +181,34 @@ public class ItunesParser {
         return musiques;
     }
 
-    private Musique extractTrack(Node dictTrack) {
+    private Musique extractTrack(final Node dictTrack) {
         int j = 0;
-        NodeList trackProperties = dictTrack.getChildNodes();
-        Musique musique = new Musique();
+        final NodeList trackProperties = dictTrack.getChildNodes();
+        final Musique musique = new Musique();
         while(j < trackProperties.getLength()) {
-            Node propertyKey = trackProperties.item(j);
+            final Node propertyKey = trackProperties.item(j);
             j++;
             if (!ELEMENT_KEY.equals(propertyKey.getNodeName())) {
                 continue;
             }
 
-            Node propertyValue = trackProperties.item(j);
-            String nodeValueName = propertyValue.getNodeName();
+            final Node propertyValue = trackProperties.item(j);
+            final String nodeValueName = propertyValue.getNodeName();
             j++;
             if (!isPropertyType(nodeValueName)) {
                 throw new IllegalTrackPropertyException("Un type de propriété non répertorié a été détecté : " + nodeValueName);
             }
 
-            try {
-                musique.fillProperty(propertyKey.getTextContent(), extractContentObject(nodeValueName, propertyValue.getTextContent()));
-            } catch (WrongTrackPropertyTypeException e) {
-                log.error("Erreur lors du renseignement d'une propriété de la musique", e);
+            if (ELEMENT_KEY_GENRE.equals(propertyKey.getNodeName())) {
+                final List<String> allGenres = propertyValue.getTextContent().isEmpty() ? new ArrayList<>() :
+                        Arrays.stream(propertyValue.getTextContent().split("/")).collect(Collectors.toList());
+
+            } else {
+                try {
+                    musique.fillProperty(propertyKey.getTextContent(), extractContentObject(nodeValueName, propertyValue.getTextContent()));
+                } catch (WrongTrackPropertyTypeException e) {
+                    log.error("Erreur lors du renseignement d'une propriété de la musique", e);
+                }
             }
         }
         return musique;
@@ -204,6 +217,9 @@ public class ItunesParser {
     private Object extractContentObject(String objectType, String objectValue) {
         if (TYPE_INTEGER.equals(objectType)) {
             return new BigInteger(objectValue);
+        }
+        if (TYPE_DATE.equals(objectType)) {
+            return DateUtils.parseDate(objectValue, DATE_TIME_FORMATTER);
         }
         if (TYPE_BOOLEAN_FALSE.equals(objectType)) {
             return Boolean.FALSE;
@@ -277,7 +293,29 @@ public class ItunesParser {
         return null;
     }
 
-    private void completeReferences(List<Playlist> playlists, List<Musique> musiques) {
+    private void completeReferencesAndSave(List<Playlist> playlists, List<Musique> musiques) {
+        final List<Musique> musiqueEntities = musiques.stream().map(musiqueXml -> {
+            Musique musiqueBdd = musiqueRepository.findByItunesId(musiqueXml.getItunesId());
+            if (musiqueBdd != null) {
+                if (musiqueBdd.getUpdateDate() != null && musiqueBdd.getUpdateDate().isAfter(musiqueXml.getUpdateDate())) {
+                    musiqueBdd.setClassement(musiqueXml.getClassement());
+//                    musiqueBdd.setGenres(musiqueXml.getGenres());
+                    musiqueBdd.setTitre(musiqueXml.getTitre());
+
+                    musiqueBdd.setArtiste(musiqueXml.getArtiste());
+                    musiqueBdd.setCommentaire(musiqueXml.getCommentaire());
+                    musiqueBdd.setBpm(musiqueXml.getBpm());
+                    musiqueBdd.setTimerDebut(musiqueXml.getTimerDebut());
+                    musiqueBdd.setTimerFin(musiqueXml.getTimerFin());
+                    musiqueBdd.setUpdateDate(musiqueXml.getUpdateDate());
+                }
+            } else {
+                musiqueBdd = musiqueRepository.save(musiqueXml);
+            }
+            return musiqueBdd;
+        }).collect(Collectors.toList());
+
+
         playlists.forEach(playlist -> {
             String parentId = playlist.getParentPersistentId();
             if (parentId != null) {
@@ -296,7 +334,7 @@ public class ItunesParser {
             }
             playlist.setMusiques(
                     playlist.getTempMusiqueITunesId().stream()
-                            .map(musiqueId -> musiques.stream()
+                            .map(musiqueId -> musiqueEntities.stream()
                                     .filter(musique -> musique.getItunesId().equals(musiqueId))
                                     .findFirst()
                                     .orElse(null))
@@ -304,6 +342,8 @@ public class ItunesParser {
                             .collect(Collectors.toList()));
             playlist.setTempMusiqueITunesId(null);
         });
+
+        playlistRepository.save(playlists);
     }
 
 }

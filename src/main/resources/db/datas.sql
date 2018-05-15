@@ -51,4 +51,4 @@ INSERT INTO GENRE(id, label) VALUES (GENRE_SEQ.nextval, '6 temps');
 INSERT INTO GENRE(id, label) VALUES (GENRE_SEQ.nextval, 'Boogie');
 INSERT INTO GENRE(id, label) VALUES (GENRE_SEQ.nextval, 'Blues');
 
-INSERT INTO MUSIQUE_GENRES(musique_id, genre_id) SELECT id, (SELECT id FROM GENRE WHERE label = 'Lindy') FROM MUSIQUE;
+INSERT INTO MUSIQUE_GENRES(id_musique, id_genre) SELECT id, (SELECT id FROM GENRE WHERE label = 'Lindy') FROM MUSIQUE;
