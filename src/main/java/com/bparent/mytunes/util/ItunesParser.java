@@ -1,5 +1,6 @@
 package com.bparent.mytunes.util;
 
+import com.bparent.mytunes.model.Genre;
 import com.bparent.mytunes.repository.GenreRepository;
 import com.bparent.mytunes.repository.MusiqueRepository;
 import com.bparent.mytunes.repository.PlaylistRepository;
@@ -199,10 +200,20 @@ public class ItunesParser {
                 throw new IllegalTrackPropertyException("Un type de propriété non répertorié a été détecté : " + nodeValueName);
             }
 
-            if (ELEMENT_KEY_GENRE.equals(propertyKey.getNodeName())) {
-                final List<String> allGenres = propertyValue.getTextContent().isEmpty() ? new ArrayList<>() :
-                        Arrays.stream(propertyValue.getTextContent().split("/")).collect(Collectors.toList());
+            if (ELEMENT_KEY_GENRE.equals(propertyKey.getTextContent())) {
+                final List<String> allGenreLabels = propertyValue.getTextContent().isEmpty() ? new ArrayList<>() :
+                        Arrays.stream(propertyValue.getTextContent().split("/"))
+                                .map(genreLabel -> genreLabel.trim())
+                                .collect(Collectors.toList());
+                List<Genre> allGenres = allGenreLabels.stream().map(genreLabel -> {
+                    Genre genre = genreRepository.findByLabel(genreLabel);
+                    if (genre == null) {
+                        return genreRepository.save(Genre.builder().label(genreLabel).build());
+                    }
+                    return genre;
+                }).collect(Collectors.toList());
 
+                musique.setGenres(allGenres);
             } else {
                 try {
                     musique.fillProperty(propertyKey.getTextContent(), extractContentObject(nodeValueName, propertyValue.getTextContent()));
@@ -240,8 +251,6 @@ public class ItunesParser {
                 playlists.add(extractPlaylist(dictNode));
             }
         }
-//        playlists.stream().forEach(System.out::println);
-
         return playlists;
     }
 
@@ -299,7 +308,7 @@ public class ItunesParser {
             if (musiqueBdd != null) {
                 if (musiqueBdd.getUpdateDate() != null && musiqueBdd.getUpdateDate().isAfter(musiqueXml.getUpdateDate())) {
                     musiqueBdd.setClassement(musiqueXml.getClassement());
-//                    musiqueBdd.setGenres(musiqueXml.getGenres());
+                    musiqueBdd.setGenres(musiqueXml.getGenres());
                     musiqueBdd.setTitre(musiqueXml.getTitre());
 
                     musiqueBdd.setArtiste(musiqueXml.getArtiste());

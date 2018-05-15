@@ -1,5 +1,7 @@
 package com.bparent.mytunes.util;
 
+import com.bparent.mytunes.model.Genre;
+import com.bparent.mytunes.repository.GenreRepository;
 import com.bparent.mytunes.repository.MusiqueRepository;
 import com.bparent.mytunes.repository.PlaylistRepository;
 import com.bparent.mytunes.model.Musique;
@@ -41,10 +43,14 @@ public class ItunesParserTest {
     @Mock
     private PlaylistRepository playlistDao;
 
+    @Mock
+    private GenreRepository genreRepository;
+
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
         when(musiqueDao.save(any(Musique.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
+        when(genreRepository.save(any(Genre.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArguments()[0]);
     }
 
     @Test
@@ -68,10 +74,12 @@ public class ItunesParserTest {
         assertEquals(Integer.valueOf(131552), m.getDuree());
         assertNull(m.getTimerDebut());
         assertNull(m.getTimerFin());
-        // TODO Parse genres
-//        assertEquals("Lindy", m.getGenres().get(0).getLabel());
         assertEquals("file://localhost/E:/wamp/www/dancetunes/songs/test-upload/30 - Shiny Stockings.mp3", m.getPath());
         assertEquals("30 - Some comment", m.getCommentaire());
+
+        assertEquals(2, m.getGenres().size());
+        assertEquals("Lindy", m.getGenres().get(0).getLabel());
+        assertEquals("Boogie", m.getGenres().get(1).getLabel());
 
         assertEquals(Integer.valueOf(0), musiques.get(3).getTimerDebut());
         assertEquals(Integer.valueOf(131552), musiques.get(3).getTimerFin());
@@ -139,11 +147,25 @@ public class ItunesParserTest {
         assertEquals(Integer.valueOf(120), musiqueToUpdate.getBpm());
         assertNull(musiqueToUpdate.getTimerDebut());
         assertNull(musiqueToUpdate.getTimerFin());
-//        assertEquals(Integer.valueOf(120), musiqueToUpdate.getUpdateDate());
-        // TODO Parse genres
-//        assertEquals("Lindy", m.getGenres().get(0).getLabel());
+        assertEquals(DateUtils.parseDate("2012-12-24T13:54:56Z",  "yyyy-MM-dd'T'HH:mm:ss'Z'"), musiqueToUpdate.getUpdateDate());
+
+        assertEquals(2, musiqueToUpdate.getGenres().size());
+        assertEquals("Lindy", musiqueToUpdate.getGenres().get(0).getLabel());
+        assertEquals("Boogie", musiqueToUpdate.getGenres().get(1).getLabel());
 
         assertEquals(Integer.valueOf(125), musiqueToUpdate.getDuree());
+    }
+
+
+    @Test
+    public void parseFile_shouldSaveGenreIfNotExisting() throws IOException, SAXException, ParserConfigurationException {
+        when(genreRepository.findByLabel("Lindy")).thenReturn(Genre.builder().id(BigInteger.valueOf(1)).label("Lindy").build());
+
+        File f = new File("src/test/resources/xml/itunes_library_test.xml");
+        this.itunesParser.load(f.getAbsolutePath());
+
+        // Save Boogie only
+        verify(genreRepository, times(1)).save(any(Genre.class));
     }
 
 }
