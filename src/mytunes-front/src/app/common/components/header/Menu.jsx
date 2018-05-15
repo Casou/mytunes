@@ -44,7 +44,7 @@ export default class Menu extends React.Component {
           className={ "mainMenu menuDrawer" }
           onRequestChange={ this.setMenuOpeness }
         >
-          <MenuItem containerElement={<Link to="/" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to="/musiques" />} onClick={ this.closeMenu }>
             <FontIcon className="material-icons">library_music</FontIcon>
             Liste musiques
           </MenuItem>
@@ -53,7 +53,7 @@ export default class Menu extends React.Component {
             Liste par genre
           </MenuItem>
           <Divider />
-          <MenuItem onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to="/playlists" />} onClick={ this.closeMenu }>
               <FontIcon className="material-icons">list</FontIcon>
               Playlists
           </MenuItem>
