@@ -11,7 +11,8 @@ CREATE TABLE MUSIQUE(
   bpm INT(11) NULL,
   classement INT(3) NULL,
   commentaire VARCHAR(255) NULL,
-  path VARCHAR(255) NULL
+  path VARCHAR(255) NULL,
+  update_date TIMESTAMP NULL
 );
 
 DROP TABLE PLAYLIST IF EXISTS;

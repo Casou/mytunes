@@ -1,0 +1,40 @@
+#savedPlaylists {
+    height : calc(100vh - var(--lecteur-height));
+}
+
+.rst__tree {
+    width: 50%;
+    display: inline-block;
+}
+
+.rst__rowWrapper {
+    padding : 0;
+    cursor : pointer;
+}
+
+.rst__rowTitleWithSubtitle {
+    font-size : 13px !important;
+    height : 14px !important;
+}
+
+#musiquesPlaylist {
+    display: inline-block;
+    width : 50%;
+    vertical-align: top;
+}
+
+#musiquesPlaylist ul {
+    display: table;
+    width : 100%;
+}
+#musiquesPlaylist li { display : table-row; width : 100%; border-bottom : 1px solid lightgrey; cursor : grab; height : 30px; font-size : 14px; line-height : 30px;}
+#musiquesPlaylist li#headerMusiquesPlaylist { display : table-header-group; background-color : #c8c8c8; cursor : default; font-weight : bold; }
+#musiquesPlaylist li:nth-child(odd) { background-color : #f3f3f3; }
+#musiquesPlaylist li:nth-child(even) { background-color : white; }
+
+#musiquesPlaylist li span.musiqueCell { display : table-cell; }
+
+#musiquesPlaylist li span.titre { width : calc(100% - 200px); padding : 0 3px; }
+#musiquesPlaylist li span.bpm { width : 50px; text-align : center; }
+#musiquesPlaylist li span.classement { width : 75px; text-align : center; }
+#musiquesPlaylist li span.duree { width : 75px; text-align : center; }

@@ -14,11 +14,10 @@ public class PlaylistController {
     @Autowired
     private PlaylistRepository playlistRepository;
 
-
     @GetMapping("/playlists")
     public List<PlaylistDTO> getAllPlaylist() {
-        return playlistRepository.findAll().stream().
-                map(PlaylistDTO::toDto)
+        return playlistRepository.findByParentIsNull().stream()
+                .map(PlaylistDTO::toDto)
                 .collect(Collectors.toList());
     }
 

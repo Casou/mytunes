@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -22,13 +24,23 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
     protected Boolean isFolder = Boolean.FALSE;
     protected String persistentId;
     protected String parentPersistentId;
-    protected List<MusiqueDTO> musiques;
-//    protected Playlist parent;
-//    protected List<Playlist> children = new ArrayList<>();
+    protected List<MusiqueDTO> musiques = new ArrayList<>();
+    protected List<PlaylistDTO> children = new ArrayList<>();
 
     public static PlaylistDTO toDto(Playlist playlist) {
         ModelMapper mapper = new ModelMapper();
-        return mapper.map(playlist, PlaylistDTO.class);
+        PlaylistDTO dto = mapper.map(playlist, PlaylistDTO.class);
+        if (playlist.getChildren() != null) {
+            dto.children = playlist.getChildren().stream()
+                    .map(PlaylistDTO::toDto)
+                    .sorted((dto1, dto2) -> {
+                        if (dto1.isFolder && !dto2.isFolder) { return 1; }
+                        if (!dto1.isFolder && dto2.isFolder) { return -1; }
+                        return dto1.getNom().compareTo(dto2.getNom());
+                    })
+                    .collect(Collectors.toList());
+        }
+        return dto;
     }
 
     @Override

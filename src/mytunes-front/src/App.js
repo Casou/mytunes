@@ -11,7 +11,7 @@ import MainWrapper from "./app/pages/initApp/MainWrapper";
 import {MuiThemeProvider} from "material-ui";
 import {NotificationContainer} from "react-notifications";
 
-import {Route, Redirect} from "react-router-dom";
+import {Route} from "react-router-dom";
 import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
 import ListeGenres from "./app/pages/listeGenres/containers/ListeGenres";
 import SavedPlaylists from "./app/pages/savedPlaylists/container/SavedPlaylists";
@@ -28,7 +28,7 @@ const App = () => (
             <WebSocketClient/>
             <Header/>
             <MainWrapper>
-                <Redirect from="/" to="musiques"/>
+                <Route exact path="/" component={ListeMusique}/>
                 <Route exact path="/musiques" component={ListeMusique}/>
                 <Route exact path="/genres/:genreId?" component={ListeGenres}/>
                 <Route exact path="/playlists" component={SavedPlaylists}/>

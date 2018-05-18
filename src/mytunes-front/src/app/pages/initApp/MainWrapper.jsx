@@ -6,11 +6,13 @@ import {assign} from "lodash";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {RefreshIndicator} from "material-ui";
+import PlaylistsActions from "../savedPlaylists/actions/PlaylistsActions";
 
 class MainWrapper extends React.Component {
 
     componentDidMount() {
         this.props.musiquesActions.getAllMusiques();
+        this.props.playlistsActions.getAllPlaylists();
         this.props.genreActions.getGenres();
     }
 
@@ -40,17 +42,19 @@ class MainWrapper extends React.Component {
     }
 
     isApplicationLoaded(props) {
-        return props.musiques && props.genres;
+        return props.musiques && props.genres && props.playlists;
     }
 }
 
 export default connect(state => assign({}, {
         musiques: state.musiques,
         genres: state.genres,
+        playlists: state.playlists,
         isLoading: state.isLoading
     }),
     dispatch => ({
         musiquesActions: bindActionCreators(MusiquesActions, dispatch),
+        playlistsActions: bindActionCreators(PlaylistsActions, dispatch),
         loadingActions: bindActionCreators(LoadingActions, dispatch),
         genreActions: bindActionCreators(GenreActions, dispatch)
     }))(MainWrapper);
