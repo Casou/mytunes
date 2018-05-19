@@ -33,7 +33,7 @@ class TreeNodeRenderer extends Component {
             onClick,
             ...otherProps
         } = this.props;
-        console.log(node);
+
         const nodeTitle = title || node.title;
         const nodeSubtitle = subtitle || node.subtitle;
 

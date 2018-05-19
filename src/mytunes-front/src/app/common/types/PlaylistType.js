@@ -5,5 +5,7 @@ export const playlistPropType = PropTypes.shape({
     itunesId: PropTypes.number,
     nom: PropTypes.string.isRequired,
     isFolder: PropTypes.bool.isRequired,
-    id_playlist_parent: PropTypes.number
+    id_playlist_parent: PropTypes.number,
+    musiqueIds: PropTypes.array,
+    children: PropTypes.array
 });

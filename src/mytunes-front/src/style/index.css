@@ -74,22 +74,17 @@ div.textField input {
 
 
 .playlistSortableHelper { z-index: 9999; list-style : none; padding : 0; border : 1px dashed grey; background-color : white; cursor : grabbing !important; }
-.playlistSortableHelper span { display : inline-block; margin : auto 0; vertical-align : middle; }
-.playlistSortableHelper span.play { width : 25px; text-align : center; cursor : pointer; }
-.playlistSortableHelper span.titre { width : calc(var(--playlist-tab-width) - 120px); }
-.playlistSortableHelper span.duree { width : 35px; color : #545454; font-size : 12px; line-height : var(--general-font-size); text-align : right; padding-right : 3px; }
+.playlistSortableHelper span { display : inline-block; color : #545454; vertical-align : middle; font-size : 12px; line-height: 29px; }
+.playlistSortableHelper span.titre { width : calc(100% - 235px); padding : 0 3px; }
+.playlistSortableHelper span.bpm { width : 50px; text-align : center; }
+.playlistSortableHelper span.classement { width : 75px; text-align : center; }
+.playlistSortableHelper span.duree { width : 75px; text-align : center; }
+.playlistSortableHelper span.delete { display : none; }
 
-.playlistSortableHelper span.play button {
-  margin : 0 !important;
-  padding : 0 !important;
-  height : 18px !important;
-  width : 18px !important;
-  color : #585858 !important;
-}
 
-.playlistSortableHelper span.play button span {
-  font-size : 18px !important;
-}
+
+
+
 
 .notification-warning {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fb9209+0,ffb657+100 */

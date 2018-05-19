@@ -13,20 +13,28 @@ const SavedPlaylistSortableList = SortableContainer((props) => {
                 <span className="musiqueCell classement">Class.</span>
                 <span className="musiqueCell bpm">BPM</span>
                 <span className="musiqueCell duree">Durée</span>
+                <span className="musiqueCell delete"> </span>
             </li>
-            {musiques.map((musique, index) => (
-                <SavedPlaylistItem key={`item-${index}`}
-                                   index={index}
-                                   musique={musique}
-                                   isPlaying={musique === musiquePlaying}
-                                   playMusique={playMusique} />
+            {
+                musiques.length === 0 ?
+                    <span className={"noData"}>Pas de musique</span>
+                    :
+                    musiques.map((musique, index) => (
+                        <SavedPlaylistItem key={`item-${index}`}
+                                           index={index}
+                                           musique={musique}
+                                           isPlaying={musique === musiquePlaying}
+                                           playMusique={playMusique}
+                                           onDelete={props.onDeleteMusique}
+                        />
             ))}
         </ul>
     );
 });
 
 SavedPlaylistSortableList.propTypes = {
-    musiques: PropTypes.arrayOf(musiquePropType).isRequired
+    musiques: PropTypes.arrayOf(musiquePropType).isRequired,
+    onDeleteMusique: PropTypes.func.isRequired
 };
 
 export default SavedPlaylistSortableList;

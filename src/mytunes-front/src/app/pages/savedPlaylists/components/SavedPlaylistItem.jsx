@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { SortableElement } from 'react-sortable-hoc';
+import { FontIcon, IconButton } from 'material-ui';
 
 import {musiquePropType} from "../../../common/types/MusiqueType";
 import {formateDuree} from "../../../common/util/Formatters";
@@ -20,13 +21,19 @@ const SavedPlaylistItem = SortableElement((props) => {
             </span>
             <span className="musiqueCell bpm">{musique.bpm}</span>
             <span className="musiqueCell duree">{musique.duree ? formateDuree(musique.duree) : "-"}</span>
+            <span className="musiqueCell delete">
+                <IconButton onClick={() => props.onDelete(musique) }>
+                    <FontIcon className="material-icons">delete</FontIcon>
+                </IconButton>
+            </span>
         </li>
     )
 });
 
 
 SavedPlaylistItem.propTypes = {
-    musique: musiquePropType.isRequired
+    musique: musiquePropType.isRequired,
+    onDelete: PropTypes.func.isRequired
 };
 
 export default SavedPlaylistItem;

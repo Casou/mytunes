@@ -42,14 +42,14 @@ class MainWrapper extends React.Component {
     }
 
     isApplicationLoaded(props) {
-        return props.musiques && props.genres && props.playlists;
+        return props.musiques && props.genres && props.playlistProvider;
     }
 }
 
 export default connect(state => assign({}, {
         musiques: state.musiques,
         genres: state.genres,
-        playlists: state.playlists,
+        playlistProvider: state.playlistProvider,
         isLoading: state.isLoading
     }),
     dispatch => ({
