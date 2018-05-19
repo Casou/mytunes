@@ -47,7 +47,7 @@ public class ITunesExporterTest {
 
         verify(shell, times(2)).exec(cmdCaptor.capture());
 
-        assertEquals("ffmpeg32 -i \"path/to/Song.mp3\" -metadata title=\"Song\" -metadata artist=\"Artiste\" -metadata album=\"Album in 'properties'\" -metadata TBPM=\"120\" -metadata comment=\"Commentaire\" \"output/folder/30 - Song.mp3\"", cmdCaptor.getAllValues().get(0));
+        assertEquals("ffmpeg32 -i \"path/to/Song.mp3\" -metadata title=\"Song\" -metadata artist=\"Artiste\" -metadata album=\"Album in 'properties'\" -metadata TBPM=\"240\" -metadata comment=\"Commentaire\" \"output/folder/60 - Song.mp3\"", cmdCaptor.getAllValues().get(0));
         assertEquals("ffmpeg32 -i \"second/path/to/Another Song.mp3\" -metadata title=\"Another Song\" -metadata album=\"Album in 'properties'\" -metadata comment=\"Commentaire Another Song\" \"output/folder/Another Song.mp3\"", cmdCaptor.getAllValues().get(1));
     }
 
@@ -63,7 +63,7 @@ public class ITunesExporterTest {
     private List<Musique> buildMusiques() {
         return Arrays.asList(
                 Musique.builder().id(BigInteger.valueOf(1234)).itunesId(4321).titre("Song").artiste("Artiste").bpm(240).duree(120).classement(5).commentaire("Commentaire").path("path/to/Song.mp3").build(),
-                Musique.builder().id(BigInteger.valueOf(2234)).itunesId(4322).titre("Another Song").bpm(200).classement(4).commentaire("Commentaire Another Song").path("second/path/to/Another Song.mp3").build()
+                Musique.builder().id(BigInteger.valueOf(2234)).itunesId(4322).titre("Another Song").classement(4).commentaire("Commentaire Another Song").path("second/path/to/Another Song.mp3").build()
         );
     }
 

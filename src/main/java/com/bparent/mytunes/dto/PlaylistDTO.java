@@ -24,7 +24,7 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
     protected Boolean isFolder = Boolean.FALSE;
     protected String persistentId;
     protected String parentPersistentId;
-    protected List<MusiqueDTO> musiques = new ArrayList<>();
+    protected List<BigInteger> musiqueIds = new ArrayList<>();
     protected List<PlaylistDTO> children = new ArrayList<>();
 
     public static PlaylistDTO toDto(Playlist playlist) {
@@ -38,6 +38,11 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
                         if (!dto1.isFolder && dto2.isFolder) { return -1; }
                         return dto1.getNom().compareTo(dto2.getNom());
                     })
+                    .collect(Collectors.toList());
+        }
+        if (playlist.getMusiques() != null) {
+            dto.musiqueIds = playlist.getMusiques().stream()
+                    .map(musique -> musique.getId())
                     .collect(Collectors.toList());
         }
         return dto;

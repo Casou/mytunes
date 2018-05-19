@@ -103,18 +103,7 @@ INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (7, 5);
 INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (7, 15);
 INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (7, 25);
 
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 33);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 34);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 18);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 24);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 3);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 13);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 23);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 37);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 25);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 26);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 27);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (8, 28);
+INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) SELECT 8, id FROM MUSIQUE;
 
 INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (9, 37);
 INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (9, 38);
