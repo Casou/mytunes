@@ -17,10 +17,14 @@ import {__KEYCODE_ENTER__} from "../../../../App";
 class SavedPlaylists extends React.Component {
     constructor(props) {
         super(props);
+
+        const { playlistId } = this.props.match.params;
+        const selectedPlaylist = playlistId ? props.playlistProvider.findById(parseInt(playlistId)) : null;
+
         this.state = {
             treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
-            selectedPlaylist: null,
-            musiques: []
+            selectedPlaylist,
+            musiques: selectedPlaylist ? this._getMusiques(selectedPlaylist) : []
         };
 
         this.inputPlaylistNom = null;
@@ -37,11 +41,14 @@ class SavedPlaylists extends React.Component {
         return (
         <div id={"savedPlaylists"}>
             <SortableTree
+                key={selectedPlaylist ? "savedPlaylistsTree_" + selectedPlaylist.id : "savedPlaylistsTree_key"}
                 treeData={treeData}
                 onChange={treeData => this.setState({ treeData })}
                 rowHeight={55}
-                nodeContentRenderer={(props) => <TreeNodeRenderer onClick={this._selectPlaylist} {...props} /> }
-                onClick={ (node) => console.log(node)}
+                maxDepth={4}
+                nodeContentRenderer={(props) => <TreeNodeRenderer onClick={this._selectPlaylist}
+                                                                  selectedPlaylist={selectedPlaylist}
+                                                                  {...props} /> }
             />
                 {
                     !selectedPlaylist ?
@@ -122,20 +129,24 @@ class SavedPlaylists extends React.Component {
 
     _selectPlaylist(node) {
         const playlist = this.props.playlistProvider.findById(node.id);
-        let musiques = [];
 
-        console.log(playlist.musiqueIds);
+        this.setState({
+            ...this.state,
+            selectedPlaylist: playlist,
+            musiques: this._getMusiques(playlist)
+        });
+    }
+
+    _getMusiques(playlist) {
+        const musiques = [];
+
         if (playlist.musiqueIds) {
             for (let id of playlist.musiqueIds) {
                 musiques.push(this.props.musiques.filter(musique => musique.id === id)[0]);
             }
         }
 
-        this.setState({
-            ...this.state,
-            selectedPlaylist: playlist,
-            musiques
-        });
+        return musiques;
     }
 
     _updatePlaylistName(id, name) {

@@ -11,6 +11,9 @@
     padding : 0;
     cursor : pointer;
 }
+.rst__rowWrapper.selected .rst__rowContents {
+    background-color : #dde7ff !important;
+}
 
 .rst__rowContents {
     width : 250px;

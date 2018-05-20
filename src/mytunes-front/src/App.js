@@ -31,7 +31,7 @@ const App = () => (
                 <Route exact path="/" component={ListeMusique}/>
                 <Route exact path="/musiques" component={ListeMusique}/>
                 <Route exact path="/genres/:genreId?" component={ListeGenres}/>
-                <Route exact path="/playlists" component={SavedPlaylists}/>
+                <Route exact path="/playlists/:playlistId?" component={SavedPlaylists}/>
             </MainWrapper>
             <NotificationContainer/>
         </div>

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {isDescendant} from './tree-data-utils';
 import classnames from 'classnames';
+import {Link} from "react-router-dom";
+import {isDescendant} from './tree-data-utils';
 import './TreeNodeRenderer.css';
 
 class TreeNodeRenderer extends Component {
@@ -31,6 +32,7 @@ class TreeNodeRenderer extends Component {
             parentNode, // Needed for dndManager
 
             onClick,
+            selectedPlaylist,
             ...otherProps
         } = this.props;
 
@@ -98,7 +100,9 @@ class TreeNodeRenderer extends Component {
                     </div>
                 )}
 
-                <div className="rst__rowWrapper" onClick={ () => onClick(node) }>
+                <div
+                    className={classnames("rst__rowWrapper", [{"selected": selectedPlaylist && selectedPlaylist.id === node.id}])}
+                    onClick={() => onClick(node)}>
                     {/* Set the row preview to be used during drag and drop */}
                     {connectDragPreview(
                         <div
@@ -117,52 +121,54 @@ class TreeNodeRenderer extends Component {
                         >
                             {handle}
 
-                            <div
-                                className={classnames(
-                                    'rst__rowContents',
-                                    !canDrag && 'rst__rowContentsDragDisabled'
-                                )}
-                            >
-                                <div className="rst__rowLabel">
-                  <span
-                      className={classnames(
-                          'rst__rowTitle',
-                          node.subtitle && 'rst__rowTitleWithSubtitle'
-                      )}
-                  >
-                    {typeof nodeTitle === 'function'
-                        ? nodeTitle({
-                            node,
-                            path,
-                            treeIndex,
-                        })
-                        : nodeTitle}
-                  </span>
-
-                                    {nodeSubtitle && (
-                                        <span className="rst__rowSubtitle">
-                      {typeof nodeSubtitle === 'function'
-                          ? nodeSubtitle({
-                              node,
-                              path,
-                              treeIndex,
-                          })
-                          : nodeSubtitle}
-                    </span>
+                            <Link to={ '/playlists/' + node.id }>
+                                <div
+                                    className={classnames(
+                                        'rst__rowContents',
+                                        !canDrag && 'rst__rowContentsDragDisabled'
                                     )}
-                                </div>
+                                >
+                                    <div className="rst__rowLabel">
+                                      <span
+                                          className={classnames(
+                                              'rst__rowTitle',
+                                              node.subtitle && 'rst__rowTitleWithSubtitle'
+                                          )}
+                                      >
+                                        {typeof nodeTitle === 'function'
+                                            ? nodeTitle({
+                                                node,
+                                                path,
+                                                treeIndex,
+                                            })
+                                            : nodeTitle}
+                                      </span>
 
-                                <div className="rst__rowToolbar">
-                                    {buttons.map((btn, index) => (
-                                        <div
-                                            key={index} // eslint-disable-line react/no-array-index-key
-                                            className="rst__toolbarButton"
-                                        >
-                                            {btn}
-                                        </div>
-                                    ))}
+                                        {nodeSubtitle && (
+                                            <span className="rst__rowSubtitle">
+                                              {typeof nodeSubtitle === 'function'
+                                                  ? nodeSubtitle({
+                                                      node,
+                                                      path,
+                                                      treeIndex,
+                                                  })
+                                                  : nodeSubtitle}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div className="rst__rowToolbar">
+                                        {buttons.map((btn, index) => (
+                                            <div
+                                                key={index} // eslint-disable-line react/no-array-index-key
+                                                className="rst__toolbarButton"
+                                            >
+                                                {btn}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     )}
                 </div>
@@ -217,7 +223,8 @@ TreeNodeRenderer.propTypes = {
     canDrop: PropTypes.bool,
 
 
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    selectedPlaylist: PropTypes.object
 };
 
 export default TreeNodeRenderer;
