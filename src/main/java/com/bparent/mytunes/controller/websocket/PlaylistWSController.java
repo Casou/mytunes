@@ -9,8 +9,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class PlaylistWSController {
 
-    @MessageMapping("/action/musiques/updateClassement")
-    @SendTo("/topic/musiques/updateClassement")
+    @MessageMapping("/action/musiquesOrder/updateClassement")
+    @SendTo("/topic/musiquesOrder/updateClassement")
     public BasicCodeLabelDto updateClassement(UpdateClassementDTO updateClassementDTO) {
         System.out.println("\n\n\n\n\n\n\nUPDATE CLASSEMENT\n\n\n\n\n\n\n--------------------------------");
         return new BasicCodeLabelDto("message", "ok");

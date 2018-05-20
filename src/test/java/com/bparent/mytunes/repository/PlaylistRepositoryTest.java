@@ -41,9 +41,13 @@ public class PlaylistRepositoryTest {
     public void findById_shouldReturnOnePlaylist() {
         Playlist p = playlistDao.findById(BigInteger.valueOf(1));
         assertEquals("pl1-titre", p.getNom());
-        assertEquals(2, p.getMusiques().size());
-        assertEquals("mus1-titre", p.getMusiques().get(0).getTitre());
-        assertEquals("mus2-titre", p.getMusiques().get(1).getTitre());
+        assertEquals(3, p.getMusiquesOrder().size());
+        assertEquals("mus1-titre", p.getMusiquesOrder().get(0).getMusique().getTitre());
+        assertEquals(1, p.getMusiquesOrder().get(0).getOrder().intValue());
+        assertEquals("mus3-titre", p.getMusiquesOrder().get(1).getMusique().getTitre());
+        assertEquals(2, p.getMusiquesOrder().get(1).getOrder().intValue());
+        assertEquals("mus2-titre", p.getMusiquesOrder().get(2).getMusique().getTitre());
+        assertEquals(3, p.getMusiquesOrder().get(2).getOrder().intValue());
     }
 
     @Test
@@ -56,9 +60,10 @@ public class PlaylistRepositoryTest {
     public void findByItunesId_shouldReturnOnePlaylist() {
         Playlist p = playlistDao.findByItunesId(1);
         assertEquals("pl1-titre", p.getNom());
-        assertEquals(2, p.getMusiques().size());
-        assertEquals("mus1-titre", p.getMusiques().get(0).getTitre());
-        assertEquals("mus2-titre", p.getMusiques().get(1).getTitre());
+        assertEquals(3, p.getMusiquesOrder().size());
+        assertEquals("mus1-titre", p.getMusiquesOrder().get(0).getMusique().getTitre());
+        assertEquals("mus3-titre", p.getMusiquesOrder().get(1).getMusique().getTitre());
+        assertEquals("mus2-titre", p.getMusiquesOrder().get(2).getMusique().getTitre());
     }
 
     @Test

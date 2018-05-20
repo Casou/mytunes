@@ -6,8 +6,9 @@ INSERT INTO PLAYLIST(id, itunes_id, nom, is_folder, id_playlist_parent) VALUES (
 INSERT INTO PLAYLIST(id, itunes_id, nom, is_folder, id_playlist_parent) VALUES (2, 2, 'pl2-titre', true, null);
 INSERT INTO PLAYLIST(id, itunes_id, nom, is_folder, id_playlist_parent) VALUES (3, 3, 'pl3-titre', false, 2);
 
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (1, 1);
-INSERT INTO PLAYLIST_MUSIQUE(id_playlist, id_musique) VALUES (1, 2);
+INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (1, 1, 1, 1);
+INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (2, 1, 3, 2);
+INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (3, 1, 2, 3);
 
 INSERT INTO GENRE (id, label) VALUES (1, 'Lindy');
 INSERT INTO GENRE (id, label) VALUES (2, 'Boogie');

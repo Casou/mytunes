@@ -1,13 +1,14 @@
 package com.bparent.mytunes.util;
 
+import com.bparent.mytunes.exception.IllegalTrackPropertyException;
+import com.bparent.mytunes.exception.WrongTrackPropertyTypeException;
 import com.bparent.mytunes.model.Genre;
+import com.bparent.mytunes.model.Musique;
+import com.bparent.mytunes.model.Playlist;
+import com.bparent.mytunes.model.PlaylistMusique;
 import com.bparent.mytunes.repository.GenreRepository;
 import com.bparent.mytunes.repository.MusiqueRepository;
 import com.bparent.mytunes.repository.PlaylistRepository;
-import com.bparent.mytunes.exception.IllegalTrackPropertyException;
-import com.bparent.mytunes.exception.WrongTrackPropertyTypeException;
-import com.bparent.mytunes.model.Musique;
-import com.bparent.mytunes.model.Playlist;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @NoArgsConstructor
 @Log4j
@@ -341,14 +341,21 @@ public class ItunesParser {
             if (playlist.getTempMusiqueITunesId() == null) {
                 return;
             }
-            playlist.setMusiques(
-                    playlist.getTempMusiqueITunesId().stream()
-                            .map(musiqueId -> musiqueEntities.stream()
-                                    .filter(musique -> musique.getItunesId().equals(musiqueId))
-                                    .findFirst()
-                                    .orElse(null))
-                            .filter(musique -> musique != null)
-                            .collect(Collectors.toList()));
+            List<Musique> playlistMusique = playlist.getTempMusiqueITunesId().stream()
+                    .map(musiqueId -> musiqueEntities.stream()
+                            .filter(musique -> musique.getItunesId().equals(musiqueId))
+                            .findFirst()
+                            .orElse(null))
+                    .filter(musique -> musique != null)
+                    .collect(Collectors.toList());
+
+            playlist.setMusiquesOrder(IntStream.range(0, playlistMusique.size())
+                    .mapToObj(i -> PlaylistMusique.builder()
+                            .order(i)
+                            .musique(playlistMusique.get(i))
+                            .playlist(playlist)
+                            .build())
+                    .collect(Collectors.toList()));
             playlist.setTempMusiqueITunesId(null);
         });
 

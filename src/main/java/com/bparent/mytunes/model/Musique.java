@@ -1,7 +1,6 @@
 package com.bparent.mytunes.model;
 
 import com.bparent.mytunes.annotations.ItunesProperty;
-import com.bparent.mytunes.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +11,6 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name="MUSIQUE")
@@ -80,6 +78,9 @@ public class Musique extends ItunesPropertyEntity implements Serializable {
     @ItunesProperty("Date Modified")
     @Column(name="updateDate")
     protected LocalDateTime updateDate;
+
+    @OneToMany(mappedBy = "musique")
+    protected List<PlaylistMusique> playlists;
 
 
 

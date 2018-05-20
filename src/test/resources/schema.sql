@@ -23,16 +23,16 @@ CREATE TABLE PLAYLIST(
   is_folder INT(1) NULL,
   persistent_id VARCHAR(30) NULL,
   parent_persistent_id VARCHAR(30) NULL,
-  id_playlist_parent INT(11) NULL,
+  id_playlist_parent INT(11) NULL
 );
 
 DROP TABLE PLAYLIST_MUSIQUE IF EXISTS;
 CREATE TABLE PLAYLIST_MUSIQUE (
+  id INT(11) NOT NULL PRIMARY KEY,
   id_playlist INT(11) NOT NULL,
-  id_musique INT(11) NOT NULL
+  id_musique INT(11) NOT NULL,
+  musique_order INT(11) NOT NULL
 );
-
-ALTER TABLE PLAYLIST_MUSIQUE ADD CONSTRAINT PK_PLAYLIST_MUSIQUE PRIMARY KEY (id_playlist, id_musique);
 
 DROP TABLE GENRE IF EXISTS;
 CREATE TABLE GENRE (

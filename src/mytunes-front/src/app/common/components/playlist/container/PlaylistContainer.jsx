@@ -32,25 +32,26 @@ class PlaylistContainer extends React.Component {
                                       musiquePlaying={ musiquePlaying }
                                       playMusique={ this._playMusique }
                                       helperClass='playlistSortableHelper'
-                                      onSortEnd={ this._sortEnd }/>
+                                      onSortEnd={ this._sortEnd }
+                />
             </div>
         );
     }
 
     _playMusique(musique) {
-        this.props.PlaylistManagerActions.playMusique(musique, true);
+        this.props.playlistManagerActions.playMusique(musique, true);
     }
 
     _toggleShuffle() {
-        this.props.PlaylistManagerActions.toggleShuffle();
+        this.props.playlistManagerActions.toggleShuffle();
     }
 
     _clearPlaylist() {
-        this.props.PlaylistManagerActions.clearPlaylist();
+        this.props.playlistManagerActions.clearPlaylist();
     }
 
     _sortEnd({oldIndex, newIndex}) {
-        this.props.PlaylistManagerActions.reorderPlaylist(oldIndex, newIndex);
+        this.props.playlistManagerActions.reorderPlaylist(oldIndex, newIndex);
     }
 
 }
@@ -62,5 +63,5 @@ PlaylistContainer.propTypes = {
 export default connect(state => assign({}, {
     playlistManager: state.playlistManager
 }), dispatch => ({
-    PlaylistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
+    playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(PlaylistContainer);

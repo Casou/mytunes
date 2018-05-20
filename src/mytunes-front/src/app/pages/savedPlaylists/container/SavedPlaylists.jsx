@@ -4,6 +4,7 @@ import SortableTree from 'react-sortable-tree';
 import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
+import {arrayMove} from 'react-sortable-hoc';
 
 import 'react-sortable-tree/style.css';
 import '../../../../style/components/savedPlaylists.css';
@@ -11,9 +12,6 @@ import TreeNodeRenderer from "../renderers/TreeNodeRenderer";
 import SavedPlaylistSortableList from "../components/SavedPlaylistSortableList";
 import {musiquePropType} from "../../../common/types/MusiqueType";
 import PlaylistsActions from "../actions/PlaylistsActions";
-import LoadingActions from "../../../common/actions/LoadingActions";
-import MusiquesActions from "../../listeMusique/actions/MusiquesActions";
-import GenreActions from "../../../common/actions/GenreActions";
 import {__KEYCODE_ENTER__} from "../../../../App";
 
 class SavedPlaylists extends React.Component {
@@ -23,7 +21,7 @@ class SavedPlaylists extends React.Component {
             treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
             selectedPlaylist: null,
             musiques: []
-            // musiques: [{ id: 1, titre : "Test", bpm : 40, classement : 5, duree : 180, genreIds : [], path : '/' },
+            // musiquesOrder: [{ id: 1, titre : "Test", bpm : 40, classement : 5, duree : 180, genreIds : [], path : '/' },
             //     { id: 2, titre : "Test 2", bpm : 60, classement : 5, duree : 235, genreIds : [], path : '/' },
             //     { id: 3, titre : "Test 3", bpm : 50, classement : 5, duree : 135, genreIds : [], path : '/' },
             //     { id: 4, titre : "Test 4", bpm : 45, classement : 5, duree : 245, genreIds : [], path : '/' }
@@ -35,6 +33,7 @@ class SavedPlaylists extends React.Component {
         this._selectPlaylist = this._selectPlaylist.bind(this);
         this._onDeleteMusique = this._onDeleteMusique.bind(this);
         this._updatePlaylistName = this._updatePlaylistName.bind(this);
+        this._sortEnd = this._sortEnd.bind(this);
     }
 
     render() {
@@ -77,11 +76,21 @@ class SavedPlaylists extends React.Component {
                                                        helperClass="playlistSortableHelper"
                                                        onDeleteMusique={this._onDeleteMusique}
                                                        pressDelay={200}
+                                                       onSortEnd={ this._sortEnd }
                             />
                         </div>
                 }
 
         </div>);
+    }
+
+    _sortEnd({oldIndex, newIndex}) {
+        const { musiques } = this.state;
+        const musiqueSorted = arrayMove([...musiques], oldIndex, newIndex);
+        this.setState({
+            ...this.state,
+            musiques: musiqueSorted
+        });
     }
 
     _mapPlaylistToTreeItem(playlists) {

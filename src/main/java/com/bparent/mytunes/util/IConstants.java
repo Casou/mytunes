@@ -13,6 +13,6 @@ public interface IConstants {
     }
 
     public interface IHandler {
-        public static final String MUSIQUES_HANDLER = "handler/musiques/";
+        public static final String MUSIQUES_HANDLER = "handler/musiquesOrder/";
     }
 }

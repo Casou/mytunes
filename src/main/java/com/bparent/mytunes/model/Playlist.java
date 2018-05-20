@@ -45,11 +45,9 @@ public class Playlist extends ItunesPropertyEntity implements Serializable {
     @Column(name="parent_persistent_id")
     protected String parentPersistentId;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "PLAYLIST_MUSIQUE",
-            joinColumns = @JoinColumn(name = "id_playlist", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_musique", referencedColumnName = "id"))
-    protected List<Musique> musiques;
+    @OneToMany(mappedBy = "playlist")
+    @OrderBy("musique_order ASC")
+    protected List<PlaylistMusique> musiquesOrder;
 
     @ManyToOne
     @JoinColumn(name="id_playlist_parent")

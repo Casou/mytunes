@@ -40,8 +40,8 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
                     })
                     .collect(Collectors.toList());
         }
-        if (playlist.getMusiques() != null) {
-            dto.musiqueIds = playlist.getMusiques().stream()
+        if (playlist.getMusiquesOrder() != null) {
+            dto.musiqueIds = playlist.getMusiquesOrder().stream()
                     .map(musique -> musique.getId())
                     .collect(Collectors.toList());
         }

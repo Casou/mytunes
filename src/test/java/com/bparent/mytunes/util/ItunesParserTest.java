@@ -105,7 +105,7 @@ public class ItunesParserTest {
         assertNull(folder.getParentPersistentId());
         assertNull(folder.getParent());
         assertEquals(1, folder.getChildren().size());
-        assertEquals(2, folder.getMusiques().size());
+        assertEquals(2, folder.getMusiquesOrder().size());
 
         Playlist child = playlists.get(1);
         assertEquals(Integer.valueOf(12345), child.getItunesId());
@@ -115,7 +115,7 @@ public class ItunesParserTest {
         assertNotNull(child.getParent());
         assertEquals(Integer.valueOf(14525), child.getParent().getItunesId());
         assertEquals(0, child.getChildren().size());
-        assertEquals(2, child.getMusiques().size());
+        assertEquals(2, child.getMusiquesOrder().size());
     }
 
 

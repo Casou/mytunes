@@ -12,7 +12,7 @@ export const musiques = (stateMusiques = {}, action) => {
 
 const mapMusiques = (musiques) => {
     // const musiqueArray = [];
-    // musiques.forEach(musique => {
+    // musiquesOrder.forEach(musique => {
     //   musiqueArray[musique.itunesId] = { ...musique,
     //     isFetching : [],
     //     searchText : [musique.titre === null ? "" : musique.titre.toLowerCase(),
@@ -35,7 +35,7 @@ const mapMusiques = (musiques) => {
 };
 
 const updateMusiqueReducer = (musiques, payload) => {
-    // const newMusiques = musiques.slice();
+    // const newMusiques = musiquesOrder.slice();
     // newMusiques[payload.id] = payload;
     // return newMusiques;
 
@@ -46,7 +46,7 @@ const updateMusiqueReducer = (musiques, payload) => {
     return musiquesModified;
 
     // {
-    //   ...musiques,
+    //   ...musiquesOrder,
     //   [payload.itunesId] : payload
     // };
 };
