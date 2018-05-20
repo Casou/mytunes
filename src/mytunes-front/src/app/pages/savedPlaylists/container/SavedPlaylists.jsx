@@ -21,11 +21,6 @@ class SavedPlaylists extends React.Component {
             treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
             selectedPlaylist: null,
             musiques: []
-            // musiquesOrder: [{ id: 1, titre : "Test", bpm : 40, classement : 5, duree : 180, genreIds : [], path : '/' },
-            //     { id: 2, titre : "Test 2", bpm : 60, classement : 5, duree : 235, genreIds : [], path : '/' },
-            //     { id: 3, titre : "Test 3", bpm : 50, classement : 5, duree : 135, genreIds : [], path : '/' },
-            //     { id: 4, titre : "Test 4", bpm : 45, classement : 5, duree : 245, genreIds : [], path : '/' }
-            // ]
         };
 
         this.inputPlaylistNom = null;
@@ -85,8 +80,9 @@ class SavedPlaylists extends React.Component {
     }
 
     _sortEnd({oldIndex, newIndex}) {
-        const { musiques } = this.state;
+        const { selectedPlaylist, musiques } = this.state;
         const musiqueSorted = arrayMove([...musiques], oldIndex, newIndex);
+        this.props.playlistsActions.updateMusiqueOrder(selectedPlaylist.id, musiqueSorted);
         this.setState({
             ...this.state,
             musiques: musiqueSorted
@@ -94,7 +90,7 @@ class SavedPlaylists extends React.Component {
     }
 
     _mapPlaylistToTreeItem(playlists) {
-        return playlists.map(playlist => {
+        return !(playlists && playlists.length) ? [] : playlists.map(playlist => {
             return {
                 id : playlist.id,
                 title : playlist.nom,
@@ -127,8 +123,12 @@ class SavedPlaylists extends React.Component {
     _selectPlaylist(node) {
         const playlist = this.props.playlistProvider.findById(node.id);
         let musiques = [];
+
+        console.log(playlist.musiqueIds);
         if (playlist.musiqueIds) {
-            musiques = this.props.musiques.filter(musique => playlist.musiqueIds.includes(musique.id));
+            for (let id of playlist.musiqueIds) {
+                musiques.push(this.props.musiques.filter(musique => musique.id === id)[0]);
+            }
         }
 
         this.setState({

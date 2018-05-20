@@ -1,6 +1,7 @@
 package com.bparent.mytunes.model;
 
 import com.bparent.mytunes.annotations.ItunesProperty;
+import com.bparent.mytunes.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="MUSIQUE")
@@ -89,45 +91,45 @@ public class Musique extends ItunesPropertyEntity implements Serializable {
 
 
 
-//    public String getBpmFormated() {
-//        if (this.bpm == null) {
-//            return "//";
-//        }
-//        return String.valueOf(this.bpm.intValue() / 4);
-//    }
-//
-//    public String getClassementFormated() {
-//        if (this.classement == null) {
-//            return "-";
-//        }
-//        return String.valueOf(this.classement.intValue() / 20);
-//    }
-//
-//    public String getDureeFormatee() {
-//        if (this.duree == null) {
-//            return "--:--";
-//        }
-//        Integer dureeMinutes = this.duree.intValue() / 60000;
-//        Integer dureeSecondes = (this.duree.intValue() / 1000) % 60;
-//
-//        return StringUtils.padZeroLeft(dureeMinutes, 2) + ":" + StringUtils.padZeroLeft(dureeSecondes, 2);
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Musique ["
-//                + StringUtils.getStringMaxLengthPadLeft(String.valueOf(this.itunesId), 5, false) + ", "
-//                + this.getBpmFormated()
-//                + " - " + StringUtils.getStringMaxLengthPadRight(this.titre, 30)
-//                + " (" + this.getDureeFormatee() + ")"
-//                + " / " + this.genres == null ?
-//                    "" :
-//                    StringUtils.getStringMaxLengthPadRight(this.genres.stream()
-//                        .map(genre -> genre.getLabel())
-//                        .collect(Collectors.joining(", ")), 25)
-//                + "]"
-//                + "    Classement [" + this.getClassementFormated() + "] "
-//                + "    Path [" + this.path + "]";
-//    }
+    public String getBpmFormated() {
+        if (this.bpm == null) {
+            return "//";
+        }
+        return String.valueOf(this.bpm.intValue() / 4);
+    }
+
+    public String getClassementFormated() {
+        if (this.classement == null) {
+            return "-";
+        }
+        return String.valueOf(this.classement.intValue() / 20);
+    }
+
+    public String getDureeFormatee() {
+        if (this.duree == null) {
+            return "--:--";
+        }
+        Integer dureeMinutes = this.duree.intValue() / 60000;
+        Integer dureeSecondes = (this.duree.intValue() / 1000) % 60;
+
+        return StringUtils.padZeroLeft(dureeMinutes, 2) + ":" + StringUtils.padZeroLeft(dureeSecondes, 2);
+    }
+
+    @Override
+    public String toString() {
+        return "Musique ["
+                + StringUtils.getStringMaxLengthPadLeft(String.valueOf(this.itunesId), 5, false) + ", "
+                + this.getBpmFormated()
+                + " - " + StringUtils.getStringMaxLengthPadRight(this.titre, 30)
+                + " (" + this.getDureeFormatee() + ")"
+                + " / " + this.genres == null ?
+                    "" :
+                    StringUtils.getStringMaxLengthPadRight(this.genres.stream()
+                        .map(genre -> genre.getLabel())
+                        .collect(Collectors.joining(", ")), 25)
+                + "]"
+                + "    Classement [" + this.getClassementFormated() + "] "
+                + "    Path [" + this.path + "]";
+    }
 
 }

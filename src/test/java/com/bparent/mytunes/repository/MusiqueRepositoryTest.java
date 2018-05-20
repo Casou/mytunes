@@ -45,6 +45,25 @@ public class MusiqueRepositoryTest {
         Musique m1 = musiqueDao.findByItunesId(null);
         assertNull(m1);
     }
+    
+    @Test
+    public void findById_shouldFindOneMusique() {
+        Musique m1 = musiqueDao.findById(BigInteger.valueOf(1));
+        assertNotNull(m1);
+        assertEquals("mus1-titre", m1.getTitre());
+    }
+
+    @Test
+    public void findById_shouldReturnNullIfIdDoesntExist() {
+        Musique m1 = musiqueDao.findById(BigInteger.valueOf(12345));
+        assertNull(m1);
+    }
+
+    @Test
+    public void findById_shouldReturnNullIfIdIsNull() {
+        Musique m1 = musiqueDao.findById(null);
+        assertNull(m1);
+    }
 
     @Test
     public void findAll_shouldFind3Musiques() {

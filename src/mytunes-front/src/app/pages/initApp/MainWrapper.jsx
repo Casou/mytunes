@@ -42,7 +42,7 @@ class MainWrapper extends React.Component {
     }
 
     isApplicationLoaded(props) {
-        return props.musiques && props.genres && props.playlistProvider;
+        return props.musiques && props.genres && props.playlistProvider && props.playlistProvider.playlists;
     }
 }
 

@@ -19,6 +19,8 @@ public interface MusiqueRepository extends CrudRepository<Musique, BigInteger> {
     @RestResource(path = "by-itunes-id")
     Musique findByItunesId(@Param("id") Integer itunesId);
 
+    Musique findById(@Param("id") BigInteger id);
+
     // http://localhost:8000/musiques/search/by-name?name=Test
 //    @Query("Select m from Musique m where m.titre like %:name%")
 //    @RestResource(path = "by-name")

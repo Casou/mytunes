@@ -24,8 +24,10 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
     protected Boolean isFolder = Boolean.FALSE;
     protected String persistentId;
     protected String parentPersistentId;
-    protected List<BigInteger> musiqueIds = new ArrayList<>();
     protected List<PlaylistDTO> children = new ArrayList<>();
+    protected List<PlaylistMusiqueDTO> musiquesOrder;
+
+    protected List<BigInteger> musiqueIds = new ArrayList<>();
 
     public static PlaylistDTO toDto(Playlist playlist) {
         ModelMapper mapper = new ModelMapper();
@@ -42,7 +44,7 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
         }
         if (playlist.getMusiquesOrder() != null) {
             dto.musiqueIds = playlist.getMusiquesOrder().stream()
-                    .map(musique -> musique.getId())
+                    .map(musique -> musique.getMusique().getId())
                     .collect(Collectors.toList());
         }
         return dto;

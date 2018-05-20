@@ -20,7 +20,7 @@ public class PlaylistController {
 
     @GetMapping("/playlists")
     public List<PlaylistDTO> getAllPlaylist() {
-        return playlistRepository.findByParentIsNull().stream()
+        return this.playlistRepository.findByParentIsNull().stream()
                 .map(PlaylistDTO::toDto)
                 .collect(Collectors.toList());
     }
@@ -34,7 +34,13 @@ public class PlaylistController {
     @PutMapping("/playlist/nom")
     @CrossOrigin
     public void updatePlaylistNom(@RequestBody PlaylistDTO playlistDTO) {
-        playlistService.updatePlaylistNom(playlistDTO);
+        this.playlistService.updatePlaylistNom(playlistDTO);
+    }
+
+    @PutMapping("/playlist/order")
+    @CrossOrigin
+    public void updateMusiqueOrder(@RequestBody PlaylistDTO playlistDTO) {
+        this.playlistService.updatePlaylistOrder(playlistDTO);
     }
 
 }

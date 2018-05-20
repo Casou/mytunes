@@ -19,6 +19,16 @@ export default {
 
     updatePlaylistNom: (id, nom) => (dispatch, getState) => {
         return RequestUtil.put("playlist/nom", {id, nom});
+    },
+
+    updateMusiqueOrder: (idPlaylist, musiques) => (dispatch, getState) => {
+        return RequestUtil.put("playlist/order",
+            {
+                id : idPlaylist,
+                musiquesOrder : musiques.map((musique, index) => {
+                    return { order : index, musique : { id : musique.id } };
+                })
+            });
     }
 
 };
