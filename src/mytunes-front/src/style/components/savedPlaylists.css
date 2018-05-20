@@ -12,6 +12,17 @@
     cursor : pointer;
 }
 
+.rst__rowContents {
+    width : 250px;
+}
+
+.rst__rowContents .rst__rowTitle {
+    width : 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .rst__rowTitleWithSubtitle {
     font-size : 13px !important;
     height : 14px !important;
