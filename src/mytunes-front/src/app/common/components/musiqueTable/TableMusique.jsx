@@ -16,7 +16,7 @@ import {MusiqueRenderer} from "../../renderer/MusiqueRenderer";
 import {musiquePropType} from "../../types/MusiqueType";
 import {genrePropType} from "../../types/GenreType";
 import MusiquesActions from "../../../pages/listeMusique/actions/MusiquesActions";
-import PlaylistActions from "../../actions/PlaylistActions";
+import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
 Object.defineProperty(Array.prototype, "sum", {
@@ -34,7 +34,7 @@ class TableMusique extends React.Component {
             searchText: '',
             musiqueRenderers: this._mapMusiqueRenderer(this.props.musiques, {
                 onPropertyChange: this._onPropertyChange.bind(this),
-                onPlaylistAdd: props.playlistActions.addMusiqueToPlaylist
+                onPlaylistAdd: props.PlaylistManagerActions.addMusiqueToPlaylist
             }, this.props.genres),
             sortProperties : {
                 order : "ASC",
@@ -171,5 +171,5 @@ export default connect(state => assign({}, {
     genres: state.genres
 }), dispatch => ({
     musiquesActions: bindActionCreators(MusiquesActions, dispatch),
-    playlistActions: bindActionCreators(PlaylistActions, dispatch)
+    PlaylistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(TableMusique);

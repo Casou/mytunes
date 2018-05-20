@@ -4,7 +4,7 @@ import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 
 import {playlistManagerPropType} from "../../../types/PlaylistMusiqueType";
-import PlaylistActions from "../../../actions/PlaylistActions";
+import PlaylistManagerActions from "../../../actions/PlaylistManagerActions";
 import PlaylistHeader from "../components/PlaylistHeader";
 import PlaylistSortableList from "../components/PlaylistSortableList";
 
@@ -38,19 +38,19 @@ class PlaylistContainer extends React.Component {
     }
 
     _playMusique(musique) {
-        this.props.playlistActions.playMusique(musique, true);
+        this.props.PlaylistManagerActions.playMusique(musique, true);
     }
 
     _toggleShuffle() {
-        this.props.playlistActions.toggleShuffle();
+        this.props.PlaylistManagerActions.toggleShuffle();
     }
 
     _clearPlaylist() {
-        this.props.playlistActions.clearPlaylist();
+        this.props.PlaylistManagerActions.clearPlaylist();
     }
 
     _sortEnd({oldIndex, newIndex}) {
-        this.props.playlistActions.reorderPlaylist(oldIndex, newIndex);
+        this.props.PlaylistManagerActions.reorderPlaylist(oldIndex, newIndex);
     }
 
 }
@@ -62,5 +62,5 @@ PlaylistContainer.propTypes = {
 export default connect(state => assign({}, {
     playlistManager: state.playlistManager
 }), dispatch => ({
-    playlistActions: bindActionCreators(PlaylistActions, dispatch)
+    PlaylistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(PlaylistContainer);

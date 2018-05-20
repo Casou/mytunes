@@ -6,7 +6,7 @@ import {bindActionCreators} from "redux";
 
 import {playlistManagerPropType} from "../../types/PlaylistMusiqueType";
 import LecteurDisplay from "./LecteurDisplay";
-import PlaylistActions from "../../actions/PlaylistActions";
+import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
 
 class LecteurContainer extends React.Component {
     constructor(props) {
@@ -53,14 +53,14 @@ class LecteurContainer extends React.Component {
     _playNextSong() {
         const nextSong = this.props.playlistManager.getNextSong();
         if (nextSong) {
-            this.props.playlistActions.playMusique(nextSong, true);
+            this.props.PlaylistManagerActions.playMusique(nextSong, true);
         }
     }
 
     _playPrevSong() {
         const prevSong = this.props.playlistManager.getPrevSong();
         if (prevSong) {
-            this.props.playlistActions.playMusique(prevSong, false);
+            this.props.PlaylistManagerActions.playMusique(prevSong, false);
         }
     }
 
@@ -73,5 +73,5 @@ LecteurContainer.propTypes = {
 export default connect(state => assign({}, {
     playlistManager: state.playlistManager
 }), dispatch => ({
-    playlistActions: bindActionCreators(PlaylistActions, dispatch)
+    PlaylistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(LecteurContainer);

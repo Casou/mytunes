@@ -1,4 +1,5 @@
 import {__SERVER_URL__} from "../../../../App";
+import RequestUtil from "../../../common/util/RequestUtil";
 
 export default {
 
@@ -15,5 +16,9 @@ export default {
                 console.error(e);
             });
     },
+
+    updatePlaylistNom: (id, nom) => (dispatch, getState) => {
+        return RequestUtil.put("playlist/nom", {id, nom});
+    }
 
 };

@@ -17,6 +17,22 @@
     height : 14px !important;
 }
 
+.rst__rowSubtitle {
+    font-size : 11px !important;
+    color : grey;
+}
+
+#savedPlaylists header input {
+    width : 100%;
+    margin-bottom : 5px;
+    font-size : 20px;
+    font-weight : bold;
+    text-align : center;
+    border : none;
+    background : transparent;
+}
+
+
 #musiquesPlaylist {
     display: inline-block;
     width : 50%;

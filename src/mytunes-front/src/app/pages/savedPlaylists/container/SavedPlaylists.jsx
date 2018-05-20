@@ -3,12 +3,18 @@ import PropTypes from 'prop-types';
 import SortableTree from 'react-sortable-tree';
 import {connect} from "react-redux";
 import {assign} from "lodash";
+import {bindActionCreators} from "redux";
 
 import 'react-sortable-tree/style.css';
 import '../../../../style/components/savedPlaylists.css';
 import TreeNodeRenderer from "../renderers/TreeNodeRenderer";
 import SavedPlaylistSortableList from "../components/SavedPlaylistSortableList";
 import {musiquePropType} from "../../../common/types/MusiqueType";
+import PlaylistsActions from "../actions/PlaylistsActions";
+import LoadingActions from "../../../common/actions/LoadingActions";
+import MusiquesActions from "../../listeMusique/actions/MusiquesActions";
+import GenreActions from "../../../common/actions/GenreActions";
+import {__KEYCODE_ENTER__} from "../../../../App";
 
 class SavedPlaylists extends React.Component {
     constructor(props) {
@@ -24,8 +30,11 @@ class SavedPlaylists extends React.Component {
             // ]
         };
 
+        this.inputPlaylistNom = null;
+
         this._selectPlaylist = this._selectPlaylist.bind(this);
         this._onDeleteMusique = this._onDeleteMusique.bind(this);
+        this._updatePlaylistName = this._updatePlaylistName.bind(this);
     }
 
     render() {
@@ -47,7 +56,23 @@ class SavedPlaylists extends React.Component {
                         </div>
                         :
                         <div id={"musiquesPlaylist"}>
-                            <h1>{ selectedPlaylist.nom }</h1>
+                            <header>
+                                <input ref={instance => this.inputPlaylistNom = instance }
+                                       value={selectedPlaylist.nom}
+                                       onChange={event => {
+                                           this.setState({
+                                               ...this.state,
+                                               selectedPlaylist : {...selectedPlaylist, nom : event.target.value}
+                                           });
+                                       }}
+                                       onKeyPress={e => {
+                                           if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
+                                               this.inputPlaylistNom.blur();
+                                           }
+                                       }}
+                                       onBlur={event => this._updatePlaylistName(selectedPlaylist.id, event.target.value)}
+                                />
+                            </header>
                             <SavedPlaylistSortableList musiques={musiques}
                                                        helperClass="playlistSortableHelper"
                                                        onDeleteMusique={this._onDeleteMusique}
@@ -104,6 +129,30 @@ class SavedPlaylists extends React.Component {
         });
     }
 
+    _updatePlaylistName(id, name) {
+        this.props.playlistsActions.updatePlaylistNom(id, name);
+
+        let playlists = [...this.props.playlistProvider.playlists];
+        playlists = this._updatePlaylistNameRecursive(playlists, id, name);
+        this.setState({
+            ...this.state,
+            treeData: this._mapPlaylistToTreeItem(playlists)
+        });
+    }
+
+    _updatePlaylistNameRecursive(playlists, id, name) {
+        for (let playlist of playlists) {
+            if (playlist.id === id) {
+                playlist.nom = name;
+                break;
+            } else {
+                playlist.children = this._updatePlaylistNameRecursive(playlist.children, id, name);
+            }
+        }
+
+        return playlists;
+    }
+
     _onDeleteMusique(musique) {
         console.log("delete", musique);
     }
@@ -121,4 +170,6 @@ SavedPlaylists.defaultProps = {
 export default connect(state => assign({}, {
     playlistProvider: state.playlistProvider,
     musiques: state.musiques
-}), null)(SavedPlaylists);
+}), dispatch => ({
+    playlistsActions: bindActionCreators(PlaylistsActions, dispatch)
+}))(SavedPlaylists);
