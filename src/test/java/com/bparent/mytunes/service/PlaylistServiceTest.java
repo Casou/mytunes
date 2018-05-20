@@ -6,7 +6,6 @@ import com.bparent.mytunes.dto.PlaylistMusiqueDTO;
 import com.bparent.mytunes.model.Musique;
 import com.bparent.mytunes.model.Playlist;
 import com.bparent.mytunes.model.PlaylistMusique;
-import com.bparent.mytunes.repository.MusiqueRepository;
 import com.bparent.mytunes.repository.PlaylistRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,9 +34,6 @@ public class PlaylistServiceTest {
     @Mock
     private PlaylistRepository playlistRepository;
 
-    @Mock
-    private MusiqueRepository musiqueRepository;
-
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
@@ -64,7 +60,6 @@ public class PlaylistServiceTest {
                         PlaylistMusique.builder().musique(Musique.builder().id(BigInteger.valueOf(2)).build()).build()
                 ))
                 .build());
-        when(this.musiqueRepository.findById(any(BigInteger.class))).thenAnswer(invocationOnMock -> Musique.builder().id((BigInteger) invocationOnMock.getArguments()[0]).build());
 
         this.playlistService.updatePlaylistOrder(PlaylistDTO.builder()
                 .musiquesOrder(Arrays.asList(

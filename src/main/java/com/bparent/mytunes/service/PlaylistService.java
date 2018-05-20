@@ -5,8 +5,6 @@ import com.bparent.mytunes.dto.PlaylistMusiqueDTO;
 import com.bparent.mytunes.exception.ResourceNotFoundException;
 import com.bparent.mytunes.model.Playlist;
 import com.bparent.mytunes.model.PlaylistMusique;
-import com.bparent.mytunes.repository.MusiqueRepository;
-import com.bparent.mytunes.repository.PlaylistMusiqueRepository;
 import com.bparent.mytunes.repository.PlaylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +18,6 @@ public class PlaylistService {
     @Autowired
     private PlaylistRepository playlistRepository;
 
-    @Autowired
-    private MusiqueRepository musiqueRepository;
-
-    @Autowired
-    private PlaylistMusiqueRepository playlistMusiqueRepository;
-
     public void updatePlaylistNom(PlaylistDTO playlistDTO) {
         final Playlist playlist = playlistRepository.findById(playlistDTO.getId());
         playlist.setNom(playlistDTO.getNom());
@@ -38,11 +30,6 @@ public class PlaylistService {
         final List<PlaylistMusique> musiquesOrder = new ArrayList<>();
         for (int i = 0; i < playlistDTO.getMusiquesOrder().size(); i++) {
             final PlaylistMusiqueDTO playlistMusiqueDTO = playlistDTO.getMusiquesOrder().get(i);
-//            musiquesOrder.add(PlaylistMusique.builder()
-//                    .playlist(playlist)
-//                    .musique(musiqueRepository.findById(playlistMusiqueDTO.getMusique().getId()))
-//                    .order(i)
-//                    .build());
             PlaylistMusique playlistMusique = playlist.getMusiquesOrder().stream()
                     .filter(musiqueOrder -> musiqueOrder.getMusique().getId().equals(playlistMusiqueDTO.getMusique().getId()))
                     .findFirst()
