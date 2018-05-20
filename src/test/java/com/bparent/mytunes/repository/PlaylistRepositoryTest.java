@@ -25,7 +25,7 @@ public class PlaylistRepositoryTest {
     private PlaylistRepository playlistDao;
 
     @Test
-    public void shouldReturnAllPlaylists() {
+    public void findAll_shouldReturnAllPlaylists() {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(3, allPlaylist.size());
 
@@ -38,7 +38,22 @@ public class PlaylistRepositoryTest {
     }
 
     @Test
-    public void shouldReturnOnePlaylist() {
+    public void findById_shouldReturnOnePlaylist() {
+        Playlist p = playlistDao.findById(BigInteger.valueOf(1));
+        assertEquals("pl1-titre", p.getNom());
+        assertEquals(2, p.getMusiques().size());
+        assertEquals("mus1-titre", p.getMusiques().get(0).getTitre());
+        assertEquals("mus2-titre", p.getMusiques().get(1).getTitre());
+    }
+
+    @Test
+    public void findById_shouldReturnNoPlaylist() {
+        Playlist p = playlistDao.findById(BigInteger.valueOf(12345));
+        assertNull(p);
+    }
+
+    @Test
+    public void findByItunesId_shouldReturnOnePlaylist() {
         Playlist p = playlistDao.findByItunesId(1);
         assertEquals("pl1-titre", p.getNom());
         assertEquals(2, p.getMusiques().size());
@@ -47,13 +62,13 @@ public class PlaylistRepositoryTest {
     }
 
     @Test
-    public void shouldReturnNoPlaylist() {
+    public void findByItunesId_shouldReturnNoPlaylist() {
         Playlist p = playlistDao.findByItunesId(12345);
         assertNull(p);
     }
 
     @Test
-    public void shouldSaveNewPlaylist() {
+    public void save_shouldSaveNewPlaylist() {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(3, allPlaylist.size());
 
@@ -64,7 +79,7 @@ public class PlaylistRepositoryTest {
     }
 
     @Test
-    public void shouldDeletePlaylistBySearch() {
+    public void delete_shouldDeletePlaylistBySearch() {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(3, allPlaylist.size());
 
@@ -77,7 +92,7 @@ public class PlaylistRepositoryTest {
     }
 
     @Test
-    public void shouldDeletePlaylistByIdObject() {
+    public void delete_shouldDeletePlaylistByIdObject() {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(3, allPlaylist.size());
 
@@ -91,7 +106,7 @@ public class PlaylistRepositoryTest {
     }
 
     @Test
-    public void shouldDeletePlaylistById() {
+    public void delete_shouldDeletePlaylistById() {
         List<Playlist> allPlaylist = playlistDao.findAll();
         assertEquals(3, allPlaylist.size());
 
