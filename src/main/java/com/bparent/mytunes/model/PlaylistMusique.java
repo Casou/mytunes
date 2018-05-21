@@ -23,11 +23,11 @@ public class PlaylistMusique implements Serializable {
     @SequenceGenerator(name="PLAYLIST_MUSIQUE_SEQ", sequenceName="PLAYLIST_MUSIQUE_SEQ", allocationSize=1)
     private BigInteger id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_musique")
     private Musique musique;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_playlist")
     private Playlist playlist;
 

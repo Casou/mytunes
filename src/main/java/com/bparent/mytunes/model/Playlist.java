@@ -45,7 +45,7 @@ public class Playlist extends ItunesPropertyEntity implements Serializable {
     @Column(name="parent_persistent_id")
     protected String parentPersistentId;
 
-    @OneToMany(mappedBy = "playlist")
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     @OrderBy("musique_order ASC")
     protected List<PlaylistMusique> musiquesOrder;
 

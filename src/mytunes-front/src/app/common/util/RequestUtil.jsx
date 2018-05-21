@@ -16,7 +16,7 @@ export default class RequestUtil {
 
   static delete(url, content) {
     const serverUrl = __SERVER_URL__ + url;
-    return axios.delete(serverUrl, content)
+    return axios.delete(serverUrl, {data: content})
     .catch(error => {
       console.error("Axios", error);
       NotificationManager.error("Erreur lors d'une requête à " + serverUrl, "Erreur lors d'une requête DELETE", 3000, null, true);

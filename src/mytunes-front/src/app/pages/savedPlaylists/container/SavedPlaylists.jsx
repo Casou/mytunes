@@ -181,18 +181,20 @@ class SavedPlaylists extends React.Component {
     }
 
     _onDeleteMusique(musique) {
-        const { selectedPlaylist, musiques } = this.state;
-        const { playlistProvider } = this.props;
-        // const selectedPlaylist = this.props.playlistProvider.findById(parseInt(playlistId, 10)) : null;
+        const { selectedPlaylist } = this.state;
 
-        let musiquesFiltered = musiques.filter(m => m.id !== musique.id);
-        this.setState({
-            ...this.state,
-            musiques: musiquesFiltered,
-            // treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
-        }, () => this._updatePlaylists(selectedPlaylist.id, [{ property : "musiqueIds", value : musiquesFiltered.map(m => m.id) }]));
+        this.props.playlistsActions.deletePlaylistMusique(selectedPlaylist.id, musique.id).then(() => {
+            const { musiques } = this.state;
+            // const { playlistProvider } = this.props;
+            // const selectedPlaylist = this.props.playlistProvider.findById(parseInt(playlistId, 10)) : null;
 
-        this.props.playlistsActions.deletePlaylistMusique(selectedPlaylist.id, musique.id);
+            let musiquesFiltered = musiques.filter(m => m.id !== musique.id);
+            this.setState({
+                ...this.state,
+                musiques: musiquesFiltered,
+                // treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
+            }, () => this._updatePlaylists(selectedPlaylist.id, [{ property : "musiqueIds", value : musiquesFiltered.map(m => m.id) }]));
+        });
     }
 }
 

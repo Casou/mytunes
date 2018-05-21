@@ -76,41 +76,41 @@ INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES 
 INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (3, 3, 3, 3);
 INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (4, 3, 4, 4);
 INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (5, 3, 5, 5);
-
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (6, 4, 1, 1);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (7, 4, 2, 2);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (8, 4, 3, 3);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (9, 4, 4, 4);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (10, 4, 5, 5);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (11, 4, 6, 6);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (12, 4, 7, 7);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (13, 4, 8, 8);
-
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (14, 5, 11, 1);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (15, 5, 12, 2);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (16, 5, 13, 3);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (17, 5, 14, 4);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (18, 5, 15, 5);
-
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (19, 7, 7, 1);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (20, 7, 12, 2);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (21, 7, 20, 3);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (22, 7, 14, 4);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (23, 7, 5, 5);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (24, 7, 15, 6);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (25, 7, 25, 7);
-
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (26, 9, 37, 1);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (27, 9, 38, 2);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (28, 9, 14, 3);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (29, 9, 2, 4);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (30, 9, 6, 5);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (31, 9, 16, 6);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (32, 9, 18, 7);
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (33, 9, 25, 8);
+--
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (6, 4, 1, 1);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (7, 4, 2, 2);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (8, 4, 3, 3);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (9, 4, 4, 4);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (10, 4, 5, 5);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (11, 4, 6, 6);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (12, 4, 7, 7);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (13, 4, 8, 8);
+--
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (14, 5, 11, 1);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (15, 5, 12, 2);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (16, 5, 13, 3);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (17, 5, 14, 4);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (18, 5, 15, 5);
+--
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (19, 7, 7, 1);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (20, 7, 12, 2);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (21, 7, 20, 3);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (22, 7, 14, 4);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (23, 7, 5, 5);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (24, 7, 15, 6);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (25, 7, 25, 7);
+--
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (26, 9, 37, 1);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (27, 9, 38, 2);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (28, 9, 14, 3);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (29, 9, 2, 4);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (30, 9, 6, 5);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (31, 9, 16, 6);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (32, 9, 18, 7);
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (33, 9, 25, 8);
 
 ALTER SEQUENCE IF EXISTS PLAYLIST_SEQ RESTART WITH 10;
 ALTER SEQUENCE IF EXISTS MUSIQUE_SEQ RESTART WITH 40;
 ALTER SEQUENCE IF EXISTS PLAYLIST_MUSIQUE_SEQ RESTART WITH 34;
 
-INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) SELECT PLAYLIST_MUSIQUE_SEQ.nextval, 8, id, PLAYLIST_MUSIQUE_SEQ.currval FROM MUSIQUE;
+-- INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) SELECT PLAYLIST_MUSIQUE_SEQ.nextval, 8, id, PLAYLIST_MUSIQUE_SEQ.currval FROM MUSIQUE;

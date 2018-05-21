@@ -81,7 +81,7 @@ public class Musique extends ItunesPropertyEntity implements Serializable {
     @Column(name="updateDate")
     protected LocalDateTime updateDate;
 
-    @OneToMany(mappedBy = "musique")
+    @OneToMany(mappedBy = "musique", cascade = CascadeType.ALL)
     protected List<PlaylistMusique> playlists;
 
 

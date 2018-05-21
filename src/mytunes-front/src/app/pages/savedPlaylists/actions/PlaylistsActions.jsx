@@ -34,8 +34,8 @@ export default {
     deletePlaylistMusique: (idPlaylist, idMusique) => (dispatch, getState) => {
         return RequestUtil.delete("playlist/musique",
             {
-                "id" : idPlaylist,
-                "musiqueIds" : [idMusique]
+                id : idPlaylist,
+                musiqueIds : [idMusique]
             });
     },
 
