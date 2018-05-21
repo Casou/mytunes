@@ -53,16 +53,6 @@ public class PlaylistService {
         final Playlist playlist = playlistRepository.findById(playlistDTO.getId());
         final BigInteger musiqueToDelete = playlistDTO.getMusiqueIds().get(0);
 
-//        final List<PlaylistMusique> musiquesOrder = new ArrayList<>();
-//        final List<PlaylistMusique> filteredPlaylistMusique = playlist.getMusiquesOrder().stream()
-//                .filter(musiquesOrderEntity -> !musiquesOrderEntity.getMusique().getId().equals(musiqueToDelete))
-//                .collect(Collectors.toList());
-//        for (int i = 0; i < filteredPlaylistMusique.size(); i++) {
-//            final PlaylistMusique playlistMusique = filteredPlaylistMusique.get(i);
-////            playlistMusique.setOrder(i);
-//            musiquesOrder.add(playlistMusique);
-//        }
-
         final PlaylistMusique playlistMusiqueToDelete = playlist.getMusiquesOrder().stream()
                 .filter(musiquesOrderEntity -> musiquesOrderEntity.getMusique().getId().equals(musiqueToDelete))
                 .findFirst()
@@ -70,23 +60,6 @@ public class PlaylistService {
 
         playlistMusiqueRepository.delete(playlistMusiqueToDelete);
         playlist.getMusiquesOrder().remove(playlistMusiqueToDelete);
-//        playlist.getMusiquesOrder().clear();
-//        playlist.getMusiquesOrder().addAll(musiquesOrder);
         playlistRepository.save(playlist);
-
-//        final PlaylistMusique playlistMusiqueToDelete = playlist.getMusiquesOrder().stream()
-//                .filter(musiquesOrderEntity -> musiquesOrderEntity.getMusique().getId().equals(musiqueToDelete))
-//                .findFirst()
-//                .orElse(null);
-//        if (playlistMusiqueToDelete != null) {
-//            Musique musique = playlistMusiqueToDelete.getMusique();
-//            musique.getPlaylists().clear();
-//            musique.getPlaylists().addAll(musique.getPlaylists().stream()
-//                    .filter(pl -> pl.getId().equals(playlist.getId()))
-//                    .collect(Collectors.toList()));
-//
-//            musiqueRepository.save(musique);
-//        }
-
     }
 }
