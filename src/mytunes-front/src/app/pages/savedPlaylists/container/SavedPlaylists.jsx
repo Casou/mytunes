@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 import {arrayMove} from 'react-sortable-hoc';
+import { TextField } from 'material-ui';
 
 import 'react-sortable-tree/style.css';
 import '../../../../style/components/savedPlaylists.css';
@@ -19,7 +20,7 @@ class SavedPlaylists extends React.Component {
         super(props);
 
         const { playlistId } = this.props.match.params;
-        const selectedPlaylist = playlistId ? props.playlistProvider.findById(parseInt(playlistId)) : null;
+        const selectedPlaylist = playlistId ? props.playlistProvider.findById(parseInt(playlistId, 10)) : null;
 
         this.state = {
             treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
@@ -37,11 +38,12 @@ class SavedPlaylists extends React.Component {
 
     render() {
         const { selectedPlaylist, treeData, musiques } = this.state;
+        const { playlistProvider } = this.props;
 
         return (
         <div id={"savedPlaylists"}>
             <SortableTree
-                key={selectedPlaylist ? "savedPlaylistsTree_" + selectedPlaylist.id : "savedPlaylistsTree_key"}
+                key={selectedPlaylist ? "savedPlaylistsTree_" + selectedPlaylist.id + "_" + playlistProvider.key : "savedPlaylistsTree_key"}
                 treeData={treeData}
                 onChange={treeData => this.setState({ treeData })}
                 rowHeight={55}
@@ -58,20 +60,21 @@ class SavedPlaylists extends React.Component {
                         :
                         <div id={"musiquesPlaylist"}>
                             <header>
-                                <input ref={instance => this.inputPlaylistNom = instance }
-                                       value={selectedPlaylist.nom}
-                                       onChange={event => {
-                                           this.setState({
-                                               ...this.state,
-                                               selectedPlaylist : {...selectedPlaylist, nom : event.target.value}
-                                           });
-                                       }}
-                                       onKeyPress={e => {
-                                           if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
-                                               this.inputPlaylistNom.blur();
-                                           }
-                                       }}
-                                       onBlur={event => this._updatePlaylistName(selectedPlaylist.id, event.target.value)}
+                                <TextField className="textField" name={"playlistName"} placeholder={"Nom de la playlist"}
+                                           ref={instance => this.inputPlaylistNom = instance }
+                                           value={selectedPlaylist.nom}
+                                           onChange={event => {
+                                               this.setState({
+                                                   ...this.state,
+                                                   selectedPlaylist : {...selectedPlaylist, nom : event.target.value}
+                                               });
+                                           }}
+                                           onKeyPress={e => {
+                                               if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
+                                                   this.inputPlaylistNom.blur();
+                                               }
+                                           }}
+                                           onBlur={event => this._updatePlaylistName(selectedPlaylist.id, event.target.value)}
                                 />
                             </header>
                             <SavedPlaylistSortableList musiques={musiques}
@@ -152,21 +155,25 @@ class SavedPlaylists extends React.Component {
     _updatePlaylistName(id, name) {
         this.props.playlistsActions.updatePlaylistNom(id, name);
 
+        this._updatePlaylists(id, [{ property : "nom", value : name }]);
+    }
+
+    _updatePlaylists(id, properties) {
         let playlists = [...this.props.playlistProvider.playlists];
-        playlists = this._updatePlaylistNameRecursive(playlists, id, name);
+        playlists = this._updatePlaylistsRecursive(playlists, id, properties);
         this.setState({
             ...this.state,
             treeData: this._mapPlaylistToTreeItem(playlists)
         });
     }
 
-    _updatePlaylistNameRecursive(playlists, id, name) {
+    _updatePlaylistsRecursive(playlists, id, properties) {
         for (let playlist of playlists) {
             if (playlist.id === id) {
-                playlist.nom = name;
+                properties.forEach(prop => playlist[prop.property] = prop.value);
                 break;
             } else {
-                playlist.children = this._updatePlaylistNameRecursive(playlist.children, id, name);
+                playlist.children = this._updatePlaylistsRecursive(playlist.children, id, properties);
             }
         }
 
@@ -174,7 +181,18 @@ class SavedPlaylists extends React.Component {
     }
 
     _onDeleteMusique(musique) {
-        console.log("delete", musique);
+        const { selectedPlaylist, musiques } = this.state;
+        const { playlistProvider } = this.props;
+        // const selectedPlaylist = this.props.playlistProvider.findById(parseInt(playlistId, 10)) : null;
+
+        let musiquesFiltered = musiques.filter(m => m.id !== musique.id);
+        this.setState({
+            ...this.state,
+            musiques: musiquesFiltered,
+            // treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
+        }, () => this._updatePlaylists(selectedPlaylist.id, [{ property : "musiqueIds", value : musiquesFiltered.map(m => m.id) }]));
+
+        this.props.playlistsActions.deletePlaylistMusique(selectedPlaylist.id, musique.id);
     }
 }
 

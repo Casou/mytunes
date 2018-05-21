@@ -29,6 +29,14 @@ export default {
                     return { order : index, musique : { id : musique.id } };
                 })
             });
-    }
+    },
+
+    deletePlaylistMusique: (idPlaylist, idMusique) => (dispatch, getState) => {
+        return RequestUtil.delete("playlist/musique",
+            {
+                "id" : idPlaylist,
+                "musiqueIds" : [idMusique]
+            });
+    },
 
 };

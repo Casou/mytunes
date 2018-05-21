@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 public class PlaylistController {
 
@@ -26,21 +27,23 @@ public class PlaylistController {
     }
 
     @PutMapping("/playlist")
-    @CrossOrigin
     public void savePlaylist(@RequestBody PlaylistDTO playlistDTO) {
         playlistRepository.save(playlistDTO.toEntity());
     }
 
     @PutMapping("/playlist/nom")
-    @CrossOrigin
     public void updatePlaylistNom(@RequestBody PlaylistDTO playlistDTO) {
         this.playlistService.updatePlaylistNom(playlistDTO);
     }
 
     @PutMapping("/playlist/order")
-    @CrossOrigin
     public void updateMusiqueOrder(@RequestBody PlaylistDTO playlistDTO) {
         this.playlistService.updatePlaylistOrder(playlistDTO);
+    }
+
+    @DeleteMapping("/playlist/musique")
+    public void deleteMusiqueFromPlaylist(@RequestBody PlaylistDTO playlistDTO) {
+        this.playlistService.deleteMusiqueFromPlaylist(playlistDTO);
     }
 
 }

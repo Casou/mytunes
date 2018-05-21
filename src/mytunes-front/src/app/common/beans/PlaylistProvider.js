@@ -2,6 +2,7 @@ export default class PlaylistProvider {
 
     constructor(playlists) {
         this.playlists = playlists;
+        this.key = Math.round(Math.random() * 100000);
     }
 
     findById(id) {

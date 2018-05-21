@@ -9,8 +9,10 @@ import com.bparent.mytunes.repository.PlaylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PlaylistService {
@@ -42,4 +44,21 @@ public class PlaylistService {
         playlistRepository.save(playlist);
     }
 
+    public void deleteMusiqueFromPlaylist(PlaylistDTO playlistDTO) {
+        final Playlist playlist = playlistRepository.findById(playlistDTO.getId());
+        final BigInteger musiqueToDelete = playlistDTO.getMusiqueIds().get(0);
+
+        final List<PlaylistMusique> musiquesOrder = new ArrayList<>();
+        List<PlaylistMusique> filteredPlaylistMusique = playlist.getMusiquesOrder().stream()
+                .filter(musiquesOrderEntity -> !musiquesOrderEntity.getMusique().getId().equals(musiqueToDelete))
+                .collect(Collectors.toList());
+        for (int i = 0; i < filteredPlaylistMusique.size(); i++) {
+            final PlaylistMusique playlistMusique = filteredPlaylistMusique.get(i);
+            playlistMusique.setOrder(i);
+            musiquesOrder.add(playlistMusique);
+        }
+
+        playlist.setMusiquesOrder(musiquesOrder);
+        playlistRepository.save(playlist);
+    }
 }
