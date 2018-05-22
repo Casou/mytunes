@@ -18,7 +18,7 @@ class PlaylistContainer extends React.Component {
     }
 
     render() {
-        const { playlistManager } = this.props;
+        const { playlistManager, playlistProvider } = this.props;
         const musiquePlaying = playlistManager.musiquePlaying;
 
         return (
@@ -28,6 +28,7 @@ class PlaylistContainer extends React.Component {
                                 onClearPlaylist={ this._clearPlaylist }
                                 onLoadPlaylist={() => alert("TODO") }
                                 playlistManager={ playlistManager }
+                                playlistProvider={ playlistProvider }
                                 onChangePlaylistName={() => alert("TODO") }
                 />
 
@@ -64,7 +65,8 @@ PlaylistContainer.propTypes = {
 };
 
 export default connect(state => assign({}, {
-    playlistManager: state.playlistManager
+    playlistManager: state.playlistManager,
+    playlistProvider: state.playlistProvider
 }), dispatch => ({
     playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(PlaylistContainer);

@@ -6,6 +6,7 @@ import { TextField } from "material-ui";
 import ConfirmDialog from "../../confirm/ConfirmDialog";
 import {playlistManagerPropType} from "../../../types/PlaylistMusiqueType";
 import {__KEYCODE_ENTER__} from "../../../../../App";
+import LoadPlaylistDialog from "../../loadPlaylistDialog/container/LoadPlaylistDialog";
 
 const PlaylistHeader = (props) => (
     <header>
@@ -27,9 +28,23 @@ const PlaylistHeader = (props) => (
                 : "" }
         </div>
         <div id="playlistMenuHeaderRightButtons">
-            <IconButton onClick={ props.loadPlaylist }>
+            <IconButton onClick={ () => {
+                if (props.playlistManager && props.playlistManager.hasChanges) {
+                    this.confirmLoadPlaylist.handleOpen();
+                } else {
+                    this.loadPlaylistDialog.handleOpen();
+                }
+            } }>
                 <FontIcon className={"material-icons"}>input</FontIcon>
             </IconButton>
+            <ConfirmDialog ref={instance => this.confirmLoadPlaylist = instance }
+                           message={"Si vous chargez une nouvelle playlist, les modifications ne seront pas sauvegardées."}
+                           onConfirm={ () => this.loadPlaylistDialog.handleOpen() } />
+            <LoadPlaylistDialog ref={instance => this.loadPlaylistDialog = instance }
+                                playlistProvider={ props.playlistProvider }
+                                onSelectPlaylist={ props.onLoadPlaylist }
+                                onNewPlaylist={ props.onClearPlaylist }
+            />
             <IconButton className="savePlaylist">
                 <FontIcon className={cn("material-icons", { "active" : props.playlistManager && props.playlistManager.hasChanges })}>
                     save
@@ -50,6 +65,7 @@ PlaylistHeader.propTypes = {
     onToggleShuffle : PropTypes.func.isRequired,
     onClearPlaylist : PropTypes.func.isRequired,
     onLoadPlaylist : PropTypes.func.isRequired,
+    playlistProvider : PropTypes.object.isRequired,
     playlistManager : playlistManagerPropType,
     onChangePlaylistName : PropTypes.func.isRequired
 };

@@ -1,0 +1,32 @@
+.loadPlaylistDialog header h3 {
+    display: inline-block;
+}
+
+.loadPlaylistDialog header button {
+    float : right;
+}
+.loadPlaylistDialog header button span { padding : 0 !important; }
+
+.loadPlaylistDialog section {
+    border-top : 1px solid rgb(224, 224, 224);
+    border-bottom : 1px solid rgb(224, 224, 224);
+}
+
+.loadPlaylistDialog ul {
+    background-color : transparent !important;
+}
+.loadPlaylistDialog ul,
+.loadPlaylistDialog ul li div {
+    color : black !important;
+}
+
+.loadPlaylistDialog .tree-item {
+    margin-left : 15px;
+}
+
+.loadPlaylistDialog .tree-node .material-icons {
+    vertical-align: middle;
+    font-size : 20px !important;
+    color : #474747 !important;
+    padding-right : 5px;
+}
