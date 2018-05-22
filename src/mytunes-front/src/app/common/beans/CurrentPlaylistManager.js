@@ -4,13 +4,19 @@ export default class CurrentPlaylistManager {
 
     constructor() {
         this.musiquePlaying = null;
+        this.playlist = null;
         this.musiques = [];
         this.shuffle = false;
         this.history = [];
+        this.hasChanges = false;
     }
 
     addMusique(musique) {
         this.musiques.push(musique);
+        if (this.playlist) {
+            this.playlist.musiqueIds.push(musique.id);
+        }
+        this.hasChanges = true;
     }
 
     setMusiquePlaying(musiquePlaying, addMusique) {
@@ -28,6 +34,7 @@ export default class CurrentPlaylistManager {
 
     reorderMusique = (oldIndex, newIndex) => {
         this.musiques = arrayMove(this.musiques, oldIndex, newIndex);
+        this.hasChanges = true;
         return this;
     };
 
@@ -88,6 +95,10 @@ export default class CurrentPlaylistManager {
     clearPlaylist() {
         this.musiques = [];
         this.history = [];
+        if (this.playlist) {
+            this.playlist.musiqueIds = [];
+        }
+        this.hasChanges = true;
     }
 
 }

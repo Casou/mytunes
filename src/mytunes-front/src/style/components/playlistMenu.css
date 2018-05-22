@@ -24,7 +24,7 @@
 }
 
 #playlistMenu header button span.active {
-    color : #4444cc !important;
+    color : #7979ec !important;
     text-shadow : 0 0 4px #FFF;
 }
 
@@ -56,10 +56,21 @@
     line-height : 25px !important;
 }
 
-#playlistMenuHeaderLeftButtons { float : left; }
-#playlistMenuHeaderRightButtons { float : right; margin-right : 7px; }
+#playlistMenuHeaderLeftButtons { display : inline-block; width : 40px; text-align : center; }
+#playlistMenuHeaderRightButtons { display : inline-block; width : 142px; margin-right : 7px; text-align : center; }
+#playlistMenuHeaderTitle {
+    display : inline-block;
+    width : calc(100% - 190px);
+    text-align : center;
+    font-size : 20px;
+    color : #474747 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align : middle
+}
 
 #playlistMenuHeaderLeftButtons button,
 #playlistMenuHeaderRightButtons button {
-    margin-right : 7px !important;
+    margin : 0 3px !important;
 }

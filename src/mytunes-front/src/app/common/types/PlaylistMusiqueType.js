@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import {musiquePropType} from "./MusiqueType";
+import {playlistPropType} from "./PlaylistType";
 
 const playlistMusiquePropType = PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -20,5 +21,6 @@ const playlistMusiquePropType = PropTypes.shape({
 
 export const playlistManagerPropType = PropTypes.shape({
     musiquePlaying: musiquePropType,
-    musiques: PropTypes.arrayOf(playlistMusiquePropType).isRequired
+    musiques: PropTypes.arrayOf(playlistMusiquePropType).isRequired,
+    playlist: playlistPropType
 });

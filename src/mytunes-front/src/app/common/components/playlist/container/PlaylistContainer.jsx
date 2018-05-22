@@ -23,9 +23,12 @@ class PlaylistContainer extends React.Component {
 
         return (
             <div id="playlistMenu">
-                <PlaylistHeader shuffle={ this.props.playlistManager.shuffle }
+                <PlaylistHeader shuffle={ playlistManager.shuffle }
                                 onToggleShuffle={ this._toggleShuffle }
                                 onClearPlaylist={ this._clearPlaylist }
+                                onLoadPlaylist={() => alert("TODO") }
+                                playlistManager={ playlistManager }
+                                onChangePlaylistName={() => alert("TODO") }
                 />
 
                 <PlaylistSortableList musiques={ playlistManager.musiques }

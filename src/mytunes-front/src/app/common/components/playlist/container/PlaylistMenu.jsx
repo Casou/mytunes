@@ -13,7 +13,7 @@ class PlaylistMenu extends React.Component {
         this._closeMenu = this._closeMenu.bind(this);
         this._setMenuOpeness = this._setMenuOpeness.bind(this);
         this.state = {
-            open: false
+            open: true
         };
     }
 
@@ -29,7 +29,7 @@ class PlaylistMenu extends React.Component {
                 </IconButton>
                 <Drawer
                     docked={true}
-                    width={350}
+                    width={500}
                     open={open}
                     className={"playlistMenu menuDrawer"}
                     onRequestChange={this._setMenuOpeness}
