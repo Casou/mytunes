@@ -25,7 +25,6 @@ nbdist/
 
 datas/
 datas/**.db
-datas/h2db-datas.trace.db
 package-lock.json
 **/package-lock.json
 medias/
