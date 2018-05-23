@@ -31,9 +31,9 @@ class PlaylistTreeView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.mappedPlaylists = this._mapPlaylists(props.playlists);
-
-        this.state = {};
+        this.state = {
+            cursor : null
+        };
 
         this._onToggle = this._onToggle.bind(this);
     }
@@ -66,20 +66,26 @@ class PlaylistTreeView extends React.Component {
     };
 
     render() {
+        const mappedPlaylists = this._mapPlaylists(this.props.playlists);
+
         return (
             <div>
-                <div className={"searchPlaylist"}>
-                    <FontIcon className="material-icons">search</FontIcon>
-                    <TextField className="textField" name={"searchPlaylist"} placeholder={"Recherche"}
-                               onKeyPress={e => {
-                                   if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
-                                       // this._searchMusique(e.target.value);
-                                   }
-                               }}
-                    />
-                </div>
+                { this.props.onFilter ?
+                    <div className={"searchPlaylist"}>
+                        <FontIcon className="material-icons">search</FontIcon>
+                        <TextField className="textField" name={"searchPlaylist"} placeholder={"Recherche"}
+                                   onKeyPress={e => {
+                                       if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
+                                           this.props.onFilter(e.target.value);
+                                       }
+                                   }}
+                        />
+                    </div>
+                    :
+                    ""
+                }
                 <Treebeard
-                    data={this.mappedPlaylists}
+                    data={mappedPlaylists}
                     onToggle={this._onToggle}
                     decorators={decorators}
                     theme={theme}
@@ -90,7 +96,8 @@ class PlaylistTreeView extends React.Component {
 
 PlaylistTreeView.propTypes = {
     playlists : PropTypes.arrayOf(playlistPropType).isRequired,
-    onChoosePlaylist : PropTypes.func.isRequired
+    onChoosePlaylist : PropTypes.func.isRequired,
+    onFilter : PropTypes.func
 };
 
 export default PlaylistTreeView;
