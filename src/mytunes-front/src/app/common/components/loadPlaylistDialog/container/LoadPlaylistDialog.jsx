@@ -7,10 +7,12 @@ import PlaylistTreeView from "../component/PlaylistTreeView";
 class LoadPlaylistDialog extends React.Component {
     state = {
         open: false,
+        chosenPlaylistId : null
     };
 
-    handleOpen = () => { this.setState({open: true}); };
-    handleClose = () => { this.setState({open: false}); };
+    handleOpen = () => { this.setState({...this.state, open: true}); };
+    handleClose = () => { this.setState({...this.state, open: false}); };
+    choosePlaylist = (playlistId) => { this.setState({...this.state, chosenPlaylistId: playlistId}); };
 
     render() {
         const actions = [
@@ -27,6 +29,7 @@ class LoadPlaylistDialog extends React.Component {
             <FlatButton
                 label="Séletionner"
                 primary={true}
+                disabled={this.state.chosenPlaylistId === null}
                 onClick={ () => {
                     if (this.props.onSelectPlaylist) {
                         this.props.onSelectPlaylist();
@@ -68,7 +71,8 @@ class LoadPlaylistDialog extends React.Component {
                     {
                         !this.props.playlistProvider || !this.props.playlistProvider.playlists ?
                         "Aucune playlist" :
-                        <PlaylistTreeView playlists={this.props.playlistProvider.playlists} />
+                        <PlaylistTreeView playlists={ this.props.playlistProvider.playlists }
+                                          onChoosePlaylist={ this.choosePlaylist.bind(this) }  />
                     }
                 </section>
             </Dialog>

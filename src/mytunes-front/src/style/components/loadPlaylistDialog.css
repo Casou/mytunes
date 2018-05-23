@@ -21,7 +21,7 @@
 }
 
 .loadPlaylistDialog .tree-item {
-    margin-left : 15px;
+    margin-left : 19px;
 }
 
 .loadPlaylistDialog .tree-node .material-icons {
@@ -29,4 +29,33 @@
     font-size : 20px !important;
     color : #474747 !important;
     padding-right : 5px;
+}
+
+.loadPlaylistDialog .tree-node .nbMusiques {
+    color : #5e5e5e;
+    font-size : 12px;
+}
+
+.loadPlaylistDialog .searchPlaylist {
+    text-align : right;
+}
+
+.loadPlaylistDialog .searchPlaylist .textField {
+    height : 25px !important;
+}
+
+.loadPlaylistDialog .searchPlaylist input {
+    font-size : 14px !important;
+    vertical-align : super;
+}
+
+
+.loadPlaylistDialog .searchPlaylist .textField hr {
+    bottom : 2px !important;
+}
+
+
+.loadPlaylistDialog .searchPlaylist span.material-icons {
+    font-size : 20px !important;
+    color : #585858 !important;
 }

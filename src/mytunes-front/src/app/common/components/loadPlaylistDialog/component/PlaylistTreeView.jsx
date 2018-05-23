@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Treebeard, decorators} from 'react-treebeard';
-import {FontIcon} from "material-ui";
+import {Treebeard, decorators, theme} from 'react-treebeard';
+import {FontIcon, TextField} from "material-ui";
 import cn from "classnames";
 import {playlistPropType} from "../../../types/PlaylistType";
+import {__KEYCODE_ENTER__} from "../../../../../App";
+
+theme.tree.node.activeLink.background = '#dde7ff';
 
 decorators.Header = ({style, node}) => {
-    const iconType = node.children ? 'folder' : 'insert_drive_file';
+    const iconType = node.children ? 'folder' : 'dehaze';
 
     return (
         <div className={cn("tree-node",
@@ -18,7 +21,7 @@ decorators.Header = ({style, node}) => {
              style={style.base}>
             <div style={style.title}>
                 <FontIcon className="material-icons">{iconType}</FontIcon>
-                {node.name}
+                {node.name} <span className={"nbMusiques"}>{ node.nbMusiques } musique{ node.nbMusiques > 1 ? "s" : "" }</span>
             </div>
         </div>
     );
@@ -37,19 +40,16 @@ class PlaylistTreeView extends React.Component {
 
     _mapPlaylists(playlists) {
         return playlists.map(playlist => {
-            let mappedPlayliat = {
-                name: playlist.nom
+            const mappedPlaylist = {
+                id: playlist.id,
+                name: playlist.nom,
+                nbMusiques : playlist.musiqueIds.length
             };
             if (playlist.isFolder) {
-                mappedPlayliat = {
-                    name: playlist.nom,
-                    toggled : true,
-                    children : this._mapPlaylists(playlist.children)
-                };
-            } else {
-
+                mappedPlaylist.toggled = true;
+                mappedPlaylist.children = this._mapPlaylists(playlist.children);
             }
-            return mappedPlayliat;
+            return mappedPlaylist;
         });
     }
 
@@ -62,23 +62,35 @@ class PlaylistTreeView extends React.Component {
             node.toggled = toggled;
         }
         this.setState({ cursor: node });
+        this.props.onChoosePlaylist(node.id);
     };
-
 
     render() {
         return (
             <div>
+                <div className={"searchPlaylist"}>
+                    <FontIcon className="material-icons">search</FontIcon>
+                    <TextField className="textField" name={"searchPlaylist"} placeholder={"Recherche"}
+                               onKeyPress={e => {
+                                   if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
+                                       // this._searchMusique(e.target.value);
+                                   }
+                               }}
+                    />
+                </div>
                 <Treebeard
                     data={this.mappedPlaylists}
                     onToggle={this._onToggle}
                     decorators={decorators}
+                    theme={theme}
                 />
             </div>);
     }
 }
 
 PlaylistTreeView.propTypes = {
-    playlists : PropTypes.arrayOf(playlistPropType).isRequired
+    playlists : PropTypes.arrayOf(playlistPropType).isRequired,
+    onChoosePlaylist : PropTypes.func.isRequired
 };
 
 export default PlaylistTreeView;
