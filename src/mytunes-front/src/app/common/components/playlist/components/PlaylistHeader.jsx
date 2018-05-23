@@ -18,7 +18,7 @@ const PlaylistHeader = (props) => (
         <div id="playlistMenuHeaderTitle" title={ props.playlistManager && props.playlistManager.playlist ? props.playlistManager.playlist.nom : "" }>
             { props.playlistManager && props.playlistManager.playlist ?
                 <TextField className="textField" name={"search"} placeholder={"Recherche"}
-                           defaultValue={ props.playlistManager.playlist.nom }
+                           value={ props.playlistManager.playlist.nom }
                            onKeyPress={e => {
                                if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
                                    props.onChangePlaylistName(props.playlistManager.playlist.id, e.target.value);

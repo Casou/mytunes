@@ -28,8 +28,6 @@
     text-shadow : 0 0 4px #FFF;
 }
 
-#playlistMenu ul { margin-top: -3px; }
-
 #playlistMenu li { display : flex; border-bottom : 1px solid lightgrey; cursor : grab; height : 25px; }
 #playlistMenu li:nth-child(odd) { background-color : white; }
 #playlistMenu li:nth-child(even) { background-color : #f3f3f3; }
@@ -61,13 +59,21 @@
 #playlistMenuHeaderTitle {
     display : inline-block;
     width : calc(100% - 190px);
-    text-align : center;
-    font-size : 20px;
-    color : #474747 !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align : middle
+}
+#playlistMenuHeaderTitle .textField {
+    height : 40px !important;
+    width : 100% !important;
+}
+
+#playlistMenuHeaderTitle .textField input {
+    text-align : center;
+    font-size : 20px;
+    color : #474747 !important;
+    font-weight : bold !important;
 }
 
 #playlistMenuHeaderLeftButtons button,

@@ -2,11 +2,13 @@ import React from "react";
 import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
+import PropTypes from "prop-types";
 
 import {playlistManagerPropType} from "../../../types/PlaylistMusiqueType";
 import PlaylistManagerActions from "../../../actions/PlaylistManagerActions";
 import PlaylistHeader from "../components/PlaylistHeader";
 import PlaylistSortableList from "../components/PlaylistSortableList";
+import {musiquePropType} from "../../../types/MusiqueType";
 
 class PlaylistContainer extends React.Component {
     constructor(props) {
@@ -26,7 +28,7 @@ class PlaylistContainer extends React.Component {
                 <PlaylistHeader shuffle={ playlistManager.shuffle }
                                 onToggleShuffle={ this._toggleShuffle }
                                 onClearPlaylist={ this._clearPlaylist }
-                                onLoadPlaylist={() => alert("TODO") }
+                                onLoadPlaylist={(playlistId) => this._loadPlaylist(playlistId) }
                                 playlistManager={ playlistManager }
                                 playlistProvider={ playlistProvider }
                                 onChangePlaylistName={() => alert("TODO") }
@@ -37,12 +39,14 @@ class PlaylistContainer extends React.Component {
                                       playMusique={ this._playMusique }
                                       helperClass='playlistSortableHelper'
                                       onSortEnd={ this._sortEnd }
+                                      pressDelay={200}
                 />
             </div>
         );
     }
 
-    _playMusique(musique) {
+    _playMusique(musique, event) {
+        event.preventDefault();
         this.props.playlistManagerActions.playMusique(musique, true);
     }
 
@@ -55,18 +59,30 @@ class PlaylistContainer extends React.Component {
     }
 
     _sortEnd({oldIndex, newIndex}) {
+        if (oldIndex === newIndex) {
+            return;
+        }
         this.props.playlistManagerActions.reorderPlaylist(oldIndex, newIndex);
+    }
+
+    _loadPlaylist(playlistId) {
+        const playlist = this.props.playlistProvider.getPlaylists().filter(playlist => playlist.id === playlistId)[0];
+        this.props.playlistManager.loadPlaylist(playlist, this.props.musiques.filter(musique => playlist.musiqueIds.includes(musique.id)));
+        this.forceUpdate();
     }
 
 }
 
 PlaylistContainer.propTypes = {
-    playlistManager: playlistManagerPropType.isRequired
+    playlistManager: playlistManagerPropType.isRequired,
+    playlistProvider : PropTypes.object.isRequired,
+    musiques : PropTypes.arrayOf(musiquePropType)
 };
 
 export default connect(state => assign({}, {
     playlistManager: state.playlistManager,
-    playlistProvider: state.playlistProvider
+    playlistProvider: state.playlistProvider,
+    musiques : state.musiques
 }), dispatch => ({
     playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(PlaylistContainer);

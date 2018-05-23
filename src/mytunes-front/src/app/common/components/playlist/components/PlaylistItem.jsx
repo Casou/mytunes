@@ -19,7 +19,7 @@ const PlaylistItem = SortableElement((props) => {
                 {isPlaying ?
                     <FontIcon className="material-icons">equalizer</FontIcon>
                     :
-                    <IconButton onClick={() => playMusique(musique)}>
+                    <IconButton onClick={(event) => playMusique(musique, event)}>
                         <FontIcon className="material-icons">play_arrow</FontIcon>
                     </IconButton>
                 }

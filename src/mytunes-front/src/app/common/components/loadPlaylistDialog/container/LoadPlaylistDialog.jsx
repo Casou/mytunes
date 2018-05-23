@@ -32,7 +32,7 @@ class LoadPlaylistDialog extends React.Component {
                 disabled={this.state.chosenPlaylistId === null}
                 onClick={ () => {
                     if (this.props.onSelectPlaylist) {
-                        this.props.onSelectPlaylist();
+                        this.props.onSelectPlaylist(this.state.chosenPlaylistId);
                     }
                     this.handleClose();
                 }}
