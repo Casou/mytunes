@@ -1,6 +1,6 @@
-INSERT INTO MUSIQUE(id, itunes_id, titre) VALUES (1, 1, 'mus1-titre');
-INSERT INTO MUSIQUE(id, itunes_id, titre) VALUES (2, 2, 'mus2-titre');
-INSERT INTO MUSIQUE(id, itunes_id, titre) VALUES (3, 3, 'mus3-titre');
+INSERT INTO MUSIQUE(id, itunes_id, titre, duree) VALUES (1, 1, 'mus1-titre', 100);
+INSERT INTO MUSIQUE(id, itunes_id, titre, duree) VALUES (2, 2, 'mus2-titre', 200);
+INSERT INTO MUSIQUE(id, itunes_id, titre, duree) VALUES (3, 3, 'mus3-titre', 300);
 
 INSERT INTO PLAYLIST(id, itunes_id, nom, is_folder, id_playlist_parent) VALUES (1, 1, 'pl1-titre', false, null);
 INSERT INTO PLAYLIST(id, itunes_id, nom, is_folder, id_playlist_parent) VALUES (2, 2, 'pl2-titre', true, null);

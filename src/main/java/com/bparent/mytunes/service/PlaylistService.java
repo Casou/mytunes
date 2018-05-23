@@ -35,12 +35,14 @@ public class PlaylistService {
         final Playlist playlist = playlistRepository.findById(playlistDTO.getId());
 
         final List<PlaylistMusique> musiquesOrder = new ArrayList<>();
-        for (int i = 0; i < playlistDTO.getMusiquesOrder().size(); i++) {
-            final PlaylistMusiqueDTO playlistMusiqueDTO = playlistDTO.getMusiquesOrder().get(i);
-            PlaylistMusique playlistMusique = playlist.getMusiquesOrder().stream()
-                    .filter(musiqueOrder -> musiqueOrder.getMusique().getId().equals(playlistMusiqueDTO.getMusique().getId()))
+        for (int i = 0; i < playlistDTO.getMusiquesOrderIds().size(); i++) {
+            final BigInteger idMusique = playlistDTO.getMusiquesOrderIds().get(i);
+
+            final PlaylistMusique playlistMusique = playlist.getMusiquesOrder().stream()
+                    .filter(musiqueOrder -> musiqueOrder.getMusique().getId().equals(idMusique))
                     .findFirst()
-                    .orElseThrow(() -> new ResourceNotFoundException("Music " + playlistMusiqueDTO.getMusique().getId() + " not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Music " + idMusique + " not found"));
+
             playlistMusique.setOrder(i);
             musiquesOrder.add(playlistMusique);
         }

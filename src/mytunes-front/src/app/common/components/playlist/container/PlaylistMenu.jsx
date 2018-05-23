@@ -13,7 +13,7 @@ class PlaylistMenu extends React.Component {
         this._closeMenu = this._closeMenu.bind(this);
         this._setMenuOpeness = this._setMenuOpeness.bind(this);
         this.state = {
-            open: true
+            open: false
         };
     }
 

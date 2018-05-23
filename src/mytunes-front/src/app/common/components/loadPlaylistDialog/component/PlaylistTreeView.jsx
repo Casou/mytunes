@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Treebeard, decorators, theme} from 'react-treebeard';
 import {FontIcon, TextField} from "material-ui";
 import cn from "classnames";
-import {playlistPropType} from "../../../types/PlaylistType";
 import {__KEYCODE_ENTER__} from "../../../../../App";
 
 theme.tree.node.activeLink.background = '#dde7ff';
@@ -32,7 +31,8 @@ class PlaylistTreeView extends React.Component {
         super(props);
 
         this.state = {
-            cursor : null
+            cursor : null,
+            filterValue : ""
         };
 
         this._onToggle = this._onToggle.bind(this);
@@ -43,9 +43,10 @@ class PlaylistTreeView extends React.Component {
             const mappedPlaylist = {
                 id: playlist.id,
                 name: playlist.nom,
-                nbMusiques : playlist.musiqueIds.length
+                nbMusiques : playlist.musiqueIds.length,
+                active : this.state.cursor ? playlist.id === this.state.cursor.id : false
             };
-            if (playlist.isFolder) {
+            if (playlist.children.length) {
                 mappedPlaylist.toggled = true;
                 mappedPlaylist.children = this._mapPlaylists(playlist.children);
             }
@@ -65,8 +66,38 @@ class PlaylistTreeView extends React.Component {
         this.props.onChoosePlaylist(node.id);
     };
 
+    _filterPlaylists() {
+        const { filterValue } = this.state;
+
+        if (!filterValue) {
+            return this.props.playlistProvider.getHierarchicalPlaylists();
+        }
+
+        let allPlaylists = this.props.playlistProvider.getPlaylists();
+        if (!allPlaylists) {
+            return [];
+        }
+
+        const filteredIds = allPlaylists.filter(playlist => playlist.nom.indexOf(filterValue) >= 0)
+            .map(playlist => playlist.id);
+
+        // debugger;
+        for (let id of filteredIds) {
+            const playlist = allPlaylists.filter(playlist => playlist.id === id)[0];
+            let parent = playlist.parent;
+            while (parent) {
+                if (!filteredIds.includes(parent.id)) {
+                    filteredIds.push(parent.id);
+                }
+                parent = parent.parent;
+            }
+        }
+
+        return this.props.playlistProvider.mapHierarchicalPlaylists(allPlaylists.filter(playlist => filteredIds.includes(playlist.id)));
+    }
+
     render() {
-        const mappedPlaylists = this._mapPlaylists(this.props.playlists);
+        const mappedPlaylists = this._mapPlaylists(this.props.playlistProvider.getHierarchicalPlaylists());
 
         return (
             <div>
@@ -76,7 +107,13 @@ class PlaylistTreeView extends React.Component {
                         <TextField className="textField" name={"searchPlaylist"} placeholder={"Recherche"}
                                    onKeyPress={e => {
                                        if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
-                                           this.props.onFilter(e.target.value);
+                                           if (this.props.onFilter) {
+                                                this.props.onFilter();
+                                           }
+                                           this.setState({
+                                               ...this.state,
+                                               filterValue: e.target.value
+                                           });
                                        }
                                    }}
                         />
@@ -95,7 +132,7 @@ class PlaylistTreeView extends React.Component {
 }
 
 PlaylistTreeView.propTypes = {
-    playlists : PropTypes.arrayOf(playlistPropType).isRequired,
+    playlistProvider : PropTypes.object.isRequired,
     onChoosePlaylist : PropTypes.func.isRequired,
     onFilter : PropTypes.func
 };

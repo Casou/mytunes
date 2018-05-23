@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface PlaylistRepository extends CrudRepository<Playlist, BigInteger> {
     List<Playlist> findAll();
-    List<Playlist> findByParentIsNull();
     Playlist findById(BigInteger id);
     Playlist findByItunesId(Integer itunesId);
 

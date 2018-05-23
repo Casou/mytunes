@@ -7,22 +7,12 @@ import PlaylistTreeView from "../component/PlaylistTreeView";
 class LoadPlaylistDialog extends React.Component {
     state = {
         open: false,
-        chosenPlaylistId : null,
-        filterValue : ""
+        chosenPlaylistId : null
     };
 
     handleOpen = () => { this.setState({...this.state, open: true}); };
     handleClose = () => { this.setState({...this.state, open: false}); };
     _choosePlaylist = (playlistId) => { this.setState({...this.state, chosenPlaylistId: playlistId}); };
-
-    _filterPlaylists() {
-        const { filterValue } = this.state;
-        let filteredPlaylist = this.props.playlistProvider.playlists ? [...this.props.playlistProvider.playlists] : [];
-        if (filterValue) {
-            filteredPlaylist = filteredPlaylist.filter(playlist => playlist.nom.indexOf(filterValue) >= 0);
-        }
-        return filteredPlaylist;
-    }
 
     render() {
         const actions = [
@@ -67,8 +57,6 @@ class LoadPlaylistDialog extends React.Component {
             { buttonNewPlaylist }
         </header>;
 
-        const filteredPlaylists = this._filterPlaylists();
-
         return (
             <Dialog
                 className={"loadPlaylistDialog"}
@@ -80,14 +68,10 @@ class LoadPlaylistDialog extends React.Component {
                 autoScrollBodyContent={true}
             >
                 <section>
-                    {
-                        filteredPlaylists ?
-                            <PlaylistTreeView playlists={ filteredPlaylists }
-                                              onChoosePlaylist={ this._choosePlaylist.bind(this) }
-                                              onFilter={ (value) => this.setState({...this.state, filterValue : value}) }
-                            /> :
-                            "Aucune playlist"
-                    }
+                    <PlaylistTreeView playlistProvider={ this.props.playlistProvider }
+                                      onChoosePlaylist={ this._choosePlaylist.bind(this) }
+                                      onFilter={ () => this.setState({...this.state, chosenPlaylistId : null}) }
+                    />
                 </section>
             </Dialog>
         );

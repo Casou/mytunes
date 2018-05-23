@@ -24,29 +24,38 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
     protected Boolean isFolder = Boolean.FALSE;
     protected String persistentId;
     protected String parentPersistentId;
-    protected List<PlaylistDTO> children = new ArrayList<>();
-    protected List<PlaylistMusiqueDTO> musiquesOrder;
 
     protected List<BigInteger> musiqueIds = new ArrayList<>();
+    protected List<BigInteger> musiquesOrderIds = new ArrayList<>();
+    protected List<BigInteger> childrenIds = new ArrayList<>();
 
     public static PlaylistDTO toDto(Playlist playlist) {
         ModelMapper mapper = new ModelMapper();
         PlaylistDTO dto = mapper.map(playlist, PlaylistDTO.class);
         if (playlist.getChildren() != null) {
-            dto.children = playlist.getChildren().stream()
+            dto.childrenIds = playlist.getChildren().stream()
                     .map(PlaylistDTO::toDto)
                     .sorted((dto1, dto2) -> {
                         if (dto1.isFolder && !dto2.isFolder) { return 1; }
                         if (!dto1.isFolder && dto2.isFolder) { return -1; }
                         return dto1.getNom().compareTo(dto2.getNom());
                     })
+                    .map(PlaylistDTO::getId)
                     .collect(Collectors.toList());
         }
+
         if (playlist.getMusiquesOrder() != null) {
             dto.musiqueIds = playlist.getMusiquesOrder().stream()
                     .map(musique -> musique.getMusique().getId())
                     .collect(Collectors.toList());
         }
+
+        if (playlist.getMusiquesOrder() != null) {
+            dto.musiquesOrderIds = playlist.getMusiquesOrder().stream()
+                    .map(order -> order.getMusique().getId())
+                    .collect(Collectors.toList());
+        }
+
         return dto;
     }
 

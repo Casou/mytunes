@@ -121,10 +121,4 @@ public class PlaylistRepositoryTest {
         assertEquals(2, allPlaylist.size());
     }
 
-    @Test
-    public void findByParentIsNull_shouldReturnOnlyRootPlaylists() {
-        List<Playlist> playlists = playlistDao.findByParentIsNull();
-        assertEquals(2, playlists.size());
-    }
-
 }

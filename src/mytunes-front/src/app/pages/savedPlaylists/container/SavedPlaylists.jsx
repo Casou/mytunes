@@ -23,7 +23,7 @@ class SavedPlaylists extends React.Component {
         const selectedPlaylist = playlistId ? props.playlistProvider.findById(parseInt(playlistId, 10)) : null;
 
         this.state = {
-            treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
+            treeData: this._mapPlaylistToTreeItem(props.playlistProvider.getHierarchicalPlaylists()),
             selectedPlaylist,
             musiques: selectedPlaylist ? this._getMusiques(selectedPlaylist) : []
         };
@@ -92,11 +92,13 @@ class SavedPlaylists extends React.Component {
     _sortEnd({oldIndex, newIndex}) {
         const { selectedPlaylist, musiques } = this.state;
         const musiqueSorted = arrayMove([...musiques], oldIndex, newIndex);
-        this.props.playlistsActions.updateMusiqueOrder(selectedPlaylist.id, musiqueSorted);
-        this.setState({
-            ...this.state,
-            musiques: musiqueSorted
-        });
+        this.props.playlistsActions.updateMusiqueOrder(selectedPlaylist.id, musiqueSorted)
+            .then(() => {
+                this.setState({
+                    ...this.state,
+                    musiques: musiqueSorted
+                });
+            });
     }
 
     _mapPlaylistToTreeItem(playlists) {
@@ -119,7 +121,7 @@ class SavedPlaylists extends React.Component {
 
     _getPlaylistSubtitle(playlist) {
         return playlist.children ?
-            playlist.children.length > 1 ? playlist.children.length + " playlists" : playlist.children.length + " playlist"
+            playlist.children.length > 1 ? playlist.children.length + " _playlists" : playlist.children.length + " playlist"
             : "0 playlist"
             + !playlist.isFolder || playlist.musiqueIds.length > 0 ? " / " + this._getMusiqueSubtitle() : "";
     }
@@ -159,25 +161,11 @@ class SavedPlaylists extends React.Component {
     }
 
     _updatePlaylists(id, properties) {
-        let playlists = [...this.props.playlistProvider.playlists];
-        playlists = this._updatePlaylistsRecursive(playlists, id, properties);
+        this.props.playlistProvider.updatePlaylist(id, properties);
         this.setState({
             ...this.state,
-            treeData: this._mapPlaylistToTreeItem(playlists)
+            treeData: this._mapPlaylistToTreeItem(this.props.playlistProvider.getHierarchicalPlaylists())
         });
-    }
-
-    _updatePlaylistsRecursive(playlists, id, properties) {
-        for (let playlist of playlists) {
-            if (playlist.id === id) {
-                properties.forEach(prop => playlist[prop.property] = prop.value);
-                break;
-            } else {
-                playlist.children = this._updatePlaylistsRecursive(playlist.children, id, properties);
-            }
-        }
-
-        return playlists;
     }
 
     _onDeleteMusique(musique) {
@@ -192,7 +180,7 @@ class SavedPlaylists extends React.Component {
             this.setState({
                 ...this.state,
                 musiques: musiquesFiltered,
-                // treeData: this._mapPlaylistToTreeItem(props.playlistProvider.playlists),
+                // treeData: this._mapPlaylistToTreeItem(props.playlistProvider.getPlaylists()),
             }, () => this._updatePlaylists(selectedPlaylist.id, [{ property : "musiqueIds", value : musiquesFiltered.map(m => m.id) }]));
         });
     }

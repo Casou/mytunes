@@ -25,9 +25,8 @@ export default {
         return RequestUtil.put("playlist/order",
             {
                 id : idPlaylist,
-                musiquesOrder : musiques.map((musique, index) => {
-                    return { order : index, musique : { id : musique.id } };
-                })
+                musiquesOrderIds : musiques.map(musique => musique.id )
+                    // return { order : index, musique : { id : musique.id } };
             });
     },
 

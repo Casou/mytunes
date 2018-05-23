@@ -60,29 +60,28 @@ public class PlaylistServiceTest {
         ArgumentCaptor<Playlist> playlistSavedCaptor = ArgumentCaptor.forClass(Playlist.class);
         when(this.playlistRepository.findById(any(BigInteger.class))).thenReturn(Playlist.builder()
                 .musiquesOrder(Arrays.asList(
-                        PlaylistMusique.builder().musique(Musique.builder().id(BigInteger.valueOf(1)).build()).build(),
-                        PlaylistMusique.builder().musique(Musique.builder().id(BigInteger.valueOf(3)).build()).build(),
-                        PlaylistMusique.builder().musique(Musique.builder().id(BigInteger.valueOf(2)).build()).build()
+                        PlaylistMusique.builder().id(BigInteger.valueOf(1)).musique(Musique.builder().id(BigInteger.valueOf(1)).build()).build(),
+                        PlaylistMusique.builder().id(BigInteger.valueOf(2)).musique(Musique.builder().id(BigInteger.valueOf(2)).build()).build(),
+                        PlaylistMusique.builder().id(BigInteger.valueOf(3)).musique(Musique.builder().id(BigInteger.valueOf(3)).build()).build()
                 ))
                 .build());
 
         this.playlistService.updatePlaylistOrder(PlaylistDTO.builder()
-                .musiquesOrder(Arrays.asList(
-                        PlaylistMusiqueDTO.builder().musique(MusiqueDTO.builder().id(BigInteger.valueOf(1)).build()).build(),
-                        PlaylistMusiqueDTO.builder().musique(MusiqueDTO.builder().id(BigInteger.valueOf(2)).build()).build(),
-                        PlaylistMusiqueDTO.builder().musique(MusiqueDTO.builder().id(BigInteger.valueOf(3)).build()).build()
-                ))
+                .musiquesOrderIds(Arrays.asList(BigInteger.valueOf(1), BigInteger.valueOf(3), BigInteger.valueOf(2)))
                 .build());
 
         verify(this.playlistRepository).save(playlistSavedCaptor.capture());
         List<PlaylistMusique> musiquesOrder = playlistSavedCaptor.getValue().getMusiquesOrder();
         assertEquals(3, musiquesOrder.size());
+
         assertEquals(0, musiquesOrder.get(0).getOrder().intValue());
         assertEquals(BigInteger.valueOf(1), musiquesOrder.get(0).getMusique().getId());
+
         assertEquals(1, musiquesOrder.get(1).getOrder().intValue());
-        assertEquals(BigInteger.valueOf(2), musiquesOrder.get(1).getMusique().getId());
+        assertEquals(BigInteger.valueOf(3), musiquesOrder.get(1).getMusique().getId());
+
         assertEquals(2, musiquesOrder.get(2).getOrder().intValue());
-        assertEquals(BigInteger.valueOf(3), musiquesOrder.get(2).getMusique().getId());
+        assertEquals(BigInteger.valueOf(2), musiquesOrder.get(2).getMusique().getId());
     }
 
     @Test

@@ -21,7 +21,7 @@ public class PlaylistController {
 
     @GetMapping("/playlists")
     public List<PlaylistDTO> getAllPlaylist() {
-        return this.playlistRepository.findByParentIsNull().stream()
+        return this.playlistRepository.findAll().stream()
                 .map(PlaylistDTO::toDto)
                 .collect(Collectors.toList());
     }
