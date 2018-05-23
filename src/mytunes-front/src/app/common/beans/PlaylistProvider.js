@@ -28,14 +28,24 @@ export default class PlaylistProvider {
     }
 
     getHierarchicalPlaylists() {
-        return this.mapHierarchicalPlaylists([... this._playlists]);
+        return this.mapHierarchicalPlaylists([...this._playlists]);
     }
 
-    mapHierarchicalPlaylists(playlists) {
-        playlists.forEach(playlist => {
+    mapHierarchicalPlaylists(playlists, filteredIds) {
+        let filteredPlaylists = playlists;
+        if (filteredIds) {
+            filteredPlaylists = filteredPlaylists.filter(playlist => filteredIds.includes(playlist.id));
+        }
+
+        filteredPlaylists.forEach(playlist => {
             if (playlist.childrenIds) {
                 playlist.children = [];
-                playlist.childrenIds.forEach(childId => {
+
+                let childrenIds = playlist.childrenIds;
+                if (filteredIds) {
+                    childrenIds = childrenIds.filter(childId => filteredIds.includes(childId));
+                }
+                childrenIds.forEach(childId => {
                     const child = this._playlists.filter(pl => pl.id === childId)[0];
                     playlist.children.push(child);
                     child.parent = playlist;
@@ -43,7 +53,7 @@ export default class PlaylistProvider {
             }
         });
 
-        return playlists.filter(playlist => !playlist.parent);
+        return filteredPlaylists.filter(playlist => !playlist.parent);
     }
 
     updatePlaylist(id, mapPropertyValue) {

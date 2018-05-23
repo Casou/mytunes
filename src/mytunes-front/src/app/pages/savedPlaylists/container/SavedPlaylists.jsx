@@ -121,7 +121,7 @@ class SavedPlaylists extends React.Component {
 
     _getPlaylistSubtitle(playlist) {
         return playlist.children ?
-            playlist.children.length > 1 ? playlist.children.length + " _playlists" : playlist.children.length + " playlist"
+            playlist.children.length > 1 ? playlist.children.length + " playlists" : playlist.children.length + " playlist"
             : "0 playlist"
             + !playlist.isFolder || playlist.musiqueIds.length > 0 ? " / " + this._getMusiqueSubtitle() : "";
     }

@@ -55,8 +55,9 @@ class PlaylistTreeView extends React.Component {
     }
 
     _onToggle = (node, toggled) => {
-        if (this.state.cursor) {
-            this.state.cursor.active = false;
+        const { cursor } = this.state;
+        if (cursor) {
+            cursor.active = false;
         }
         node.active = true;
         if (node.children) {
@@ -78,10 +79,9 @@ class PlaylistTreeView extends React.Component {
             return [];
         }
 
-        const filteredIds = allPlaylists.filter(playlist => playlist.nom.indexOf(filterValue) >= 0)
+        const filteredIds = allPlaylists.filter(playlist => playlist.nom.toLowerCase().indexOf(filterValue.toLowerCase()) >= 0)
             .map(playlist => playlist.id);
 
-        // debugger;
         for (let id of filteredIds) {
             const playlist = allPlaylists.filter(playlist => playlist.id === id)[0];
             let parent = playlist.parent;
@@ -93,11 +93,12 @@ class PlaylistTreeView extends React.Component {
             }
         }
 
-        return this.props.playlistProvider.mapHierarchicalPlaylists(allPlaylists.filter(playlist => filteredIds.includes(playlist.id)));
+        return this.props.playlistProvider.mapHierarchicalPlaylists(allPlaylists, filteredIds);
     }
 
     render() {
-        const mappedPlaylists = this._mapPlaylists(this.props.playlistProvider.getHierarchicalPlaylists());
+
+        const mappedPlaylists = this._mapPlaylists(this._filterPlaylists());
 
         return (
             <div>
