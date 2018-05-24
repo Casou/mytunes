@@ -6,6 +6,7 @@ import ConfirmDialog from "../../confirm/ConfirmDialog";
 import {playlistManagerPropType} from "../../../types/PlaylistMusiqueType";
 import LoadPlaylistDialog from "../../loadPlaylistDialog/container/LoadPlaylistDialog";
 import TextFieldInput from "../../form/TextFieldInput";
+import SavePlaylistDialog from "../container/SavePlaylistDIalog";
 
 const PlaylistHeader = (props) => {
     const nomPlaylist = props.playlistManager && props.playlistManager.playlist ? props.playlistManager.playlist.nom : "";
@@ -45,11 +46,14 @@ const PlaylistHeader = (props) => {
                                     onSelectPlaylist={ props.onLoadPlaylist }
                                     onNewPlaylist={ props.onClearPlaylist }
                 />
-                <IconButton className="savePlaylist">
+                <IconButton className="savePlaylist" onClick={ () => this.savePlaylistDialog.handleOpen() }>
                     <FontIcon className={cn("material-icons", { "active" : props.playlistManager && props.playlistManager.hasChanges })}>
                         save
                     </FontIcon>
                 </IconButton>
+                <SavePlaylistDialog ref={instance => this.savePlaylistDialog = instance }
+                                    playlistProvider={ props.playlistProvider }
+                />
                 <IconButton className="clearPlaylist" onClick={ () => this.confirmCleanPlaylist.handleOpen() }>
                     <FontIcon className={ "material-icons" }>delete_sweep</FontIcon>
                 </IconButton>

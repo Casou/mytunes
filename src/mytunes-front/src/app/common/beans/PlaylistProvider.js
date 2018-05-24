@@ -59,7 +59,5 @@ export default class PlaylistProvider {
     updatePlaylist(id, mapPropertyValue) {
         const playlist = this._playlists.filter(playlist => playlist.id === id)[0];
         mapPropertyValue.forEach(prop => playlist[prop.property] = prop.value);
-
-        console.log(this._playlists);
     }
 }

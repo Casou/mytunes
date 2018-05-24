@@ -1,0 +1,56 @@
+
+
+.playlistTreeView ul {
+    background-color : transparent !important;
+}
+.playlistTreeView ul,
+.playlistTreeView ul li div {
+    color : black !important;
+}
+
+.playlistTreeView .tree-item {
+    margin-left : 19px;
+}
+
+.playlistTreeView .tree-node .material-icons {
+    vertical-align: middle;
+    font-size : 20px !important;
+    color : #474747 !important;
+    padding-right : 5px;
+}
+
+.playlistTreeView .tree-node .nbMusiques {
+    color : #5e5e5e;
+    font-size : 12px;
+}
+
+.playlistTreeView .tree-node              { cursor : default; }
+.playlistTreeView .tree-node.selectable   { cursor : pointer; }
+
+.playlistTreeView .tree-node.active {
+    background-color : #dde7ff !important;
+}
+
+.playlistTreeView .searchPlaylist {
+    text-align : right;
+}
+
+.playlistTreeView .searchPlaylist .textField {
+    height : 25px !important;
+}
+
+.playlistTreeView .searchPlaylist input {
+    font-size : 14px !important;
+    vertical-align : super;
+}
+
+
+.playlistTreeView .searchPlaylist .textField hr {
+    bottom : 2px !important;
+}
+
+
+.playlistTreeView .searchPlaylist span.material-icons {
+    font-size : 20px !important;
+    color : #585858 !important;
+}

@@ -80,3 +80,18 @@
 #playlistMenuHeaderRightButtons button {
     margin : 0 3px !important;
 }
+
+
+
+
+.savePlaylistDialog .playlistTreeView {
+    width : 100% !important;
+    min-height: 100px;
+    max-height: 300px;
+    border : 3px inset lightgrey;
+    overflow: auto;
+}
+
+.savePlaylistDialog .textField {
+    width : 100% !important;
+}

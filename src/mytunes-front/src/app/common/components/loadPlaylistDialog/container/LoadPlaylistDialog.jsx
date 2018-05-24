@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Dialog, FlatButton } from "material-ui";
 import '../../../../../style/components/loadPlaylistDialog.css';
-import PlaylistTreeView from "../component/PlaylistTreeView";
+import LoadPlaylistTreeView from "../component/LoadPlaylistTreeView";
 
 class LoadPlaylistDialog extends React.Component {
     state = {
@@ -68,9 +68,9 @@ class LoadPlaylistDialog extends React.Component {
                 autoScrollBodyContent={true}
             >
                 <section>
-                    <PlaylistTreeView playlistProvider={ this.props.playlistProvider }
-                                      onChoosePlaylist={ this._choosePlaylist.bind(this) }
-                                      onFilter={ () => this.setState({...this.state, chosenPlaylistId : null}) }
+                    <LoadPlaylistTreeView playlistProvider={ this.props.playlistProvider }
+                                          onChoosePlaylist={ this._choosePlaylist.bind(this) }
+                                          onFilter={ () => this.setState({...this.state, chosenPlaylistId : null}) }
                     />
                 </section>
             </Dialog>
