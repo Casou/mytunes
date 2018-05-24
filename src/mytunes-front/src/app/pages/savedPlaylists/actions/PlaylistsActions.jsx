@@ -36,6 +36,6 @@ export default {
                 id : idPlaylist,
                 musiqueIds : [idMusique]
             });
-    },
+    }
 
 };

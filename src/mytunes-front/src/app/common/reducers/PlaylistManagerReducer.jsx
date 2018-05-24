@@ -26,6 +26,12 @@ export const playlistManager = (state = {}, action) => {
         case "REORDER_PLAYLIST" :
             playlistManager = playlistManager.reorderMusique(action.payload.oldIndex, action.payload.newIndex);
             return ObjectUtil.clone(playlistManager);
+        case "LOAD_PLAYLIST" :
+            playlistManager.loadPlaylist(action.payload.playlist, action.payload.musiques);
+            return ObjectUtil.clone(playlistManager);
+        case "CHANGE_PLAYLIST_NAME" :
+            playlistManager.updatePlaylistName(action.payload);
+            return ObjectUtil.clone(playlistManager);
         default :
             return state;
     }

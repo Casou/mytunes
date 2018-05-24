@@ -36,6 +36,21 @@ export default {
                 newIndex
             }
         });
+    },
+
+    loadPlaylist: (playlist, allMusiques) => (dispatch, getState) => {
+        const musiques = allMusiques.filter(musique => playlist.musiqueIds.includes(musique.id));
+        dispatch({
+            type : "LOAD_PLAYLIST",
+            payload : { playlist, musiques }
+        });
+    },
+
+    changePlaylistName: (name) => (dispatch, getState) => {
+        dispatch({
+            type : "CHANGE_PLAYLIST_NAME",
+            payload : name
+        });
     }
 
 }

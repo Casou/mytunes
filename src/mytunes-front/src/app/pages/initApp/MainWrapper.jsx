@@ -42,19 +42,21 @@ class MainWrapper extends React.Component {
     }
 
     isApplicationLoaded(props) {
-        return props.musiques && props.genres && props.playlistProvider && props.playlistProvider.getPlaylists().length;
+        return props.musiques && props.genres &&
+            props.playlistProvider &&
+            props.playlistProvider.getPlaylists().length;
     }
 }
 
 export default connect(state => assign({}, {
-        musiques: state.musiques,
-        genres: state.genres,
-        playlistProvider: state.playlistProvider,
-        isLoading: state.isLoading
-    }),
-    dispatch => ({
-        musiquesActions: bindActionCreators(MusiquesActions, dispatch),
-        playlistsActions: bindActionCreators(PlaylistsActions, dispatch),
-        loadingActions: bindActionCreators(LoadingActions, dispatch),
-        genreActions: bindActionCreators(GenreActions, dispatch)
-    }))(MainWrapper);
+    musiques: state.musiques,
+    genres: state.genres,
+    playlistProvider: state.playlistProvider,
+    isLoading: state.isLoading
+}),
+dispatch => ({
+    musiquesActions: bindActionCreators(MusiquesActions, dispatch),
+    playlistsActions: bindActionCreators(PlaylistsActions, dispatch),
+    loadingActions: bindActionCreators(LoadingActions, dispatch),
+    genreActions: bindActionCreators(GenreActions, dispatch)
+}))(MainWrapper);

@@ -13,9 +13,7 @@ export default class CurrentPlaylistManager {
 
     addMusique(musique) {
         this.musiques.push(musique);
-        if (this.playlist) {
-            this.playlist.musiqueIds.push(musique.id);
-        }
+        this.playlist.musiqueIds.push(musique.id);
         this.hasChanges = true;
     }
 
@@ -95,9 +93,7 @@ export default class CurrentPlaylistManager {
     clearPlaylist() {
         this.musiques = [];
         this.history = [];
-        if (this.playlist) {
-            this.playlist.musiqueIds = [];
-        }
+        this.playlist.musiqueIds = [];
         this.hasChanges = true;
     }
 
@@ -105,6 +101,12 @@ export default class CurrentPlaylistManager {
         this.playlist = playlist;
         this.musiques = musiques;
         this.musiques.forEach(musique => musique.alreadyPlayed = false);
+        this.hasChanges = false;
+    }
+
+    updatePlaylistName(name) {
+        this.playlist.nom = name;
+        this.hasChanges = true;
     }
 
 }

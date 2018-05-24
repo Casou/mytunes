@@ -11,12 +11,14 @@ import PlaylistSortableList from "../components/PlaylistSortableList";
 import {musiquePropType} from "../../../types/MusiqueType";
 
 class PlaylistContainer extends React.Component {
+
     constructor(props) {
         super(props);
         this._playMusique = this._playMusique.bind(this);
         this._clearPlaylist = this._clearPlaylist.bind(this);
         this._toggleShuffle = this._toggleShuffle.bind(this);
         this._sortEnd = this._sortEnd.bind(this);
+        this._changePlaylistName = this._changePlaylistName.bind(this);
     }
 
     render() {
@@ -31,7 +33,7 @@ class PlaylistContainer extends React.Component {
                                 onLoadPlaylist={(playlistId) => this._loadPlaylist(playlistId) }
                                 playlistManager={ playlistManager }
                                 playlistProvider={ playlistProvider }
-                                onChangePlaylistName={() => alert("TODO") }
+                                onChangePlaylistName={ this._changePlaylistName }
                 />
 
                 <PlaylistSortableList musiques={ playlistManager.musiques }
@@ -67,8 +69,11 @@ class PlaylistContainer extends React.Component {
 
     _loadPlaylist(playlistId) {
         const playlist = this.props.playlistProvider.getPlaylists().filter(playlist => playlist.id === playlistId)[0];
-        this.props.playlistManager.loadPlaylist(playlist, this.props.musiques.filter(musique => playlist.musiqueIds.includes(musique.id)));
-        this.forceUpdate();
+        this.props.playlistManagerActions.loadPlaylist(playlist, this.props.musiques);
+    }
+
+    _changePlaylistName(name) {
+        this.props.playlistManagerActions.changePlaylistName(name);
     }
 
 }
