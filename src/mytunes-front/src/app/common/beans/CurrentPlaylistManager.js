@@ -98,7 +98,7 @@ export default class CurrentPlaylistManager {
     }
 
     loadPlaylist(playlist, musiques) {
-        this.playlist = playlist;
+        this.playlist = {...playlist};
         this.musiques = musiques;
         this.musiques.forEach(musique => musique.alreadyPlayed = false);
         this.hasChanges = false;

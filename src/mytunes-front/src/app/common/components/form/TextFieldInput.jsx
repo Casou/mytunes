@@ -29,6 +29,7 @@ class TextFieldInput extends React.Component {
                                onChange(value);
                            }
                        } }
+                       onBlur={() => onChange(value)}
                        onKeyPress={e => {
                            if (this.props.changeOnEnter && (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__)) {
                                onChange(value);
