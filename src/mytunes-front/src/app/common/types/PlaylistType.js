@@ -8,5 +8,6 @@ export const playlistPropType = PropTypes.shape({
     id_playlist_parent: PropTypes.number,
     musiqueIds: PropTypes.arrayOf(PropTypes.number),
     childrenIds: PropTypes.arrayOf(PropTypes.number),
-    musiquesOrderIds: PropTypes.arrayOf(PropTypes.number)
+    musiquesOrderIds: PropTypes.arrayOf(PropTypes.number),
+    parentId: PropTypes.number
 });

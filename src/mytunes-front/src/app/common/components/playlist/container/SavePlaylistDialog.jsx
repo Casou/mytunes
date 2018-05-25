@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FlatButton, Dialog } from 'material-ui';
+import {Dialog, FlatButton} from 'material-ui';
 import TextFieldInput from "../../form/TextFieldInput";
 import PlaylistTreeView from "../../loadPlaylistDialog/component/PlaylistTreeView";
+import {playlistPropType} from "../../../types/PlaylistType";
 
 class SavePlaylistDialog extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -26,18 +28,22 @@ class SavePlaylistDialog extends React.Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.playlistProvider.getHierarchicalPlaylists() !== nextProps.playlistProvider.getHierarchicalPlaylists()) {
-            let hierarchicalPlaylists = this.props.playlistProvider.getHierarchicalPlaylists();
+        if (this.props.hierarchicalPlaylists !== nextProps.hierarchicalPlaylists) {
             const rootPlaylist = [{
                 id : -1,
                 nom : "Racine",
                 isFolder : true,
-                children : hierarchicalPlaylists,
+                children : [...this.props.hierarchicalPlaylists],
                 musiqueIds : []
             }];
 
             this.mappedPlaylists = this._mapPlaylists(rootPlaylist);
         }
+
+        if (this.props.playlistParentId !== nextProps) {
+            this.setState({...this.state, playlistParentId : nextProps.playlistParentId});
+        }
+
     }
 
     _mapPlaylists(playlists) {
@@ -59,8 +65,11 @@ class SavePlaylistDialog extends React.Component {
     }
 
     render() {
-        const { onCancel, onConfirm, title } = this.props;
+        const { onCancel, onConfirm, title, playlist } = this.props;
         const { playlistName, playlistParentId, open } = this.state;
+
+        const playlistNameSetted = playlistName || (playlist && playlist.nom);
+        const playlistParentIdSetted = playlistParentId || (playlist && playlist.parentId);
 
         const actions = [
             <FlatButton
@@ -76,7 +85,7 @@ class SavePlaylistDialog extends React.Component {
             <FlatButton
                 label="Sauvegarder"
                 primary={true}
-                disabled={!playlistName || !playlistParentId}
+                disabled={!playlistNameSetted || !playlistParentIdSetted}
                 onClick={ () => {
                     if (onConfirm) {
                         onConfirm({ playlistName, playlistParentId });
@@ -98,10 +107,11 @@ class SavePlaylistDialog extends React.Component {
                 <PlaylistTreeView data={ this.mappedPlaylists }
                                   toggleOnClick={ false }
                                   onToggle={ (node) => this.setState({...this.state, playlistParentId : node.id}) }
+                                  playlistSelected={ playlist && playlist.parentId }
                 />
                 <TextFieldInput name={"savePlaylistName"}
                                 placeholder={"Nom de la playlist"}
-                                value={ "" }
+                                value={ playlist && playlist.nom }
                                 onChange={ (value) => this.setState({...this.state, playlistName : value }) }
                                 changeOnEnter={false}
                 />
@@ -115,7 +125,8 @@ SavePlaylistDialog.propTypes = {
     title : PropTypes.string,
     onConfirm : PropTypes.func,
     onCancel : PropTypes.func,
-    playlistProvider : PropTypes.object.isRequired
+    hierarchicalPlaylists : PropTypes.array,
+    playlist: playlistPropType
 };
 SavePlaylistDialog.defaultProps = {
     title : "Sauvegarde de la playlist"

@@ -13,10 +13,27 @@ class PlaylistTreeView extends React.Component {
         this._onToggle = this._onToggle.bind(this);
 
         this.state = {
-            cursor : null,
-            data : props.data
+            cursor : props.playlistSelected ? { id : props.playlistSelected } : null,
+            data : props.playlistSelected ?
+                this._activateNode(props.data, props.playlistSelected)
+                : props.data
         };
+
     }
+
+    _activateNode = (data, nodeId) => {
+        return data.map(datum => {
+            if (datum.id === nodeId) {
+                datum.active = true;
+            } else {
+                datum.active = false;
+            }
+            if (datum.children) {
+                datum.children = this._activateNode(datum.children, nodeId);
+            }
+            return datum;
+        })
+    };
 
     _onToggle = (node, toggled) => {
         if (!node.selectable) {
@@ -54,6 +71,7 @@ class PlaylistTreeView extends React.Component {
 
 PlaylistTreeView.propTypes = {
     data : PropTypes.array.isRequired,
+    playlistSelected : PropTypes.number,
     onToggle : PropTypes.func,
     toggleOnClick : PropTypes.bool
 };

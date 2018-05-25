@@ -10,6 +10,8 @@ import SavePlaylistDialog from "../container/SavePlaylistDialog";
 
 const PlaylistHeader = (props) => {
     const nomPlaylist = props.playlistManager && props.playlistManager.playlist ? props.playlistManager.playlist.nom : "";
+    const idParentPlaylist = props.playlistManager && props.playlistManager.playlist ? props.playlistManager.playlist.parentId : null;
+
     return (
         <header>
             <div id="playlistMenuHeaderLeftButtons">
@@ -30,7 +32,8 @@ const PlaylistHeader = (props) => {
             </div>
             <div id="playlistMenuHeaderRightButtons">
                 <IconButton onClick={ () => {
-                    if (props.playlistManager && props.playlistManager.hasChanges) {
+                    if (props.playlistManager && !props.playlistManager.playlist &&
+                        props.playlistManager.musiques.length) {
                         this.confirmLoadPlaylist.handleOpen();
                     } else {
                         this.loadPlaylistDialog.handleOpen();
@@ -47,13 +50,18 @@ const PlaylistHeader = (props) => {
                                     onNewPlaylist={ props.onClearPlaylist }
                 />
                 <IconButton className="savePlaylist" onClick={ () => this.savePlaylistDialog.handleOpen() }>
-                    <FontIcon className={cn("material-icons", { "active" : props.playlistManager && props.playlistManager.hasChanges })}>
+                    <FontIcon className={cn("material-icons",
+                        { "active" : props.playlistManager && !props.playlistManager.playlist && props.playlistManager.musiques.length })}
+                    >
                         save
                     </FontIcon>
                 </IconButton>
                 <SavePlaylistDialog ref={instance => this.savePlaylistDialog = instance }
-                                    playlistProvider={ props.playlistProvider }
                                     onConfirm={ props.onSavePlaylist }
+                                    title={ props.playlistManager.playlist ? "Enregistrer sous" : "Enregistrer" }
+                                    hierarchicalPlaylists={ props.playlistProvider.getHierarchicalPlaylists() }
+                                    playlist={ props.playlistManager.playlist }
+                                    playlistParentId={ idParentPlaylist }
                 />
                 <IconButton className="clearPlaylist" onClick={ () => this.confirmCleanPlaylist.handleOpen() }>
                     <FontIcon className={ "material-icons" }>delete_sweep</FontIcon>
