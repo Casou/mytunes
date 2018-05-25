@@ -5,11 +5,17 @@ import TextFieldInput from "../../form/TextFieldInput";
 import PlaylistTreeView from "../../loadPlaylistDialog/component/PlaylistTreeView";
 
 class SavePlaylistDIalog extends React.Component {
-    state = {
-        open: false,
-        playlistName : "",
-        playlistParentId : null
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            open: false,
+            playlistName : "",
+            playlistParentId : null
+        };
+
+        this.mappedPlaylists = [];
+    }
 
     handleOpen = () => {
         this.setState({open: true});
@@ -18,6 +24,21 @@ class SavePlaylistDIalog extends React.Component {
     handleClose = () => {
         this.setState({open: false});
     };
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.playlistProvider.getHierarchicalPlaylists() !== nextProps.playlistProvider.getHierarchicalPlaylists()) {
+            let hierarchicalPlaylists = this.props.playlistProvider.getHierarchicalPlaylists();
+            const rootPlaylist = [{
+                id : -1,
+                nom : "Racine",
+                isFolder : true,
+                children : hierarchicalPlaylists,
+                musiqueIds : []
+            }];
+
+            this.mappedPlaylists = this._mapPlaylists(rootPlaylist);
+        }
+    }
 
     _mapPlaylists(playlists) {
         return playlists.map(playlist => {
@@ -62,8 +83,6 @@ class SavePlaylistDIalog extends React.Component {
             />,
         ];
 
-        const playlists = this._mapPlaylists(this.props.playlistProvider.getHierarchicalPlaylists());
-
         return (
             <Dialog
                 title={ this.props.title }
@@ -73,13 +92,17 @@ class SavePlaylistDIalog extends React.Component {
                 onRequestClose={this.handleClose}
                 className={"savePlaylistDialog"}
             >
-                <PlaylistTreeView data={ playlists }
+                <PlaylistTreeView data={ this.mappedPlaylists }
                                   toggleOnClick={ false }
+                                  onToggle={ (node) => this.setState({...this.state, playlistParentId : node.id}) }
                 />
-                <TextFieldInput onChange={(value) => this.setState({...this.state, playlistName : value })}
+                <TextFieldInput name={"savePlaylistName"}
+                                placeholder={"Nom de la playlist"}
+                                value={ "" }
+                                onChange={ (value) => this.setState({...this.state, playlistName : value }) }
                                 changeOnEnter={false}
-                                name={"savePlaylistName"}
-                                placeholder={"Nom de la playlist"} />
+                />
+
             </Dialog>
         );
     }

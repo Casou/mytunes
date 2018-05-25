@@ -14,7 +14,7 @@ class TextFieldInput extends React.Component {
     }
 
     render() {
-        const { classNames, name, placeholder, onChange } = this.props;
+        const { classNames, name, placeholder, onChange, changeOnEnter } = this.props;
         const { value } = this.state;
 
         return (
@@ -25,13 +25,13 @@ class TextFieldInput extends React.Component {
                        value={ value }
                        onChange={ (event) => {
                            this.setState({...this.state, value : event.target.value});
-                           if (!this.props.changeOnEnter) {
+                           if (!changeOnEnter) {
                                onChange(value);
                            }
                        } }
                        onBlur={() => onChange(value)}
                        onKeyPress={e => {
-                           if (this.props.changeOnEnter && (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__)) {
+                           if (changeOnEnter && (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__)) {
                                onChange(value);
                                this.inputRef.blur();
                            }
