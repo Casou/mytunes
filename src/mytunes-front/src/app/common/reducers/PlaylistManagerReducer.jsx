@@ -32,6 +32,9 @@ export const playlistManager = (state = {}, action) => {
         case "CHANGE_PLAYLIST_NAME" :
             playlistManager.updatePlaylistName(action.payload);
             return ObjectUtil.clone(playlistManager);
+        case "SET_PLAYLIST" :
+            playlistManager.setPlaylist(action.payload);
+            return ObjectUtil.clone(playlistManager);
         default :
             return state;
     }

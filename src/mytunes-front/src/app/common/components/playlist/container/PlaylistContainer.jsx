@@ -9,6 +9,7 @@ import PlaylistManagerActions from "../../../actions/PlaylistManagerActions";
 import PlaylistHeader from "../components/PlaylistHeader";
 import PlaylistSortableList from "../components/PlaylistSortableList";
 import {musiquePropType} from "../../../types/MusiqueType";
+import PlaylistsActions from "../../../../pages/savedPlaylists/actions/PlaylistsActions";
 
 class PlaylistContainer extends React.Component {
 
@@ -31,6 +32,7 @@ class PlaylistContainer extends React.Component {
                                 onToggleShuffle={ this._toggleShuffle }
                                 onClearPlaylist={ this._clearPlaylist }
                                 onLoadPlaylist={(playlistId) => this._loadPlaylist(playlistId) }
+                                onSavePlaylist={(playlistProperties) => this._savePlaylist(playlistProperties) }
                                 playlistManager={ playlistManager }
                                 playlistProvider={ playlistProvider }
                                 onChangePlaylistName={ this._changePlaylistName }
@@ -76,6 +78,21 @@ class PlaylistContainer extends React.Component {
         this.props.playlistManagerActions.changePlaylistName(name);
     }
 
+    _savePlaylist(playlistProperties) {
+        const playlist = this.props.playlistManager.playlist;
+        const playlistToSave = {
+            id : playlist ? playlist.id : null,
+            nom : playlistProperties.playlistName,
+            parentId : playlistProperties.playlistParentId > 0 ? playlistProperties.playlistParentId : null,
+            musiqueIds : this.props.playlistManager.musiques.map(musique => musique.id)
+        };
+        this.props.playlistsActions.savePlaylist(playlistToSave).then(playlist => {
+            if (!playlistToSave.id) {
+                this.props.playlistManagerActions.setPlaylist(playlist);
+            }
+        });
+    }
+
 }
 
 PlaylistContainer.propTypes = {
@@ -89,5 +106,6 @@ export default connect(state => assign({}, {
     playlistProvider: state.playlistProvider,
     musiques : state.musiques
 }), dispatch => ({
-    playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
+    playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch),
+    playlistsActions: bindActionCreators(PlaylistsActions, dispatch)
 }))(PlaylistContainer);

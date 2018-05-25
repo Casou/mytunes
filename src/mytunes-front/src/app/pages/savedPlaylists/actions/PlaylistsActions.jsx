@@ -1,5 +1,6 @@
 import {__SERVER_URL__} from "../../../../App";
 import RequestUtil from "../../../common/util/RequestUtil";
+import { NotificationManager } from "react-notifications";
 
 export default {
 
@@ -35,6 +36,21 @@ export default {
             {
                 id : idPlaylist,
                 musiqueIds : [idMusique]
+            });
+    },
+
+    savePlaylist: (playlistToSave) => (dispatch, getState) => {
+        return RequestUtil.put("playlist", playlistToSave)
+            .then((response) => {
+                NotificationManager.info("Playlist " + playlistToSave.nom + " sauvegardée.")
+
+                if (!playlistToSave.id) {
+                    dispatch({
+                        type : "NEW_PLAYLIST_SAVED",
+                        payload : response.data
+                    });
+                }
+                return response.data;
             });
     }
 

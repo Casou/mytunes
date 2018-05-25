@@ -11,6 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -124,6 +125,18 @@ public class MusiqueRepositoryTest {
 
         Musique changedMusique = musiqueDao.findByItunesId(1);
         assertEquals("Changed name", changedMusique.getTitre());
+    }
+
+    @Test
+    public void findByIdIn_shouldReturnAListOfExistingMusiqueOnly() {
+        List<Musique> musiques = musiqueDao.findByIdIn(Arrays.asList(
+                BigInteger.valueOf(1),
+                BigInteger.valueOf(2),
+                BigInteger.valueOf(9999)));
+
+        assertEquals(2, musiques.size());
+        assertEquals(1, musiques.get(0).getId().intValue());
+        assertEquals(2, musiques.get(1).getId().intValue());
     }
 
 }

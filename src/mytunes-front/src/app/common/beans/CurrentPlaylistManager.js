@@ -13,7 +13,9 @@ export default class CurrentPlaylistManager {
 
     addMusique(musique) {
         this.musiques.push(musique);
-        this.playlist.musiqueIds.push(musique.id);
+        if (this.playlist) {
+            this.playlist.musiqueIds.push(musique.id);
+        }
         this.hasChanges = true;
     }
 
@@ -93,7 +95,9 @@ export default class CurrentPlaylistManager {
     clearPlaylist() {
         this.musiques = [];
         this.history = [];
-        this.playlist.musiqueIds = [];
+        if (this.playlist) {
+            this.playlist.musiqueIds = [];
+        }
         this.hasChanges = true;
     }
 
@@ -109,4 +113,8 @@ export default class CurrentPlaylistManager {
         this.hasChanges = true;
     }
 
+    setPlaylist(playlist) {
+        this.playlist = playlist;
+        this.hasChanges = false;
+    }
 }

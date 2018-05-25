@@ -21,6 +21,8 @@ public interface MusiqueRepository extends CrudRepository<Musique, BigInteger> {
 
     Musique findById(@Param("id") BigInteger id);
 
+    List<Musique> findByIdIn(List<BigInteger> id);
+
     // http://localhost:8000/musiques/search/by-name?name=Test
 //    @Query("Select m from Musique m where m.titre like %:name%")
 //    @RestResource(path = "by-name")

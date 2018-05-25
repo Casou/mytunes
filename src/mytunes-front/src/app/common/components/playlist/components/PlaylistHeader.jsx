@@ -6,7 +6,7 @@ import ConfirmDialog from "../../confirm/ConfirmDialog";
 import {playlistManagerPropType} from "../../../types/PlaylistMusiqueType";
 import LoadPlaylistDialog from "../../loadPlaylistDialog/container/LoadPlaylistDialog";
 import TextFieldInput from "../../form/TextFieldInput";
-import SavePlaylistDialog from "../container/SavePlaylistDIalog";
+import SavePlaylistDialog from "../container/SavePlaylistDialog";
 
 const PlaylistHeader = (props) => {
     const nomPlaylist = props.playlistManager && props.playlistManager.playlist ? props.playlistManager.playlist.nom : "";
@@ -26,7 +26,7 @@ const PlaylistHeader = (props) => {
                                     onChange={ props.onChangePlaylistName }
                                     changeOnEnter={true}
                     />
-                    : "" }
+                    : <span id="newPlaylist">Nouvelle playlist</span> }
             </div>
             <div id="playlistMenuHeaderRightButtons">
                 <IconButton onClick={ () => {
@@ -53,6 +53,7 @@ const PlaylistHeader = (props) => {
                 </IconButton>
                 <SavePlaylistDialog ref={instance => this.savePlaylistDialog = instance }
                                     playlistProvider={ props.playlistProvider }
+                                    onConfirm={ props.onSavePlaylist }
                 />
                 <IconButton className="clearPlaylist" onClick={ () => this.confirmCleanPlaylist.handleOpen() }>
                     <FontIcon className={ "material-icons" }>delete_sweep</FontIcon>
@@ -63,13 +64,14 @@ const PlaylistHeader = (props) => {
             </div>
         </header>
     );
-}
+};
 
 PlaylistHeader.propTypes = {
     shuffle : PropTypes.bool.isRequired,
     onToggleShuffle : PropTypes.func.isRequired,
     onClearPlaylist : PropTypes.func.isRequired,
     onLoadPlaylist : PropTypes.func.isRequired,
+    onSavePlaylist : PropTypes.func.isRequired,
     playlistProvider : PropTypes.object.isRequired,
     playlistManager : playlistManagerPropType,
     onChangePlaylistName : PropTypes.func.isRequired

@@ -4,7 +4,7 @@ import { FlatButton, Dialog } from 'material-ui';
 import TextFieldInput from "../../form/TextFieldInput";
 import PlaylistTreeView from "../../loadPlaylistDialog/component/PlaylistTreeView";
 
-class SavePlaylistDIalog extends React.Component {
+class SavePlaylistDialog extends React.Component {
     constructor(props) {
         super(props);
 
@@ -59,13 +59,16 @@ class SavePlaylistDIalog extends React.Component {
     }
 
     render() {
+        const { onCancel, onConfirm, title } = this.props;
+        const { playlistName, playlistParentId, open } = this.state;
+
         const actions = [
             <FlatButton
                 label="Annuler"
                 primary={false}
                 onClick={ () => {
-                    if (this.props.onCancel) {
-                        this.props.onCancel();
+                    if (onCancel) {
+                        onCancel();
                     }
                     this.handleClose();
                 }}
@@ -73,10 +76,10 @@ class SavePlaylistDIalog extends React.Component {
             <FlatButton
                 label="Sauvegarder"
                 primary={true}
-                disabled={!this.state.playlistName || !this.state.playlistParentId}
+                disabled={!playlistName || !playlistParentId}
                 onClick={ () => {
-                    if (this.props.onConfirm) {
-                        this.props.onConfirm();
+                    if (onConfirm) {
+                        onConfirm({ playlistName, playlistParentId });
                     }
                     this.handleClose();
                 }}
@@ -85,10 +88,10 @@ class SavePlaylistDIalog extends React.Component {
 
         return (
             <Dialog
-                title={ this.props.title }
+                title={ title }
                 actions={actions}
                 modal={false}
-                open={this.state.open}
+                open={open}
                 onRequestClose={this.handleClose}
                 className={"savePlaylistDialog"}
             >
@@ -108,14 +111,14 @@ class SavePlaylistDIalog extends React.Component {
     }
 }
 
-SavePlaylistDIalog.propTypes = {
+SavePlaylistDialog.propTypes = {
     title : PropTypes.string,
     onConfirm : PropTypes.func,
     onCancel : PropTypes.func,
     playlistProvider : PropTypes.object.isRequired
 };
-SavePlaylistDIalog.defaultProps = {
+SavePlaylistDialog.defaultProps = {
     title : "Sauvegarde de la playlist"
 };
 
-export default SavePlaylistDIalog;
+export default SavePlaylistDialog;

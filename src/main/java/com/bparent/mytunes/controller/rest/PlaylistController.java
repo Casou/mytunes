@@ -27,8 +27,8 @@ public class PlaylistController {
     }
 
     @PutMapping("/playlist")
-    public void savePlaylist(@RequestBody PlaylistDTO playlistDTO) {
-        playlistRepository.save(playlistDTO.toEntity());
+    public PlaylistDTO savePlaylist(@RequestBody PlaylistDTO playlistDTO) {
+        return playlistService.save(playlistDTO);
     }
 
     @PutMapping("/playlist/nom")

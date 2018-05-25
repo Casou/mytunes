@@ -69,7 +69,7 @@ INSERT INTO PLAYLIST(id, nom, is_folder, id_playlist_parent) VALUES (13, 'Lille 
 INSERT INTO PLAYLIST(id, nom, is_folder, id_playlist_parent) VALUES (14, 'Embarquement 2017', false, 12);
 INSERT INTO PLAYLIST(id, nom, is_folder, id_playlist_parent) VALUES (15, 'Lille Dit Hop 2018', false, 11);
 INSERT INTO PLAYLIST(id, nom, is_folder, id_playlist_parent) VALUES (16, 'Lille Dit Jazz Roots 2018', false, 11);
-INSERT INTO PLAYLIST(id, nom, is_folder, id_playlist_parent) VALUES (170, 'Embarquement 2018', false, 11);
+INSERT INTO PLAYLIST(id, nom, is_folder, id_playlist_parent) VALUES (17, 'Embarquement 2018', false, 11);
 
 INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (1, 3, 1, 1);
 INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (2, 3, 2, 2);
@@ -109,8 +109,8 @@ INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES 
 INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (32, 9, 18, 7);
 INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) VALUES (33, 9, 25, 8);
 
-ALTER SEQUENCE IF EXISTS PLAYLIST_SEQ RESTART WITH 10;
-ALTER SEQUENCE IF EXISTS MUSIQUE_SEQ RESTART WITH 40;
-ALTER SEQUENCE IF EXISTS PLAYLIST_MUSIQUE_SEQ RESTART WITH 34;
+ALTER SEQUENCE IF EXISTS PLAYLIST_SEQ RESTART WITH 1000;
+ALTER SEQUENCE IF EXISTS MUSIQUE_SEQ RESTART WITH 1000;
+ALTER SEQUENCE IF EXISTS PLAYLIST_MUSIQUE_SEQ RESTART WITH 1000;
 
 INSERT INTO PLAYLIST_MUSIQUE(id, id_playlist, id_musique, musique_order) SELECT PLAYLIST_MUSIQUE_SEQ.nextval, 8, id, PLAYLIST_MUSIQUE_SEQ.currval FROM MUSIQUE;

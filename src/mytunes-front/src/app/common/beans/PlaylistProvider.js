@@ -47,8 +47,10 @@ export default class PlaylistProvider {
                 }
                 childrenIds.forEach(childId => {
                     const child = this._playlists.filter(pl => pl.id === childId)[0];
-                    playlist.children.push(child);
-                    child.parent = playlist;
+                    if (child) {
+                        playlist.children.push(child);
+                        child.parent = playlist;
+                    }
                 })
             }
         });

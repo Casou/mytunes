@@ -25,6 +25,7 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
     protected String persistentId;
     protected String parentPersistentId;
 
+    protected BigInteger parentId;
     protected List<BigInteger> musiqueIds = new ArrayList<>();
     protected List<BigInteger> musiquesOrderIds = new ArrayList<>();
     protected List<BigInteger> childrenIds = new ArrayList<>();
@@ -54,6 +55,10 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
             dto.musiquesOrderIds = playlist.getMusiquesOrder().stream()
                     .map(order -> order.getMusique().getId())
                     .collect(Collectors.toList());
+        }
+
+        if (playlist.getParent() != null) {
+            dto.setParentId(playlist.getParent().getId());
         }
 
         return dto;

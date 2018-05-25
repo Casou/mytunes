@@ -51,6 +51,13 @@ export default {
             type : "CHANGE_PLAYLIST_NAME",
             payload : name
         });
+    },
+
+    setPlaylist: (playlist) => (dispatch, getState) => {
+        dispatch({
+            type : "SET_PLAYLIST",
+            payload : playlist
+        });
     }
 
 }
