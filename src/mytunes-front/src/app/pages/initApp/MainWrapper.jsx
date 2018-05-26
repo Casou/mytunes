@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {RefreshIndicator} from "material-ui";
 import PlaylistsActions from "../savedPlaylists/actions/PlaylistsActions";
+import Loading from "../../common/components/loading/Loading";
 
 class MainWrapper extends React.Component {
 
@@ -17,15 +18,16 @@ class MainWrapper extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.isLoading && nextProps.isLoading && this.isApplicationLoaded(nextProps)) {
-            this.props.loadingActions.setIsLoading(false);
+        if (this.props.isLoading.application && nextProps.isLoading.application && this.isApplicationLoaded(nextProps)) {
+            this.props.loadingActions.setIsApplicationLoading(false);
         }
     }
 
     render() {
         return (
             <main style={{position: 'relative'}}>
-                {this.props.isLoading ?
+                <Loading open={this.props.isLoading.general} />
+                {this.props.isLoading.application ?
                     <RefreshIndicator
                         size={70}
                         left={-35}

@@ -15,7 +15,10 @@ import CurrentPlaylistManager from "./app/common/beans/CurrentPlaylistManager";
 import PlaylistProvider from "./app/common/beans/PlaylistProvider";
 
 const initialStore = {
-    isLoading: true,
+    isLoading: {
+        general : false,
+        application : true
+    },
     musiques: null,
     genres: null,
     playlistManager: new CurrentPlaylistManager(),

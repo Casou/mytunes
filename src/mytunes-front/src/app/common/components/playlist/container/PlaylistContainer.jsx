@@ -10,6 +10,7 @@ import PlaylistHeader from "../components/PlaylistHeader";
 import PlaylistSortableList from "../components/PlaylistSortableList";
 import {musiquePropType} from "../../../types/MusiqueType";
 import PlaylistsActions from "../../../../pages/savedPlaylists/actions/PlaylistsActions";
+import LoadingActions from "../../../actions/LoadingActions";
 
 class PlaylistContainer extends React.Component {
 
@@ -79,6 +80,8 @@ class PlaylistContainer extends React.Component {
     }
 
     _savePlaylist(playlistProperties) {
+        this.props.loadingActions.setIsGeneralLoading(true);
+
         const playlist = this.props.playlistManager.playlist;
         const playlistToSave = {
             id : playlist ? playlist.id : null,
@@ -90,6 +93,7 @@ class PlaylistContainer extends React.Component {
             if (!playlistToSave.id) {
                 this.props.playlistManagerActions.setPlaylist(playlist);
             }
+            this.props.loadingActions.setIsGeneralLoading(false);
         });
     }
 
@@ -107,5 +111,6 @@ export default connect(state => assign({}, {
     musiques : state.musiques
 }), dispatch => ({
     playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch),
-    playlistsActions: bindActionCreators(PlaylistsActions, dispatch)
+    playlistsActions: bindActionCreators(PlaylistsActions, dispatch),
+    loadingActions: bindActionCreators(LoadingActions, dispatch)
 }))(PlaylistContainer);
