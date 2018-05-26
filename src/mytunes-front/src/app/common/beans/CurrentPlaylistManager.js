@@ -8,7 +8,6 @@ export default class CurrentPlaylistManager {
         this.musiques = [];
         this.shuffle = false;
         this.history = [];
-        this.hasChanges = false;
     }
 
     addMusique(musique) {
@@ -16,7 +15,6 @@ export default class CurrentPlaylistManager {
         if (this.playlist) {
             this.playlist.musiqueIds.push(musique.id);
         }
-        this.hasChanges = true;
     }
 
     setMusiquePlaying(musiquePlaying, addMusique) {
@@ -34,7 +32,6 @@ export default class CurrentPlaylistManager {
 
     reorderMusique = (oldIndex, newIndex) => {
         this.musiques = arrayMove(this.musiques, oldIndex, newIndex);
-        this.hasChanges = true;
         return this;
     };
 
@@ -98,23 +95,19 @@ export default class CurrentPlaylistManager {
         if (this.playlist) {
             this.playlist.musiqueIds = [];
         }
-        this.hasChanges = true;
     }
 
     loadPlaylist(playlist, musiques) {
         this.playlist = {...playlist};
         this.musiques = musiques;
         this.musiques.forEach(musique => musique.alreadyPlayed = false);
-        this.hasChanges = false;
     }
 
     updatePlaylistName(name) {
         this.playlist.nom = name;
-        this.hasChanges = true;
     }
 
     setPlaylist(playlist) {
         this.playlist = playlist;
-        this.hasChanges = false;
     }
 }

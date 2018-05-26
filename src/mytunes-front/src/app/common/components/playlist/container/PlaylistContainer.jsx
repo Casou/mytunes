@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 import PropTypes from "prop-types";
+import {arrayMove} from 'react-sortable-hoc';
 
 import {playlistManagerPropType} from "../../../types/PlaylistMusiqueType";
 import PlaylistManagerActions from "../../../actions/PlaylistManagerActions";
@@ -42,6 +43,7 @@ class PlaylistContainer extends React.Component {
                 <PlaylistSortableList musiques={ playlistManager.musiques }
                                       musiquePlaying={ musiquePlaying }
                                       playMusique={ this._playMusique }
+                                      deleteMusique={ this._deleteMusique }
                                       helperClass='playlistSortableHelper'
                                       onSortEnd={ this._sortEnd }
                                       pressDelay={200}
@@ -59,6 +61,10 @@ class PlaylistContainer extends React.Component {
         this.props.playlistManagerActions.toggleShuffle();
     }
 
+    _deleteMusique(musique, event) {
+        event.preventDefault();
+        alert("TODO");
+    }
     _clearPlaylist() {
         this.props.playlistManagerActions.clearPlaylist();
     }
@@ -67,6 +73,12 @@ class PlaylistContainer extends React.Component {
         if (oldIndex === newIndex) {
             return;
         }
+
+        if (this.props.playlistManager.playlist) {
+            this.props.playlistsActions.updateMusiqueOrder(this.props.playlistManager.playlist,
+                arrayMove(this.props.playlistManager.musiques, oldIndex, newIndex));
+        }
+
         this.props.playlistManagerActions.reorderPlaylist(oldIndex, newIndex);
     }
 
@@ -76,6 +88,7 @@ class PlaylistContainer extends React.Component {
     }
 
     _changePlaylistName(name) {
+        this.props.playlistsActions.updatePlaylistNom(this.props.playlistManager.playlist.id, name);
         this.props.playlistManagerActions.changePlaylistName(name);
     }
 

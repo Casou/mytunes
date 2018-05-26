@@ -32,7 +32,6 @@ class TextFieldInput extends React.Component {
                        onBlur={() => onChange(value)}
                        onKeyPress={e => {
                            if (changeOnEnter && (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__)) {
-                               onChange(value);
                                this.inputRef.blur();
                            }
                        }}

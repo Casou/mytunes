@@ -19,15 +19,28 @@ export default {
     },
 
     updatePlaylistNom: (id, nom) => (dispatch, getState) => {
-        return RequestUtil.put("playlist/nom", {id, nom});
+        const playlistToUpdate = {id, nom};
+        return RequestUtil.put("playlist/nom", playlistToUpdate)
+            .then(() => {
+                dispatch({
+                    type : "UPDATE_PLAYLIST_NAME",
+                    payload : playlistToUpdate
+                });
+            });
     },
 
-    updateMusiqueOrder: (idPlaylist, musiques) => (dispatch, getState) => {
-        return RequestUtil.put("playlist/order",
-            {
-                id : idPlaylist,
-                musiquesOrderIds : musiques.map(musique => musique.id )
-                    // return { order : index, musique : { id : musique.id } };
+    updateMusiqueOrder: (playlist, musiques) => (dispatch, getState) => {
+        const playlistNewMusiqueOrder = {
+            id : playlist.id,
+            musiquesOrderIds : musiques.map(musique => musique.id)
+        };
+        console.log(playlistNewMusiqueOrder);
+        return RequestUtil.put("playlist/order", playlistNewMusiqueOrder)
+            .then(() => {
+                dispatch({
+                    type : "UPDATE_PLAYLIST_MUSIQUE_ORDER",
+                    payload : playlistNewMusiqueOrder
+                });
             });
     },
 

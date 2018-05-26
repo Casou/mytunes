@@ -1,6 +1,6 @@
 :root {
     --playlist-top: var(--lecteur-height);
-    --playlist-tab-width: 400px;
+    --playlist-tab-width: 500px;
 }
 
 #playlistMenu header {
@@ -34,14 +34,17 @@
 
 #playlistMenu li span { display : inline-block; margin : auto 0; }
 #playlistMenu li span.play { width : 30px; text-align : center; cursor : pointer; }
-#playlistMenu li span.titre { width : calc(var(--playlist-tab-width) - 70px); }
+#playlistMenu li span.titre { width : calc(var(--playlist-tab-width) - 170px); }
+#playlistMenu li span.classement { width : 60px; color : #797979; text-align : center; }
 #playlistMenu li span.duree { width : 35px; color : grey; font-size : 12px; line-height : var(--general-font-size); text-align : right; padding-right : 3px; }
+#playlistMenu li span.delete { width : 40px; text-align : center; cursor : pointer; }
 
 /*#playlistMenu li svg      { height : 16px !important; width : 16px !important; }*/
 
 #playlistMenu li.alreadyPlayed { color : gray; font-style: italic; }
 #playlistMenu li.isPlaying { color : black !important; font-style: normal !important; font-weight : bold; }
 
+#playlistMenu span.delete button,
 #playlistMenu span.play button {
     margin : 0 !important;
     padding : 0 !important;
@@ -52,6 +55,11 @@
 #playlistMenu span.play button span {
     font-size : 25px !important;
     line-height : 25px !important;
+}
+
+#playlistMenu span.delete button span {
+    font-size : 20px !important;
+    line-height : 20px !important;
 }
 
 #playlistMenuHeaderLeftButtons { display : inline-block; width : 40px; text-align : center; }

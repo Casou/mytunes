@@ -5,7 +5,7 @@ import PlaylistItem from "./PlaylistItem";
 import {musiquePropType} from "../../../types/MusiqueType";
 
 const PlaylistSortableList = SortableContainer((props) => {
-    const { musiques, musiquePlaying, playMusique } = props;
+    const { musiques, musiquePlaying, playMusique, deleteMusique } = props;
     return (
         <ul>
             {musiques.map((musique, index) => (
@@ -13,7 +13,9 @@ const PlaylistSortableList = SortableContainer((props) => {
                               index={index}
                               musique={musique}
                               isPlaying={musique === musiquePlaying}
-                              playMusique={playMusique} />
+                              playMusique={playMusique}
+                              deleteMusique={deleteMusique}
+                />
             ))}
         </ul>
     );
@@ -22,7 +24,8 @@ const PlaylistSortableList = SortableContainer((props) => {
 PlaylistSortableList.propTypes = {
     musiques: PropTypes.arrayOf(musiquePropType).isRequired,
     musiquePlaying: PropTypes.shape({type: PropTypes.oneOf([musiquePropType])}),
-    playMusique : PropTypes.func.isRequired
+    playMusique : PropTypes.func.isRequired,
+    deleteMusique : PropTypes.func.isRequired
 };
 
 export default PlaylistSortableList;

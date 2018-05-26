@@ -14,7 +14,7 @@ export const Classement = ({ musique, onChange, isFetching }) => {
         {stars.map(star => (
           <span key={"classement_" + musique.id + "_star_" + star}
                 className={"ratingStar"}
-                onClick={ () => onChange((star + 1) * 20) }>
+                onClick={ () => onChange && onChange((star + 1) * 20) }>
                 {star >= rating ? "☆" : "★"}
             </span>
         ))
@@ -25,7 +25,7 @@ export const Classement = ({ musique, onChange, isFetching }) => {
 
 Classement.propTypes = {
   musique : musiquePropType.isRequired,
-  onChange : PropTypes.func.isRequired,
+  onChange : PropTypes.func,
   isFetching : PropTypes.bool
 };
 

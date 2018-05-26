@@ -6,9 +6,10 @@ import { SortableElement } from 'react-sortable-hoc';
 
 import {musiquePropType} from "../../../types/MusiqueType";
 import {formateDuree} from "../../../util/Formatters";
+import Classement from "../../../../pages/listeMusique/components/Classement";
 
 const PlaylistItem = SortableElement((props) => {
-    const {musique, isPlaying, playMusique} = props;
+    const {musique, isPlaying, playMusique, deleteMusique} = props;
 
     return (
         <li className={
@@ -25,7 +26,13 @@ const PlaylistItem = SortableElement((props) => {
                 }
             </span>
             <span className="titre">{musique.titre}</span>
+            <span className="classement"><Classement musique={musique} /></span>
             <span className="duree">{musique.duree ? formateDuree(musique.duree) : "-"}</span>
+            <span className="delete">
+                <IconButton onClick={(event) => deleteMusique(musique, event)}>
+                    <FontIcon className="material-icons">delete</FontIcon>
+                </IconButton>
+            </span>
         </li>
     )
 });
@@ -34,7 +41,8 @@ const PlaylistItem = SortableElement((props) => {
 PlaylistItem.propTypes = {
     musique: musiquePropType.isRequired,
     isPlaying: PropTypes.bool.isRequired,
-    playMusique: PropTypes.func.isRequired
+    playMusique: PropTypes.func.isRequired,
+    deleteMusique: PropTypes.func.isRequired
 };
 
 export default PlaylistItem;
