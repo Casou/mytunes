@@ -177,4 +177,36 @@ public class PlaylistServiceTest {
         assertEquals(BigInteger.valueOf(321), playlistSaved.getParent().getId());
     }
 
+    @Test
+    public void save_shouldDeleteExistingPlaylist() {
+        ArgumentCaptor<Playlist> playlistCaptor = ArgumentCaptor.forClass(Playlist.class);
+
+        when(musiqueRepository.findByIdIn(anyList())).thenReturn(Arrays.asList(
+                Musique.builder().id(BigInteger.valueOf(1)).build(),
+                Musique.builder().id(BigInteger.valueOf(2)).build()
+        ));
+        when(playlistRepository.findById(eq(BigInteger.valueOf(321)))).thenReturn(
+                Playlist.builder().id(BigInteger.valueOf(321)).build()
+        );
+
+        playlistService.save(PlaylistDTO.builder().nom("Test")
+                .parentId(BigInteger.valueOf(321))
+                .musiqueIds(Arrays.asList(BigInteger.valueOf(1), BigInteger.valueOf(2)))
+                .build());
+
+        verify((this.playlistRepository)).save(playlistCaptor.capture());
+        Playlist playlistSaved = playlistCaptor.getValue();
+        assertEquals(2, playlistSaved.getMusiquesOrder().size());
+
+        assertEquals(1, playlistSaved.getMusiquesOrder().get(0).getMusique().getId().intValue());
+        assertEquals(0, playlistSaved.getMusiquesOrder().get(0).getOrder().intValue());
+        assertEquals(playlistSaved, playlistSaved.getMusiquesOrder().get(0).getPlaylist());
+        assertEquals(2, playlistSaved.getMusiquesOrder().get(1).getMusique().getId().intValue());
+        assertEquals(1, playlistSaved.getMusiquesOrder().get(1).getOrder().intValue());
+        assertEquals(playlistSaved, playlistSaved.getMusiquesOrder().get(1).getPlaylist());
+
+        assertNotNull(playlistSaved.getParent());
+        assertEquals(BigInteger.valueOf(321), playlistSaved.getParent().getId());
+    }
+
 }

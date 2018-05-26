@@ -88,9 +88,11 @@ class SavePlaylistDialog extends React.Component {
                 disabled={!playlistNameSetted || !playlistParentIdSetted}
                 onClick={ () => {
                     if (onConfirm) {
-                        onConfirm({ playlistName, playlistParentId });
+                        onConfirm({ playlistName, playlistParentId })
+                            .then(() => this.handleClose());
+                    } else {
+                        this.handleClose();
                     }
-                    this.handleClose();
                 }}
             />,
         ];

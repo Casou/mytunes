@@ -1,7 +1,6 @@
 package com.bparent.mytunes.service;
 
 import com.bparent.mytunes.dto.PlaylistDTO;
-import com.bparent.mytunes.dto.PlaylistMusiqueDTO;
 import com.bparent.mytunes.exception.ResourceNotFoundException;
 import com.bparent.mytunes.model.Musique;
 import com.bparent.mytunes.model.Playlist;
@@ -16,6 +15,7 @@ import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -71,28 +71,59 @@ public class PlaylistService {
         playlistRepository.save(playlist);
     }
 
+    public void delete(PlaylistDTO playlistDTO) {
+        this.delete(playlistRepository.findById(playlistDTO.getId()));
+    }
+
+    public void delete(Playlist playlist) {
+        playlistRepository.delete(playlist);
+    }
+
     public PlaylistDTO save(PlaylistDTO playlistDTO) {
-        Playlist playlist = playlistDTO.toEntity();
-        playlist.setIsFolder(false);
+        final Playlist playlist = playlistRepository.findByNomAndParentId(playlistDTO.getNom(), playlistDTO.getParentId());
+        final Playlist playlistToUpdate;
+        if (playlist != null) {
+            if (!playlist.getId().equals(playlistDTO.getId()))  {
+                // Delete and replace existing playlist
+                this.delete(playlist);
+
+                playlistToUpdate = playlistDTO.toEntity();
+                playlistToUpdate.setId(null);
+                playlistToUpdate.setIsFolder(false);
+            } else {
+                playlistToUpdate = playlist;
+                playlistToUpdate.setNom(playlistDTO.getNom());
+            }
+        } else {
+            playlistToUpdate = playlistDTO.toEntity();
+            playlistToUpdate.setId(null);
+            playlistToUpdate.setIsFolder(false);
+        }
+
+        if (playlistDTO.getId() != null && playlistToUpdate.getMusiquesOrder() != null) {
+            playlistMusiqueRepository.delete(playlistToUpdate.getMusiquesOrder().stream()
+                .map(playlistMusique -> playlistMusique.getId())
+                .collect(Collectors.toList()));
+        }
 
         if (playlistDTO.getMusiqueIds() != null) {
-            playlist.setMusiquesOrder(new ArrayList<>());
+            playlistToUpdate.setMusiquesOrder(new ArrayList<>());
             List<Musique> musiques = musiqueRepository.findByIdIn(playlistDTO.getMusiqueIds());
             IntStream.range(0, musiques.size())
-                    .forEach(index -> playlist.getMusiquesOrder().add(
+                    .forEach(index -> playlistToUpdate.getMusiquesOrder().add(
                             PlaylistMusique.builder()
                                     .musique(musiques.get(index))
-                                    .playlist(playlist)
+                                    .playlist(playlistToUpdate)
                                     .order(index)
                                     .build()
                     ));
         }
 
         if (playlistDTO.getParentId() != null) {
-            playlist.setParent(playlistRepository.findById(playlistDTO.getParentId()));
+            playlistToUpdate.setParent(playlistRepository.findById(playlistDTO.getParentId()));
         }
 
-        Playlist savedPlaylist = playlistRepository.save(playlist);
+        Playlist savedPlaylist = playlistRepository.save(playlistToUpdate);
 
         return PlaylistDTO.toDto(savedPlaylist);
     }

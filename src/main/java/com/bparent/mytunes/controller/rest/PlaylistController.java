@@ -31,6 +31,11 @@ public class PlaylistController {
         return playlistService.save(playlistDTO);
     }
 
+    @DeleteMapping("/playlist")
+    public void deletePlaylist(@RequestBody PlaylistDTO playlistDTO) {
+        playlistService.delete(playlistDTO);
+    }
+
     @PutMapping("/playlist/nom")
     public void updatePlaylistNom(@RequestBody PlaylistDTO playlistDTO) {
         this.playlistService.updatePlaylistNom(playlistDTO);

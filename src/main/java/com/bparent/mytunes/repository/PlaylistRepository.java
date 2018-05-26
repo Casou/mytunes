@@ -10,6 +10,7 @@ public interface PlaylistRepository extends CrudRepository<Playlist, BigInteger>
     List<Playlist> findAll();
     Playlist findById(BigInteger id);
     Playlist findByItunesId(Integer itunesId);
+    Playlist findByNomAndParentId(String name, BigInteger parentId);
 
     Playlist save(Playlist playlist);
     void delete(Playlist playlist);

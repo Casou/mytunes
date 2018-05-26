@@ -11,7 +11,6 @@ export const playlistProvider = (state = {}, action) => {
             if (playlistToAdd.parentId) {
                 playlists.filter(pl => pl.id === playlistToAdd.parentId)[0].childrenIds.push(playlistToAdd.id);
             }
-            console.warn(playlists);
             return new PlaylistProvider(playlists);
         default :
             return state;

@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 //@RunWith(SpringRunner.class)
@@ -22,11 +23,11 @@ import static org.junit.Assert.assertNull;
 public class PlaylistRepositoryTest {
 
     @Autowired
-    private PlaylistRepository playlistDao;
+    private PlaylistRepository playlistRepository;
 
     @Test
     public void findAll_shouldReturnAllPlaylists() {
-        List<Playlist> allPlaylist = playlistDao.findAll();
+        List<Playlist> allPlaylist = playlistRepository.findAll();
         assertEquals(3, allPlaylist.size());
 
         assertEquals(BigInteger.valueOf(1), allPlaylist.get(0).getId());
@@ -39,7 +40,7 @@ public class PlaylistRepositoryTest {
 
     @Test
     public void findById_shouldReturnOnePlaylist() {
-        Playlist p = playlistDao.findById(BigInteger.valueOf(1));
+        Playlist p = playlistRepository.findById(BigInteger.valueOf(1));
         assertEquals("pl1-titre", p.getNom());
         assertEquals(3, p.getMusiquesOrder().size());
         assertEquals("mus1-titre", p.getMusiquesOrder().get(0).getMusique().getTitre());
@@ -52,13 +53,13 @@ public class PlaylistRepositoryTest {
 
     @Test
     public void findById_shouldReturnNoPlaylist() {
-        Playlist p = playlistDao.findById(BigInteger.valueOf(12345));
+        Playlist p = playlistRepository.findById(BigInteger.valueOf(12345));
         assertNull(p);
     }
 
     @Test
     public void findByItunesId_shouldReturnOnePlaylist() {
-        Playlist p = playlistDao.findByItunesId(1);
+        Playlist p = playlistRepository.findByItunesId(1);
         assertEquals("pl1-titre", p.getNom());
         assertEquals(3, p.getMusiquesOrder().size());
         assertEquals("mus1-titre", p.getMusiquesOrder().get(0).getMusique().getTitre());
@@ -68,57 +69,63 @@ public class PlaylistRepositoryTest {
 
     @Test
     public void findByItunesId_shouldReturnNoPlaylist() {
-        Playlist p = playlistDao.findByItunesId(12345);
+        Playlist p = playlistRepository.findByItunesId(12345);
         assertNull(p);
     }
 
     @Test
     public void save_shouldSaveNewPlaylist() {
-        List<Playlist> allPlaylist = playlistDao.findAll();
+        List<Playlist> allPlaylist = playlistRepository.findAll();
         assertEquals(3, allPlaylist.size());
 
-        playlistDao.save(Playlist.builder().nom("pl3-titre").build());
+        playlistRepository.save(Playlist.builder().nom("pl3-titre").build());
 
-        allPlaylist = playlistDao.findAll();
+        allPlaylist = playlistRepository.findAll();
         assertEquals(4, allPlaylist.size());
     }
 
     @Test
     public void delete_shouldDeletePlaylistBySearch() {
-        List<Playlist> allPlaylist = playlistDao.findAll();
+        List<Playlist> allPlaylist = playlistRepository.findAll();
         assertEquals(3, allPlaylist.size());
 
-        Playlist p = playlistDao.findByItunesId(1);
+        Playlist p = playlistRepository.findByItunesId(1);
 
-        playlistDao.delete(p);
+        playlistRepository.delete(p);
 
-        allPlaylist = playlistDao.findAll();
-        assertEquals(2, allPlaylist.size());
-    }
-
-    @Test
-    public void delete_shouldDeletePlaylistByIdObject() {
-        List<Playlist> allPlaylist = playlistDao.findAll();
-        assertEquals(3, allPlaylist.size());
-
-        Playlist p = new Playlist();
-        p.setId(BigInteger.valueOf(1));
-
-        playlistDao.delete(p);
-
-        allPlaylist = playlistDao.findAll();
+        allPlaylist = playlistRepository.findAll();
         assertEquals(2, allPlaylist.size());
     }
 
     @Test
     public void delete_shouldDeletePlaylistById() {
-        List<Playlist> allPlaylist = playlistDao.findAll();
+        List<Playlist> allPlaylist = playlistRepository.findAll();
         assertEquals(3, allPlaylist.size());
 
-        playlistDao.delete(BigInteger.valueOf(1));
+        playlistRepository.delete(BigInteger.valueOf(1));
 
-        allPlaylist = playlistDao.findAll();
+        allPlaylist = playlistRepository.findAll();
         assertEquals(2, allPlaylist.size());
+    }
+
+    @Test
+    public void findByNomAndParentId_shouldReturnOneRecordIfHasParent() {
+        Playlist playlist = playlistRepository.findByNomAndParentId("pl3-titre", BigInteger.valueOf(2));
+        assertNotNull(playlist);
+        assertEquals(3, playlist.getId().intValue());
+    }
+
+    @Test
+    public void findByNomAndParentId_shouldReturnOneRecordIfHasNoParent() {
+        Playlist playlist = playlistRepository.findByNomAndParentId("pl2-titre", null);
+        assertNotNull(playlist);
+        assertEquals(2, playlist.getId().intValue());
+    }
+
+    @Test
+    public void findByNomAndParentId_shouldReturnNullRecord() {
+        Playlist playlist = playlistRepository.findByNomAndParentId("pl999-titre", null);
+        assertNull(playlist);
     }
 
 }

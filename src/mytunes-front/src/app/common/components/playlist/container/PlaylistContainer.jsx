@@ -86,7 +86,7 @@ class PlaylistContainer extends React.Component {
             parentId : playlistProperties.playlistParentId > 0 ? playlistProperties.playlistParentId : null,
             musiqueIds : this.props.playlistManager.musiques.map(musique => musique.id)
         };
-        this.props.playlistsActions.savePlaylist(playlistToSave).then(playlist => {
+        return this.props.playlistsActions.savePlaylist(playlistToSave).then(playlist => {
             if (!playlistToSave.id) {
                 this.props.playlistManagerActions.setPlaylist(playlist);
             }
