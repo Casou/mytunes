@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 import {arrayMove} from 'react-sortable-hoc';
-import { TextField } from 'material-ui';
+import { FontIcon, TextField } from 'material-ui';
 
 import 'react-sortable-tree/style.css';
 import '../../../../style/components/savedPlaylists.css';
@@ -14,6 +14,7 @@ import SavedPlaylistSortableList from "../components/SavedPlaylistSortableList";
 import {musiquePropType} from "../../../common/types/MusiqueType";
 import PlaylistsActions from "../actions/PlaylistsActions";
 import {__KEYCODE_ENTER__} from "../../../../App";
+import ConfirmDialog from "../../../common/components/confirm/ConfirmDialog";
 
 class SavedPlaylists extends React.Component {
     constructor(props) {
@@ -29,11 +30,14 @@ class SavedPlaylists extends React.Component {
         };
 
         this.inputPlaylistNom = null;
+        this.playlistToDelete = null;
 
         this._selectPlaylist = this._selectPlaylist.bind(this);
         this._onDeleteMusique = this._onDeleteMusique.bind(this);
         this._updatePlaylistName = this._updatePlaylistName.bind(this);
         this._sortEnd = this._sortEnd.bind(this);
+        this._showDeletePlaylistConfirm = this._showDeletePlaylistConfirm.bind(this);
+        this._confirmDelete = this._confirmDelete.bind(this);
     }
 
     render() {
@@ -41,17 +45,33 @@ class SavedPlaylists extends React.Component {
         const { playlistProvider } = this.props;
 
         return (
-        <div id={"savedPlaylists"}>
-            <SortableTree
-                key={selectedPlaylist ? "savedPlaylistsTree_" + selectedPlaylist.id + "_" + playlistProvider.key : "savedPlaylistsTree_key"}
-                treeData={treeData}
-                onChange={treeData => this.setState({ treeData })}
-                rowHeight={55}
-                maxDepth={4}
-                nodeContentRenderer={(props) => <TreeNodeRenderer onClick={this._selectPlaylist}
-                                                                  selectedPlaylist={selectedPlaylist}
-                                                                  {...props} /> }
-            />
+            <div id={"savedPlaylists"}>
+                    <SortableTree
+                            key={selectedPlaylist ? "savedPlaylistsTree_" + selectedPlaylist.id + "_" + playlistProvider.key : "savedPlaylistsTree_key"}
+                            treeData={treeData}
+                            onChange={treeData => this.setState({ treeData })}
+                            rowHeight={55}
+                            maxDepth={4}
+                            nodeContentRenderer={(props) => <TreeNodeRenderer onClick={this._selectPlaylist}
+                                                                              selectedPlaylist={selectedPlaylist}
+                                                                              {...props} /> }
+                            generateNodeProps={rowInfo => ({
+                                buttons: [
+                                    <button
+                                        style={{
+                                            verticalAlign: 'middle',
+                                        }}
+                                        onClick={(e) => this._showDeletePlaylistConfirm(rowInfo, e)}
+                                    >
+                                        <FontIcon className="material-icons">delete</FontIcon>
+                                    </button>,
+                                ],
+                            })}
+                />
+                <ConfirmDialog ref={ref => this.confirmDeletePlaylist = ref}
+                               message={"Etes-vous sûr de vouloir supprimer cette playlist ?"}
+                               onConfirm={ this._confirmDelete }
+                />
                 {
                     !selectedPlaylist ?
                         <div id={"musiquesPlaylist"}>
@@ -173,17 +193,26 @@ class SavedPlaylists extends React.Component {
 
         this.props.playlistsActions.deletePlaylistMusique(selectedPlaylist.id, musique.id).then(() => {
             const { musiques } = this.state;
-            // const { playlistProvider } = this.props;
-            // const selectedPlaylist = this.props.playlistProvider.findById(parseInt(playlistId, 10)) : null;
 
             let musiquesFiltered = musiques.filter(m => m.id !== musique.id);
             this.setState({
                 ...this.state,
-                musiques: musiquesFiltered,
-                // treeData: this._mapPlaylistToTreeItem(props.playlistProvider.getPlaylists()),
+                musiques: musiquesFiltered
             }, () => this._updatePlaylists(selectedPlaylist.id, [{ property : "musiqueIds", value : musiquesFiltered.map(m => m.id) }]));
         });
     }
+
+    _showDeletePlaylistConfirm(rowInfo, e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.playlistToDelete = rowInfo.node.id;
+        this.confirmDeletePlaylist.handleOpen();
+    }
+
+    _confirmDelete() {
+        console.log(this.playlistToDelete);
+    }
+
 }
 
 SavedPlaylists.propTypes = {

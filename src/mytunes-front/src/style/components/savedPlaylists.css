@@ -26,6 +26,11 @@
     text-overflow: ellipsis;
 }
 
+.rst__rowLabel {
+    width : calc(100% - 100px) !important;
+    padding-right : 0;
+}
+
 .rst__rowTitleWithSubtitle {
     font-size : 13px !important;
     height : 14px !important;
@@ -34,6 +39,17 @@
 .rst__rowSubtitle {
     font-size : 11px !important;
     color : grey;
+}
+
+.rst__toolbarButton button {
+    padding : 0;
+    background-color : transparent;
+    border : none;
+    cursor : pointer;
+}
+
+.rst__toolbarButton button span {
+    font-size : 15px;
 }
 
 #savedPlaylists header div.textField {
