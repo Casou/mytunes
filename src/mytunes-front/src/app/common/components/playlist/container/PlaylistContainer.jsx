@@ -22,6 +22,7 @@ class PlaylistContainer extends React.Component {
         this._toggleShuffle = this._toggleShuffle.bind(this);
         this._sortEnd = this._sortEnd.bind(this);
         this._changePlaylistName = this._changePlaylistName.bind(this);
+        this._newPlaylist = this._newPlaylist.bind(this);
     }
 
     render() {
@@ -35,6 +36,7 @@ class PlaylistContainer extends React.Component {
                                 onClearPlaylist={ this._clearPlaylist }
                                 onLoadPlaylist={(playlistId) => this._loadPlaylist(playlistId) }
                                 onSavePlaylist={(playlistProperties) => this._savePlaylist(playlistProperties) }
+                                onNewPlaylist={ this._newPlaylist }
                                 playlistManager={ playlistManager }
                                 playlistProvider={ playlistProvider }
                                 onChangePlaylistName={ this._changePlaylistName }
@@ -67,6 +69,9 @@ class PlaylistContainer extends React.Component {
     }
     _clearPlaylist() {
         this.props.playlistManagerActions.clearPlaylist();
+    }
+    _newPlaylist() {
+        this.props.playlistManagerActions.newPlaylist();
     }
 
     _sortEnd({oldIndex, newIndex}) {

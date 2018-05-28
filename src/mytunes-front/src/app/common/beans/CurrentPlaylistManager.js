@@ -97,6 +97,11 @@ export default class CurrentPlaylistManager {
         }
     }
 
+    newPlaylist() {
+        this.playlist = null;
+        this.musiques = [];
+    }
+
     loadPlaylist(playlist, musiques) {
         this.playlist = {...playlist};
         this.musiques = musiques;

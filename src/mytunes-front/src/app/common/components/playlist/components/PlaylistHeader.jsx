@@ -47,7 +47,7 @@ const PlaylistHeader = (props) => {
                 <LoadPlaylistDialog ref={instance => this.loadPlaylistDialog = instance }
                                     playlistProvider={ props.playlistProvider }
                                     onSelectPlaylist={ props.onLoadPlaylist }
-                                    onNewPlaylist={ props.onClearPlaylist }
+                                    onNewPlaylist={ props.onNewPlaylist }
                 />
                 <IconButton className="savePlaylist" onClick={ () => this.savePlaylistDialog.handleOpen() }>
                     <FontIcon className={cn("material-icons",
@@ -80,6 +80,7 @@ PlaylistHeader.propTypes = {
     onClearPlaylist : PropTypes.func.isRequired,
     onLoadPlaylist : PropTypes.func.isRequired,
     onSavePlaylist : PropTypes.func.isRequired,
+    onNewPlaylist : PropTypes.func.isRequired,
     playlistProvider : PropTypes.object.isRequired,
     playlistManager : playlistManagerPropType,
     onChangePlaylistName : PropTypes.func.isRequired
