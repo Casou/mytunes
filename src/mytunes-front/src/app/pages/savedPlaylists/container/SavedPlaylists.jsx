@@ -41,6 +41,15 @@ class SavedPlaylists extends React.Component {
         this._sortedTree = this._sortedTree.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.playlistProvider !== nextProps.playlistProvider) {
+            this.setState({
+                ...this.state,
+                treeData: this._mapPlaylistToTreeItem(nextProps.playlistProvider.getHierarchicalPlaylists())
+            });
+        }
+    }
+
     render() {
         const { selectedPlaylist, treeData, musiques } = this.state;
         const { playlistProvider } = this.props;
@@ -211,7 +220,8 @@ class SavedPlaylists extends React.Component {
     }
 
     _deletePlaylist() {
-        this.props.playlistsActions.deletePlaylist({ id : this.playlistToDelete });
+        this.props.playlistsActions.deletePlaylist({ id : this.playlistToDelete })
+            .then(() => this.props.playlistsActions.getAllPlaylists());
     }
 
     _sortedTree(treeData) {
