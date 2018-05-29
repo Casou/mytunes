@@ -26,7 +26,7 @@ function getNodeDataAtTreeIndexOrNextIndex({
         };
     }
 
-    // Add one and continue for nodes with no plainChildren or hidden plainChildren
+    // Add one and continue for nodes with no children or hidden children
     if (!node.children || (ignoreCollapsed && node.expanded !== true)) {
         return { nextIndex: currentIndex + 1 };
     }
@@ -75,7 +75,7 @@ export function getDescendantCount({ node, ignoreCollapsed = true }) {
  * @param {Object} args - Function parameters
  * @param {function} args.callback - Function to call on each node
  * @param {function} args.getNodeKey - Function to get the key from the nodeData and tree index
- * @param {boolean} args.ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean} args.ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  * @param {boolean=} args.isPseudoRoot - If true, this node has no real data, and only serves
  *                                        as the parent of all the nodes in the tree
  * @param {Object} args.node - A tree node
@@ -122,7 +122,7 @@ function walkDescendants({
         }
     }
 
-    // Return self on nodes with no plainChildren or hidden plainChildren
+    // Return self on nodes with no children or hidden children
     if (
         !node.children ||
         (node.expanded !== true && ignoreCollapsed && !isPseudoRoot)
@@ -162,7 +162,7 @@ function walkDescendants({
  * @param {Object} args - Function parameters
  * @param {function} args.callback - Function to call on each node
  * @param {function} args.getNodeKey - Function to get the key from the nodeData and tree index
- * @param {boolean} args.ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean} args.ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  * @param {boolean=} args.isPseudoRoot - If true, this node has no real data, and only serves
  *                                        as the parent of all the nodes in the tree
  * @param {Object} args.node - A tree node
@@ -200,7 +200,7 @@ function mapDescendants({
         treeIndex: currentIndex,
     };
 
-    // Return self on nodes with no plainChildren or hidden plainChildren
+    // Return self on nodes with no children or hidden children
     if (
         !nextNode.children ||
         (nextNode.expanded !== true && ignoreCollapsed && !isPseudoRoot)
@@ -319,7 +319,7 @@ export function getVisibleNodeInfoAtIndex({
  * @param {!Object[]} treeData - Tree data
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
  * @param {function} callback - Function to call on each node
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  *
  * @return void
  */
@@ -352,7 +352,7 @@ export function walk({
  * @param {!Object[]} treeData - Tree data
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
  * @param {function} callback - Function to call on each node
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  *
  * @return {Object[]} changedTreeData - The changed tree data
  */
@@ -402,7 +402,7 @@ export function toggleExpandedForAll({ treeData, expanded = true }) {
  * @param {number[]|string[]} path - Array of keys leading up to node to be changed
  * @param {function|any} newNode - Node to replace the node at the path with, or a function producing the new node
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  *
  * @return {Object[]} changedTreeData - The changed tree data
  */
@@ -433,8 +433,8 @@ export function changeNodeAtPath({
                 ? newNode({ node, treeIndex: currentTreeIndex })
                 : newNode;
         } else if (!node.children) {
-            // If this node is part of the path, but has no plainChildren, return the unchanged node
-            throw new Error('Path referenced plainChildren of node with no plainChildren.');
+            // If this node is part of the path, but has no children, return the unchanged node
+            throw new Error('Path referenced children of node with no children.');
         }
 
         let nextTreeIndex = currentTreeIndex + 1;
@@ -498,7 +498,7 @@ export function changeNodeAtPath({
  * @param {!Object[]} treeData
  * @param {number[]|string[]} path - Array of keys leading up to node to be deleted
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  *
  * @return {Object[]} changedTreeData - The tree data with the node removed
  */
@@ -523,7 +523,7 @@ export function removeNodeAtPath({
  * @param {!Object[]} treeData
  * @param {number[]|string[]} path - Array of keys leading up to node to be deleted
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  *
  * @return {Object} result
  * @return {Object[]} result.treeData - The tree data with the node removed
@@ -565,7 +565,7 @@ export function removeNode({
  * @param {!Object[]} treeData
  * @param {number[]|string[]} path - Array of keys leading up to node to be deleted
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  *
  * @return {Object|null} nodeInfo - The node info at the given path, or null if not found
  */
@@ -602,7 +602,7 @@ export function getNodeAtPath({
  * @param {!Object} newNode - The node to insert
  * @param {number|string} parentKey - The key of the to-be parentNode of the node
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  * @param {boolean=} expandParent - If true, expands the parentNode specified by parentPath
  *
  * @return {Object} result
@@ -646,7 +646,7 @@ export function addNodeUnderParent({
                 parentNode.expanded = true;
             }
 
-            // If no plainChildren exist yet, just add the single newNode
+            // If no children exist yet, just add the single newNode
             if (!parentNode.children) {
                 insertedTreeIndex = treeIndex + 1;
                 return {
@@ -656,7 +656,7 @@ export function addNodeUnderParent({
             }
 
             if (typeof parentNode.children === 'function') {
-                throw new Error('Cannot add to plainChildren defined by a function');
+                throw new Error('Cannot add to children defined by a function');
             }
 
             let nextTreeIndex = treeIndex + 1;
@@ -710,7 +710,7 @@ function addNodeAtDepthAndIndex({
         (isLastChild && !(node.children && node.children.length))
     ) {
         if (typeof node.children === 'function') {
-            throw new Error('Cannot add to plainChildren defined by a function');
+            throw new Error('Cannot add to children defined by a function');
         } else {
             const extraNodeProps = expandParent ? { expanded: true } : {};
             const nextNode = {
@@ -731,9 +731,9 @@ function addNodeAtDepthAndIndex({
     }
 
     // If this is the target depth for the insertion,
-    // i.e., where the newNode can be added to the current node's plainChildren
+    // i.e., where the newNode can be added to the current node's children
     if (currentDepth >= targetDepth - 1) {
-        // Skip over nodes with no plainChildren or hidden plainChildren
+        // Skip over nodes with no children or hidden children
         if (
             !node.children ||
             typeof node.children === 'function' ||
@@ -742,7 +742,7 @@ function addNodeAtDepthAndIndex({
             return { node, nextIndex: currentIndex + 1 };
         }
 
-        // Scan over the plainChildren to see if there's a place among them that fulfills
+        // Scan over the children to see if there's a place among them that fulfills
         // the minimumTreeIndex requirement
         let childIndex = currentIndex + 1;
         let insertedTreeIndex = null;
@@ -763,13 +763,13 @@ function addNodeAtDepthAndIndex({
 
         // If no valid indices to add the node were found
         if (insertIndex === null) {
-            // If the last position in this node's plainChildren is less than the minimum index
-            // and there are more plainChildren on the level of this node, return without insertion
+            // If the last position in this node's children is less than the minimum index
+            // and there are more children on the level of this node, return without insertion
             if (childIndex < minimumTreeIndex && !isLastChild) {
                 return { node, nextIndex: childIndex };
             }
 
-            // Use the last position in the plainChildren array to insert the newNode
+            // Use the last position in the children array to insert the newNode
             insertedTreeIndex = childIndex;
             insertIndex = node.children.length;
         }
@@ -794,7 +794,7 @@ function addNodeAtDepthAndIndex({
         };
     }
 
-    // Skip over nodes with no plainChildren or hidden plainChildren
+    // Skip over nodes with no children or hidden children
     if (
         !node.children ||
         typeof node.children === 'function' ||
@@ -826,7 +826,7 @@ function addNodeAtDepthAndIndex({
                 currentIndex: childIndex,
                 currentDepth: currentDepth + 1,
                 getNodeKey,
-                path: [], // Cannot determine the parent path until the plainChildren have been processed
+                path: [], // Cannot determine the parent path until the children have been processed
             });
 
             if ('insertedTreeIndex' in mapResult) {
@@ -865,7 +865,7 @@ function addNodeAtDepthAndIndex({
  * @param {!number} depth - The depth to insert the node at (the first level of the array being depth 0)
  * @param {!number} minimumTreeIndex - The lowest possible treeIndex to insert the node at
  * @param {!Object} newNode - The node to insert into the tree
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  * @param {boolean=} expandParent - If true, expands the parent of the inserted node
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
  *
@@ -928,7 +928,7 @@ export function insertNode({
  *
  * @param {!Object[]} treeData - Tree data
  * @param {!function} getNodeKey - Function to get the key from the nodeData and tree index
- * @param {boolean=} ignoreCollapsed - Ignore plainChildren of nodes without `expanded` set to `true`
+ * @param {boolean=} ignoreCollapsed - Ignore children of nodes without `expanded` set to `true`
  *
  * @return {{
  *      node: Object,
@@ -1028,7 +1028,7 @@ export function isDescendant(older, younger) {
 }
 
 /**
- * Get the maximum depth of the plainChildren (the depth of the root node is 0).
+ * Get the maximum depth of the children (the depth of the root node is 0).
  *
  * @param {!Object} node - Node in the tree
  * @param {?number} depth - The current depth
@@ -1092,7 +1092,7 @@ export function find({
                 treeIndex: currentIndex,
             };
 
-        // Nodes with with plainChildren that aren't lazy
+        // Nodes with with children that aren't lazy
         const hasChildren =
             node.children &&
             typeof node.children !== 'function' &&

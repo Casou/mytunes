@@ -1,6 +1,8 @@
 package com.bparent.mytunes.dto;
 
 import com.bparent.mytunes.model.Playlist;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +33,8 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
     protected List<BigInteger> musiquesOrderIds = new ArrayList<>();
     protected List<BigInteger> childrenIds = new ArrayList<>();
 
-    protected List<PlaylistDTO> plainChildren = new ArrayList<>();
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    protected List<PlaylistDTO> children = new ArrayList<>();
 
     public static PlaylistDTO toDto(Playlist playlist) {
         ModelMapper mapper = new ModelMapper();
@@ -74,8 +77,8 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
 
     public Stream<PlaylistDTO> childrenFlatMap() {
         Stream childrenStream = Stream.empty();
-        if (plainChildren != null) {
-            childrenStream = plainChildren.stream().flatMap(PlaylistDTO::childrenFlatMap);
+        if (children != null) {
+            childrenStream = children.stream().flatMap(PlaylistDTO::childrenFlatMap);
         }
         return Stream.concat(Stream.of(this), childrenStream);
     }

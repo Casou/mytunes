@@ -223,15 +223,15 @@ class SavedPlaylists extends React.Component {
         return {
             id : null,
             parentId : null,
-            plainChildren: this._mapSortedTreeDataRecursive(treeData, null)
+            children: this._mapSortedTreeDataRecursive(treeData, null)
         }
     }
 
     _mapSortedTreeDataRecursive(treeData, parentId) {
         const playlistList = [];
         for (let data of treeData) {
-            const plainChildren = data.children ? this._mapSortedTreeDataRecursive(data.children, data.id) : [];
-            playlistList.push({ id : data.id, parentId, plainChildren })
+            const children = data.children ? this._mapSortedTreeDataRecursive(data.children, data.id) : [];
+            playlistList.push({ id : data.id, parentId, children })
         }
         return playlistList;
     }

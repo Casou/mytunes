@@ -21,12 +21,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -50,7 +49,9 @@ public class PlaylistServiceTest {
         MockitoAnnotations.initMocks(this);
         when(playlistRepository.save(any(Playlist.class))).thenAnswer(invocationOnMock -> {
             Playlist pl = (Playlist) invocationOnMock.getArguments()[0];
-            pl.setId(BigInteger.valueOf(123));
+            if (pl.getId() == null) {
+                pl.setId(BigInteger.valueOf(123));
+            }
             return pl;
         });
     }
@@ -188,25 +189,69 @@ public class PlaylistServiceTest {
         when(playlistRepository.findById(eq(BigInteger.valueOf(321)))).thenReturn(
                 Playlist.builder().id(BigInteger.valueOf(321)).build()
         );
+        when(playlistRepository.findByNomAndParentId("Test", BigInteger.valueOf(321)))
+                .thenReturn(Playlist.builder().id(BigInteger.valueOf(999)).build());
 
         playlistService.save(PlaylistDTO.builder().nom("Test")
                 .parentId(BigInteger.valueOf(321))
                 .musiqueIds(Arrays.asList(BigInteger.valueOf(1), BigInteger.valueOf(2)))
                 .build());
 
-        verify((this.playlistRepository)).save(playlistCaptor.capture());
-        Playlist playlistSaved = playlistCaptor.getValue();
-        assertEquals(2, playlistSaved.getMusiquesOrder().size());
+        verify((this.playlistRepository)).delete(playlistCaptor.capture());
+        assertEquals(999, playlistCaptor.getValue().getId().intValue());
+    }
 
-        assertEquals(1, playlistSaved.getMusiquesOrder().get(0).getMusique().getId().intValue());
-        assertEquals(0, playlistSaved.getMusiquesOrder().get(0).getOrder().intValue());
-        assertEquals(playlistSaved, playlistSaved.getMusiquesOrder().get(0).getPlaylist());
-        assertEquals(2, playlistSaved.getMusiquesOrder().get(1).getMusique().getId().intValue());
-        assertEquals(1, playlistSaved.getMusiquesOrder().get(1).getOrder().intValue());
-        assertEquals(playlistSaved, playlistSaved.getMusiquesOrder().get(1).getPlaylist());
+    @Test
+    public void reorderPlaylistTree_shouldSavePlaylistWithRightParent() {
+        ArgumentCaptor<Playlist> playlistCaptor = ArgumentCaptor.forClass(Playlist.class);
 
-        assertNotNull(playlistSaved.getParent());
-        assertEquals(BigInteger.valueOf(321), playlistSaved.getParent().getId());
+        when(this.playlistRepository.findAll()).thenReturn(Arrays.asList(
+                Playlist.builder().id(BigInteger.valueOf(1)).build(),
+                Playlist.builder().id(BigInteger.valueOf(2)).build(),
+                Playlist.builder().id(BigInteger.valueOf(3)).build(),
+                Playlist.builder().id(BigInteger.valueOf(4)).build()
+        ));
+
+        PlaylistDTO dto = PlaylistDTO.builder()
+                .id(null)
+                .children(Arrays.asList(
+                        PlaylistDTO.builder()
+                                .id(BigInteger.valueOf(1))
+                                .parentId(null)
+                                .children(Arrays.asList(
+                                        PlaylistDTO.builder().id(BigInteger.valueOf(2)).parentId(BigInteger.valueOf(1)).build(),
+                                        PlaylistDTO.builder().id(BigInteger.valueOf(3))
+                                                .parentId(BigInteger.valueOf(1))
+                                                .children(Arrays.asList(
+                                                        PlaylistDTO.builder().id(BigInteger.valueOf(4))
+                                                                .parentId(BigInteger.valueOf(3  ))
+                                                                .build()
+                                                ))
+                                                .build()
+                                ))
+                                .build()
+                )).build();
+        this.playlistService.reorderPlaylistTree(dto);
+
+        verify(this.playlistRepository, times(4)).save(playlistCaptor.capture());
+
+        List<Playlist> allPlaylistSaved = playlistCaptor.getAllValues();
+        assertEquals(4, allPlaylistSaved.size());
+
+        assertEquals(1, allPlaylistSaved.get(0).getId().intValue());
+        assertNull(allPlaylistSaved.get(0).getParent());
+
+        assertEquals(2, allPlaylistSaved.get(1).getId().intValue());
+        assertNotNull(allPlaylistSaved.get(1).getParent());
+        assertEquals(1, allPlaylistSaved.get(1).getParent().getId().intValue());
+
+        assertEquals(3, allPlaylistSaved.get(2).getId().intValue());
+        assertNotNull(allPlaylistSaved.get(2).getParent());
+        assertEquals(1, allPlaylistSaved.get(2).getParent().getId().intValue());
+
+        assertEquals(4, allPlaylistSaved.get(3).getId().intValue());
+        assertNotNull(allPlaylistSaved.get(3).getParent());
+        assertEquals(3, allPlaylistSaved.get(3).getParent().getId().intValue());
     }
 
 }
