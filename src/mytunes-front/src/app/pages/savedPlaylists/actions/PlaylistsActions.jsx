@@ -68,8 +68,11 @@ export default {
     },
 
     sortPlaylistTree: (playlistTree) => (dispatch, getState) => {
-        console.log(playlistTree);
         return RequestUtil.put("playlist/tree", playlistTree);
+    },
+
+    deletePlaylist: (playlist) => (dispatch, getState) => {
+        return RequestUtil.delete("playlist", playlist);
     }
 
 };

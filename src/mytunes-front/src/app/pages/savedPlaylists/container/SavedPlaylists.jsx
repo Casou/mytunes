@@ -37,7 +37,7 @@ class SavedPlaylists extends React.Component {
         this._updatePlaylistName = this._updatePlaylistName.bind(this);
         this._sortEnd = this._sortEnd.bind(this);
         this._showDeletePlaylistConfirm = this._showDeletePlaylistConfirm.bind(this);
-        this._confirmDelete = this._confirmDelete.bind(this);
+        this._deletePlaylist = this._deletePlaylist.bind(this);
         this._sortedTree = this._sortedTree.bind(this);
     }
 
@@ -71,7 +71,7 @@ class SavedPlaylists extends React.Component {
                 />
                 <ConfirmDialog ref={ref => this.confirmDeletePlaylist = ref}
                                message={"Etes-vous sûr de vouloir supprimer cette playlist ?"}
-                               onConfirm={ this._confirmDelete }
+                               onConfirm={ this._deletePlaylist }
                 />
                 {
                     !selectedPlaylist ?
@@ -210,8 +210,8 @@ class SavedPlaylists extends React.Component {
         this.confirmDeletePlaylist.handleOpen();
     }
 
-    _confirmDelete() {
-        console.log(this.playlistToDelete);
+    _deletePlaylist() {
+        this.props.playlistsActions.deletePlaylist({ id : this.playlistToDelete });
     }
 
     _sortedTree(treeData) {

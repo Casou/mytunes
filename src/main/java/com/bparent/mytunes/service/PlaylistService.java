@@ -76,6 +76,10 @@ public class PlaylistService {
     }
 
     public void delete(Playlist playlist) {
+        if (playlist.getChildren() != null) {
+            playlist.getChildren().forEach(child -> child.setParent(playlist.getParent()));
+            playlist.setChildren(new ArrayList<>());
+        }
         playlistRepository.delete(playlist);
     }
 
