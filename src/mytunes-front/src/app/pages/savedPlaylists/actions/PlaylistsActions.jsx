@@ -34,7 +34,7 @@ export default {
             id : playlist.id,
             musiquesOrderIds : musiques.map(musique => musique.id)
         };
-        console.log(playlistNewMusiqueOrder);
+
         return RequestUtil.put("playlist/order", playlistNewMusiqueOrder)
             .then(() => {
                 dispatch({
@@ -65,6 +65,11 @@ export default {
                 }
                 return response.data;
             });
+    },
+
+    sortPlaylistTree: (playlistTree) => (dispatch, getState) => {
+        console.log(playlistTree);
+        return RequestUtil.put("playlist/tree", playlistTree);
     }
 
 };

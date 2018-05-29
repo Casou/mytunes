@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 @NoArgsConstructor
@@ -29,6 +30,8 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
     protected List<BigInteger> musiqueIds = new ArrayList<>();
     protected List<BigInteger> musiquesOrderIds = new ArrayList<>();
     protected List<BigInteger> childrenIds = new ArrayList<>();
+
+    protected List<PlaylistDTO> plainChildren = new ArrayList<>();
 
     public static PlaylistDTO toDto(Playlist playlist) {
         ModelMapper mapper = new ModelMapper();
@@ -67,5 +70,13 @@ public class PlaylistDTO extends EntityDTO<Playlist> {
     @Override
     public Class getEntityClass() {
         return Playlist.class;
+    }
+
+    public Stream<PlaylistDTO> childrenFlatMap() {
+        Stream childrenStream = Stream.empty();
+        if (plainChildren != null) {
+            childrenStream = plainChildren.stream().flatMap(PlaylistDTO::childrenFlatMap);
+        }
+        return Stream.concat(Stream.of(this), childrenStream);
     }
 }

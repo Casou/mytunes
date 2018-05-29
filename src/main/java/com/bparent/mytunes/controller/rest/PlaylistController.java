@@ -51,4 +51,9 @@ public class PlaylistController {
         this.playlistService.deleteMusiqueFromPlaylist(playlistDTO);
     }
 
+    @PutMapping("/playlist/tree")
+    public void reorderPlaylistTree(@RequestBody PlaylistDTO rootPlaylistDTO) {
+        playlistService.reorderPlaylistTree(rootPlaylistDTO);
+    }
+
 }

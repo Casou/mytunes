@@ -38,6 +38,7 @@ class SavedPlaylists extends React.Component {
         this._sortEnd = this._sortEnd.bind(this);
         this._showDeletePlaylistConfirm = this._showDeletePlaylistConfirm.bind(this);
         this._confirmDelete = this._confirmDelete.bind(this);
+        this._sortedTree = this._sortedTree.bind(this);
     }
 
     render() {
@@ -49,7 +50,6 @@ class SavedPlaylists extends React.Component {
                     <SortableTree
                             key={selectedPlaylist ? "savedPlaylistsTree_" + selectedPlaylist.id + "_" + playlistProvider.key : "savedPlaylistsTree_key"}
                             treeData={treeData}
-                            onChange={treeData => this.setState({ treeData })}
                             rowHeight={55}
                             maxDepth={4}
                             nodeContentRenderer={(props) => <TreeNodeRenderer onClick={this._selectPlaylist}
@@ -67,6 +67,7 @@ class SavedPlaylists extends React.Component {
                                     </button>,
                                 ],
                             })}
+                            onChange={ this._sortedTree }
                 />
                 <ConfirmDialog ref={ref => this.confirmDeletePlaylist = ref}
                                message={"Etes-vous sûr de vouloir supprimer cette playlist ?"}
@@ -213,6 +214,27 @@ class SavedPlaylists extends React.Component {
         console.log(this.playlistToDelete);
     }
 
+    _sortedTree(treeData) {
+        this.setState({ treeData });
+        this.props.playlistsActions.sortPlaylistTree(this._mapSortedTreeData(treeData));
+    }
+
+    _mapSortedTreeData(treeData) {
+        return {
+            id : null,
+            parentId : null,
+            plainChildren: this._mapSortedTreeDataRecursive(treeData, null)
+        }
+    }
+
+    _mapSortedTreeDataRecursive(treeData, parentId) {
+        const playlistList = [];
+        for (let data of treeData) {
+            const plainChildren = data.children ? this._mapSortedTreeDataRecursive(data.children, data.id) : [];
+            playlistList.push({ id : data.id, parentId, plainChildren })
+        }
+        return playlistList;
+    }
 }
 
 SavedPlaylists.propTypes = {

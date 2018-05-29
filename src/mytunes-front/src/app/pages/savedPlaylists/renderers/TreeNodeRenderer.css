@@ -278,7 +278,7 @@
 }
 
 /**
- * Line for under a node with children
+ * Line for under a node with plainChildren
  */
 .rst__lineChildren {
     height: 100%;

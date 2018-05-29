@@ -128,4 +128,26 @@ public class PlaylistService {
         return PlaylistDTO.toDto(savedPlaylist);
     }
 
+    public void reorderPlaylistTree(PlaylistDTO rootPlaylistDTO) {
+        final List<Playlist> allPlaylists = this.playlistRepository.findAll();
+        final List<PlaylistDTO> flatPlaylistsDTOList = rootPlaylistDTO.childrenFlatMap().collect(Collectors.toList());
+
+        for (Playlist playlist : allPlaylists) {
+            playlist.setParent(null);
+            playlist.setChildren(new ArrayList<>());
+        }
+
+        for (PlaylistDTO playlistDTO : flatPlaylistsDTOList) {
+            if (playlistDTO.getId() == null) {
+                continue;
+            }
+
+            Playlist playlist = allPlaylists.stream().filter(pl -> pl.getId().equals(playlistDTO.getId())).findFirst().orElseThrow(() -> new ResourceNotFoundException("Playlist " + playlistDTO.getId() + " not found"));
+            if (playlistDTO.getParentId() != null) {
+                Playlist playlistParent = allPlaylists.stream().filter(pl -> pl.getId().equals(playlistDTO.getParentId())).findFirst().orElseThrow(() -> new ResourceNotFoundException("Playlist " + playlistDTO.getId() + " not found"));
+                playlist.setParent(playlistParent);
+            }
+            playlistRepository.save(playlist);
+        }
+    }
 }

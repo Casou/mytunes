@@ -42,8 +42,8 @@ class TreeNodeRenderer extends Component {
         let handle;
         if (canDrag) {
             if (typeof node.children === 'function' && node.expanded) {
-                // Show a loading symbol on the handle when the children are expanded
-                //  and yet still defined by a function (a callback to fetch the children)
+                // Show a loading symbol on the handle when the plainChildren are expanded
+                //  and yet still defined by a function (a callback to fetch the plainChildren)
                 handle = (
                     <div className="rst__loadingHandle">
                         <div className="rst__loadingCircle">
