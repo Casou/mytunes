@@ -13,6 +13,12 @@ class TextFieldInput extends React.Component {
         this.inputRef = null;
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.value !== nextProps.value) {
+            this.setState({...this.state, value : nextProps.value});
+        }
+    }
+
     render() {
         const { classNames, name, placeholder, onChange, changeOnEnter } = this.props;
         const { value } = this.state;

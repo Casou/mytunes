@@ -16,6 +16,7 @@ import PlaylistsActions from "../actions/PlaylistsActions";
 import {__KEYCODE_ENTER__} from "../../../../App";
 import ConfirmDialog from "../../../common/components/confirm/ConfirmDialog";
 import LoadingActions from "../../../common/actions/LoadingActions";
+import AddPlaylistTextField from "../components/AddPlaylistTextField";
 
 class SavedPlaylists extends React.Component {
     constructor(props) {
@@ -40,6 +41,7 @@ class SavedPlaylists extends React.Component {
         this._showDeletePlaylistConfirm = this._showDeletePlaylistConfirm.bind(this);
         this._deletePlaylist = this._deletePlaylist.bind(this);
         this._sortedTree = this._sortedTree.bind(this);
+        this._newPlaylist = this._newPlaylist.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -57,6 +59,8 @@ class SavedPlaylists extends React.Component {
 
         return (
             <div id={"savedPlaylists"}>
+                <div id={"savedPlaylistTree"}>
+                    <AddPlaylistTextField className={"addPlaylist"} onNewPlaylist={this._newPlaylist} />
                     <SortableTree
                             key={selectedPlaylist ? "savedPlaylistsTree_" + selectedPlaylist.id + "_" + playlistProvider.key : "savedPlaylistsTree_key"}
                             treeData={treeData}
@@ -78,11 +82,12 @@ class SavedPlaylists extends React.Component {
                                 ],
                             })}
                             onChange={ this._sortedTree }
-                />
-                <ConfirmDialog ref={ref => this.confirmDeletePlaylist = ref}
-                               message={"Etes-vous sûr de vouloir supprimer cette playlist ?"}
-                               onConfirm={ this._deletePlaylist }
-                />
+                    />
+                    <ConfirmDialog ref={ref => this.confirmDeletePlaylist = ref}
+                                   message={"Etes-vous sûr de vouloir supprimer cette playlist ?"}
+                                   onConfirm={ this._deletePlaylist }
+                    />
+                </div>
                 {
                     !selectedPlaylist ?
                         <div id={"musiquesPlaylist"}>
@@ -249,6 +254,15 @@ class SavedPlaylists extends React.Component {
             playlistList.push({ id : data.id, parentId, children })
         }
         return playlistList;
+    }
+
+    _newPlaylist(name) {
+        this.props.loadingActions.setIsGeneralLoading(true);
+
+        const playlistToSave = { id : null, nom : name, parentId : null, musiqueIds : [] };
+        return this.props.playlistsActions.savePlaylist(playlistToSave).then(() =>
+            this.props.playlistsActions.getAllPlaylists().then(() =>
+                this.props.loadingActions.setIsGeneralLoading(false)));
     }
 }
 

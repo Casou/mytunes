@@ -29,9 +29,9 @@ export default {
             });
     },
 
-    updateMusiqueOrder: (playlist, musiques) => (dispatch, getState) => {
+    updateMusiqueOrder: (idPlaylist, musiques) => (dispatch, getState) => {
         const playlistNewMusiqueOrder = {
-            id : playlist.id,
+            id : idPlaylist,
             musiquesOrderIds : musiques.map(musique => musique.id)
         };
 
