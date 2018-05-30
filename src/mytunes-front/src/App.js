@@ -10,6 +10,7 @@ import WebSocketClient from "./app/common/components/websocket/WebSocketClient";
 import MainWrapper from "./app/pages/initApp/MainWrapper";
 import {MuiThemeProvider} from "material-ui";
 import {NotificationContainer} from "react-notifications";
+import Favicon from 'react-favicon';
 
 import {Route} from "react-router-dom";
 import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
@@ -25,6 +26,7 @@ export const __KEYCODE_ENTER__ = 13;
 const App = () => (
     <MuiThemeProvider>
         <div className="App">
+            <Favicon url="https://cdn0.iconfinder.com/data/icons/pack-web-app-game/512/play-button-128.png" />
             <WebSocketClient/>
             <Header/>
             <MainWrapper>

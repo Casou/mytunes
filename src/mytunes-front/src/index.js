@@ -28,6 +28,8 @@ const store = createStore(reducers, initialStore,
     composeWithDevTools(applyMiddleware(thunk)));
 // compose(applyMiddleware(thunk), window.devToolsExtension && window.devToolsExtension()));
 
+document.title="Mytunes";
+
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
