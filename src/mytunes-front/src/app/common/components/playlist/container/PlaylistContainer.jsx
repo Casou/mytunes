@@ -108,7 +108,7 @@ class PlaylistContainer extends React.Component {
             musiqueIds : this.props.playlistManager.musiques.map(musique => musique.id)
         };
         return this.props.playlistsActions.savePlaylist(playlistToSave).then(playlist => {
-            if (!playlistToSave.id) {
+            if (!playlistToSave.id || playlist.id !== playlistToSave.id) {
                 this.props.playlistManagerActions.setPlaylist(playlist);
             }
             this.props.loadingActions.setIsGeneralLoading(false);

@@ -57,7 +57,7 @@ export default {
             .then((response) => {
                 NotificationManager.info("Playlist " + playlistToSave.nom + " sauvegardée.")
 
-                if (!playlistToSave.id) {
+                if (!playlistToSave.id || response.id !== playlistToSave.id) {
                     dispatch({
                         type : "NEW_PLAYLIST_SAVED",
                         payload : response.data

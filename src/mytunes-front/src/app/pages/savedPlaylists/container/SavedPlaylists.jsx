@@ -15,6 +15,7 @@ import {musiquePropType} from "../../../common/types/MusiqueType";
 import PlaylistsActions from "../actions/PlaylistsActions";
 import {__KEYCODE_ENTER__} from "../../../../App";
 import ConfirmDialog from "../../../common/components/confirm/ConfirmDialog";
+import LoadingActions from "../../../common/actions/LoadingActions";
 
 class SavedPlaylists extends React.Component {
     constructor(props) {
@@ -220,8 +221,12 @@ class SavedPlaylists extends React.Component {
     }
 
     _deletePlaylist() {
+        this.props.loadingActions.setIsGeneralLoading(true);
         this.props.playlistsActions.deletePlaylist({ id : this.playlistToDelete })
-            .then(() => this.props.playlistsActions.getAllPlaylists());
+            .then(() => {
+                this.props.playlistsActions.getAllPlaylists().then(() =>
+                    this.props.loadingActions.setIsGeneralLoading(false));
+            });
     }
 
     _sortedTree(treeData) {
@@ -260,5 +265,6 @@ export default connect(state => assign({}, {
     playlistProvider: state.playlistProvider,
     musiques: state.musiques
 }), dispatch => ({
-    playlistsActions: bindActionCreators(PlaylistsActions, dispatch)
+    playlistsActions: bindActionCreators(PlaylistsActions, dispatch),
+    loadingActions: bindActionCreators(LoadingActions, dispatch)
 }))(SavedPlaylists);
