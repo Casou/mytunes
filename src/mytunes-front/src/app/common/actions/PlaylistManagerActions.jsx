@@ -16,6 +16,13 @@ export default {
         });
     },
 
+    errorMusique: (musique) => (dispatch, getState) => {
+        dispatch({
+            type: "ERROR_MUSIQUE",
+            payload: musique
+        });
+    },
+
     clearPlaylist: () => (dispatch, getState) => {
         dispatch({
             type: "CLEAR_PLAYLIST"

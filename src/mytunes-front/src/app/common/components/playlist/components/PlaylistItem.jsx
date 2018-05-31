@@ -13,8 +13,11 @@ const PlaylistItem = SortableElement((props) => {
 
     return (
         <li className={
-            cn({ "alreadyPlayed" : musique.alreadyPlayed },
-                { "isPlaying" : isPlaying })
+            cn([
+                { "alreadyPlayed" : musique.alreadyPlayed },
+                { "error" : musique.error },
+                { "isPlaying" : isPlaying }
+            ])
         }>
             <span className="play">
                 {isPlaying ?

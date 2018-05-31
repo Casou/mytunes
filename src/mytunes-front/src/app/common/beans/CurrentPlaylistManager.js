@@ -30,6 +30,11 @@ export default class CurrentPlaylistManager {
             .forEach(musique => musique.alreadyPlayed = true);
     }
 
+    setMusiqueError(musiqueError) {
+        this.musiques.filter(musique => musiqueError.id === musique.id)
+            .forEach(musique => musique.error = true);
+    }
+
     reorderMusique = (oldIndex, newIndex) => {
         this.musiques = arrayMove(this.musiques, oldIndex, newIndex);
         return this;
@@ -105,7 +110,10 @@ export default class CurrentPlaylistManager {
     loadPlaylist(playlist, musiques) {
         this.playlist = {...playlist};
         this.musiques = musiques;
-        this.musiques.forEach(musique => musique.alreadyPlayed = false);
+        this.musiques.forEach(musique => {
+            musique.alreadyPlayed = false;
+            musique.error = false;
+        });
     }
 
     updatePlaylistName(name) {

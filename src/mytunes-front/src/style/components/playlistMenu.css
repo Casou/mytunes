@@ -42,6 +42,7 @@
 /*#playlistMenu li svg      { height : 16px !important; width : 16px !important; }*/
 
 #playlistMenu li.alreadyPlayed { color : gray; font-style: italic; }
+#playlistMenu li.error { color : red; }
 #playlistMenu li.isPlaying { color : black !important; font-style: normal !important; font-weight : bold; }
 
 #playlistMenu span.delete button,

@@ -17,15 +17,11 @@ class LecteurContainer extends React.Component {
             currentTime : 0,
             isPlaying : false
         };
-        this.audio = null;
 
         this._updateVolume = this._updateVolume.bind(this);
         this._playNextSong = this._playNextSong.bind(this);
         this._playPrevSong = this._playPrevSong.bind(this);
-    }
-
-    componentDidMount() {
-        this.audio = document.getElementById('lecteur');
+        this._songError = this._songError.bind(this);
     }
 
     render() {
@@ -39,7 +35,9 @@ class LecteurContainer extends React.Component {
                                 volume={ volume }
                                 playNextSong={ this._playNextSong }
                                 playPrevSong={ this._playPrevSong }
-                                onSongEnd={ this._playNextSong } />
+                                onSongEnd={ this._playNextSong }
+                                onSongError={ this._songError }
+                />
                 <AsideVolumeSlider volume={volume}
                                    onVolumeChange={ this._updateVolume } />
             </section>
@@ -53,15 +51,19 @@ class LecteurContainer extends React.Component {
     _playNextSong() {
         const nextSong = this.props.playlistManager.getNextSong();
         if (nextSong) {
-            this.props.PlaylistManagerActions.playMusique(nextSong, true);
+            this.props.playlistManagerActions.playMusique(nextSong, true);
         }
     }
 
     _playPrevSong() {
         const prevSong = this.props.playlistManager.getPrevSong();
         if (prevSong) {
-            this.props.PlaylistManagerActions.playMusique(prevSong, false);
+            this.props.playlistManagerActions.playMusique(prevSong, false);
         }
+    }
+
+    _songError(musique) {
+        this.props.playlistManagerActions.errorMusique(musique);
     }
 
 }
@@ -73,5 +75,5 @@ LecteurContainer.propTypes = {
 export default connect(state => assign({}, {
     playlistManager: state.playlistManager
 }), dispatch => ({
-    PlaylistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
+    playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(LecteurContainer);

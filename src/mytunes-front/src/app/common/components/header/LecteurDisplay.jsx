@@ -1,6 +1,7 @@
 import React from 'react';
 import { PlayButton, PrevButton, NextButton, ProgressBar, TimeMarker, PauseButton } from "react-player-controls";
 import PropTypes from "prop-types";
+import { NotificationManager } from "react-notifications";
 
 import {musiquePropType} from "../../types/MusiqueType";
 import {__SERVER_URL__} from "../../../../App";
@@ -21,11 +22,13 @@ class LecteurDisplay extends React.Component {
         this._seek = this._seek.bind(this);
         this._updateTime = this._updateTime.bind(this);
         this._updateCurrentTime = this._updateCurrentTime.bind(this);
+        this._loadingError = this._loadingError.bind(this);
     }
 
     componentDidMount() {
         this.audio = document.getElementById('lecteur');
         this.audioSource = document.getElementById('lecteurSource');
+        this.audioSource.addEventListener("error", this._loadingError);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -135,12 +138,23 @@ class LecteurDisplay extends React.Component {
         });
     }
 
+    _loadingError(e) {
+        const { musique, playNextSong, onSongError } = this.props;
+        if (musique) {
+            NotificationManager.error("Erreur lors du chargement de la chanson " + musique.titre);
+            console.error("Erreur lors du chargement de la chanson " + musique.titre, e);
+            onSongError(musique);
+            playNextSong();
+        }
+    }
+
 }
 
 LecteurDisplay.propTypes = {
     musique : musiquePropType,
     volume : PropTypes.number.isRequired,
     onSongEnd : PropTypes.func.isRequired,
+    onSongError : PropTypes.func.isRequired,
     playNextSong : PropTypes.func.isRequired,
     playPrevSong : PropTypes.func.isRequired
 };
