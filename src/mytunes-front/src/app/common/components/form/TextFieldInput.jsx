@@ -32,7 +32,7 @@ class TextFieldInput extends React.Component {
                        onChange={ (event) => {
                            this.setState({...this.state, value : event.target.value});
                            if (!changeOnEnter) {
-                               onChange(value);
+                               onChange(event.target.value);
                            }
                        } }
                        onBlur={() => onChange(value)}

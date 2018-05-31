@@ -12,8 +12,8 @@ class AddPlaylistTextField extends React.Component {
         const { newPlaylistName } = this.state;
         return (
         <div className={ this.props.className }>
-            <TextFieldInput onChange={ (value) => this.setState({...this.state, newPlaylistName : value })}
-                            value={newPlaylistName}
+            <TextFieldInput onChange={ (value) => this.setState({...this.state, newPlaylistName : value }) }
+                            value={ newPlaylistName }
                             changeOnEnter={false}
                             name={"newPlaylistName"}
                             placeholder={"Nouvelle playlist"} />

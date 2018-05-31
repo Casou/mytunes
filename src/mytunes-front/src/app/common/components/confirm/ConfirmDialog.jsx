@@ -46,6 +46,7 @@ class ConfirmDialog extends React.Component {
                 modal={false}
                 open={this.state.open}
                 onRequestClose={this.handleClose}
+                className={ this.props.className }
             >
                 { this.props.message }
             </Dialog>
@@ -55,9 +56,10 @@ class ConfirmDialog extends React.Component {
 
 ConfirmDialog.propTypes = {
     title : PropTypes.string,
-    message : PropTypes.string.isRequired,
+    message : PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
     onConfirm : PropTypes.func,
-    onCancel : PropTypes.func
+    onCancel : PropTypes.func,
+    className : PropTypes.string
 };
 
 export default ConfirmDialog;

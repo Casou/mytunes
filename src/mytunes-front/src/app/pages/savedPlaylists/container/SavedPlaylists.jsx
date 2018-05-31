@@ -1,22 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SortableTree from 'react-sortable-tree';
 import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 import {arrayMove} from 'react-sortable-hoc';
-import { FontIcon, TextField } from 'material-ui';
+import { TextField} from 'material-ui';
 
 import 'react-sortable-tree/style.css';
 import '../../../../style/components/savedPlaylists.css';
-import TreeNodeRenderer from "../renderers/TreeNodeRenderer";
+
 import SavedPlaylistSortableList from "../components/SavedPlaylistSortableList";
 import {musiquePropType} from "../../../common/types/MusiqueType";
 import PlaylistsActions from "../actions/PlaylistsActions";
 import {__KEYCODE_ENTER__} from "../../../../App";
-import ConfirmDialog from "../../../common/components/confirm/ConfirmDialog";
 import LoadingActions from "../../../common/actions/LoadingActions";
-import AddPlaylistTextField from "../components/AddPlaylistTextField";
+import SavedPlaylistsTree from "../components/SavedPlaylistsTree";
 
 class SavedPlaylists extends React.Component {
     constructor(props) {
@@ -32,13 +30,11 @@ class SavedPlaylists extends React.Component {
         };
 
         this.inputPlaylistNom = null;
-        this.playlistToDelete = null;
 
         this._selectPlaylist = this._selectPlaylist.bind(this);
         this._onDeleteMusique = this._onDeleteMusique.bind(this);
         this._updatePlaylistName = this._updatePlaylistName.bind(this);
         this._sortEnd = this._sortEnd.bind(this);
-        this._showDeletePlaylistConfirm = this._showDeletePlaylistConfirm.bind(this);
         this._deletePlaylist = this._deletePlaylist.bind(this);
         this._sortedTree = this._sortedTree.bind(this);
         this._newPlaylist = this._newPlaylist.bind(this);
@@ -59,35 +55,14 @@ class SavedPlaylists extends React.Component {
 
         return (
             <div id={"savedPlaylists"}>
-                <div id={"savedPlaylistTree"}>
-                    <AddPlaylistTextField className={"addPlaylist"} onNewPlaylist={this._newPlaylist} />
-                    <SortableTree
-                            key={selectedPlaylist ? "savedPlaylistsTree_" + selectedPlaylist.id + "_" + playlistProvider.key : "savedPlaylistsTree_key"}
-                            treeData={treeData}
-                            rowHeight={55}
-                            maxDepth={4}
-                            nodeContentRenderer={(props) => <TreeNodeRenderer onClick={this._selectPlaylist}
-                                                                              selectedPlaylist={selectedPlaylist}
-                                                                              {...props} /> }
-                            generateNodeProps={rowInfo => ({
-                                buttons: [
-                                    <button
-                                        style={{
-                                            verticalAlign: 'middle',
-                                        }}
-                                        onClick={(e) => this._showDeletePlaylistConfirm(rowInfo, e)}
-                                    >
-                                        <FontIcon className="material-icons">delete</FontIcon>
-                                    </button>,
-                                ],
-                            })}
-                            onChange={ this._sortedTree }
-                    />
-                    <ConfirmDialog ref={ref => this.confirmDeletePlaylist = ref}
-                                   message={"Etes-vous sûr de vouloir supprimer cette playlist ?"}
-                                   onConfirm={ this._deletePlaylist }
-                    />
-                </div>
+                <SavedPlaylistsTree treeData={ treeData }
+                                    playlistProvider={ playlistProvider }
+                                    onSortedTree={ this._sortEnd }
+                                    selectedPlaylist={ selectedPlaylist }
+                                    onDeletePlaylist={ this._deletePlaylist }
+                                    onSelectPlaylist={ this._selectPlaylist }
+                                    onNewPlaylist={ this._newPlaylist }
+                />
                 {
                     !selectedPlaylist ?
                         <div id={"musiquesPlaylist"}>
@@ -218,16 +193,9 @@ class SavedPlaylists extends React.Component {
         });
     }
 
-    _showDeletePlaylistConfirm(rowInfo, e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.playlistToDelete = rowInfo.node.id;
-        this.confirmDeletePlaylist.handleOpen();
-    }
-
-    _deletePlaylist() {
+    _deletePlaylist(idPlaylistToDelete) {
         this.props.loadingActions.setIsGeneralLoading(true);
-        this.props.playlistsActions.deletePlaylist({ id : this.playlistToDelete })
+        this.props.playlistsActions.deletePlaylist({ id : idPlaylistToDelete })
             .then(() => {
                 this.props.playlistsActions.getAllPlaylists().then(() =>
                     this.props.loadingActions.setIsGeneralLoading(false));

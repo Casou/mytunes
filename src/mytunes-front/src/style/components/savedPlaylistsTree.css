@@ -1,0 +1,88 @@
+#savedPlaylistTree {
+    width: 50%;
+    height : 100%;
+    display: inline-block;
+}
+
+.addPlaylist {
+    height : 50px;
+    width: 100%;
+    display: inline-block;
+    padding : 0 15px;
+    box-sizing: border-box;
+}
+.addPlaylist .textField {
+    width : calc(100% - 120px) !important;
+}
+.addPlaylist .newPlaylistButton {
+    width : 100px;
+    margin-left : 15px;
+}
+.addPlaylist .newPlaylistButton span {
+    padding : 0;
+}
+
+.rst__tree {
+    width: 100%;
+    height : calc(100% - 50px) !important;
+    display: inline-block;
+}
+
+.rst__rowWrapper {
+    padding : 0;
+    cursor : pointer;
+    height: 80% !important;
+}
+.rst__rowWrapper.selected .rst__rowContents {
+    background-color : #dde7ff !important;
+}
+
+.rst__rowContents {
+    width : 250px;
+}
+
+.rst__rowContents .rst__rowTitle {
+    width : 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rst__rowLabel {
+    width : calc(100% - 100px) !important;
+    padding-right : 0;
+}
+
+.rst__rowTitleWithSubtitle {
+    font-size : 13px !important;
+    height : 14px !important;
+}
+
+.rst__rowSubtitle {
+    font-size : 11px !important;
+    color : grey;
+}
+
+.rst__toolbarButton button {
+    padding : 0;
+    background-color : transparent;
+    border : none;
+    cursor : pointer;
+}
+
+.rst__toolbarButton button span {
+    font-size : 15px;
+}
+
+#savedPlaylists header div.textField {
+    width : 100% !important;
+}
+#savedPlaylists header input {
+    width : 100% !important;
+    margin-bottom : 5px;
+    font-size : 20px !important;
+    font-weight : bold !important;
+    text-align : center;
+    border : none;
+    background : transparent;
+}
