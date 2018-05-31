@@ -1,35 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FontIcon, Checkbox } from "material-ui";
+import { FontIcon } from "material-ui";
 import SortableTree from 'react-sortable-tree';
-
-import {playlistPropType} from "../../../common/types/PlaylistType";
 import TreeNodeRenderer from "../renderers/TreeNodeRenderer";
-import ConfirmDialog from "../../../common/components/confirm/ConfirmDialog";
-import AddPlaylistTextField from "./AddPlaylistTextField";
-
-import "../../../../style/components/savedPlaylistsTree.css"
+import {playlistPropType} from "../../../common/types/PlaylistType";
 import ScrollHandledComponent from "../../../common/components/scrollHandledComponent/ScrollHandledComponent";
 
 class SavedPlaylistsTree extends ScrollHandledComponent {
-    
     constructor(props) {
-        super(props, "#savedPlaylistTree > div.rst__tree > div:nth-child(1) > div");
-
-        this._showDeletePlaylistConfirm = this._showDeletePlaylistConfirm.bind(this);
+        super(props, "#savedPlaylistTree > div.savedPlaylistSortableTree > div > div:nth-child(1) > div");
+        this.idPlaylistToDelete = null;
     }
 
-    _showDeletePlaylistConfirm = (rowInfo, e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        this.idPlaylistToDelete = rowInfo.node.id;
-        this.confirmDeletePlaylist.handleOpen();
-    };
+    componentWillReceiveProps(nextProps) {
+        if (this.props.selectedPlaylist !== nextProps.selectedPlaylist) {
+            // TODO Scroll to the selected playlist
+            // this.scrollTo({ left : 0, top : 200 });
+        }
+    }
 
     render() {
         return (
-            <div id={"savedPlaylistTree"}>
-                <AddPlaylistTextField className={"addPlaylist"} onNewPlaylist={this.props.onNewPlaylist} />
+            <div className={"savedPlaylistSortableTree"}>
                 <SortableTree
                     key={this.props.selectedPlaylist ? "savedPlaylistsTree_" + this.props.selectedPlaylist.id + "_" + this.props.playlistProvider.key : "savedPlaylistsTree_key"}
                     treeData={this.props.treeData}
@@ -44,7 +36,7 @@ class SavedPlaylistsTree extends ScrollHandledComponent {
                                 style={{
                                     verticalAlign: 'middle',
                                 }}
-                                onClick={(e) => this._showDeletePlaylistConfirm(rowInfo, e)}
+                                onClick={(e) => this.props.onDeletePlaylist(rowInfo, e)}
                             >
                                 <FontIcon className="material-icons">delete</FontIcon>
                             </button>,
@@ -52,35 +44,18 @@ class SavedPlaylistsTree extends ScrollHandledComponent {
                     })}
                     onChange={ this.props.onSortedTree }
                 />
-                <ConfirmDialog ref={ref => this.confirmDeletePlaylist = ref}
-                               className={"confirmDeletePlaylist"}
-                               message={
-                                   <div>
-                                       <p>
-                                        Etes-vous sûr de vouloir supprimer cette playlist ?
-                                       </p>
-                                       <Checkbox
-                                           label="Supprimer aussi les enfants"
-                                           checked={false}
-                                       />
-                                   </div>
-                               }
-                               onConfirm={ () => this.props.onDeletePlaylist(this.idPlaylistToDelete) }
-                />
             </div>
         );
     }
-
 }
 
 SavedPlaylistsTree.propTypes = {
     treeData : PropTypes.array.isRequired,
     selectedPlaylist: playlistPropType,
     playlistProvider : PropTypes.object.isRequired,
-    onSortedTree : PropTypes.func.isRequired,
-    onDeletePlaylist : PropTypes.func.isRequired,
     onSelectPlaylist : PropTypes.func.isRequired,
-    onNewPlaylist : PropTypes.func.isRequired
+    onDeletePlaylist : PropTypes.func.isRequired,
+    onSortedTree : PropTypes.func.isRequired
 };
 
 export default SavedPlaylistsTree;

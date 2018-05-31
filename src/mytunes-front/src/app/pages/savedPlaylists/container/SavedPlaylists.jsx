@@ -14,7 +14,7 @@ import {musiquePropType} from "../../../common/types/MusiqueType";
 import PlaylistsActions from "../actions/PlaylistsActions";
 import {__KEYCODE_ENTER__} from "../../../../App";
 import LoadingActions from "../../../common/actions/LoadingActions";
-import SavedPlaylistsTree from "../components/SavedPlaylistsTree";
+import SavedPlaylistsTreeContainer from "./SavedPlaylistsTreeContainer";
 
 class SavedPlaylists extends React.Component {
     constructor(props) {
@@ -34,7 +34,7 @@ class SavedPlaylists extends React.Component {
         this._selectPlaylist = this._selectPlaylist.bind(this);
         this._onDeleteMusique = this._onDeleteMusique.bind(this);
         this._updatePlaylistName = this._updatePlaylistName.bind(this);
-        this._sortEnd = this._sortEnd.bind(this);
+        this._sortListEnd = this._sortListEnd.bind(this);
         this._deletePlaylist = this._deletePlaylist.bind(this);
         this._sortedTree = this._sortedTree.bind(this);
         this._newPlaylist = this._newPlaylist.bind(this);
@@ -55,13 +55,13 @@ class SavedPlaylists extends React.Component {
 
         return (
             <div id={"savedPlaylists"}>
-                <SavedPlaylistsTree treeData={ treeData }
-                                    playlistProvider={ playlistProvider }
-                                    onSortedTree={ this._sortEnd }
-                                    selectedPlaylist={ selectedPlaylist }
-                                    onDeletePlaylist={ this._deletePlaylist }
-                                    onSelectPlaylist={ this._selectPlaylist }
-                                    onNewPlaylist={ this._newPlaylist }
+                <SavedPlaylistsTreeContainer treeData={ treeData }
+                                             playlistProvider={ playlistProvider }
+                                             onSortedTree={ this._sortedTree }
+                                             selectedPlaylist={ selectedPlaylist }
+                                             onDeletePlaylist={ this._deletePlaylist }
+                                             onSelectPlaylist={ this._selectPlaylist }
+                                             onNewPlaylist={ this._newPlaylist }
                 />
                 {
                     !selectedPlaylist ?
@@ -92,7 +92,7 @@ class SavedPlaylists extends React.Component {
                                                        helperClass="playlistSortableHelper"
                                                        onDeleteMusique={this._onDeleteMusique}
                                                        pressDelay={200}
-                                                       onSortEnd={ this._sortEnd }
+                                                       onSortEnd={ this._sortListEnd }
                             />
                         </div>
                 }
@@ -100,7 +100,7 @@ class SavedPlaylists extends React.Component {
         </div>);
     }
 
-    _sortEnd({oldIndex, newIndex}) {
+    _sortListEnd({oldIndex, newIndex}) {
         const { selectedPlaylist, musiques } = this.state;
         const musiqueSorted = arrayMove([...musiques], oldIndex, newIndex);
         this.props.playlistsActions.updateMusiqueOrder(selectedPlaylist.id, musiqueSorted)

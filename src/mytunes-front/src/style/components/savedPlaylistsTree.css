@@ -22,6 +22,15 @@
     padding : 0;
 }
 
+
+
+
+
+
+.savedPlaylistSortableTree {
+    height : 100%;
+}
+
 .rst__tree {
     width: 100%;
     height : calc(100% - 50px) !important;
@@ -31,7 +40,7 @@
 .rst__rowWrapper {
     padding : 0;
     cursor : pointer;
-    height: 80% !important;
+    padding : 5px 10px 5px 0;
 }
 .rst__rowWrapper.selected .rst__rowContents {
     background-color : #dde7ff !important;
@@ -74,6 +83,8 @@
     font-size : 15px;
 }
 
+
+
 #savedPlaylists header div.textField {
     width : 100% !important;
 }
@@ -85,4 +96,27 @@
     text-align : center;
     border : none;
     background : transparent;
+}
+
+
+
+
+
+.confirmDeletePlaylist .checkbox {
+    height : 20px !important;
+    font-size : 14px !important;
+}
+
+.confirmDeletePlaylist .checkbox > div > div > div,
+.confirmDeletePlaylist svg {
+    height : 20px !important;
+    width : 20px !important;
+}
+
+.confirmDeletePlaylist .checkbox > div > div > div {
+    margin-right : 10px !important;
+}
+.confirmDeletePlaylist .checkbox label {
+    line-height : 20px !important;
+    color : #4d4d4d !important;
 }

@@ -1,0 +1,9 @@
+Playlists :
+[ ] BUG Scroll quand on sélectionne une playlist
+[ ] Scroll vers la playlist sélectionnée
+
+Playlist Menu :
+[ ] Refaire les items
+
+Général
+[ ] Sortir d'un loading infini

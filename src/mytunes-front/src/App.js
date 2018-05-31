@@ -19,7 +19,7 @@ import SavedPlaylists from "./app/pages/savedPlaylists/container/SavedPlaylists"
 
 const __BASIC_URL__ = "localhost:8000/";
 export const __SERVER_URL__ = "http://" + __BASIC_URL__;
-export const __WEBSOCKET_URL__ = "http://" + __BASIC_URL__ + "/ws";
+export const __WEBSOCKET_URL__ = __SERVER_URL__ + "/ws";
 export const __KEYCODE_ENTER__ = 13;
 
 

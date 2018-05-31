@@ -19,7 +19,12 @@ class ScrollHandledComponent extends React.Component {
     _spyScroll() {
         document.querySelector(this.selector).addEventListener("scroll", (event) => {
             this.scrollPosition = { top : event.target.scrollTop, left : event.target.scrollLeft };
+            console.debug(this.scrollPosition);
         });
+    }
+
+    scrollTo({left, top}) {
+        document.querySelector(this.selector).scrollTo(left, top);
     }
 
     render() {
