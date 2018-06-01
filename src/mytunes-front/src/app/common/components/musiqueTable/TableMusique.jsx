@@ -34,7 +34,7 @@ class TableMusique extends React.Component {
             searchText: '',
             musiqueRenderers: this._mapMusiqueRenderer(this.props.musiques, {
                 onPropertyChange: this._onPropertyChange.bind(this),
-                onPlaylistAdd: props.PlaylistManagerActions.addMusiqueToPlaylist
+                onPlaylistAdd: this._addMusiqueToPlaylist
             }, this.props.genres),
             sortProperties : {
                 order : "ASC",
@@ -44,6 +44,7 @@ class TableMusique extends React.Component {
 
         this._sortProperty = this._sortProperty.bind(this);
         this._searchMusique = this._searchMusique.bind(this);
+        this._addMusiqueToPlaylist = this._addMusiqueToPlaylist.bind(this);
     }
 
     render() {
@@ -117,6 +118,10 @@ class TableMusique extends React.Component {
             return new MusiqueRenderer(musique, index, {onPropertyChange, onPlaylistAdd}, genres)
         });
     };
+
+    _addMusiqueToPlaylist(musique) {
+        this.props.playlistManagerActions.addMusiqueToPlaylist(musique, this.props.playlistManager.playlist);
+    }
 
     _onPropertyChange(property, newValue, index) {
         const musiqueRenderers = this.state.musiqueRenderers;

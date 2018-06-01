@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class PlaylistMusiqueDTO extends EntityDTO<PlaylistMusique> {
 
     private Integer order;
+    private PlaylistDTO playlist;
     private MusiqueDTO musique;
 
     @Override

@@ -1,6 +1,8 @@
 package com.bparent.mytunes.service;
 
+import com.bparent.mytunes.dto.MusiqueDTO;
 import com.bparent.mytunes.dto.PlaylistDTO;
+import com.bparent.mytunes.dto.PlaylistMusiqueDTO;
 import com.bparent.mytunes.model.Musique;
 import com.bparent.mytunes.model.Playlist;
 import com.bparent.mytunes.model.PlaylistMusique;
@@ -252,6 +254,48 @@ public class PlaylistServiceTest {
         assertEquals(4, allPlaylistSaved.get(3).getId().intValue());
         assertNotNull(allPlaylistSaved.get(3).getParent());
         assertEquals(3, allPlaylistSaved.get(3).getParent().getId().intValue());
+    }
+
+    @Test
+    public void addMusiqueToPlaylist_shouldAddAMusiqueWithOrder1IfNoExistingMusique() {
+        ArgumentCaptor<Playlist> playlistCaptor = ArgumentCaptor.forClass(Playlist.class);
+
+        when(this.playlistRepository.findById(BigInteger.valueOf(1))).thenReturn(Playlist.builder().musiquesOrder(new ArrayList<>()).build());
+        when(this.musiqueRepository.findById(BigInteger.valueOf(2))).thenReturn(Musique.builder().id(BigInteger.valueOf(2)).build());
+
+        this.playlistService.addMusiqueToPlaylist(PlaylistMusiqueDTO.builder()
+                .playlist(PlaylistDTO.builder().id(BigInteger.valueOf(1)).build())
+                .musique(MusiqueDTO.builder().id(BigInteger.valueOf(2)).build())
+                .build());
+
+        verify(this.playlistRepository).save(playlistCaptor.capture());
+        Playlist playlistSaved = playlistCaptor.getValue();
+        assertEquals(1, playlistSaved.getMusiquesOrder().size());
+        assertEquals(1, playlistSaved.getMusiquesOrder().get(0).getOrder().intValue());
+    }
+
+    @Test
+    public void addMusiqueToPlaylist_shouldAddAMusiqueWithMaxPlusOneOrder1IfMusiquesExist() {
+        ArgumentCaptor<Playlist> playlistCaptor = ArgumentCaptor.forClass(Playlist.class);
+
+        when(this.playlistRepository.findById(BigInteger.valueOf(1))).thenReturn(Playlist.builder()
+                .musiquesOrder(new ArrayList<>(Arrays.asList(
+                        PlaylistMusique.builder().order(1).build(),
+                        PlaylistMusique.builder().order(2).build(),
+                        PlaylistMusique.builder().order(100).build()
+                )))
+                .build());
+        when(this.musiqueRepository.findById(BigInteger.valueOf(2))).thenReturn(Musique.builder().id(BigInteger.valueOf(2)).build());
+
+        this.playlistService.addMusiqueToPlaylist(PlaylistMusiqueDTO.builder()
+                .playlist(PlaylistDTO.builder().id(BigInteger.valueOf(1)).build())
+                .musique(MusiqueDTO.builder().id(BigInteger.valueOf(2)).build())
+                .build());
+
+        verify(this.playlistRepository).save(playlistCaptor.capture());
+        Playlist playlistSaved = playlistCaptor.getValue();
+        assertEquals(4, playlistSaved.getMusiquesOrder().size());
+        assertEquals(101, playlistSaved.getMusiquesOrder().get(3).getOrder().intValue());
     }
 
 }

@@ -193,9 +193,9 @@ class SavedPlaylists extends React.Component {
         });
     }
 
-    _deletePlaylist(idPlaylistToDelete) {
+    _deletePlaylist(idPlaylistToDelete, deleteAllChildren) {
         this.props.loadingActions.setIsGeneralLoading(true);
-        this.props.playlistsActions.deletePlaylist({ id : idPlaylistToDelete })
+        this.props.playlistsActions.deletePlaylist({ id : idPlaylistToDelete, deleteChildren : deleteAllChildren })
             .then(() => {
                 this.props.playlistsActions.getAllPlaylists().then(() =>
                     this.props.loadingActions.setIsGeneralLoading(false));

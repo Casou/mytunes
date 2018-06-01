@@ -3,6 +3,11 @@ Playlists :
 [ ] Scroll vers la playlist sélectionnée
 
 Playlist Menu :
+[ ] Mise à jour de la bdd en direct (add musique, etc.)
+[ ] Remplacer une playlist par une autre (enregistrer sous)
+    [ ] Message d'avertissement si remplacement
+    [ ] Transfert des enfants vers le nouveau (sans perdre les anciens enfants !)
+[ ] Suppression d'une playlist et de ses enfants
 [ ] Refaire les items
 [ ] Gérer les musiques en double dans la playlist (marque les 2 comme lus)
 

@@ -1,6 +1,8 @@
 package com.bparent.mytunes.controller.rest;
 
 import com.bparent.mytunes.dto.PlaylistDTO;
+import com.bparent.mytunes.dto.PlaylistDeleteDTO;
+import com.bparent.mytunes.dto.PlaylistMusiqueDTO;
 import com.bparent.mytunes.repository.PlaylistRepository;
 import com.bparent.mytunes.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class PlaylistController {
     }
 
     @DeleteMapping("/playlist")
-    public void deletePlaylist(@RequestBody PlaylistDTO playlistDTO) {
+    public void deletePlaylist(@RequestBody PlaylistDeleteDTO playlistDTO) {
         playlistService.delete(playlistDTO);
     }
 
@@ -44,6 +46,11 @@ public class PlaylistController {
     @PutMapping("/playlist/order")
     public void updateMusiqueOrder(@RequestBody PlaylistDTO playlistDTO) {
         this.playlistService.updatePlaylistOrder(playlistDTO);
+    }
+
+    @PutMapping("/playlist/musique")
+    public void addMusiqueToPlaylist(@RequestBody PlaylistMusiqueDTO playlistMusiqueDTO) {
+        this.playlistService.addMusiqueToPlaylist(playlistMusiqueDTO);
     }
 
     @DeleteMapping("/playlist/musique")

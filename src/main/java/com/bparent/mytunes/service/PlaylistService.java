@@ -1,6 +1,8 @@
 package com.bparent.mytunes.service;
 
 import com.bparent.mytunes.dto.PlaylistDTO;
+import com.bparent.mytunes.dto.PlaylistDeleteDTO;
+import com.bparent.mytunes.dto.PlaylistMusiqueDTO;
 import com.bparent.mytunes.exception.ResourceNotFoundException;
 import com.bparent.mytunes.model.Musique;
 import com.bparent.mytunes.model.Playlist;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -71,13 +74,17 @@ public class PlaylistService {
         playlistRepository.save(playlist);
     }
 
-    public void delete(PlaylistDTO playlistDTO) {
-        this.delete(playlistRepository.findById(playlistDTO.getId()));
+    public void delete(PlaylistDeleteDTO playlistDTO) {
+        this.delete(playlistRepository.findById(playlistDTO.getId()), playlistDTO.getDeleteAllChildren());
     }
 
-    public void delete(Playlist playlist) {
+    public void delete(Playlist playlist, Boolean deleteChildren) {
         if (playlist.getChildren() != null) {
-            playlist.getChildren().forEach(child -> child.setParent(playlist.getParent()));
+            if (deleteChildren) {
+                playlist.getChildren().forEach(child -> this.delete(child, true));
+            } else {
+                playlist.getChildren().forEach(child -> child.setParent(playlist.getParent()));
+            }
             playlist.setChildren(new ArrayList<>());
         }
         playlistRepository.delete(playlist);
@@ -89,11 +96,17 @@ public class PlaylistService {
         if (playlist != null) {
             if (!playlist.getId().equals(playlistDTO.getId()))  {
                 // Delete and replace existing playlist
-                this.delete(playlist);
+                List<Playlist> children = playlist.getChildren();
 
                 playlistToUpdate = playlistDTO.toEntity();
                 playlistToUpdate.setId(null);
                 playlistToUpdate.setIsFolder(false);
+                playlistToUpdate.setChildren(children != null ? children : new ArrayList<>());
+                if (children != null) {
+                    children.forEach(child -> child.setParent(playlistToUpdate));
+                }
+
+                playlistRepository.delete(playlist);
             } else {
                 playlistToUpdate = playlist;
                 playlistToUpdate.setNom(playlistDTO.getNom());
@@ -154,4 +167,21 @@ public class PlaylistService {
             playlistRepository.save(playlist);
         }
     }
+
+    public void addMusiqueToPlaylist(PlaylistMusiqueDTO playlistMusiqueDTO) {
+        Playlist playlist = this.playlistRepository.findById(playlistMusiqueDTO.getPlaylist().getId());
+        Musique musique = this.musiqueRepository.findById(playlistMusiqueDTO.getMusique().getId());
+
+        playlist.getMusiquesOrder().add(PlaylistMusique.builder()
+                .playlist(playlist)
+                .musique(musique)
+                .order(playlist.getMusiquesOrder().stream().map(pl -> pl.getOrder().intValue())
+                        .max(Comparator.naturalOrder())
+                        .orElse(0) + 1
+                )
+                .build());
+
+        this.playlistRepository.save(playlist);
+    }
+
 }

@@ -1,5 +1,10 @@
+import RequestUtil from "../util/RequestUtil";
+
 export default {
-    addMusiqueToPlaylist: (musique) => (dispatch, getState) => {
+    addMusiqueToPlaylist: (musique, playlist) => (dispatch, getState) => {
+        if (playlist) {
+            RequestUtil.put("playlist/musique", musique);
+        }
         dispatch({
             type: "ADD_MUSIQUE_TO_PLAYLIST",
             payload: musique
