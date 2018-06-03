@@ -68,7 +68,7 @@ class PlaylistContainer extends React.Component {
         alert("TODO");
     }
     _clearPlaylist() {
-        this.props.playlistManagerActions.clearPlaylist();
+        this.props.playlistManagerActions.clearPlaylist(this.props.playlistManager.playlist);
     }
     _newPlaylist() {
         this.props.playlistManagerActions.newPlaylist();

@@ -30,6 +30,10 @@ class TableMusique extends React.Component {
     constructor(props) {
         super(props);
 
+        this._sortProperty = this._sortProperty.bind(this);
+        this._searchMusique = this._searchMusique.bind(this);
+        this._addMusiqueToPlaylist = this._addMusiqueToPlaylist.bind(this);
+
         this.state = {
             searchText: '',
             musiqueRenderers: this._mapMusiqueRenderer(this.props.musiques, {
@@ -41,10 +45,6 @@ class TableMusique extends React.Component {
                 property : "titre"
             }
         };
-
-        this._sortProperty = this._sortProperty.bind(this);
-        this._searchMusique = this._searchMusique.bind(this);
-        this._addMusiqueToPlaylist = this._addMusiqueToPlaylist.bind(this);
     }
 
     render() {
@@ -173,8 +173,9 @@ TableMusique.propTypes = {
 
 
 export default connect(state => assign({}, {
-    genres: state.genres
+    genres: state.genres,
+    playlistManager: state.playlistManager
 }), dispatch => ({
     musiquesActions: bindActionCreators(MusiquesActions, dispatch),
-    PlaylistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
+    playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(TableMusique);

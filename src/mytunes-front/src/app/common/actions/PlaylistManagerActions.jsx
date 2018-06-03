@@ -3,7 +3,7 @@ import RequestUtil from "../util/RequestUtil";
 export default {
     addMusiqueToPlaylist: (musique, playlist) => (dispatch, getState) => {
         if (playlist) {
-            RequestUtil.put("playlist/musique", musique);
+            RequestUtil.put("playlist/musique", { playlist, musique });
         }
         dispatch({
             type: "ADD_MUSIQUE_TO_PLAYLIST",
@@ -28,7 +28,10 @@ export default {
         });
     },
 
-    clearPlaylist: () => (dispatch, getState) => {
+    clearPlaylist: (playlist) => (dispatch, getState) => {
+        if (playlist) {
+            RequestUtil.put("playlist/clear", playlist);
+        }
         dispatch({
             type: "CLEAR_PLAYLIST"
         });

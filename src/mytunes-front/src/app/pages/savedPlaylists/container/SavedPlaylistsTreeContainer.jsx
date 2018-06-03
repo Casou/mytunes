@@ -53,7 +53,7 @@ class SavedPlaylistsTreeContainer extends React.Component {
                                        </p>
                                    </div>
                                }
-                               onConfirm={ () => this.props.onDeletePlaylist(this.idPlaylistToDelete) }
+                               onConfirm={ () => this.props.onDeletePlaylist(this.idPlaylistToDelete, false) }
                 />
                 <ConfirmDialog ref={ref => this.confirmDeleteFolder = ref}
                                className={"confirmDeletePlaylist"}
