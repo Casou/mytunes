@@ -181,29 +181,6 @@ public class PlaylistServiceTest {
     }
 
     @Test
-    public void save_shouldDeleteExistingPlaylist() {
-        ArgumentCaptor<Playlist> playlistCaptor = ArgumentCaptor.forClass(Playlist.class);
-
-        when(musiqueRepository.findByIdIn(anyList())).thenReturn(Arrays.asList(
-                Musique.builder().id(BigInteger.valueOf(1)).build(),
-                Musique.builder().id(BigInteger.valueOf(2)).build()
-        ));
-        when(playlistRepository.findById(eq(BigInteger.valueOf(321)))).thenReturn(
-                Playlist.builder().id(BigInteger.valueOf(321)).build()
-        );
-        when(playlistRepository.findByNomAndParentId("Test", BigInteger.valueOf(321)))
-                .thenReturn(Playlist.builder().id(BigInteger.valueOf(999)).build());
-
-        playlistService.save(PlaylistDTO.builder().nom("Test")
-                .parentId(BigInteger.valueOf(321))
-                .musiqueIds(Arrays.asList(BigInteger.valueOf(1), BigInteger.valueOf(2)))
-                .build());
-
-        verify((this.playlistRepository)).delete(playlistCaptor.capture());
-        assertEquals(999, playlistCaptor.getValue().getId().intValue());
-    }
-
-    @Test
     public void reorderPlaylistTree_shouldSavePlaylistWithRightParent() {
         ArgumentCaptor<Playlist> playlistCaptor = ArgumentCaptor.forClass(Playlist.class);
 

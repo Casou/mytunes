@@ -4,7 +4,7 @@ Playlists :
 
 Playlist Menu :
 [x] Mise à jour de la bdd en direct (add musique, etc.)
-[ ] Remplacer une playlist par une autre (enregistrer sous)
+[/] Remplacer une playlist par une autre (enregistrer sous)
     [/] Message d'avertissement si remplacement
     [/] Transfert des enfants vers le nouveau (sans perdre les anciens enfants !)
 [ ] Suppression d'une playlist et de ses enfants
