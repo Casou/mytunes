@@ -8,7 +8,7 @@ import ScrollHandledComponent from "../../../common/components/scrollHandledComp
 
 class SavedPlaylistsTree extends ScrollHandledComponent {
     constructor(props) {
-        super(props, "#savedPlaylistTree > div.savedPlaylistSortableTree > div > div:nth-child(1) > div");
+        super(props, "#savedPlaylistTree .ReactVirtualized__Grid");
         this.idPlaylistToDelete = null;
     }
 
@@ -43,6 +43,9 @@ class SavedPlaylistsTree extends ScrollHandledComponent {
                         ],
                     })}
                     onChange={ this.props.onSortedTree }
+                    searchQuery={ this.props.selectedPlaylist && this.props.selectedPlaylist.id }
+                    searchMethod={({ node, path, treeIndex, searchQuery }) => searchQuery && node.id === searchQuery }
+                    // searchFinishCallback={ matches => console.log(matches) }
                 />
             </div>
         );

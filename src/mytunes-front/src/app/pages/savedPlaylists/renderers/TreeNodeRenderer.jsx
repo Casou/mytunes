@@ -100,7 +100,7 @@ class TreeNodeRenderer extends Component {
                     </div>
                 )}
 
-                <div
+                <div id={ "sortableTree_node_" + node.id }
                     className={classnames("rst__rowWrapper", [{"selected": selectedPlaylist && selectedPlaylist.id === node.id}])}
                     onClick={() => onClick(node)}>
                     {/* Set the row preview to be used during drag and drop */}
