@@ -63,4 +63,10 @@ public class PlaylistController {
         playlistService.reorderPlaylistTree(rootPlaylistDTO);
     }
 
+    @PutMapping("/playlist/clear")
+    public void clearPlaylist(@RequestBody PlaylistDTO playlistDTO) {
+        this.playlistService.clearPlaylist(playlistDTO);
+    }
+
+
 }

@@ -184,4 +184,10 @@ public class PlaylistService {
         this.playlistRepository.save(playlist);
     }
 
+    public void clearPlaylist(PlaylistDTO playlistDTO) {
+        Playlist playlist = this.playlistRepository.findById(playlistDTO.getId());
+        this.playlistMusiqueRepository.delete(playlist.getMusiquesOrder());
+        playlist.setMusiquesOrder(new ArrayList<>());
+        this.playlistRepository.save(playlist);
+    }
 }
