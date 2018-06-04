@@ -25,7 +25,7 @@ class SavedPlaylistsTree extends ScrollHandledComponent {
                 <SortableTree
                     key={this.props.selectedPlaylist ? "savedPlaylistsTree_" + this.props.selectedPlaylist.id + "_" + this.props.playlistProvider.key : "savedPlaylistsTree_key"}
                     treeData={this.props.treeData}
-                    rowHeight={55}
+                    rowHeight={40}
                     maxDepth={4}
                     nodeContentRenderer={(rendererProps) => <TreeNodeRenderer onClick={this.props.onSelectPlaylist}
                                                                               selectedPlaylist={this.props.selectedPlaylist}

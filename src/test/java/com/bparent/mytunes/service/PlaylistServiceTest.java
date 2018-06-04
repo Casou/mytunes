@@ -22,6 +22,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -178,6 +179,55 @@ public class PlaylistServiceTest {
 
         assertNotNull(playlistSaved.getParent());
         assertEquals(BigInteger.valueOf(321), playlistSaved.getParent().getId());
+    }
+
+    @Test
+    public void save_shouldDeleteOldMusiqueFromExistingPlaylist() {
+        List<BigInteger> musiqueIds = Arrays.asList(BigInteger.valueOf(111), BigInteger.valueOf(222), BigInteger.valueOf(333));
+        List<PlaylistMusique> musiqueOrder = musiqueIds.stream()
+                .map(idMusique -> PlaylistMusique.builder().id(idMusique).build()).collect(Collectors.toList());
+
+        when(this.playlistRepository.findByNomAndParentId("TEST", BigInteger.valueOf(1000))).thenReturn(Playlist.builder()
+                .id(BigInteger.valueOf(1))
+                .musiquesOrder(musiqueOrder)
+                .build());
+
+        this.playlistService.save(PlaylistDTO.builder()
+                .id(BigInteger.valueOf(1))
+                .nom("TEST")
+                .musiqueIds(musiqueIds)
+                .parentId(BigInteger.valueOf(1000))
+                .build());
+
+        verify(this.playlistMusiqueRepository).delete(musiqueIds);
+    }
+
+    @Test
+    public void save_shouldSaveANewPlaylistIfHadIdButSomePropertiesHadChanged() {
+        ArgumentCaptor<Playlist> playlistArgumentCaptor = ArgumentCaptor.forClass(Playlist.class);
+
+        List<BigInteger> musiqueIds = Arrays.asList(BigInteger.valueOf(111), BigInteger.valueOf(222), BigInteger.valueOf(333));
+        List<PlaylistMusique> musiqueOrder = musiqueIds.stream()
+                .map(idMusique -> PlaylistMusique.builder().id(idMusique).build()).collect(Collectors.toList());
+
+        when(this.playlistRepository.findByNomAndParentId("TEST", BigInteger.valueOf(1000))).thenReturn(Playlist.builder()
+                .id(BigInteger.valueOf(1))
+                .musiquesOrder(musiqueOrder)
+                .build());
+
+        this.playlistService.save(PlaylistDTO.builder()
+                .id(BigInteger.valueOf(1))
+                .nom("TEST MODIFIED")
+                .musiqueIds(musiqueIds)
+                .parentId(BigInteger.valueOf(1000))
+                .build());
+
+        verify(this.playlistMusiqueRepository, times(0)).delete(musiqueIds);
+
+        verify(this.playlistRepository).save(playlistArgumentCaptor.capture());
+        Playlist playlistSaved = playlistArgumentCaptor.getValue();
+        assertEquals(BigInteger.valueOf(123), playlistSaved.getId());
+        assertEquals("TEST MODIFIED", playlistSaved.getNom());
     }
 
     @Test

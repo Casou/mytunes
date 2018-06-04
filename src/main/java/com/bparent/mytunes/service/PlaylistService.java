@@ -92,21 +92,34 @@ public class PlaylistService {
     }
 
     public PlaylistDTO save(PlaylistDTO playlistDTO) {
-        final Playlist playlist = playlistDTO.toEntity();
+        final Playlist playlist;
+        if (playlistDTO.getId() != null) {
+            final Playlist playlistDb = this.playlistRepository.findByNomAndParentId(playlistDTO.getNom(), playlistDTO.getParentId());
+
+            if (playlistDb == null) {
+                playlist = playlistDTO.toEntity();
+                playlist.setId(null);
+            } else {
+                playlist = playlistDb;
+                playlist.setNom(playlistDTO.getNom());
+
+                if (playlist.getMusiquesOrder() != null) {
+                    playlistMusiqueRepository.delete(playlist.getMusiquesOrder().stream()
+                            .map(playlistMusique -> playlistMusique.getId())
+                            .collect(Collectors.toList()));
+                }
+            }
+        } else {
+            playlist = playlistDTO.toEntity();
+        }
 
         if (playlist.getIsFolder() == null) {
             playlist.setIsFolder(false);
         }
 
-        if (playlistDTO.getId() != null && playlist.getMusiquesOrder() != null) {
-            playlistMusiqueRepository.delete(playlist.getMusiquesOrder().stream()
-                .map(playlistMusique -> playlistMusique.getId())
-                .collect(Collectors.toList()));
-        }
-
         if (playlistDTO.getMusiqueIds() != null) {
             playlist.setMusiquesOrder(new ArrayList<>());
-            List<Musique> musiques = musiqueRepository.findByIdIn(playlistDTO.getMusiqueIds());
+            final List<Musique> musiques = musiqueRepository.findByIdIn(playlistDTO.getMusiqueIds());
             IntStream.range(0, musiques.size())
                     .forEach(index -> playlist.getMusiquesOrder().add(
                             PlaylistMusique.builder()
@@ -121,7 +134,7 @@ public class PlaylistService {
             playlist.setParent(playlistRepository.findById(playlistDTO.getParentId()));
         }
 
-        Playlist savedPlaylist = playlistRepository.save(playlist);
+        final Playlist savedPlaylist = playlistRepository.save(playlist);
 
         return PlaylistDTO.toDto(savedPlaylist);
     }
