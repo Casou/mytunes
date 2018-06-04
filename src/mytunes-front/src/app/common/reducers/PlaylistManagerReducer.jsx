@@ -1,5 +1,6 @@
 import {NotificationManager} from "react-notifications";
 import ObjectUtil from "../util/ObjectUtil";
+import {__LOCAL_STORAGE__PLAYLIST_MANAGER__} from "../../../App";
 
 export const playlistManager = (state = {}, action) => {
     let playlistManager = state;
@@ -13,35 +14,45 @@ export const playlistManager = (state = {}, action) => {
             } else {
                 NotificationManager.info("Musique ajoutée à la playlist", "Playlist", 1500);
             }
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "PLAYING_MUSIQUE" :
             playlistManager.setMusiquePlaying(action.payload.musique, action.payload.addMusique);
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "ERROR_MUSIQUE" :
             playlistManager.setMusiqueError(action.payload);
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "CLEAR_PLAYLIST" :
             playlistManager.clearPlaylist();
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "TOGGLE_SHUFFLE" :
             playlistManager.toggleShuffle();
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "REORDER_PLAYLIST" :
             playlistManager = playlistManager.reorderMusique(action.payload.oldIndex, action.payload.newIndex);
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "LOAD_PLAYLIST" :
             playlistManager.loadPlaylist(action.payload.playlist, action.payload.musiques);
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "NEW_PLAYLIST" :
             playlistManager.newPlaylist();
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "CHANGE_PLAYLIST_NAME" :
             playlistManager.updatePlaylistName(action.payload);
-            return ObjectUtil.clone(playlistManager);
+            break;
         case "SET_PLAYLIST" :
             playlistManager.setPlaylist(action.payload);
-            return ObjectUtil.clone(playlistManager);
+            break;
         default :
             return state;
     }
+
+    const newState = ObjectUtil.clone(playlistManager);
+    localStorage.setItem(__LOCAL_STORAGE__PLAYLIST_MANAGER__,
+        JSON.stringify(newState, (key, value) => {
+            if (key === "parent") {
+                return;
+            }
+            return value;
+        }));
+    return newState;
 };

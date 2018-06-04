@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './style/index.css';
-import App from './App';
+import App, {__LOCAL_STORAGE__PLAYLIST_MANAGER__} from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from "redux";
@@ -21,7 +21,9 @@ const initialStore = {
     },
     musiques: null,
     genres: null,
-    playlistManager: new CurrentPlaylistManager(),
+    playlistManager: localStorage.getItem(__LOCAL_STORAGE__PLAYLIST_MANAGER__) ?
+        new CurrentPlaylistManager(JSON.parse(localStorage.getItem(__LOCAL_STORAGE__PLAYLIST_MANAGER__))) :
+        new CurrentPlaylistManager(),
     playlistProvider : new PlaylistProvider([])
 };
 const store = createStore(reducers, initialStore,

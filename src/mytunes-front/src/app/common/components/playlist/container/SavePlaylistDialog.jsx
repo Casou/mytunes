@@ -35,7 +35,7 @@ class SavePlaylistDialog extends React.Component {
         if (this.props.playlist !== nextProps.playlist) {
             this.setState({...this.state,
                 playlistName : nextProps.playlist.nom,
-                playlistParentId : nextProps.playlist.parent && nextProps.playlist.parentId });
+                playlistParentId : nextProps.playlist && nextProps.playlist.parentId });
         }
 
     }

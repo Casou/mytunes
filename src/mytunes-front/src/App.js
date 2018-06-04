@@ -22,6 +22,8 @@ export const __SERVER_URL__ = "http://" + __BASIC_URL__;
 export const __WEBSOCKET_URL__ = __SERVER_URL__ + "/ws";
 export const __KEYCODE_ENTER__ = 13;
 
+export const __LOCAL_STORAGE__PLAYLIST_MANAGER__ = "playlistManager";
+
 
 const App = () => (
     <MuiThemeProvider>

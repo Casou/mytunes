@@ -2,12 +2,18 @@ import {arrayMove} from 'react-sortable-hoc';
 
 export default class CurrentPlaylistManager {
 
-    constructor() {
-        this.musiquePlaying = null;
-        this.playlist = null;
-        this.musiques = [];
-        this.shuffle = false;
-        this.history = [];
+    constructor(originalPlaylistManager) {
+        this.musiquePlaying = originalPlaylistManager && originalPlaylistManager.musiquePlaying;
+        this.playlist = originalPlaylistManager && originalPlaylistManager.playlist;
+        this.musiques = originalPlaylistManager && originalPlaylistManager.musiques ?
+            originalPlaylistManager && originalPlaylistManager.musiques :
+            [];
+        this.shuffle = originalPlaylistManager && originalPlaylistManager.shuffle ?
+            originalPlaylistManager && originalPlaylistManager.shuffle :
+            false;
+        this.history = originalPlaylistManager && originalPlaylistManager.history ?
+            originalPlaylistManager && originalPlaylistManager.history :
+            [];
     }
 
     addMusique(musique) {

@@ -22,4 +22,4 @@ Listes / tree de playlist :
 
 Général
 [x] Sortir d'un loading infini
-[ ] Local storage pour le playlistManager
+[x] Local storage pour le playlistManager
