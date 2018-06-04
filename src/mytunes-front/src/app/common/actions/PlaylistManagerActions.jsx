@@ -3,7 +3,7 @@ import RequestUtil from "../util/RequestUtil";
 export default {
     addMusiqueToPlaylist: (musique, playlist) => (dispatch, getState) => {
         if (playlist) {
-            RequestUtil.put("playlist/musique", { playlist, musique });
+            RequestUtil.put("playlist/musique", { playlist : { id : playlist.id }, musique : { id : musique.id } });
         }
         dispatch({
             type: "ADD_MUSIQUE_TO_PLAYLIST",

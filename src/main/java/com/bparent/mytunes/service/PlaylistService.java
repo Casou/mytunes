@@ -87,6 +87,7 @@ public class PlaylistService {
             }
             playlist.setChildren(new ArrayList<>());
         }
+        playlistMusiqueRepository.delete(playlist.getMusiquesOrder());
         playlistRepository.delete(playlist);
     }
 
