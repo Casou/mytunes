@@ -59,7 +59,7 @@ export default {
 
                 if (!playlistToSave.id || response.id !== playlistToSave.id) {
                     dispatch({
-                        type : "NEW_PLAYLIST_SAVED",
+                            type : "NEW_PLAYLIST_SAVED",
                         payload : response.data
                     });
                 }

@@ -10,7 +10,6 @@ import SavePlaylistDialog from "../container/SavePlaylistDialog";
 
 const PlaylistHeader = (props) => {
     const nomPlaylist = props.playlistManager && props.playlistManager.playlist ? props.playlistManager.playlist.nom : "";
-    const idParentPlaylist = props.playlistManager && props.playlistManager.playlist ? props.playlistManager.playlist.parentId : null;
 
     return (
         <header>
@@ -61,7 +60,6 @@ const PlaylistHeader = (props) => {
                                     title={ props.playlistManager.playlist ? "Enregistrer sous" : "Enregistrer" }
                                     hierarchicalPlaylists={ props.playlistProvider.getHierarchicalPlaylists() }
                                     playlist={ props.playlistManager.playlist }
-                                    playlistParentId={ idParentPlaylist }
                 />
                 <IconButton className="clearPlaylist" onClick={ () => this.confirmCleanPlaylist.handleOpen() }>
                     <FontIcon className={ "material-icons" }>delete_sweep</FontIcon>

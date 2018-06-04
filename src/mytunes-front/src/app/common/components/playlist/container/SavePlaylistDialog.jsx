@@ -19,14 +19,6 @@ class SavePlaylistDialog extends React.Component {
         this.mappedPlaylists = [];
     }
 
-    handleOpen = () => {
-        this.setState({open: true});
-    };
-
-    handleClose = () => {
-        this.setState({open: false});
-    };
-
     componentWillReceiveProps(nextProps) {
         if (this.props.hierarchicalPlaylists !== nextProps.hierarchicalPlaylists) {
             const rootPlaylist = [{
@@ -40,36 +32,17 @@ class SavePlaylistDialog extends React.Component {
             this.mappedPlaylists = this._mapPlaylists(rootPlaylist);
         }
 
-        if (this.props.playlistParentId !== nextProps) {
-            this.setState({...this.state, playlistParentId : nextProps.playlistParentId});
+        if (this.props.playlist !== nextProps.playlist) {
+            this.setState({...this.state,
+                playlistName : nextProps.playlist.nom,
+                playlistParentId : nextProps.playlist.parent && nextProps.playlist.parentId });
         }
 
     }
 
-    _mapPlaylists(playlists) {
-        return playlists.map(playlist => {
-            const mappedPlaylist = {
-                id: playlist.id,
-                name: playlist.nom,
-                nbMusiques : playlist.musiqueIds.length,
-                active : this.state.cursor ? playlist.id === this.state.cursor.id : false,
-                selectable : false
-            };
-            if (playlist.children.length) {
-                mappedPlaylist.selectable = true;
-                mappedPlaylist.toggled = true;
-                mappedPlaylist.children = this._mapPlaylists(playlist.children);
-            }
-            return mappedPlaylist;
-        });
-    }
-
     render() {
-        const { onCancel, onConfirm, title, playlist } = this.props;
+        const { onCancel, onConfirm, title } = this.props;
         const { playlistName, playlistParentId, open } = this.state;
-
-        const playlistNameSetted = playlistName || (playlist && playlist.nom);
-        const playlistParentIdSetted = playlistParentId || (playlist && playlist.parentId);
 
         const actions = [
             <FlatButton
@@ -85,7 +58,7 @@ class SavePlaylistDialog extends React.Component {
             <FlatButton
                 label="Sauvegarder"
                 primary={true}
-                disabled={!playlistNameSetted || !playlistParentIdSetted}
+                disabled={!playlistName || !playlistParentId}
                 onClick={ () => {
                     if (onConfirm) {
                         onConfirm({ playlistName, playlistParentId })
@@ -109,11 +82,11 @@ class SavePlaylistDialog extends React.Component {
                 <PlaylistTreeView data={ this.mappedPlaylists }
                                   toggleOnClick={ false }
                                   onToggle={ (node) => this.setState({...this.state, playlistParentId : node.id}) }
-                                  playlistSelected={ playlist && playlist.parentId }
+                                  playlistSelected={ playlistParentId }
                 />
                 <TextFieldInput name={"savePlaylistName"}
                                 placeholder={"Nom de la playlist"}
-                                value={ playlist && playlist.nom }
+                                value={ playlistName }
                                 onChange={ (value) => this.setState({...this.state, playlistName : value }) }
                                 changeOnEnter={false}
                 />
@@ -121,6 +94,33 @@ class SavePlaylistDialog extends React.Component {
             </Dialog>
         );
     }
+
+    handleOpen = () => {
+        this.setState({open: true});
+    };
+
+    handleClose = () => {
+        this.setState({open: false});
+    };
+
+    _mapPlaylists(playlists) {
+        return playlists.map(playlist => {
+            const mappedPlaylist = {
+                id: playlist.id,
+                name: playlist.nom,
+                nbMusiques : playlist.musiqueIds.length,
+                active : this.state.cursor ? playlist.id === this.state.cursor.id : false,
+                selectable : false
+            };
+            if (playlist.children.length) {
+                mappedPlaylist.selectable = true;
+                mappedPlaylist.toggled = true;
+                mappedPlaylist.children = this._mapPlaylists(playlist.children);
+            }
+            return mappedPlaylist;
+        });
+    }
+
 }
 
 SavePlaylistDialog.propTypes = {
