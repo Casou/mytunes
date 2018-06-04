@@ -18,8 +18,8 @@ Playlist Menu :
 Listes / tree de playlist :
 [ ] Déplier au clic sur la flèche (pas sur le nom)
 [ ] BUG Recherche de playlists dans le dialog "load"
-
+[ ] Drag d'arborescence => le store n'est pas MAJ
 
 Général
-[ ] Sortir d'un loading infini
+[x] Sortir d'un loading infini
 [ ] Local storage pour le playlistManager

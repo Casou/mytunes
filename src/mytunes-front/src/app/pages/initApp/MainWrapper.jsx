@@ -18,7 +18,7 @@ class MainWrapper extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.isLoading.application && nextProps.isLoading.application && this.isApplicationLoaded(nextProps)) {
+        if (this.props.isLoading.application && nextProps.isLoading.application && this._isApplicationLoaded(nextProps)) {
             this.props.loadingActions.setIsApplicationLoading(false);
         }
     }
@@ -26,7 +26,7 @@ class MainWrapper extends React.Component {
     render() {
         return (
             <main style={{position: 'relative'}}>
-                <Loading open={this.props.isLoading.general} />
+                <Loading open={this.props.isLoading.general} onForceClose={this._forceCloseGeneralLoading.bind(this)} />
                 {this.props.isLoading.application ?
                     <RefreshIndicator
                         size={70}
@@ -43,10 +43,14 @@ class MainWrapper extends React.Component {
         )
     }
 
-    isApplicationLoaded(props) {
+    _isApplicationLoaded(props) {
         return props.musiques && props.genres &&
             props.playlistProvider &&
             props.playlistProvider.getPlaylists().length;
+    }
+
+    _forceCloseGeneralLoading() {
+        this.props.loadingActions.setIsGeneralLoading(false);
     }
 }
 
