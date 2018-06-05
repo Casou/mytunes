@@ -67,7 +67,7 @@ export default class Menu extends React.Component {
                 Import / export
             </MenuItem>
           <Divider />
-          <MenuItem onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to="/parametres" />} onClick={ this.closeMenu }>
               <FontIcon className="material-icons">settings</FontIcon>
               Paramètres
           </MenuItem>

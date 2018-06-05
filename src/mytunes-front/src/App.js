@@ -16,10 +16,11 @@ import {Route} from "react-router-dom";
 import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
 import ListeGenres from "./app/pages/listeGenres/containers/ListeGenres";
 import SavedPlaylists from "./app/pages/savedPlaylists/container/SavedPlaylists";
+import Parametres from "./app/pages/parametres/Parametres";
 
 const __BASIC_URL__ = "localhost:8000/";
 export const __SERVER_URL__ = "http://" + __BASIC_URL__;
-export const __WEBSOCKET_URL__ = __SERVER_URL__ + "/ws";
+export const __WEBSOCKET_URL__ = __SERVER_URL__ + "ws";
 export const __KEYCODE_ENTER__ = 13;
 
 export const __LOCAL_STORAGE__PLAYLIST_MANAGER__ = "playlistManager";
@@ -36,6 +37,7 @@ const App = () => (
                 <Route exact path="/musiques" component={ListeMusique}/>
                 <Route exact path="/genres/:genreId?" component={ListeGenres}/>
                 <Route exact path="/playlists/:playlistId?" component={SavedPlaylists}/>
+                <Route exact path="/parametres" component={Parametres}/>
             </MainWrapper>
             <NotificationContainer/>
         </div>

@@ -4,13 +4,13 @@ import com.bparent.mytunes.dto.BasicCodeLabelDto;
 import com.bparent.mytunes.dto.UpdateClassementDTO;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class PlaylistWSController {
 
-    @MessageMapping("/action/musiquesOrder/updateClassement")
-    @SendTo("/topic/musiquesOrder/updateClassement")
+    @MessageMapping("/action/musiques/updateClassement")
+    @SendTo("/topic/musiques/updateClassement")
     public BasicCodeLabelDto updateClassement(UpdateClassementDTO updateClassementDTO) {
         System.out.println("\n\n\n\n\n\n\nUPDATE CLASSEMENT\n\n\n\n\n\n\n--------------------------------");
         return new BasicCodeLabelDto("message", "ok");
