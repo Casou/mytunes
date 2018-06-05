@@ -62,6 +62,11 @@ export default class Menu extends React.Component {
               Playlists intelligentes
           </MenuItem>
           <Divider />
+            <MenuItem onClick={ this.closeMenu }>
+                <FontIcon className="material-icons">import_export</FontIcon>
+                Import / export
+            </MenuItem>
+          <Divider />
           <MenuItem onClick={ this.closeMenu }>
               <FontIcon className="material-icons">settings</FontIcon>
               Paramètres

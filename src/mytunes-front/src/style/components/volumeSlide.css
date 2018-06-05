@@ -149,18 +149,12 @@
 .VolumeSlider .VolumeSlider-handle {
     position: absolute;
     left: 0;
-    margin: 0 0 calc(var(--slider-width) * -1) calc(var(--slider-width) / 2 * -1);
+    margin: 0 0 calc(var(--slider-width) * -1) calc(var(--slider-width) * -0.5);
     width: calc(var(--slider-width) * 2);
     height: calc(var(--slider-width) * 2);
     background: var(--slider-active-color);
     border-radius: 100%;
-    transform: scale(0);
-    transition: transform 0.2s;
     cursor : pointer;
-}
-
-.VolumeSlider:hover .VolumeSlider-handle {
-    transform: scale(1);
 }
 
 .VolumeSlider .VolumeSlider-intent {
