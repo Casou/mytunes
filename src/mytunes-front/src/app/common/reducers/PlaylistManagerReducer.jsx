@@ -18,6 +18,9 @@ export const playlistManager = (state = {}, action) => {
         case "PLAYING_MUSIQUE" :
             playlistManager.setMusiquePlaying(action.payload.musique, action.payload.addMusique);
             break;
+        case "CLEAR_MUSIQUE" :
+            playlistManager.setMusiquePlaying(null, false);
+            break;
         case "ERROR_MUSIQUE" :
             playlistManager.setMusiqueError(action.payload);
             break;

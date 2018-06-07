@@ -30,7 +30,6 @@ const App = () => (
     <MuiThemeProvider>
         <div className="App">
             <Favicon url="https://cdn0.iconfinder.com/data/icons/pack-web-app-game/512/play-button-128.png" />
-            <WebSocketClient/>
             <Header/>
             <MainWrapper>
                 <Route exact path="/" component={ListeMusique}/>

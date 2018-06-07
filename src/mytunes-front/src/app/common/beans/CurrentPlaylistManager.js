@@ -24,16 +24,20 @@ export default class CurrentPlaylistManager {
     }
 
     setMusiquePlaying(musiquePlaying, addMusique) {
-        if (addMusique && this.musiquePlaying) {
-            this.history.push(this.musiquePlaying);
-        } else {
-            this.history.pop();
+        if (this.musiquePlaying) {
+            if (addMusique) {
+                this.history.push(this.musiquePlaying);
+            } else {
+                this.history.pop();
+            }
         }
 
         this.musiquePlaying = musiquePlaying;
 
-        this.musiques.filter(musique => musiquePlaying.id === musique.id)
-            .forEach(musique => musique.alreadyPlayed = true);
+        if (this.musiquePlaying) {
+            this.musiques.filter(musique => musiquePlaying.id === musique.id)
+                .forEach(musique => musique.alreadyPlayed = true);
+        }
     }
 
     setMusiqueError(musiqueError) {

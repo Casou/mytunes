@@ -43,6 +43,7 @@ Liste par genre :
 Général
     [x] Sortir d'un loading infini
     [x] Local storage pour le playlistManager
+    [ ] Reload de la page
     [ ] Communications WebSockets pour les fonctions de base (lecture, pause, suivant, volume)
     [ ] Pouvoir confirmer les confirm dialog via la touche "Entrée"
     [ ] Gestion des logs Front et Back

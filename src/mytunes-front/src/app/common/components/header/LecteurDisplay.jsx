@@ -34,9 +34,11 @@ class LecteurDisplay extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.musique !== nextProps.musique) {
             this._pause();
-            this.audioSource.src = __SERVER_URL__ + nextProps.musique.path;
-            this.audio.load();
-            this._play();
+            if (nextProps.musique) {
+                this.audioSource.src = __SERVER_URL__ + nextProps.musique.path;
+                this.audio.load();
+                this._play();
+            }
         }
         if (this.props.volume !== nextProps.volume) {
             this.audio.volume = nextProps.volume;
@@ -51,24 +53,24 @@ class LecteurDisplay extends React.Component {
             <div id="lecteurDiv">
                 <div id="lecteurAction">
                     <PrevButton
-                        isEnabled={ true }
+                        isEnabled={ this.props.musique ? true : false }
                         onClick={ this.props.playPrevSong }
                     />
                     {
                         isPlaying ?
                         <PauseButton
-                            isEnabled={ true }
+                            isEnabled={ this.props.musique ? true : false }
                             onClick={() => this._pause() }
                         />
                         :
                         <PlayButton
-                            isEnabled={ true }
+                            isEnabled={ this.props.musique ? true : false }
                             onClick={() => this._play() }
                         />
                     }
 
                     <NextButton
-                        isEnabled={ true }
+                        isEnabled={ this.props.musique ? true : false }
                         onClick={ this.props.playNextSong }
                     />
                 </div>
@@ -111,6 +113,12 @@ class LecteurDisplay extends React.Component {
     }
 
     _updateCurrentTime(time) {
+        const { onUpdatePlayTime } = this.props;
+
+        if (onUpdatePlayTime) {
+            onUpdatePlayTime(time);
+        }
+
         this.setState({
             ...this.state,
             currentTime : time
@@ -123,6 +131,12 @@ class LecteurDisplay extends React.Component {
     }
 
     _play() {
+        const { onPlaySong, musique } = this.props;
+
+        if (onPlaySong) {
+            onPlaySong(musique);
+        }
+
         this.audio.play();
         this.setState({
             ...this.state,
@@ -142,7 +156,7 @@ class LecteurDisplay extends React.Component {
         const { musique, playNextSong, onSongError } = this.props;
         if (musique) {
             NotificationManager.error("Erreur lors du chargement de la chanson " + musique.titre);
-            console.error("Erreur lors du chargement de la chanson " + musique.titre, e);
+            console.error("Erreur lors du chargement de la chanson '" + musique.titre + "'");
             onSongError(musique);
             playNextSong();
         }
@@ -156,7 +170,10 @@ LecteurDisplay.propTypes = {
     onSongEnd : PropTypes.func.isRequired,
     onSongError : PropTypes.func.isRequired,
     playNextSong : PropTypes.func.isRequired,
-    playPrevSong : PropTypes.func.isRequired
+    playPrevSong : PropTypes.func.isRequired,
+    onPlaySong : PropTypes.func,
+    onUpdatePlayTime : PropTypes.func,
+    wsClient : PropTypes.object
 };
 
 export default LecteurDisplay;

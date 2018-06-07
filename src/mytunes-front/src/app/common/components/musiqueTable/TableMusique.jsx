@@ -75,6 +75,7 @@ class TableMusique extends React.Component {
                     { filteredMusiqueRenderers.length } musique{ filteredMusiqueRenderers.length > 1 ? "s" : "" }
                     &nbsp;-&nbsp;Durée totale : { formateDuree(filteredMusiqueRenderers.map(musiqueRenderer => musiqueRenderer.musique.duree).sum()) }
                 </StateBar>
+
             </section>
         );
     }
