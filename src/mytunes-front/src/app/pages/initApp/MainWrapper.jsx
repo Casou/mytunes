@@ -24,10 +24,11 @@ class MainWrapper extends React.Component {
     }
 
     render() {
+        const isLoading = !this._isApplicationLoaded(this.props);
         return (
             <main style={{position: 'relative'}}>
                 <Loading open={this.props.isLoading.general} onForceClose={this._forceCloseGeneralLoading.bind(this)} />
-                {this.props.isLoading.application ?
+                { isLoading ?
                     <RefreshIndicator
                         size={70}
                         left={-35}
@@ -46,7 +47,9 @@ class MainWrapper extends React.Component {
     _isApplicationLoaded(props) {
         return props.musiques && props.genres &&
             props.playlistProvider &&
-            props.playlistProvider.getPlaylists().length;
+            props.playlistProvider.getPlaylists().length &&
+            props.wsClient &&
+            props.wsClient.isConnected();
     }
 
     _forceCloseGeneralLoading() {
@@ -58,7 +61,8 @@ export default connect(state => assign({}, {
     musiques: state.musiques,
     genres: state.genres,
     playlistProvider: state.playlistProvider,
-    isLoading: state.isLoading
+    isLoading: state.isLoading,
+    wsClient: state.wsClient
 }),
 dispatch => ({
     musiquesActions: bindActionCreators(MusiquesActions, dispatch),

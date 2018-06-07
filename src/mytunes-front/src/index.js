@@ -25,7 +25,8 @@ const initialStore = {
         new CurrentPlaylistManager(JSON.parse(localStorage.getItem(__LOCAL_STORAGE__PLAYLIST_MANAGER__))) :
         new CurrentPlaylistManager(),
     // playlistManager : new CurrentPlaylistManager(),
-    playlistProvider : new PlaylistProvider([])
+    playlistProvider : new PlaylistProvider([]),
+    wsClient: null
 };
 const store = createStore(reducers, initialStore,
     composeWithDevTools(applyMiddleware(thunk)));

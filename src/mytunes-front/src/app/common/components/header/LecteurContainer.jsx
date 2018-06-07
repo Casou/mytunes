@@ -7,7 +7,7 @@ import {bindActionCreators} from "redux";
 import {playlistManagerPropType} from "../../types/PlaylistMusiqueType";
 import LecteurDisplay from "./LecteurDisplay";
 import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
-import WebSocketClient from "../websocket/WebSocketClient";
+import WebSocketClient_save from "../websocket/WebSocketClient_save";
 
 class LecteurContainer extends React.Component {
     constructor(props) {
@@ -27,7 +27,17 @@ class LecteurContainer extends React.Component {
         this._onPauseSong = this._onPauseSong.bind(this);
         this._onUpdatePlayTime = this._onUpdatePlayTime.bind(this);
 
-        this.wsClient = null;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
+            console.log("connecting", nextProps.wsClient);
+            nextProps.wsClient.subscribe("/topic/lecteur/status", (response) => this._logStatus(response.status));
+        }
+    }
+
+    _logStatus(status) {
+        console.log("status", status);
     }
 
     render() {
@@ -45,12 +55,10 @@ class LecteurContainer extends React.Component {
                                 onSongError={ this._songError }
                                 onPlaySong={ this._onPlaySong }
                                 onUpdatePlayTime={ this._onUpdatePlayTime }
-                                wsClient={ this.wsClient }
+                                wsClient={ this.props.wsClient }
                 />
                 <AsideVolumeSlider volume={volume}
                                    onVolumeChange={ this._updateVolume } />
-                <WebSocketClient ref={ (instance) => { this.wsClient = instance }}
-                                 topics={['/topic/lecteur/play', '/topic/lecteur/time']} />
             </section>
         );
     }
@@ -60,19 +68,19 @@ class LecteurContainer extends React.Component {
     }
 
     _onPlaySong(musique) {
-        if (this.wsClient) {
-            this.wsClient.send("/app/action/lecteur/play", musique);
+        if (this.props.wsClient) {
+            this.props.wsClient.send("/app/action/lecteur/play", musique);
         }
     }
     _onPauseSong() {
-        if (this.wsClient) {
-            this.wsClient.send("/app/action/lecteur/pause", {});
+        if (this.props.wsClient) {
+            this.props.wsClient.send("/app/action/lecteur/pause", {});
         }
     }
 
     _onUpdatePlayTime(time) {
-        if (this.wsClient) {
-            this.wsClient.send("/app/action/lecteur/updateTime", { time });
+        if (this.props.wsClient) {
+            this.props.wsClient.send("/app/action/lecteur/updateTime", { time });
         }
     }
 
@@ -103,7 +111,8 @@ LecteurContainer.propTypes = {
 };
 
 export default connect(state => assign({}, {
-    playlistManager: state.playlistManager
+    playlistManager: state.playlistManager,
+    wsClient: state.wsClient
 }), dispatch => ({
     playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
 }))(LecteurContainer);
