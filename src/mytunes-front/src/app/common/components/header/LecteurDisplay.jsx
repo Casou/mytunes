@@ -153,6 +153,12 @@ class LecteurDisplay extends React.Component {
     }
 
     _pause() {
+        const { onPauseSong } = this.props;
+
+        if (onPauseSong) {
+            onPauseSong();
+        }
+
         this.audio.pause();
         this.setState({
             ...this.state,
@@ -180,6 +186,7 @@ LecteurDisplay.propTypes = {
     playNextSong : PropTypes.func.isRequired,
     playPrevSong : PropTypes.func.isRequired,
     onPlaySong : PropTypes.func,
+    onPauseSong : PropTypes.func,
     onUpdatePlayTime : PropTypes.func,
     wsClient : PropTypes.object
 };

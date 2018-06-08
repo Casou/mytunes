@@ -42,6 +42,7 @@ class LecteurContainer extends React.Component {
                                 onSongEnd={ this._playNextSong }
                                 onSongError={ this._songError }
                                 onPlaySong={ this._onPlaySong }
+                                onPauseSong={ this._onPauseSong }
                                 onUpdatePlayTime={ this._onUpdatePlayTime }
                                 wsClient={ this.props.wsClient }
                 />
