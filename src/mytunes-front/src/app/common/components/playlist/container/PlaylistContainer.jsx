@@ -12,8 +12,9 @@ import PlaylistSortableList from "../components/PlaylistSortableList";
 import {musiquePropType} from "../../../types/MusiqueType";
 import PlaylistsActions from "../../../../pages/savedPlaylists/actions/PlaylistsActions";
 import LoadingActions from "../../../actions/LoadingActions";
+import WebSocketConnectedComponent from "../../websocket/WebSocketConnectedComponent";
 
-class PlaylistContainer extends React.Component {
+class PlaylistContainer extends WebSocketConnectedComponent {
 
     constructor(props) {
         super(props);
@@ -23,7 +24,11 @@ class PlaylistContainer extends React.Component {
         this._sortEnd = this._sortEnd.bind(this);
         this._changePlaylistName = this._changePlaylistName.bind(this);
         this._newPlaylist = this._newPlaylist.bind(this);
+
+        this._setComponentName("PlaylistContainer");
+        this._addSubscription("/topic/lecteur/play", (response) => this._playMusiqueCallback(response));
     }
+
 
     render() {
         const { playlistManager, playlistProvider } = this.props;
@@ -56,6 +61,12 @@ class PlaylistContainer extends React.Component {
 
     _playMusique(musique, event) {
         event.preventDefault();
+        console.log("PlaylistContainer _playMusique");
+        this.props.wsClient.send("/app/action/lecteur/play", musique);
+    }
+
+    _playMusiqueCallback(musique) {
+        console.log("callback", musique);
         this.props.playlistManagerActions.playMusique(musique, true);
     }
 
@@ -120,13 +131,15 @@ class PlaylistContainer extends React.Component {
 PlaylistContainer.propTypes = {
     playlistManager: playlistManagerPropType.isRequired,
     playlistProvider : PropTypes.object.isRequired,
-    musiques : PropTypes.arrayOf(musiquePropType)
+    musiques : PropTypes.arrayOf(musiquePropType),
+    wsClient : PropTypes.object
 };
 
 export default connect(state => assign({}, {
     playlistManager: state.playlistManager,
     playlistProvider: state.playlistProvider,
-    musiques : state.musiques
+    musiques : state.musiques,
+    wsClient : state.wsClient
 }), dispatch => ({
     playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch),
     playlistsActions: bindActionCreators(PlaylistsActions, dispatch),

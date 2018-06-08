@@ -115,9 +115,9 @@ class WebSocketClient extends React.Component {
         }
     };
 
-    subscribe = (topic, callback) => {
-        if (!this.subscriptions.has(topic)) {
-            console.log("subscribe", topic);
+    subscribe = (topic, component, callback) => {
+        if (!this.subscriptions.has(topic  + component)) {
+            console.log("subscribe for " + topic  + component);
             let sub = this.client.subscribe(topic, (msg) => {
                 const response = JSON.parse(msg.body);
                 this.props.onMessage(response, topic);
@@ -125,20 +125,22 @@ class WebSocketClient extends React.Component {
                     callback(response);
                 }
             }, Lo.slice(this.props.subscribeHeaders));
-            this.subscriptions.set(topic, sub);
+            this.subscriptions.set(topic + component, sub);
+        } else {
+            console.warn("already subscribed for " + topic  + component);
         }
     };
 
-    unsubscribe = (topic) => {
-        let sub = this.subscriptions.get(topic);
+    unsubscribe = (topic, component) => {
+        let sub = this.subscriptions.get(topic + component);
         sub.unsubscribe();
-        this.subscriptions.delete(topic);
+        this.subscriptions.delete(topic + component);
     };
 
     // Below methods can be accessed by ref attribute from the parent component
-    sendMessage = (topic, msg, opt_headers = {}) => {
+    send = (topic, objectParameter, opt_headers = {}) => {
         if (this.state.connected) {
-            this.client.send(topic, opt_headers, msg);
+            this.client.send(topic, opt_headers, JSON.stringify(objectParameter));
         } else {
             console.error("Send error: WebSocketClient is disconnected");
         }

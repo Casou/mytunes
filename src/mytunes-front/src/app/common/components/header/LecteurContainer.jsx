@@ -7,7 +7,6 @@ import {bindActionCreators} from "redux";
 import {playlistManagerPropType} from "../../types/PlaylistMusiqueType";
 import LecteurDisplay from "./LecteurDisplay";
 import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
-import WebSocketClient_save from "../websocket/WebSocketClient_save";
 
 class LecteurContainer extends React.Component {
     constructor(props) {
@@ -27,17 +26,6 @@ class LecteurContainer extends React.Component {
         this._onPauseSong = this._onPauseSong.bind(this);
         this._onUpdatePlayTime = this._onUpdatePlayTime.bind(this);
 
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
-            console.log("connecting", nextProps.wsClient);
-            nextProps.wsClient.subscribe("/topic/lecteur/status", (response) => this._logStatus(response.status));
-        }
-    }
-
-    _logStatus(status) {
-        console.log("status", status);
     }
 
     render() {
@@ -69,6 +57,7 @@ class LecteurContainer extends React.Component {
 
     _onPlaySong(musique) {
         if (this.props.wsClient) {
+            console.log("LecteurContainer _onPlaySong");
             this.props.wsClient.send("/app/action/lecteur/play", musique);
         }
     }

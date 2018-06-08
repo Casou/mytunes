@@ -33,15 +33,13 @@ class LecteurDisplay extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.musique !== nextProps.musique) {
-            this._pause();
-            if (nextProps.musique) {
-                this.audioSource.src = __SERVER_URL__ + nextProps.musique.path;
-                this.audio.load();
-                this._play();
-            }
+            this._load(nextProps.musique);
         }
         if (this.props.volume !== nextProps.volume) {
             this.audio.volume = nextProps.volume;
+        }
+        if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
+            nextProps.wsClient.subscribe("/topic/lecteur/play", "LecteurDisplay", () => this._play(false));
         }
     }
 
@@ -102,7 +100,7 @@ class LecteurDisplay extends React.Component {
                 </div>
 
                 <audio id="lecteur" onTimeUpdate={ this._updateTime } onEnded={ onSongEnd }>
-                    <source id="lecteurSource" src=""></source>
+                    <source id="lecteurSource" src={ musique && __SERVER_URL__ + musique.path } ></source>
                 </audio>
             </div>
         );
@@ -130,10 +128,20 @@ class LecteurDisplay extends React.Component {
         this._updateCurrentTime(time);
     }
 
-    _play() {
+    _load(musique) {
+        this._pause();
+        if (musique) {
+            this.audioSource.src = __SERVER_URL__ + musique.path;
+            console.log("load " + __SERVER_URL__ + musique.path);
+            this.audio.load();
+            this._play(false);
+        }
+    }
+
+    _play(spreadParent = true) {
         const { onPlaySong, musique } = this.props;
 
-        if (onPlaySong) {
+        if (spreadParent && onPlaySong) {
             onPlaySong(musique);
         }
 
@@ -156,7 +164,7 @@ class LecteurDisplay extends React.Component {
         const { musique, playNextSong, onSongError } = this.props;
         if (musique) {
             NotificationManager.error("Erreur lors du chargement de la chanson " + musique.titre);
-            console.error("Erreur lors du chargement de la chanson '" + musique.titre + "'");
+            console.error("Erreur lors du chargement de la chanson '" + musique.titre + "'", musique.path);
             onSongError(musique);
             playNextSong();
         }

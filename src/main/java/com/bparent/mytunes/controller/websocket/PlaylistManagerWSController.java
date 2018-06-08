@@ -18,7 +18,7 @@ public class PlaylistManagerWSController {
             .build();
 
     @MessageMapping("/action/lecteur/play")
-    @SendTo("/topic/lecteur/status")
+    @SendTo("/topic/lecteur/play")
     public LecteurStatusDto playLecteur(MusiqueDTO musiqueDTO) {
         LECTEUR_STATUS.setMusique(musiqueDTO);
         LECTEUR_STATUS.setStatus(LecteurStatus.PLAY);
@@ -26,7 +26,7 @@ public class PlaylistManagerWSController {
     }
 
     @MessageMapping("/action/lecteur/pause")
-    @SendTo("/topic/lecteur/status")
+    @SendTo("/topic/lecteur/pause")
     public LecteurStatusDto pauseLecteur() {
         LECTEUR_STATUS.setStatus(LecteurStatus.PAUSE);
         return LECTEUR_STATUS;
