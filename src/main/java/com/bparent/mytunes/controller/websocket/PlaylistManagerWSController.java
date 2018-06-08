@@ -20,14 +20,19 @@ public class PlaylistManagerWSController {
     @MessageMapping("/action/lecteur/play")
     @SendTo("/topic/lecteur/play")
     public LecteurStatusDto playLecteur(MusiqueDTO musiqueDTO) {
-        LECTEUR_STATUS.setMusique(musiqueDTO);
+        if (musiqueDTO != null) {
+            LECTEUR_STATUS.setMusique(musiqueDTO);
+        }
         LECTEUR_STATUS.setStatus(LecteurStatus.PLAY);
         return LECTEUR_STATUS;
     }
 
     @MessageMapping("/action/lecteur/pause")
     @SendTo("/topic/lecteur/pause")
-    public LecteurStatusDto pauseLecteur() {
+    public LecteurStatusDto pauseLecteur(MusiqueDTO musiqueDTO) {
+        if (musiqueDTO != null) {
+            LECTEUR_STATUS.setMusique(musiqueDTO);
+        }
         LECTEUR_STATUS.setStatus(LecteurStatus.PAUSE);
         return LECTEUR_STATUS;
     }

@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import {connect} from "react-redux";
 import {assign} from "lodash";
-import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
-import LoadingActions from "../../actions/LoadingActions";
-import PlaylistsActions from "../../../pages/savedPlaylists/actions/PlaylistsActions";
 
 class WebSocketConnectedComponent extends React.Component {
 

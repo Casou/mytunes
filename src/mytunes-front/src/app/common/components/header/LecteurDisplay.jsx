@@ -29,6 +29,7 @@ class LecteurDisplay extends React.Component {
         this.audio = document.getElementById('lecteur');
         this.audioSource = document.getElementById('lecteurSource');
         this.audioSource.addEventListener("error", this._loadingError);
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -39,9 +40,13 @@ class LecteurDisplay extends React.Component {
             this.audio.volume = nextProps.volume;
         }
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
-            nextProps.wsClient.subscribe("/topic/lecteur/play", "LecteurDisplay", () => this._play(false));
+            nextProps.wsClient.subscribe("/topic/lecteur/play", "LecteurDisplay", () => this._playCallback(false));
+            nextProps.wsClient.subscribe("/topic/lecteur/pause", "LecteurDisplay", () => this._pauseCallback());
+
+            nextProps.wsClient.send("/app/action/lecteur/pause", nextProps.musique);
         }
     }
+
 
     render() {
         const { isPlaying, currentTime } = this.state;
@@ -129,22 +134,24 @@ class LecteurDisplay extends React.Component {
     }
 
     _load(musique) {
-        this._pause();
+        this._pauseCallback();
         if (musique) {
             this.audioSource.src = __SERVER_URL__ + musique.path;
             console.log("load " + __SERVER_URL__ + musique.path);
             this.audio.load();
-            this._play(false);
+            this._playCallback(false);
         }
     }
 
-    _play(spreadParent = true) {
+    _play() {
         const { onPlaySong, musique } = this.props;
 
-        if (spreadParent && onPlaySong) {
+        if (onPlaySong) {
             onPlaySong(musique);
         }
+    }
 
+    _playCallback() {
         this.audio.play();
         this.setState({
             ...this.state,
@@ -157,6 +164,14 @@ class LecteurDisplay extends React.Component {
 
         if (onPauseSong) {
             onPauseSong();
+        }
+    }
+
+    _pauseCallback() {
+        const isPlaying = this.audio.currentTime > 0 && !this.audio.paused && !this.audio.ended
+            && this.audio.readyState > 2;
+        if (!isPlaying) {
+            return;
         }
 
         this.audio.pause();

@@ -58,7 +58,6 @@ class LecteurContainer extends React.Component {
 
     _onPlaySong(musique) {
         if (this.props.wsClient) {
-            console.log("LecteurContainer _onPlaySong");
             this.props.wsClient.send("/app/action/lecteur/play", musique);
         }
     }

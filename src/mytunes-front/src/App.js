@@ -48,7 +48,7 @@ class App extends React.Component {
                     <WebSocketClient url={ __WEBSOCKET_URL__ }
                                      onConnect={ this._subscribe }
                                      onMessage={ this._handleMessage }
-                                     debug={ false }
+                                     debug={ true }
                                      ref={ (client) => { this.wsClient = client }} />
                     <Header/>
                     <MainWrapper>
@@ -66,8 +66,6 @@ class App extends React.Component {
 
     _subscribe() {
         this.props.webSocketActions.setWsClient(this.wsClient);
-        // this.wsClient.subscribe("/topic/lecteur/status", (response) => this._logStatus(JSON.parse(response.status)));
-        // this.wsClient.subscribe("/topic/lecteur/status", (response) => this._logStatus(response.status));
     }
 
     _handleMessage(message, topic) {
