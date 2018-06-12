@@ -21,7 +21,8 @@ class LecteurContainer extends React.Component {
         this._updateVolume = this._updateVolume.bind(this);
         this._playNextSongWS = this._playNextSongWS.bind(this);
         this._playNextSongCallback = this._playNextSongCallback.bind(this);
-        this._playPrevSong = this._playPrevSong.bind(this);
+        this._playPrevSongWS = this._playPrevSongWS.bind(this);
+        this._playPrevSongCallback = this._playPrevSongCallback.bind(this);
         this._songError = this._songError.bind(this);
         this._onPlaySong = this._onPlaySong.bind(this);
         this._onPauseSong = this._onPauseSong.bind(this);
@@ -33,6 +34,8 @@ class LecteurContainer extends React.Component {
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
             nextProps.wsClient.subscribe("/topic/lecteur/playNextSong", "LecteurContainer",
                 (response) => this._playNextSongCallback(response.musique));
+            nextProps.wsClient.subscribe("/topic/lecteur/playPrevSong", "LecteurContainer",
+                (response) => this._playPrevSongCallback(response.musique));
         }
     }
 
@@ -46,7 +49,7 @@ class LecteurContainer extends React.Component {
                 <LecteurDisplay musique={ musique }
                                 volume={ volume }
                                 onPlayNextSong={ this._playNextSongWS }
-                                playPrevSong={ this._playPrevSong }
+                                playPrevSong={ this._playPrevSongWS }
                                 onSongEnd={ this._playNextSongWS }
                                 onSongError={ this._songError }
                                 onPlaySong={ this._onPlaySong }
@@ -96,8 +99,14 @@ class LecteurContainer extends React.Component {
         }
     }
 
-    _playPrevSong() {
-        const prevSong = this.props.playlistManager.getPrevSong();
+    _playPrevSongWS() {
+        if (this.props.wsClient) {
+            const prevSong = this.props.playlistManager.getPrevSong();
+            this.props.wsClient.send("/app/action/lecteur/playPrevSong", { musique : prevSong });
+        }
+    }
+
+    _playPrevSongCallback(prevSong) {
         if (prevSong) {
             this.props.playlistManagerActions.playMusique(prevSong, false);
         }

@@ -50,4 +50,11 @@ public class PlaylistManagerWSController {
         return LECTEUR_STATUS;
     }
 
+    @MessageMapping("/action/lecteur/playPrevSong")
+    @SendTo("/topic/lecteur/playPrevSong")
+    public LecteurStatusDto playPrevSong(LecteurStatusDto musiqueDTO) {
+        LECTEUR_STATUS.setMusique(musiqueDTO.getMusique());
+        return LECTEUR_STATUS;
+    }
+
 }
