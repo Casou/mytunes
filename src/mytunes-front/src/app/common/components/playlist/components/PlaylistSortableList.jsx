@@ -6,13 +6,14 @@ import {musiquePropType} from "../../../types/MusiqueType";
 
 const PlaylistSortableList = SortableContainer((props) => {
     const { musiques, musiquePlaying, playMusique, deleteMusique } = props;
+
     return (
         <ul>
             {musiques.map((musique, index) => (
                 <PlaylistItem key={`item-${index}`}
                               index={index}
                               musique={musique}
-                              isPlaying={musique === musiquePlaying}
+                              isPlaying={musiquePlaying && musique.uniqueId === musiquePlaying.uniqueId}
                               playMusique={playMusique}
                               deleteMusique={deleteMusique}
                 />

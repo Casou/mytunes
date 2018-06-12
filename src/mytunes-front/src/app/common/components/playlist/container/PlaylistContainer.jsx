@@ -61,12 +61,10 @@ class PlaylistContainer extends WebSocketConnectedComponent {
 
     _playMusique(musique, event) {
         event.preventDefault();
-        console.log("PlaylistContainer _playMusique");
         this.props.wsClient.send("/app/action/lecteur/play", musique);
     }
 
     _playMusiqueCallback(musique) {
-        console.log("callback", musique);
         this.props.playlistManagerActions.playMusique(musique, true);
     }
 

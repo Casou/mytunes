@@ -31,6 +31,7 @@ public class MusiqueDTO extends EntityDTO<Musique> {
     private Integer classement;
     private String commentaire;
     private String path;
+    private Integer uniqueId;
 
     public static MusiqueDTO toDto(Musique musique) {
         ModelMapper mapper = new ModelMapper();

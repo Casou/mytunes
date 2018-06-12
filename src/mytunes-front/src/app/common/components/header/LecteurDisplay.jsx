@@ -17,8 +17,8 @@ class LecteurDisplay extends React.Component {
         this.audio = null;
         this.audioSource = null;
 
-        this._play = this._play.bind(this);
-        this._pause = this._pause.bind(this);
+        this._playWS = this._playWS.bind(this);
+        this._pauseWS = this._pauseWS.bind(this);
         this._seek = this._seek.bind(this);
         this._updateTime = this._updateTime.bind(this);
         this._updateCurrentTime = this._updateCurrentTime.bind(this);
@@ -63,18 +63,18 @@ class LecteurDisplay extends React.Component {
                         isPlaying ?
                         <PauseButton
                             isEnabled={ this.props.musique ? true : false }
-                            onClick={() => this._pause() }
+                            onClick={() => this._pauseWS() }
                         />
                         :
                         <PlayButton
                             isEnabled={ this.props.musique ? true : false }
-                            onClick={() => this._play() }
+                            onClick={() => this._playWS() }
                         />
                     }
 
                     <NextButton
                         isEnabled={ this.props.musique ? true : false }
-                        onClick={ this.props.playNextSong }
+                        onClick={ this.props.onPlayNextSong }
                     />
                 </div>
                 <div id="lecteurDisplay">
@@ -137,13 +137,12 @@ class LecteurDisplay extends React.Component {
         this._pauseCallback();
         if (musique) {
             this.audioSource.src = __SERVER_URL__ + musique.path;
-            console.log("load " + __SERVER_URL__ + musique.path);
             this.audio.load();
             this._playCallback(false);
         }
     }
 
-    _play() {
+    _playWS() {
         const { onPlaySong, musique } = this.props;
 
         if (onPlaySong) {
@@ -159,7 +158,7 @@ class LecteurDisplay extends React.Component {
         });
     }
 
-    _pause() {
+    _pauseWS() {
         const { onPauseSong } = this.props;
 
         if (onPauseSong) {
@@ -182,12 +181,12 @@ class LecteurDisplay extends React.Component {
     }
 
     _loadingError(e) {
-        const { musique, playNextSong, onSongError } = this.props;
+        const { musique, onPlayNextSong, onSongError } = this.props;
         if (musique) {
             NotificationManager.error("Erreur lors du chargement de la chanson " + musique.titre);
             console.error("Erreur lors du chargement de la chanson '" + musique.titre + "'", musique.path);
             onSongError(musique);
-            playNextSong();
+            onPlayNextSong();
         }
     }
 
@@ -198,7 +197,7 @@ LecteurDisplay.propTypes = {
     volume : PropTypes.number.isRequired,
     onSongEnd : PropTypes.func.isRequired,
     onSongError : PropTypes.func.isRequired,
-    playNextSong : PropTypes.func.isRequired,
+    onPlayNextSong : PropTypes.func.isRequired,
     playPrevSong : PropTypes.func.isRequired,
     onPlaySong : PropTypes.func,
     onPauseSong : PropTypes.func,

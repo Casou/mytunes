@@ -48,7 +48,7 @@ class App extends React.Component {
                     <WebSocketClient url={ __WEBSOCKET_URL__ }
                                      onConnect={ this._subscribe }
                                      onMessage={ this._handleMessage }
-                                     debug={ true }
+                                     debug={ false }
                                      ref={ (client) => { this.wsClient = client }} />
                     <Header/>
                     <MainWrapper>

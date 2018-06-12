@@ -1,6 +1,7 @@
 import {NotificationManager} from "react-notifications";
 import ObjectUtil from "../util/ObjectUtil";
 import {__LOCAL_STORAGE__PLAYLIST_MANAGER__} from "../../../App";
+import {randomId} from "../util/Common";
 
 export const playlistManager = (state = {}, action) => {
     let playlistManager = state;
@@ -8,7 +9,7 @@ export const playlistManager = (state = {}, action) => {
         case "ADD_MUSIQUE_TO_PLAYLIST" :
             const newMusique = action.payload;
             const alreadyPresent = playlistManager.musiques.map(musique => musique.id).includes(newMusique.id);
-            playlistManager.addMusique({...newMusique, alreadyPlayed: false});
+            playlistManager.addMusique(_mapMusique(newMusique));
             if (alreadyPresent) {
                 NotificationManager.warning("Musique " + newMusique.titre + " déjà présent dans la playlist", "Playlist", 2000);
             } else {
@@ -34,7 +35,9 @@ export const playlistManager = (state = {}, action) => {
             playlistManager = playlistManager.reorderMusique(action.payload.oldIndex, action.payload.newIndex);
             break;
         case "LOAD_PLAYLIST" :
-            playlistManager.loadPlaylist(action.payload.playlist, action.payload.musiques);
+            playlistManager.loadPlaylist(
+                action.payload.playlist,
+                action.payload.musiques.map(_mapMusique));
             break;
         case "NEW_PLAYLIST" :
             playlistManager.newPlaylist();
@@ -59,3 +62,7 @@ export const playlistManager = (state = {}, action) => {
         }));
     return newState;
 };
+
+function _mapMusique(musique) {
+    return {...musique, uniqueId : randomId(), alreadyPlayed: false};
+}

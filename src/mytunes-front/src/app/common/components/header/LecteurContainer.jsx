@@ -19,13 +19,21 @@ class LecteurContainer extends React.Component {
         };
 
         this._updateVolume = this._updateVolume.bind(this);
-        this._playNextSong = this._playNextSong.bind(this);
+        this._playNextSongWS = this._playNextSongWS.bind(this);
+        this._playNextSongCallback = this._playNextSongCallback.bind(this);
         this._playPrevSong = this._playPrevSong.bind(this);
         this._songError = this._songError.bind(this);
         this._onPlaySong = this._onPlaySong.bind(this);
         this._onPauseSong = this._onPauseSong.bind(this);
         this._onUpdatePlayTime = this._onUpdatePlayTime.bind(this);
 
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
+            nextProps.wsClient.subscribe("/topic/lecteur/playNextSong", "LecteurContainer",
+                (response) => this._playNextSongCallback(response.musique));
+        }
     }
 
     render() {
@@ -37,9 +45,9 @@ class LecteurContainer extends React.Component {
             <section id="lecteurWrapper">
                 <LecteurDisplay musique={ musique }
                                 volume={ volume }
-                                playNextSong={ this._playNextSong }
+                                onPlayNextSong={ this._playNextSongWS }
                                 playPrevSong={ this._playPrevSong }
-                                onSongEnd={ this._playNextSong }
+                                onSongEnd={ this._playNextSongWS }
                                 onSongError={ this._songError }
                                 onPlaySong={ this._onPlaySong }
                                 onPauseSong={ this._onPauseSong }
@@ -73,8 +81,14 @@ class LecteurContainer extends React.Component {
         }
     }
 
-    _playNextSong() {
-        const nextSong = this.props.playlistManager.getNextSong();
+    _playNextSongWS() {
+        if (this.props.wsClient) {
+            const nextSong = this.props.playlistManager.getNextSong();
+            this.props.wsClient.send("/app/action/lecteur/playNextSong", { musique : nextSong });
+        }
+    }
+
+    _playNextSongCallback(nextSong) {
         if (nextSong) {
             this.props.playlistManagerActions.playMusique(nextSong, true);
         } else {

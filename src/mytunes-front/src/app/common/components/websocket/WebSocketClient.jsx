@@ -117,7 +117,6 @@ class WebSocketClient extends React.Component {
 
     subscribe = (topic, component, callback) => {
         if (!this.subscriptions.has(topic  + component)) {
-            console.log("subscribe for " + topic  + component);
             let sub = this.client.subscribe(topic, (msg) => {
                 const response = JSON.parse(msg.body);
                 this.props.onMessage(response, topic);
