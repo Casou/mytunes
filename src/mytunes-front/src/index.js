@@ -7,7 +7,7 @@ import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from "redux";
 import reducers from "./app/reducers";
 import thunk from "redux-thunk";
-import {BrowserRouter} from "react-router-dom"
+import {BrowserRouter, Route} from "react-router-dom"
 
 import {composeWithDevTools} from 'redux-devtools-extension';
 
@@ -32,12 +32,10 @@ const store = createStore(reducers, initialStore,
     composeWithDevTools(applyMiddleware(thunk)));
 // compose(applyMiddleware(thunk), window.devToolsExtension && window.devToolsExtension()));
 
-document.title="Mytunes";
-
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <App/>
+            <Route component={App} />
         </BrowserRouter>
     </Provider>, document.getElementById('root'));
 registerServiceWorker();

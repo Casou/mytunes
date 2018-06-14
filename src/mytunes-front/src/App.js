@@ -5,22 +5,18 @@ import './style/components/header.css';
 import './style/material-icons.css';
 import 'react-notifications/lib/notifications.css';
 
-import Header from "./app/common/components/header/Header";
 import {bindActionCreators} from "redux";
-import MainWrapper from "./app/pages/initApp/MainWrapper";
+
 import {MuiThemeProvider} from "material-ui";
-import {NotificationContainer} from "react-notifications";
-import Favicon from 'react-favicon';
+
 import {connect} from "react-redux";
 import {assign} from "lodash";
 
 import {Route} from "react-router-dom";
-import ListeMusique from "./app/pages/listeMusique/containers/ListeMusique";
-import ListeGenres from "./app/pages/listeGenres/containers/ListeGenres";
-import SavedPlaylists from "./app/pages/savedPlaylists/container/SavedPlaylists";
-import Parametres from "./app/pages/parametres/Parametres";
 import WebSocketClient from "./app/common/components/websocket/WebSocketClient";
 import WebSocketActions from "./app/common/actions/WebSocketActions";
+import DesktopWrapper from "./app/pages/initApp/DesktopWrapper";
+import MobileWrapper from "./app/pages/mobile/MobileWrapper";
 
 const __BASIC_URL__ = "localhost:8000/";
 export const __SERVER_URL__ = "http://" + __BASIC_URL__;
@@ -43,22 +39,15 @@ class App extends React.Component {
     render() {
         return (
             <MuiThemeProvider>
-                <div className="App">
-                    <Favicon url="https://cdn0.iconfinder.com/data/icons/pack-web-app-game/512/play-button-128.png"/>
+                <div>
                     <WebSocketClient url={ __WEBSOCKET_URL__ }
                                      onConnect={ this._subscribe }
                                      onMessage={ this._handleMessage }
                                      debug={ false }
                                      ref={ (client) => { this.wsClient = client }} />
-                    <Header/>
-                    <MainWrapper>
-                        <Route exact path="/" component={ListeMusique}/>
-                        <Route exact path="/musiques" component={ListeMusique}/>
-                        <Route exact path="/genres/:genreId?" component={ListeGenres}/>
-                        <Route exact path="/playlists/:playlistId?" component={SavedPlaylists}/>
-                        <Route exact path="/parametres" component={Parametres}/>
-                    </MainWrapper>
-                    <NotificationContainer/>
+
+                    <Route path="/desktop" component={DesktopWrapper}/>
+                    <Route path="/mobile" component={MobileWrapper}/>
                 </div>
             </MuiThemeProvider>
         );

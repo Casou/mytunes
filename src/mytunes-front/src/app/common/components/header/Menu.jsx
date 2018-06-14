@@ -44,16 +44,16 @@ export default class Menu extends React.Component {
           className={ "mainMenu menuDrawer" }
           onRequestChange={ this.setMenuOpeness }
         >
-          <MenuItem containerElement={<Link to="/musiques" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to="/desktop/musiques" />} onClick={ this.closeMenu }>
             <FontIcon className="material-icons">library_music</FontIcon>
             Liste musiques
           </MenuItem>
-          <MenuItem containerElement={<Link to="/genres" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to="/desktop/genres" />} onClick={ this.closeMenu }>
             <FontIcon className="material-icons">view_module</FontIcon>
             Liste par genre
           </MenuItem>
           <Divider />
-          <MenuItem containerElement={<Link to="/playlists" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to="/desktop/playlists" />} onClick={ this.closeMenu }>
               <FontIcon className="material-icons">list</FontIcon>
               Playlists
           </MenuItem>
@@ -67,7 +67,7 @@ export default class Menu extends React.Component {
                 Import / export
             </MenuItem>
           <Divider />
-          <MenuItem containerElement={<Link to="/parametres" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to="/desktop/parametres" />} onClick={ this.closeMenu }>
               <FontIcon className="material-icons">settings</FontIcon>
               Paramètres
           </MenuItem>
