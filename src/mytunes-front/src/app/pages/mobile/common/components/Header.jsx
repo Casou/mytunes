@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Toolbar, ToolbarButton, Icon } from 'react-onsenui';
+import { Toolbar, ToolbarButton, Icon, Switch } from 'react-onsenui';
 
 const Header = (props) => {
     return (
@@ -11,6 +11,9 @@ const Header = (props) => {
                 </ToolbarButton>
             </div>
             <div className='center'>Mytunes</div>
+            <div className='right'>
+                <Switch />
+            </div>
         </Toolbar>
     );
 }

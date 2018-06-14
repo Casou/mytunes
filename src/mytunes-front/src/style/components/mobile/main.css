@@ -8,6 +8,18 @@
     float : left;
 }
 
+.toolbar__title {
+    text-align : center;
+}
+
+.toolbar__right {
+    text-align : right;
+}
+
+.switch {
+    vertical-align: middle;
+}
+
 #volumeSlider {
     width : 20%;
     float : right;
@@ -18,7 +30,39 @@
 
 .bottom-bar {
     box-shadow : 0 -1px 5px rgba(0, 0, 0, .3);
+    height : 55px;
 }
 
-.range--material {
+.bottom-bar .button--material {
+    height : 100%;
+}
+
+.zmdi {
+    height : 55px;
+    line-height : 55px;
+}
+
+.zmdi:before {
+    font-size: 30px;
+    color: black;
+    vertical-align: middle;
+}
+
+div#bottomPlayerSlider {
+    display : inline-block;
+    height: 100%;
+    vertical-align: top;
+}
+
+div#bottomPlayerSlider label {
+    float : left;
+    width : 100%;
+    text-align : center;
+    font-size : 12px;
+    line-height: 20px;
+}
+div#bottomPlayerSlider .range--material {
+    float : left;
+    // vertical-align: middle;
+    width : 100%;
 }
