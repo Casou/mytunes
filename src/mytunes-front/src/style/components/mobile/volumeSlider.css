@@ -1,0 +1,13 @@
+#volumeSlider {
+    position : fixed;
+    top : 56px;
+    height: calc(100% - 111px);
+    width : 20%;
+    right : 0;
+
+    vertical-align: top;
+
+    z-index : 9999;
+    box-shadow : 0 1px 5px rgba(0, 0, 0, .3);
+    background-color : #FFF;
+}

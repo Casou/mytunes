@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Toolbar, ToolbarButton, Icon, Switch } from 'react-onsenui';
+import '../../../../../style/components/mobile/header.css';
 
 const Header = (props) => {
     return (

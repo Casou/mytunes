@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BottomToolbar, Button, Icon, Range } from 'react-onsenui';
+import '../../../../../style/components/mobile/footer.css';
 
 const Footer = (props) => {
     return (
