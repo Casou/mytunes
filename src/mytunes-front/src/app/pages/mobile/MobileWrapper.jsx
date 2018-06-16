@@ -8,6 +8,7 @@ import Footer from "./common/components/Footer";
 
 import "../../../style/components/mobile/main.css";
 import Menu from "./common/components/Menu";
+import VolumeSlider from "./common/components/VolumeSlider";
 
 class MobileWrapper extends React.Component {
 
@@ -44,11 +45,7 @@ class MobileWrapper extends React.Component {
                             <Button onClick={this._handleClick}>Push button</Button>
                         </section>
 
-                        <section id={"volumeSlider"}>
-                            <div className="rangeSlider">
-                                <input type={"range"} orient="vertical" min={0} max={100} defaultValue={75} />
-                            </div>
-                        </section>
+                        <VolumeSlider />
                     </Page>
                 </SplitterContent>
             </Splitter>
