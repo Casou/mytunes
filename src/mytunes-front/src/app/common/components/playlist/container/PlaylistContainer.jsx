@@ -26,7 +26,7 @@ class PlaylistContainer extends WebSocketConnectedComponent {
         this._newPlaylist = this._newPlaylist.bind(this);
 
         this._setComponentName("PlaylistContainer");
-        this._addSubscription("/topic/lecteur/play", (response) => this._playMusiqueCallback(response));
+        this._addSubscription("/topic/lecteur/play", (response) => this._playMusiqueCallback(response.musique));
     }
 
 

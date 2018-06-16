@@ -33,7 +33,11 @@ class LecteurDisplay extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.musique !== nextProps.musique) {
+        if ((!this.props.musique && nextProps.musique) ||
+                (this.props.musique && nextProps.musique &&
+                    this.props.musique.uniqueId !== nextProps.musique.uniqueId)
+            ) {
+            console.log("load", this.props.musique, nextProps.musique);
             this._load(nextProps.musique);
         }
         if (this.props.volume !== nextProps.volume) {

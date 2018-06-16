@@ -19,8 +19,13 @@ class Footer extends WebSocketConnectedComponent {
     constructor(props) {
         super(props);
 
+        this._playMusique = this._playMusique.bind(this);
+        this._pauseMusique = this._pauseMusique.bind(this);
+
         this._setComponentName("MobileFooter");
-        this._addSubscription("/topic/lecteur/play", (response) => this._playMusiqueCallback(response));
+        this._addSubscription("/topic/lecteur/play", (response) => this._playMusiqueCallback(response.musique));
+        this._addSubscription("/topic/lecteur/pause", () => this._pauseMusiqueCallback());
+        this._addSubscription("/topic/lecteur/time", (response) => this._timerMusiqueCallback(response));
     }
 
     componentDidMount() {
@@ -36,13 +41,16 @@ class Footer extends WebSocketConnectedComponent {
 
         return (
             <BottomToolbar aligned={"center"} modifier="material">
-                <Button modifier="quiet">
-                    {
-                        isPlaying ?
-                        <Icon icon={"md-pause"} />
-                        : <Icon icon={"md-play"} />
-                    }
-                </Button>
+                {
+                    isPlaying ?
+                        <Button modifier="quiet">
+                            <Icon icon={"md-pause"} onClick={ this._pauseMusique } />
+                        </Button>
+                    :
+                        <Button modifier="quiet" onClick={ this._playMusique }>
+                            <Icon icon={"md-play"} />
+                        </Button>
+                }
                 <div id={"bottomPlayerSlider"}>
                     <div id={"playerTitleWrapper"} className={ defileTitle ? "marquee" : "" }>
                         <label id={"playerTitle"}>{ musique ? musique.titre : "-" }</label>
@@ -69,8 +77,38 @@ class Footer extends WebSocketConnectedComponent {
         }
     }
 
-    _playMusiqueCallback(response) {
+    _playMusique() {
+        const { musique } = this.state;
+        this.props.wsClient.send("/app/action/lecteur/play", musique);
+    }
 
+    _playMusiqueCallback(newMusique) {
+        const { musique, timer } = this.state;
+
+        this.setState({
+            ...this.state,
+            musique: newMusique,
+            isPlaying: true,
+            timer : musique && musique.uniqueId === newMusique.uniqueId ? timer : 0
+        });
+    }
+
+    _pauseMusique() {
+        this.props.wsClient.send("/app/action/lecteur/pause", {});
+    }
+
+    _pauseMusiqueCallback() {
+        this.setState({
+            ...this.state,
+            isPlaying: false
+        });
+    }
+
+    _timerMusiqueCallback(response) {
+        this.setState({
+            ...this.state,
+            timer: response.time
+        });
     }
 }
 

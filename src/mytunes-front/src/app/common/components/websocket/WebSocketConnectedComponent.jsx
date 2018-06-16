@@ -20,7 +20,7 @@ class WebSocketConnectedComponent extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
             this.subscriptions.forEach((callback, topic) => {
-                nextProps.wsClient.subscribe(topic, this.componentWSName, (response) => callback(response.musique));
+                nextProps.wsClient.subscribe(topic, this.componentWSName, (response) => callback(response));
             });
         }
     }
