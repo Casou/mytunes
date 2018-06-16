@@ -7,19 +7,14 @@ import Header from "./common/components/Header";
 import Footer from "./common/components/Footer";
 
 import "../../../style/components/mobile/main.css";
+import Menu from "./common/components/Menu";
 
 class MobileWrapper extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isMenuOpen : false
-        };
-
         this._handleClick = this._handleClick.bind(this);
-        this._toggleMenu = this._toggleMenu.bind(this);
-        this._showMenu = this._showMenu.bind(this);
-        this._hideMenu = this._hideMenu.bind(this);
+        this.menuRef = null;
     }
 
     componentDidUpdate() {
@@ -36,38 +31,12 @@ class MobileWrapper extends React.Component {
         ons.notification.alert('Hello world!');
     };
 
-    _toggleMenu = () => {
-        this.setState({
-            ...this.state,
-            isMenuOpen : !this.state.isMenuOpen
-        });
-    };
-    _showMenu = () => { this.setState({ ...this.state, isMenuOpen : true }); };
-    _hideMenu = () => { this.setState({ ...this.state, isMenuOpen : false }); };
-
     render() {
         return (
             <Splitter>
-                <SplitterSide style={{
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
-                }}
-                              side='left'
-                              width={200}
-                              collapse={true}
-                              swipeable={true}
-                              isOpen={this.state.isMenuOpen}
-                              onClose={this._hideMenu}
-                              onOpen={this._showMenu}>
-                    <Page>
-                        <List dataSource={['Profile', 'Followers', 'Settings']}
-                              renderRow={(title) => (
-                                  <ListItem key={title} onClick={this._hideMenu} tappable>{title}</ListItem>
-                              )}
-                        />
-                    </Page>
-                </SplitterSide>
+                <Menu ref={ instance => this.menuRef = instance }/>
                 <SplitterContent>
-                    <Page renderToolbar={() => <Header toggleMenu={ this._toggleMenu } />}
+                    <Page renderToolbar={() => <Header toggleMenu={ this.menuRef && this.menuRef.toggleMenu } />}
                           renderBottomToolbar={() => <Footer />}>
                         <section id={"mainPageContent"}>
                             <p>https://onsen.io/v2/api/react/</p>
