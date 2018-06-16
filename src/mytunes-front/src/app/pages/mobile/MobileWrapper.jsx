@@ -1,36 +1,28 @@
 import React from 'react';
-import { Page, Button, Splitter, SplitterSide, List, ListItem, SplitterContent, Range } from 'react-onsenui';
-import * as ons from 'onsenui';
+import { Page, Button, Splitter,SplitterContent } from 'react-onsenui';
+// import * as ons from 'onsenui';
 import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 import Header from "./common/components/Header";
 import Footer from "./common/components/Footer";
+import {Route} from "react-router-dom";
 
 import "../../../style/components/mobile/main.css";
 import Menu from "./common/components/Menu";
 import VolumeSlider from "./common/components/VolumeSlider";
+import CurrentPlaylist from "./pages/CurrentPlaylist";
+import Playlists from "./pages/Playlists";
 
 class MobileWrapper extends React.Component {
 
     constructor(props) {
         super(props);
-        this._handleClick = this._handleClick.bind(this);
         this.menuRef = null;
     }
 
-    componentDidUpdate() {
-        // const totalHeight = document.getElementById("volumeSlider").offsetHeight;
-        // const sliderSize = parseInt(totalHeight * 0.9);
-        //
-        // const translateX = sliderSize * -0.53;
-        // const translateY = sliderSize * -0.428;
-        // document.getElementById("volumeSliderRange").style["transform"] = `rotate(-90deg) translate(${translateX}px, ${translateY}px)`;
-        // document.getElementById("volumeSliderRange").style["width"] = sliderSize + "px";
-    }
-
-    _handleClick = () => {
-        ons.notification.alert('Hello world!');
-    };
+    // _handleClick = () => {
+    //     ons.notification.alert('Hello world!');
+    // };
 
     render() {
         return (
@@ -39,11 +31,9 @@ class MobileWrapper extends React.Component {
                 <SplitterContent>
                     <Page renderToolbar={() => <Header toggleMenu={ this.menuRef && this.menuRef.toggleMenu } />}
                           renderBottomToolbar={() => <Footer />}>
-                        <section id={"mainPageContent"}>
-                            <p>https://onsen.io/v2/api/react/</p>
-                            <p>https://onsen.io/v2/api/angular2/ ons.notification.html</p>
-                            <Button onClick={this._handleClick}>Push button</Button>
-                        </section>
+
+                        <Route exact path="/mobile" component={CurrentPlaylist}/>
+                        <Route exact path="/mobile/playlists" component={Playlists}/>
 
                         <VolumeSlider />
                     </Page>

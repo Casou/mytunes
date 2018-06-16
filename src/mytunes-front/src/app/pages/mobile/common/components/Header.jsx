@@ -19,7 +19,7 @@ const Header = (props) => {
 }
 
 Header.propTypes = {
-    toggleMenu : PropTypes.func.isRequired
+    toggleMenu : PropTypes.func
 };
 Header.defaultProps = {};
 
