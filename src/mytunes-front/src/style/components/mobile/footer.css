@@ -5,6 +5,14 @@
 
 .bottom-bar .button--material {
     height : 100%;
+    width : 50px;
+}
+
+
+.bottom-bar .buttonPrev,
+.bottom-bar .buttonNext{
+    padding : 0 10px;
+    width : 40px;
 }
 
 .zmdi {
@@ -22,18 +30,46 @@ div#bottomPlayerSlider {
     display : inline-block;
     height: 100%;
     vertical-align: top;
+    width : calc(100% - 160px);
+    margin :  0 20px 0 5px;
 }
 
 div#bottomPlayerSlider label {
-    float : left;
-    width : 100%;
-    text-align : center;
-    font-size : 12px;
+    text-align: center;
+    font-size: 12px;
     line-height: 20px;
 }
+
+div#bottomPlayerSlider div#playerTitleWrapper {
+    position: relative;
+    overflow: hidden;
+    height: 20px;
+    width: 100%;
+}
+
+div#bottomPlayerSlider div#playerTitleWrapper:not(.marquee) label {
+    width : 100%;
+    display : inline-block;
+}
+div#bottomPlayerSlider div#playerTitleWrapper.marquee label {
+    position: absolute;
+    margin: 0;
+    white-space: nowrap;
+    animation: marquee 8s linear infinite;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    20% { transform: translateX(0%); }
+    60% { transform: translateX(-110%); color : black; }
+    60.5% { transform: translateX(-110%); color : white; }
+    61% { transform: translateX(100%); color : white; }
+    64% { transform: translateX(100%); color : black; }
+    100% { transform: translateX(0%); }
+}
+
 div#bottomPlayerSlider .range--material {
     float : left;
-// vertical-align: middle;
     width : 100%;
 }
 
