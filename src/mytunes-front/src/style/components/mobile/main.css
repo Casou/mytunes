@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+}
+
+
 #mainPageContent, #volumeSlider {
     height: 100%;
     vertical-align: top;
@@ -6,6 +11,7 @@
 #mainPageContent {
     width : 79%;
     float : left;
+    border : 2px solid green;
 }
 
 .toolbar__title {
@@ -13,7 +19,7 @@
 }
 
 .toolbar__right {
-    text-align : right;
+    text-align : center;
 }
 
 .switch {
@@ -65,4 +71,24 @@ div#bottomPlayerSlider .range--material {
     float : left;
     // vertical-align: middle;
     width : 100%;
+}
+
+
+.rangeSlider {
+    width : 100%;
+    height : 100%;
+    display : flex;
+}
+
+.rangeSlider input[type=range] {
+    margin : auto;
+    -webkit-appearance: none;
+    width : 100%;
+    height : 80%;
+    border-radius: 5px;
+    background: #ccc;
+    outline: none;
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+
 }

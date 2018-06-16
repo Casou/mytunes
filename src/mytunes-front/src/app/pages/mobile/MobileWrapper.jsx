@@ -23,13 +23,13 @@ class MobileWrapper extends React.Component {
     }
 
     componentDidUpdate() {
-        const totalHeight = document.getElementById("volumeSlider").offsetHeight;
-        const sliderSize = parseInt(totalHeight * 0.9);
-
-        const translateX = sliderSize * -0.53;
-        const translateY = sliderSize * -0.428;
-        document.getElementById("volumeSliderRange").style["transform"] = `rotate(-90deg) translate(${translateX}px, ${translateY}px)`;
-        document.getElementById("volumeSliderRange").style["width"] = sliderSize + "px";
+        // const totalHeight = document.getElementById("volumeSlider").offsetHeight;
+        // const sliderSize = parseInt(totalHeight * 0.9);
+        //
+        // const translateX = sliderSize * -0.53;
+        // const translateY = sliderSize * -0.428;
+        // document.getElementById("volumeSliderRange").style["transform"] = `rotate(-90deg) translate(${translateX}px, ${translateY}px)`;
+        // document.getElementById("volumeSliderRange").style["width"] = sliderSize + "px";
     }
 
     _handleClick = () => {
@@ -71,12 +71,14 @@ class MobileWrapper extends React.Component {
                           renderBottomToolbar={() => <Footer />}>
                         <section id={"mainPageContent"}>
                             <p>https://onsen.io/v2/api/react/</p>
-                            <p>https://onsen.io/v2/api/angular2/ons.notification.html</p>
+                            <p>https://onsen.io/v2/api/angular2/ ons.notification.html</p>
                             <Button onClick={this._handleClick}>Push button</Button>
                         </section>
 
                         <section id={"volumeSlider"}>
-                            <Range id="volumeSliderRange" value={70} min={0} max={100} />
+                            <div className="rangeSlider">
+                                <input type={"range"} orient="vertical" min={0} max={100} defaultValue={75} />
+                            </div>
                         </section>
                     </Page>
                 </SplitterContent>
