@@ -43,6 +43,13 @@ public class PlaylistManagerWSController {
         return LECTEUR_STATUS;
     }
 
+    @MessageMapping("/action/lecteur/seekTime")
+    @SendTo("/topic/lecteur/seek")
+    public LecteurStatusDto seekTimeLecteur(LecteurStatusDto updateTime) {
+        LECTEUR_STATUS.setTime(updateTime.getTime());
+        return LECTEUR_STATUS;
+    }
+
     @MessageMapping("/action/lecteur/playNextSong")
     @SendTo("/topic/lecteur/playNextSong")
     public LecteurStatusDto playNextSong(LecteurStatusDto musiqueDTO) {

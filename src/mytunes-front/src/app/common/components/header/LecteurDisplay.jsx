@@ -46,6 +46,8 @@ class LecteurDisplay extends React.Component {
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
             nextProps.wsClient.subscribe("/topic/lecteur/play", "LecteurDisplay", () => this._playCallback(false));
             nextProps.wsClient.subscribe("/topic/lecteur/pause", "LecteurDisplay", () => this._pauseCallback());
+            nextProps.wsClient.subscribe("/topic/lecteur/time", "LecteurDisplay", (response) => this._updateCurrentTimeCallback(response.time));
+            nextProps.wsClient.subscribe("/topic/lecteur/seek", "LecteurDisplay", (response) => this._seek(response.time, false));
 
             nextProps.wsClient.send("/app/action/lecteur/pause", nextProps.musique);
         }
@@ -125,7 +127,9 @@ class LecteurDisplay extends React.Component {
         if (onUpdatePlayTime) {
             onUpdatePlayTime(time);
         }
+    }
 
+    _updateCurrentTimeCallback(time) {
         this.setState({
             ...this.state,
             currentTime : time

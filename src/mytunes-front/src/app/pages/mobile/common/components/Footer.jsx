@@ -21,6 +21,7 @@ class Footer extends WebSocketConnectedComponent {
 
         this._playMusique = this._playMusique.bind(this);
         this._pauseMusique = this._pauseMusique.bind(this);
+        this._seek = this._seek.bind(this);
 
         this._setComponentName("MobileFooter");
         this._addSubscription("/topic/lecteur/play", (response) => this._playMusiqueCallback(response.musique));
@@ -55,7 +56,11 @@ class Footer extends WebSocketConnectedComponent {
                     <div id={"playerTitleWrapper"} className={ defileTitle ? "marquee" : "" }>
                         <label id={"playerTitle"}>{ musique ? musique.titre : "-" }</label>
                     </div>
-                    <Range value={timer} min={0} max={ musique ? musique.duree : 0 } />
+                    <Range value={timer}
+                           min={0}
+                           max={ musique ? musique.duree : 0 }
+                           onChange={ (event) => this._seek(event.target.value) }
+                    />
                 </div>
                 <Button modifier="quiet" className={"buttonPrev"}><Icon icon={"md-skip-previous"} /></Button>
                 <Button modifier="quiet" className={"buttonNext"}><Icon icon={"md-skip-next"} /></Button>
@@ -109,6 +114,10 @@ class Footer extends WebSocketConnectedComponent {
             ...this.state,
             timer: response.time
         });
+    }
+
+    _seek(time) {
+        this.props.wsClient.send("/app/action/lecteur/seekTime", { time });
     }
 }
 

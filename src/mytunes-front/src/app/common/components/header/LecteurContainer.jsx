@@ -27,7 +27,7 @@ class LecteurContainer extends React.Component {
         this._onPlaySong = this._onPlaySong.bind(this);
         this._onPauseSong = this._onPauseSong.bind(this);
         this._onUpdatePlayTime = this._onUpdatePlayTime.bind(this);
-
+        this._onSeekPlayTime = this._onSeekPlayTime.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -55,6 +55,7 @@ class LecteurContainer extends React.Component {
                                 onPlaySong={ this._onPlaySong }
                                 onPauseSong={ this._onPauseSong }
                                 onUpdatePlayTime={ this._onUpdatePlayTime }
+                                onSeekTime ={ this._onSeekPlayTime }
                                 wsClient={ this.props.wsClient }
                 />
                 <AsideVolumeSlider volume={volume}
@@ -81,6 +82,12 @@ class LecteurContainer extends React.Component {
     _onUpdatePlayTime(time) {
         if (this.props.wsClient) {
             this.props.wsClient.send("/app/action/lecteur/updateTime", { time });
+        }
+    }
+
+    _onSeekPlayTime(time) {
+        if (this.props.wsClient) {
+            this.props.wsClient.send("/app/action/lecteur/seekTime", { time });
         }
     }
 
