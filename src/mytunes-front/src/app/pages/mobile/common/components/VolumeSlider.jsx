@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {assign} from "lodash";
 import WebSocketConnectedComponent from "../../../../common/components/websocket/WebSocketConnectedComponent";
+import PropTypes from 'prop-types';
 
 import '../../../../../style/components/mobile/volumeSlider.css';
 
@@ -31,6 +32,7 @@ class VolumeSlider extends WebSocketConnectedComponent {
                            step="0.01"
                            value={this.state.volume}
                            onChange={this._updateVolume}
+                           disabled={this.props.isLocked}
                     />
                 </div>
             </section>
@@ -48,6 +50,10 @@ class VolumeSlider extends WebSocketConnectedComponent {
         });
     }
 }
+
+VolumeSlider.propTypes = {
+    isLocked : PropTypes.bool.isRequired
+};
 
 export default connect(state => assign({}, {
     wsClient: state.wsClient

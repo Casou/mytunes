@@ -39,31 +39,35 @@ class Footer extends WebSocketConnectedComponent {
 
     render() {
         const { isPlaying, musique, timer, defileTitle } = this.state;
+        const { isLocked } = this.props;
+
+        const disabled = isLocked ? "true" : "";
 
         return (
             <BottomToolbar aligned={"center"} modifier="material">
                 {
                     isPlaying ?
-                        <Button modifier="quiet">
+                        <Button modifier="quiet" disabled={disabled}>
                             <Icon icon={"md-pause"} onClick={ this._pauseMusique } />
                         </Button>
                     :
-                        <Button modifier="quiet" onClick={ this._playMusique }>
+                        <Button modifier="quiet" onClick={ this._playMusique } disabled={disabled}>
                             <Icon icon={"md-play"} />
                         </Button>
                 }
                 <div id={"bottomPlayerSlider"}>
                     <div id={"playerTitleWrapper"} className={ defileTitle ? "marquee" : "" }>
-                        <label id={"playerTitle"}>{ musique ? musique.titre : "-" }</label>
+                        <label id={"playerTitle"}>{ musique ? musique.titre : "Aucun titre" }</label>
                     </div>
                     <Range value={timer}
                            min={0}
                            max={ musique ? musique.duree : 0 }
                            onChange={ (event) => this._seek(event.target.value) }
+                           disabled={disabled}
                     />
                 </div>
-                <Button modifier="quiet" className={"buttonPrev"}><Icon icon={"md-skip-previous"} /></Button>
-                <Button modifier="quiet" className={"buttonNext"}><Icon icon={"md-skip-next"} /></Button>
+                <Button modifier="quiet" className={"buttonPrev"} disabled={disabled}><Icon icon={"md-skip-previous"} /></Button>
+                <Button modifier="quiet" className={"buttonNext"} disabled={disabled}><Icon icon={"md-skip-next"} /></Button>
             </BottomToolbar>
         );
     }
@@ -121,7 +125,9 @@ class Footer extends WebSocketConnectedComponent {
     }
 }
 
-Footer.propTypes = {};
+Footer.propTypes = {
+    isLocked : PropTypes.bool.isRequired
+};
 
 export default connect(state => assign({}, {
     wsClient: state.wsClient

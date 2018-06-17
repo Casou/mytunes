@@ -13,14 +13,15 @@ const Header = (props) => {
             </div>
             <div className='center'>Mytunes</div>
             <div className='right'>
-                <Switch />
+                <Switch onChange={ props.onToggleLock } />
             </div>
         </Toolbar>
     );
 }
 
 Header.propTypes = {
-    toggleMenu : PropTypes.func
+    toggleMenu : PropTypes.func,
+    onToggleLock : PropTypes.func.isRequired
 };
 Header.defaultProps = {};
 

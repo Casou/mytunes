@@ -20,9 +20,12 @@
     line-height : 55px;
 }
 
+.button {
+    color: black;
+}
+
 .zmdi:before {
     font-size: 30px;
-    color: black;
     vertical-align: middle;
 }
 

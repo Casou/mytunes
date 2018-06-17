@@ -15,9 +15,15 @@ import Playlists from "./pages/Playlists";
 
 class MobileWrapper extends React.Component {
 
+    state = {
+        isLocked : true
+    };
+
     constructor(props) {
         super(props);
         this.menuRef = null;
+
+        this._toggleLock = this._toggleLock.bind(this);
     }
 
     // _handleClick = () => {
@@ -29,17 +35,25 @@ class MobileWrapper extends React.Component {
             <Splitter>
                 <Menu ref={ instance => this.menuRef = instance }/>
                 <SplitterContent>
-                    <Page renderToolbar={() => <Header toggleMenu={ this.menuRef && this.menuRef.toggleMenu } />}
-                          renderBottomToolbar={() => <Footer />}>
+                    <Page renderToolbar={() => <Header toggleMenu={ this.menuRef && this.menuRef.toggleMenu }
+                                                       onToggleLock={ this._toggleLock } />}
+                          renderBottomToolbar={() => <Footer isLocked={this.state.isLocked} />}>
 
                         <Route exact path="/mobile" component={CurrentPlaylist}/>
                         <Route exact path="/mobile/playlists" component={Playlists}/>
 
-                        <VolumeSlider />
+                        <VolumeSlider isLocked={this.state.isLocked} />
                     </Page>
                 </SplitterContent>
             </Splitter>
         );
+    }
+
+    _toggleLock(event) {
+        this.setState({
+            ...this.state,
+            isLocked : !event.target.checked
+        });
     }
 
 }
