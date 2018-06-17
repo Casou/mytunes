@@ -18,7 +18,9 @@ import WebSocketActions from "./app/common/actions/WebSocketActions";
 import DesktopWrapper from "./app/pages/initApp/DesktopWrapper";
 import MobileWrapper from "./app/pages/mobile/MobileWrapper";
 
-const __BASIC_URL__ = "localhost:8000/";
+const HOST_SERVER = window.location.hostname;
+
+const __BASIC_URL__ = HOST_SERVER + ":8000/";
 export const __SERVER_URL__ = "http://" + __BASIC_URL__;
 export const __WEBSOCKET_URL__ = __SERVER_URL__ + "ws";
 export const __KEYCODE_ENTER__ = 13;
