@@ -24,6 +24,8 @@ class MobileWrapper extends React.Component {
         this.menuRef = null;
 
         this._toggleLock = this._toggleLock.bind(this);
+
+        window.addEventListener('visibilitychange', () => this._toggleLock(true));
     }
 
     // _handleClick = () => {
@@ -36,7 +38,8 @@ class MobileWrapper extends React.Component {
                 <Menu ref={ instance => this.menuRef = instance }/>
                 <SplitterContent>
                     <Page renderToolbar={() => <Header toggleMenu={ this.menuRef && this.menuRef.toggleMenu }
-                                                       onToggleLock={ this._toggleLock } />}
+                                                       isLocked={!this.state.isLocked}
+                                                       onToggleLock={ event => this._toggleLock(!event.target.checked) } />}
                           renderBottomToolbar={() => <Footer isLocked={this.state.isLocked} />}>
 
                         <Route exact path="/mobile" component={CurrentPlaylist}/>
@@ -49,10 +52,11 @@ class MobileWrapper extends React.Component {
         );
     }
 
-    _toggleLock(event) {
+    _toggleLock(isLocked) {
+        console.log("toggle", isLocked);
         this.setState({
             ...this.state,
-            isLocked : !event.target.checked
+            isLocked
         });
     }
 
