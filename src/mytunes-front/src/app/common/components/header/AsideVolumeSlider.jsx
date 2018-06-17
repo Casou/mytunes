@@ -20,5 +20,8 @@ AsideVolumeSlider.propTypes = {
     volume : PropTypes.number.isRequired,
     onVolumeChange : PropTypes.func.isRequired
 };
+AsideVolumeSlider.defaultProps = {
+    volume : 0
+};
 
 export default AsideVolumeSlider;

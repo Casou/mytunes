@@ -10,4 +10,5 @@ public class LecteurStatusDto {
     private String status;
     private MusiqueDTO musique;
     private Integer time;
+    private Double volume;
 }

@@ -14,6 +14,7 @@ public class PlaylistManagerWSController {
             .status(LecteurStatus.PAUSE)
             .musique(null)
             .time(0)
+            .volume(0.25)
             .build();
 
     @MessageMapping("/action/lecteur/play")
@@ -40,6 +41,13 @@ public class PlaylistManagerWSController {
     @SendTo("/topic/lecteur/time")
     public LecteurStatusDto updateTimeLecteur(LecteurStatusDto updateTime) {
         LECTEUR_STATUS.setTime(updateTime.getTime());
+        return LECTEUR_STATUS;
+    }
+
+    @MessageMapping("/action/lecteur/updateVolume")
+    @SendTo("/topic/lecteur/volume")
+    public LecteurStatusDto updateVolumeLecteur(LecteurStatusDto updateTime) {
+        LECTEUR_STATUS.setVolume(updateTime.getVolume());
         return LECTEUR_STATUS;
     }
 

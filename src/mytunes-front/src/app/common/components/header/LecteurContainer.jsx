@@ -13,12 +13,13 @@ class LecteurContainer extends React.Component {
         super(props);
 
         this.state = {
-            volume : 1,
+            volume : 25,
             currentTime : 0,
             isPlaying : false
         };
 
         this._updateVolume = this._updateVolume.bind(this);
+        this._updateVolumeCallback = this._updateVolumeCallback.bind(this);
         this._playNextSongWS = this._playNextSongWS.bind(this);
         this._playNextSongCallback = this._playNextSongCallback.bind(this);
         this._playPrevSongWS = this._playPrevSongWS.bind(this);
@@ -32,10 +33,9 @@ class LecteurContainer extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
-            nextProps.wsClient.subscribe("/topic/lecteur/playNextSong", "LecteurContainer",
-                (response) => this._playNextSongCallback(response.musique));
-            nextProps.wsClient.subscribe("/topic/lecteur/playPrevSong", "LecteurContainer",
-                (response) => this._playPrevSongCallback(response.musique));
+            nextProps.wsClient.subscribe("/topic/lecteur/playNextSong", "LecteurContainer", (response) => this._playNextSongCallback(response.musique));
+            nextProps.wsClient.subscribe("/topic/lecteur/playPrevSong", "LecteurContainer", (response) => this._playPrevSongCallback(response.musique));
+            nextProps.wsClient.subscribe("/topic/lecteur/volume", "LecteurContainer", (response) => this._updateVolumeCallback(response.volume));
         }
     }
 
@@ -65,6 +65,12 @@ class LecteurContainer extends React.Component {
     }
 
     _updateVolume(volume) {
+        if (this.props.wsClient) {
+            this.props.wsClient.send("/app/action/lecteur/updateVolume", { volume });
+        }
+    }
+
+    _updateVolumeCallback(volume) {
         this.setState({...this.state, volume });
     }
 
@@ -90,6 +96,7 @@ class LecteurContainer extends React.Component {
             this.props.wsClient.send("/app/action/lecteur/seekTime", { time });
         }
     }
+
 
     _playNextSongWS() {
         if (this.props.wsClient) {
