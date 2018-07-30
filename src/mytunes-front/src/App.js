@@ -17,6 +17,7 @@ import WebSocketClient from "./app/common/components/websocket/WebSocketClient";
 import WebSocketActions from "./app/common/actions/WebSocketActions";
 import DesktopWrapper from "./app/pages/initApp/DesktopWrapper";
 import MobileWrapper from "./app/pages/mobile/MobileWrapper";
+import RouteWrapper from "./app/pages/initApp/RouteWrapper";
 
 const HOST_SERVER = window.location.hostname;
 
@@ -48,6 +49,7 @@ class App extends React.Component {
                                      debug={ false }
                                      ref={ (client) => { this.wsClient = client }} />
 
+                    <Route exact path="/" component={RouteWrapper}/>
                     <Route path="/desktop" component={DesktopWrapper}/>
                     <Route path="/mobile" component={MobileWrapper}/>
                 </div>
