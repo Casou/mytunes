@@ -28,3 +28,4 @@ datas/**.db
 package-lock.json
 **/package-lock.json
 medias/
+src/mytunesNative
