@@ -14,7 +14,7 @@ export const playlistManager = (state = {}, action) => {
             const alreadyPresent = playlistManager.musiques.map(musique => musique.id).includes(newMusique.id);
             playlistManager.addMusique(_mapMusique(newMusique));
             if (alreadyPresent) {
-                NotificationManager.warning("Musique " + newMusique.titre + " déjà présent dans la playlist", "Playlist", 2000);
+                NotificationManager.warning("Musique " + newMusique.titre + " déjà présente dans la playlist", "Playlist", 2000);
             } else {
                 NotificationManager.info("Musique ajoutée à la playlist", "Playlist", 1500);
             }

@@ -3,7 +3,6 @@ import './style/App.css';
 import './style/components/lecteur.css';
 import './style/components/header.css';
 import './style/material-icons.css';
-import 'react-notifications/lib/notifications.css';
 
 import {bindActionCreators} from "redux";
 
@@ -19,6 +18,8 @@ import DesktopWrapper from "./app/pages/initApp/DesktopWrapper";
 import MobileWrapper from "./app/pages/mobile/MobileWrapper";
 import RouteWrapper from "./app/pages/initApp/RouteWrapper";
 
+import 'react-notifications/lib/notifications.css';
+
 const HOST_SERVER = window.location.hostname;
 
 const __BASIC_URL__ = HOST_SERVER + ":8000/";
@@ -27,7 +28,6 @@ export const __WEBSOCKET_URL__ = __SERVER_URL__ + "ws";
 export const __KEYCODE_ENTER__ = 13;
 
 export const __LOCAL_STORAGE__PLAYLIST_MANAGER__ = "playlistManager";
-
 
 class App extends React.Component {
 

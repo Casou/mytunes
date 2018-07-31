@@ -4,7 +4,7 @@ import {RefreshIndicator} from "material-ui";
 
 import greenLight from '../../../images/green-light.png';
 import redLight from '../../../images/red-light.png';
-import '../../../style/components/init.css';
+import './init.css';
 
 const DesktopLoadingStatus = (props) => {
     return (
