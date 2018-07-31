@@ -1,0 +1,14 @@
+#initLoadingState {
+    padding : 160px 0 0 50px;
+}
+
+#initLoadingState li {
+    font-size : 20px;
+    line-height : 25px;
+    height : 45px;
+}
+
+#initLoadingState li img {
+    height : 25px;
+    vertical-align: sub;
+}

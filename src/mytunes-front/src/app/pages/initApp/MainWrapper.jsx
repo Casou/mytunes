@@ -5,10 +5,9 @@ import GenreActions from "../../common/actions/GenreActions";
 import {assign} from "lodash";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {RefreshIndicator} from "material-ui";
 import PlaylistsActions from "../savedPlaylists/actions/PlaylistsActions";
 import Loading from "../../common/components/loading/Loading";
-import {playlistManagerPropType} from "../../common/types/PlaylistMusiqueType";
+import DesktopLoadingStatus from "./DesktopLoadingStatus";
 
 class MainWrapper extends React.Component {
 
@@ -39,13 +38,10 @@ class MainWrapper extends React.Component {
             <main style={{position: 'relative'}}>
                 <Loading open={this.props.isLoading.general} onForceClose={this._forceCloseGeneralLoading.bind(this)} />
                 { isLoading ?
-                    <RefreshIndicator
-                        size={70}
-                        left={-35}
-                        top={35}
-                        loadingColor="#808080"
-                        status="loading"
-                        style={{marginLeft: '50%'}}
+                    <DesktopLoadingStatus musiques={this.props.musiques}
+                                          genres={this.props.genres}
+                                          playlists={this.props.playlistProvider && this.props.playlistProvider.getPlaylists()}
+                                          wsClient={this.props.wsClient}
                     />
                     :
                     this.props.children
