@@ -138,6 +138,7 @@ class WebSocketClient extends React.Component {
 
     // Below methods can be accessed by ref attribute from the parent component
     send = (topic, objectParameter, opt_headers = {}) => {
+        console.log("send", topic, objectParameter);
         if (this.state.connected) {
             this.client.send(topic, opt_headers, JSON.stringify(objectParameter));
         } else {

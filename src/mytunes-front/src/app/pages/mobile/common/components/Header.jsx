@@ -17,7 +17,7 @@ const Header = (props) => {
             </div>
         </Toolbar>
     );
-}
+};
 
 Header.propTypes = {
     isLocked : PropTypes.bool.isRequired,

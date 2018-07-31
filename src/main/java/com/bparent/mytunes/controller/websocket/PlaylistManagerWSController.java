@@ -3,6 +3,7 @@ package com.bparent.mytunes.controller.websocket;
 import com.bparent.mytunes.controller.websocket.constants.LecteurStatus;
 import com.bparent.mytunes.controller.websocket.dto.LecteurStatusDto;
 import com.bparent.mytunes.dto.MusiqueDTO;
+import com.bparent.mytunes.dto.PlaylistManagerDTO;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,6 +71,18 @@ public class PlaylistManagerWSController {
     public LecteurStatusDto playPrevSong(LecteurStatusDto musiqueDTO) {
         LECTEUR_STATUS.setMusique(musiqueDTO.getMusique());
         return LECTEUR_STATUS;
+    }
+
+    @MessageMapping("/action/lecteur/getCurrentPlaylist")
+    @SendTo("/topic/lecteur/getCurrentPlaylist")
+    public LecteurStatusDto getCurrentPlaylistPing() {
+        return LECTEUR_STATUS;
+    }
+
+    @MessageMapping("/action/lecteur/setCurrentPlaylist")
+    @SendTo("/topic/lecteur/setCurrentPlaylist")
+    public PlaylistManagerDTO setCurrentPlaylist(PlaylistManagerDTO playlistManager) {
+        return playlistManager;
     }
 
 }

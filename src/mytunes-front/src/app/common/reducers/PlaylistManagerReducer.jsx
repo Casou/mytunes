@@ -6,6 +6,9 @@ import {randomId} from "../util/Common";
 export const playlistManager = (state = {}, action) => {
     let playlistManager = state;
     switch (action.type) {
+        case "SET_PLAYLIST_MANAGER" :
+            playlistManager = action.payload;
+            break;
         case "ADD_MUSIQUE_TO_PLAYLIST" :
             const newMusique = action.payload;
             const alreadyPresent = playlistManager.musiques.map(musique => musique.id).includes(newMusique.id);

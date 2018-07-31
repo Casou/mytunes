@@ -1,6 +1,14 @@
 import RequestUtil from "../util/RequestUtil";
 
 export default {
+
+    setPlaylistManager: (playlistManager) => (dispatch, getState) => {
+        dispatch({
+            type : "SET_PLAYLIST_MANAGER",
+            payload : playlistManager
+        });
+    },
+
     addMusiqueToPlaylist: (musique, playlist) => (dispatch, getState) => {
         if (playlist) {
             RequestUtil.put("playlist/musique", { playlist : { id : playlist.id }, musique : { id : musique.id } });

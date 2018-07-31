@@ -8,6 +8,7 @@ import {bindActionCreators} from "redux";
 import {RefreshIndicator} from "material-ui";
 import PlaylistsActions from "../savedPlaylists/actions/PlaylistsActions";
 import Loading from "../../common/components/loading/Loading";
+import {playlistManagerPropType} from "../../common/types/PlaylistMusiqueType";
 
 class MainWrapper extends React.Component {
 
@@ -20,6 +21,15 @@ class MainWrapper extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.isLoading.application && nextProps.isLoading.application && this._isApplicationLoaded(nextProps)) {
             this.props.loadingActions.setIsApplicationLoading(false);
+        }
+
+        if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
+            nextProps.wsClient.subscribe("/topic/lecteur/getCurrentPlaylist", "MainWrapper",
+                () => {
+                    console.log("get");
+                    console.log(this.props.playlistManager );
+                    nextProps.wsClient.send("/app/action/lecteur/setCurrentPlaylist", this.props.playlistManager );
+                });
         }
     }
 
@@ -61,6 +71,7 @@ export default connect(state => assign({}, {
     musiques: state.musiques,
     genres: state.genres,
     playlistProvider: state.playlistProvider,
+    playlistManager : state.playlistManager,
     isLoading: state.isLoading,
     wsClient: state.wsClient
 }),

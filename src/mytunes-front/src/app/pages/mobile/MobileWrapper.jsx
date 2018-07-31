@@ -6,12 +6,16 @@ import 'onsenui/css/onsen-css-components.css';
 import Header from "./common/components/Header";
 import Footer from "./common/components/Footer";
 import {Route} from "react-router-dom";
+import {connect} from "react-redux";
+import {assign} from "lodash";
+import {bindActionCreators} from "redux";
 
 import "../../../style/components/mobile/main.css";
 import Menu from "./common/components/Menu";
 import VolumeSlider from "./common/components/VolumeSlider";
 import CurrentPlaylist from "./pages/CurrentPlaylist";
 import Playlists from "./pages/Playlists";
+import PlaylistManagerActions from "../../common/actions/PlaylistManagerActions";
 
 class MobileWrapper extends React.Component {
 
@@ -26,6 +30,18 @@ class MobileWrapper extends React.Component {
         this._toggleLock = this._toggleLock.bind(this);
 
         window.addEventListener('visibilitychange', () => this._toggleLock(true));
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
+            nextProps.wsClient.subscribe("/topic/lecteur/setCurrentPlaylist", "MobileWrapper",
+                (currentPlaylistManager) => {
+                    console.log("set");
+                    console.log(currentPlaylistManager);
+                    this.props.playlistManagerActions.setPlaylistManager(currentPlaylistManager);
+                });
+            nextProps.wsClient.send("/app/action/lecteur/getCurrentPlaylist", {});
+        }
     }
 
     // _handleClick = () => {
@@ -53,7 +69,6 @@ class MobileWrapper extends React.Component {
     }
 
     _toggleLock(isLocked) {
-        console.log("toggle", isLocked);
         this.setState({
             ...this.state,
             isLocked
@@ -62,4 +77,8 @@ class MobileWrapper extends React.Component {
 
 }
 
-export default MobileWrapper;
+export default connect(state => assign({}, {
+    wsClient: state.wsClient
+}), dispatch => ({
+    playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
+}))(MobileWrapper);
