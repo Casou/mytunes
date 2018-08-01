@@ -18,9 +18,9 @@ const DesktopLoadingStatus = (props) => {
                 style={{marginLeft: '50%'}}
             />
             <ul id={"initLoadingState"}>
-                <li><img src={props.genres ? greenLight : redLight} /> Genres</li>
-                <li><img src={props.musiques ? greenLight : redLight} /> Musiques</li>
-                <li><img src={props.playlists ? greenLight : redLight} /> Playlists</li>
+                <li><img src={props.genres ? greenLight : redLight} /> Genres{ props.genres && " : " + props.genres.length }</li>
+                <li><img src={props.musiques ? greenLight : redLight} /> Musiques{ props.musiques && " : " + props.musiques.length }</li>
+                <li><img src={props.playlists ? greenLight : redLight} /> Playlists{ props.playlists && " : " + props.playlists.length }</li>
                 <li><img src={props.wsClient && props.wsClient.isConnected() ? greenLight : redLight} /> WS Client connecté</li>
             </ul>
         </div>);
