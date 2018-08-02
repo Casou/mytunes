@@ -6,6 +6,7 @@ import com.bparent.mytunes.dto.MusiqueDTO;
 import com.bparent.mytunes.dto.PlaylistManagerDTO;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,6 +18,11 @@ public class PlaylistManagerWSController {
             .time(0)
             .volume(0.25)
             .build();
+
+    @GetMapping("/lecteur/status")
+    public LecteurStatusDto getStatus() {
+        return LECTEUR_STATUS;
+    }
 
     @MessageMapping("/action/lecteur/play")
     @SendTo("/topic/lecteur/play")
@@ -83,6 +89,19 @@ public class PlaylistManagerWSController {
     @SendTo("/topic/lecteur/setCurrentPlaylist")
     public PlaylistManagerDTO setCurrentPlaylist(PlaylistManagerDTO playlistManager) {
         return playlistManager;
+    }
+
+
+    @MessageMapping("/request/lecteur/playNextSong")
+    @SendTo("/topic/request/lecteur/playNextSong")
+    public LecteurStatusDto requestPlayNextSong() {
+        return LECTEUR_STATUS;
+    }
+
+    @MessageMapping("/request/lecteur/playPrevSong")
+    @SendTo("/topic/request/lecteur/playPrevSong")
+    public LecteurStatusDto requestPlayPrevSong() {
+        return LECTEUR_STATUS;
     }
 
 }

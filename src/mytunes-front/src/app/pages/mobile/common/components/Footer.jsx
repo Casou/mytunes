@@ -23,9 +23,13 @@ class Footer extends WebSocketConnectedComponent {
         this._playMusique = this._playMusique.bind(this);
         this._pauseMusique = this._pauseMusique.bind(this);
         this._seek = this._seek.bind(this);
+        this._previousSong = this._previousSong.bind(this);
+        this._nextSong = this._nextSong.bind(this);
 
         this._setComponentName("MobileFooter");
         this._addSubscription("/topic/lecteur/play", (response) => this._playMusiqueCallback(response.musique));
+        this._addSubscription("/topic/lecteur/playNextSong", (response) => this._playMusiqueCallback(response.musique));
+        this._addSubscription("/topic/lecteur/playPrevSong", (response) => this._playMusiqueCallback(response.musique));
         this._addSubscription("/topic/lecteur/pause", () => this._pauseMusiqueCallback());
         this._addSubscription("/topic/lecteur/time", (response) => this._timerMusiqueCallback(response));
     }
@@ -75,8 +79,8 @@ class Footer extends WebSocketConnectedComponent {
                            disabled={disabled}
                     />
                 </div>
-                <Button modifier="quiet" className={"buttonPrev"} disabled={disabled}><Icon icon={"md-skip-previous"} /></Button>
-                <Button modifier="quiet" className={"buttonNext"} disabled={disabled}><Icon icon={"md-skip-next"} /></Button>
+                <Button modifier="quiet" className={"buttonPrev"} disabled={disabled} onClick={ this._previousSong }><Icon icon={"md-skip-previous"} /></Button>
+                <Button modifier="quiet" className={"buttonNext"} disabled={disabled} onClick={ this._nextSong }><Icon icon={"md-skip-next"} /></Button>
             </BottomToolbar>
         );
     }
@@ -133,6 +137,16 @@ class Footer extends WebSocketConnectedComponent {
     _seek(time) {
         this.props.wsClient.send("/app/action/lecteur/seekTime", { time });
     }
+
+    _nextSong() {
+        this.props.wsClient.send("/app/request/lecteur/playNextSong", {});
+    }
+
+    _previousSong() {
+        this.props.wsClient.send("/app/request/lecteur/playPrevSong", {});
+    }
+
+
 }
 
 Footer.propTypes = {

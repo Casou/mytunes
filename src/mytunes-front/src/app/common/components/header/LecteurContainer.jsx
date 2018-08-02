@@ -7,16 +7,19 @@ import {bindActionCreators} from "redux";
 import {playlistManagerPropType} from "../../types/PlaylistMusiqueType";
 import LecteurDisplay from "./LecteurDisplay";
 import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
+import {__SERVER_URL__} from "../../../../App";
 
 class LecteurContainer extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            volume : 25,
+            volume : 0.25,
             currentTime : 0,
             isPlaying : false
         };
+
+        this._getLecteurStatus();
 
         this._updateVolume = this._updateVolume.bind(this);
         this._updateVolumeCallback = this._updateVolumeCallback.bind(this);
@@ -36,6 +39,8 @@ class LecteurContainer extends React.Component {
             nextProps.wsClient.subscribe("/topic/lecteur/playNextSong", "LecteurContainer", (response) => this._playNextSongCallback(response.musique));
             nextProps.wsClient.subscribe("/topic/lecteur/playPrevSong", "LecteurContainer", (response) => this._playPrevSongCallback(response.musique));
             nextProps.wsClient.subscribe("/topic/lecteur/volume", "LecteurContainer", (response) => this._updateVolumeCallback(response.volume));
+            nextProps.wsClient.subscribe("/topic/request/lecteur/playNextSong", "LecteurContainer", () => this._playNextSongWS());
+            nextProps.wsClient.subscribe("/topic/request/lecteur/playPrevSong", "LecteurContainer", () => this._playPrevSongWS());
         }
     }
 
@@ -99,6 +104,7 @@ class LecteurContainer extends React.Component {
 
 
     _playNextSongWS() {
+        console.log("play next", this.props.wsClient ? "ok" : "KO");
         if (this.props.wsClient) {
             const nextSong = this.props.playlistManager.getNextSong();
             this.props.wsClient.send("/app/action/lecteur/playNextSong", { musique : nextSong });
@@ -114,6 +120,7 @@ class LecteurContainer extends React.Component {
     }
 
     _playPrevSongWS() {
+        console.log("play prev", this.props.wsClient ? "ok" : "KO");
         if (this.props.wsClient) {
             const prevSong = this.props.playlistManager.getPrevSong();
             this.props.wsClient.send("/app/action/lecteur/playPrevSong", { musique : prevSong });
@@ -130,6 +137,19 @@ class LecteurContainer extends React.Component {
         this.props.playlistManagerActions.errorMusique(musique);
     }
 
+    _getLecteurStatus() {
+        fetch(__SERVER_URL__ + "lecteur/status")
+            .then(response => response.json())
+            .then(lecteurStatus => {
+                this.setState({
+                    ...this.state,
+                    volume : lecteurStatus.volume
+                });
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    }
 }
 
 LecteurContainer.propTypes = {

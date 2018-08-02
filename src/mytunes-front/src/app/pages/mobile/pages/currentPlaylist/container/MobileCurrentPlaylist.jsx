@@ -26,35 +26,6 @@ const MobileCurrentPlaylist = ({playlistManager}) => {
     );
 };
 
-/*
-const MobileCurrentPlaylist = SortableContainer((props) => {
-    const { playlistManager } = props;
-
-    const playMusique = () => {
-
-    };
-
-    const deleteMusique = () => {
-
-    };
-
-
-    return (
-        <ul>
-            { playlistManager.musiques.map((musique, index) => (
-                <MobilePlaylistItem key={`item-${index}`}
-                              index={index}
-                              musique={musique}
-                              isPlaying={playlistManager.musiquePlaying && musique.uniqueId === playlistManager.musiquePlaying.uniqueId}
-                              playMusique={playMusique}
-                              deleteMusique={deleteMusique}
-                />
-            ))}
-        </ul>
-    );
-});
-*/
-
 MobileCurrentPlaylist.propTypes = {};
 MobileCurrentPlaylist.defaultProps = {};
 

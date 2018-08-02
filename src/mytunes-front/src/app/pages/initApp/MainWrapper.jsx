@@ -25,8 +25,6 @@ class MainWrapper extends React.Component {
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
             nextProps.wsClient.subscribe("/topic/lecteur/getCurrentPlaylist", "MainWrapper",
                 () => {
-                    console.log("get");
-                    console.log(this.props.playlistManager );
                     nextProps.wsClient.send("/app/action/lecteur/setCurrentPlaylist", this.props.playlistManager );
                 });
         }

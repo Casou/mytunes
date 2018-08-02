@@ -15,26 +15,38 @@ import VolumeSlider from "./common/components/VolumeSlider";
 import CurrentPlaylist from "./pages/currentPlaylist/container/MobileCurrentPlaylist";
 import Playlists from "./pages/Playlists";
 import PlaylistManagerActions from "../../common/actions/PlaylistManagerActions";
+import WebSocketConnectedComponent from "../../common/components/websocket/WebSocketConnectedComponent";
+import {__SERVER_URL__} from "../../../App";
 
 export const __MOBILE_URL__ = '/mobile';
 
-class MobileWrapper extends React.Component {
+class MobileWrapper extends WebSocketConnectedComponent {
 
     state = {
-        isLocked : true
+        isLocked : true,
+        volume : null
     };
 
     constructor(props) {
         super(props);
         this.menuRef = null;
 
+        this._setComponentName("MobileWrapper");
+
         this._toggleLock = this._toggleLock.bind(this);
         this._loadProperties = this._loadProperties.bind(this);
+
+        this._addSubscription("/topic/lecteur/volume", (response) =>  {
+            this.setState({ ...this.state, volume : response.volume });
+        });
+        this._getLecteurStatus();
 
         window.addEventListener('visibilitychange', () => this._toggleLock(true));
     }
 
     componentWillReceiveProps(nextProps) {
+        super.componentWillReceiveProps(nextProps);
+
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
             nextProps.wsClient.subscribe("/topic/lecteur/setCurrentPlaylist", "MobileWrapper",
                 (currentPlaylistManager) => this.props.playlistManagerActions.setPlaylistManager(currentPlaylistManager));
@@ -68,7 +80,9 @@ class MobileWrapper extends React.Component {
                             <Route exact path={__MOBILE_URL__ + "/playlists"} component={Playlists}/>
                         </section>
 
-                        <VolumeSlider isLocked={this.state.isLocked} />
+                        <VolumeSlider isLocked={this.state.isLocked}
+                                      volume={ this.state.volume }
+                        />
                     </Page>
                 </SplitterContent>
             </Splitter>
@@ -80,6 +94,20 @@ class MobileWrapper extends React.Component {
             ...this.state,
             isLocked
         });
+    }
+
+    _getLecteurStatus() {
+        fetch(__SERVER_URL__ + "lecteur/status")
+            .then(response => response.json())
+            .then(lecteurStatus => {
+                this.setState({
+                    ...this.state,
+                    volume : lecteurStatus.volume
+                });
+            })
+            .catch(e => {
+                console.error(e);
+            });
     }
 
 }

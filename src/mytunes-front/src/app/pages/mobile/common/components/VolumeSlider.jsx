@@ -1,25 +1,15 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {assign} from "lodash";
-import WebSocketConnectedComponent from "../../../../common/components/websocket/WebSocketConnectedComponent";
 import PropTypes from 'prop-types';
 
 import '../../../../../style/components/mobile/volumeSlider.css';
 
-class VolumeSlider extends WebSocketConnectedComponent {
-
-    state = {
-        volume : 0.25
-    };
+class VolumeSlider extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this._setComponentName("VolumeSlider");
-        this._addSubscription("/topic/lecteur/volume", (response) => this._updateVolumeCallback(response.volume));
-
         this._updateVolume = this._updateVolume.bind(this);
-        this._updateVolumeCallback = this._updateVolumeCallback.bind(this);
     }
 
     render() {
@@ -29,8 +19,8 @@ class VolumeSlider extends WebSocketConnectedComponent {
                     <input type={"range"}
                            orient="vertical"
                            min={0} max={1}
-                           step="0.01"
-                           value={this.state.volume}
+                           step="0.05"
+                           value={this.props.volume}
                            onChange={this._updateVolume}
                            disabled={this.props.isLocked}
                     />
@@ -43,16 +33,15 @@ class VolumeSlider extends WebSocketConnectedComponent {
         this.props.wsClient.send("/app/action/lecteur/updateVolume", { volume : event.target.value });
     }
 
-    _updateVolumeCallback(volume) {
-        this.setState({
-            ...this.state,
-            volume
-        });
-    }
 }
 
 VolumeSlider.propTypes = {
-    isLocked : PropTypes.bool.isRequired
+    isLocked : PropTypes.bool.isRequired,
+    volume : PropTypes.number
+};
+
+VolumeSlider.defaultProps = {
+    volume : 1
 };
 
 export default connect(state => assign({}, {
