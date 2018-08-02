@@ -1,8 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const Playlists = (props) => (
-    <div>Playlists</div>
+    <div>
+        Playlists
+        <p>https://onsen.io/v2/api/react/</p>
+        <p>https://onsen.io/v2/api/angular2/ons.notification.html</p>
+    </div>
 );
 
 Playlists.propTypes = {};

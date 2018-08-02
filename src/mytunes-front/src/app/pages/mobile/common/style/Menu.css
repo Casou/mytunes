@@ -1,0 +1,11 @@
+.list-item--material.list-item--longdivider, .list-item--material.list-item--expandable.list-item--longdivider {
+    background-image: linear-gradient(0deg, #878787, #878787 50%, transparent 50%);
+}
+
+.list-item {
+    font-size : 18px;
+}
+
+.list-item span.material-icons {
+    margin-right : 10px;
+}

@@ -6,6 +6,7 @@ import {assign} from "lodash";
 import WebSocketConnectedComponent from "../../../../common/components/websocket/WebSocketConnectedComponent";
 
 import '../../../../../style/components/mobile/footer.css';
+import {musiquePropType} from "../../../../common/types/MusiqueType";
 
 class Footer extends WebSocketConnectedComponent {
 
@@ -35,6 +36,12 @@ class Footer extends WebSocketConnectedComponent {
 
     componentDidUpdate() {
         this._updateMarquee();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.musique !== nextProps.musique) {
+            this.setState({ ...this.state, musique : nextProps.musique });
+        }
     }
 
     render() {
@@ -78,7 +85,7 @@ class Footer extends WebSocketConnectedComponent {
         const label = document.getElementById("playerTitle");
 
         const defile = wrapper.offsetWidth < label.scrollWidth;
-        if (defileTitle != defile) {
+        if (defileTitle !== defile) {
             this.setState({
                 ...this.state,
                 defileTitle: defile
@@ -126,7 +133,8 @@ class Footer extends WebSocketConnectedComponent {
 }
 
 Footer.propTypes = {
-    isLocked : PropTypes.bool.isRequired
+    isLocked : PropTypes.bool.isRequired,
+    musique : musiquePropType
 };
 
 export default connect(state => assign({}, {

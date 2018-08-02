@@ -1,11 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Page, SplitterSide, List, ListItem } from 'react-onsenui';
+import {FontIcon} from "material-ui";
+import {Link} from "react-router-dom";
+
+import '../style/Menu.css';
+import {__MOBILE_URL__} from "../../MobileWrapper";
 
 class Menu extends React.Component {
     state = {
         isMenuOpen : false
     };
+
+    items = [
+        { title : 'En cours', divider : true, page : __MOBILE_URL__, icon : 'play_circle_filled' },
+        { title : 'Genres', divider : false, page : __MOBILE_URL__ + '/genres', icon : 'view_module' },
+        { title : 'Playlists', divider : true, page : __MOBILE_URL__ + '/playlists', icon : 'library_music' },
+        { title : 'Recharger', divider : false, page : null, icon : 'compare_arrows', onClick : this.props.refresh },
+        { title : 'Actualiser', divider : false, page : null, icon : 'refresh', onClick : () => { window.location.reload(); } }
+    ];
 
     toggleMenu = () => {
         this.setState({
@@ -15,6 +28,33 @@ class Menu extends React.Component {
     };
     _showMenu = () => { this.setState({ ...this.state, isMenuOpen : true }); };
     _hideMenu = () => { this.setState({ ...this.state, isMenuOpen : false }); };
+
+    _renderRow = (item) => {
+        const itemRendered = <ListItem key={item.title}
+                                onClick={() => this._clickItem(item)}
+                                modifier={item.divider ? "longdivider" : null}
+                                tappable>
+            <FontIcon className="material-icons">{item.icon}</FontIcon>
+            {item.title}
+        </ListItem>;
+
+        if (item.page) {
+            return (
+                <Link to={ item.page }>
+                    { itemRendered }
+                </Link>
+            );
+        }
+
+        return itemRendered;
+    };
+
+    _clickItem = (item) => {
+        if (item.onClick) {
+            item.onClick();
+        }
+        this._hideMenu();
+    };
 
     render() {
         return (
@@ -29,10 +69,8 @@ class Menu extends React.Component {
                           onClose={this._hideMenu}
                           onOpen={this._showMenu}>
                 <Page>
-                    <List dataSource={['Profile', 'Followers', 'Settings']}
-                          renderRow={(title) => (
-                              <ListItem key={title} onClick={this._hideMenu} tappable>{title}</ListItem>
-                          )}
+                    <List dataSource={this.items}
+                          renderRow={this._renderRow}
                     />
                 </Page>
             </SplitterSide>
@@ -40,7 +78,9 @@ class Menu extends React.Component {
     }
 }
 
-Menu.propTypes = {};
+Menu.propTypes = {
+    refresh : PropTypes.func.isRequired
+};
 Menu.defaultProps = {};
 
 export default Menu;

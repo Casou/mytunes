@@ -14,6 +14,7 @@ const PlaylistItem = SortableElement((props) => {
     return (
         <li className={
             cn([
+                "playlistItem",
                 { "alreadyPlayed" : musique.alreadyPlayed },
                 { "error" : musique.error },
                 { "isPlaying" : isPlaying }

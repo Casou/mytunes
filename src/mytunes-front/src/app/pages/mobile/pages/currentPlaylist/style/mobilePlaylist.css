@@ -1,0 +1,13 @@
+li.playlistItem {
+    height : 35px !important;
+}
+
+li span.classement {
+    display : none !important;
+}
+
+li span.titre {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
