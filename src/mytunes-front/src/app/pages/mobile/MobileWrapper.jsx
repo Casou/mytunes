@@ -37,11 +37,7 @@ class MobileWrapper extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
             nextProps.wsClient.subscribe("/topic/lecteur/setCurrentPlaylist", "MobileWrapper",
-                (currentPlaylistManager) => {
-                    console.log("set");
-                    console.log(currentPlaylistManager);
-                    this.props.playlistManagerActions.setPlaylistManager(currentPlaylistManager);
-                });
+                (currentPlaylistManager) => this.props.playlistManagerActions.setPlaylistManager(currentPlaylistManager));
             this._loadProperties(nextProps.wsClient);
         }
     }

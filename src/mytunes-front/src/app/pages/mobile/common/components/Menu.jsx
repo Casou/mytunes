@@ -40,7 +40,7 @@ class Menu extends React.Component {
 
         if (item.page) {
             return (
-                <Link to={ item.page }>
+                <Link key={ "link_" + item.title } to={ item.page }>
                     { itemRendered }
                 </Link>
             );

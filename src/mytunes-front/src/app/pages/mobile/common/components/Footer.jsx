@@ -39,6 +39,8 @@ class Footer extends WebSocketConnectedComponent {
     }
 
     componentWillReceiveProps(nextProps) {
+        super.componentWillReceiveProps(nextProps);
+
         if (this.props.musique !== nextProps.musique) {
             this.setState({ ...this.state, musique : nextProps.musique });
         }
@@ -99,6 +101,7 @@ class Footer extends WebSocketConnectedComponent {
     }
 
     _playMusiqueCallback(newMusique) {
+        console.log("_playMusiqueCallback");
         const { musique, timer } = this.state;
 
         this.setState({
