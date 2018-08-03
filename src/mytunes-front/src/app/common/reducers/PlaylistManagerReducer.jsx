@@ -12,13 +12,12 @@ export const playlistManager = (state = {}, action) => {
         case "ADD_MUSIQUE_TO_PLAYLIST" :
             const newMusique = action.payload;
             const alreadyPresent = playlistManager.musiques.map(musique => musique.id).includes(newMusique.id);
-            playlistManager.addMusique(_mapMusique(newMusique));
+            playlistManager.addMusique(mapMusique(newMusique));
             if (alreadyPresent) {
                 NotificationManager.warning("Musique " + newMusique.titre + " déjà présente dans la playlist", "Playlist", 2000);
             } else {
                 NotificationManager.info("Musique ajoutée à la playlist", "Playlist", 1500);
             }
-            console.log("Reducer", playlistManager);
             break;
         case "PLAYING_MUSIQUE" :
             playlistManager.setMusiquePlaying(action.payload.musique, action.payload.addMusique);
@@ -41,7 +40,7 @@ export const playlistManager = (state = {}, action) => {
         case "LOAD_PLAYLIST" :
             playlistManager.loadPlaylist(
                 action.payload.playlist,
-                action.payload.musiques.map(_mapMusique));
+                action.payload.musiques.map(mapMusique));
             break;
         case "NEW_PLAYLIST" :
             playlistManager.newPlaylist();
@@ -67,6 +66,6 @@ export const playlistManager = (state = {}, action) => {
     return newState;
 };
 
-function _mapMusique(musique) {
+const mapMusique = (musique) => {
     return {...musique, uniqueId : randomId(), alreadyPlayed: false};
-}
+};

@@ -17,6 +17,7 @@ import {musiquePropType} from "../../types/MusiqueType";
 import {genrePropType} from "../../types/GenreType";
 import MusiquesActions from "../../../pages/listeMusique/actions/MusiquesActions";
 import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
+import CurrentPlaylistManager from "../../beans/CurrentPlaylistManager";
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
 Object.defineProperty(Array.prototype, "sum", {
@@ -45,6 +46,12 @@ class TableMusique extends React.Component {
                 property : "titre"
             }
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.playlistManager !== nextProps.playlistManager && nextProps.playlistManager && this.props.wsClient) {
+            this.props.wsClient.send("/app/action/lecteur/setCurrentPlaylist", this.props.playlistManager);
+        }
     }
 
     render() {
@@ -175,7 +182,8 @@ TableMusique.propTypes = {
 
 export default connect(state => assign({}, {
     genres: state.genres,
-    playlistManager: state.playlistManager
+    playlistManager: state.playlistManager,
+    wsClient: state.wsClient
 }), dispatch => ({
     musiquesActions: bindActionCreators(MusiquesActions, dispatch),
     playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)

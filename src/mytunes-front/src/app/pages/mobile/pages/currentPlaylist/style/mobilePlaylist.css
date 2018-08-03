@@ -1,12 +1,12 @@
-li.playlistItem {
+#mobile_mainPageContent li.playlistItem {
     height : 35px !important;
 }
 
-li span.classement {
+#mobile_mainPageContent li span.classement {
     display : none !important;
 }
 
-li span.titre {
+#mobile_mainPageContent li span.titre {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

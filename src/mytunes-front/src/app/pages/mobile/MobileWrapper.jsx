@@ -77,7 +77,7 @@ class MobileWrapper extends WebSocketConnectedComponent {
                                                              musique={ this.props.playlistManager.musiquePlaying }
                                                      />}>
 
-                        <section id={"mainPageContent"}>
+                        <section id={"mobile_mainPageContent"}>
                             <Route exact path={__MOBILE_URL__} component={CurrentPlaylist}/>
                             <Route exact path={__MOBILE_URL__ + "/playlists"} component={Playlists}/>
                         </section>
