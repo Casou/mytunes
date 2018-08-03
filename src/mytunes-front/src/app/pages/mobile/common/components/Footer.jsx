@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { BottomToolbar, Button, Icon, Range } from 'react-onsenui';
 import {connect} from "react-redux";
 import {assign} from "lodash";
+import {bindActionCreators} from "redux";
 import WebSocketConnectedComponent from "../../../../common/components/websocket/WebSocketConnectedComponent";
 
 import '../../../../../style/components/mobile/footer.css';
 import {musiquePropType} from "../../../../common/types/MusiqueType";
+import PlaylistManagerActions from "../../../../common/actions/PlaylistManagerActions";
 
 class Footer extends WebSocketConnectedComponent {
 
@@ -32,6 +34,7 @@ class Footer extends WebSocketConnectedComponent {
         this._addSubscription("/topic/lecteur/playPrevSong", (response) => this._playMusiqueCallback(response.musique));
         this._addSubscription("/topic/lecteur/pause", () => this._pauseMusiqueCallback());
         this._addSubscription("/topic/lecteur/time", (response) => this._timerMusiqueCallback(response));
+        this._addSubscription("/topic/lecteur/error", (response) => this._errorCallback(response));
     }
 
     componentDidMount() {
@@ -108,6 +111,8 @@ class Footer extends WebSocketConnectedComponent {
         console.log("_playMusiqueCallback");
         const { musique, timer } = this.state;
 
+        this.props.playlistManagerActions.playMusique(newMusique, false);
+
         this.setState({
             ...this.state,
             musique: newMusique,
@@ -146,6 +151,10 @@ class Footer extends WebSocketConnectedComponent {
         this.props.wsClient.send("/app/request/lecteur/playPrevSong", {});
     }
 
+    _errorCallback(musique) {
+        console.error("Error in music", musique);
+        this.props.playlistManagerActions.errorMusique(musique);
+    }
 
 }
 
@@ -156,4 +165,6 @@ Footer.propTypes = {
 
 export default connect(state => assign({}, {
     wsClient: state.wsClient
-}), null)(Footer);
+}), dispatch => ({
+    playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
+}))(Footer);

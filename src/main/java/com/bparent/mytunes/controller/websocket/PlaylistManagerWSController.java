@@ -104,4 +104,10 @@ public class PlaylistManagerWSController {
         return LECTEUR_STATUS;
     }
 
+    @MessageMapping("/action/lecteur/error")
+    @SendTo("/topic/lecteur/error")
+    public MusiqueDTO errorSong(MusiqueDTO musiqueDTO) {
+        return musiqueDTO;
+    }
+
 }

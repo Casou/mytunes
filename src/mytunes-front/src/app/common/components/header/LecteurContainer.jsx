@@ -135,6 +135,9 @@ class LecteurContainer extends React.Component {
 
     _songError(musique) {
         this.props.playlistManagerActions.errorMusique(musique);
+        if (this.props.wsClient) {
+            this.props.wsClient.send("/app/action/lecteur/error", musique);
+        }
     }
 
     _getLecteurStatus() {

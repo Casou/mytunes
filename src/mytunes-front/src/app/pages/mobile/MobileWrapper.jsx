@@ -17,6 +17,7 @@ import Playlists from "./pages/Playlists";
 import PlaylistManagerActions from "../../common/actions/PlaylistManagerActions";
 import WebSocketConnectedComponent from "../../common/components/websocket/WebSocketConnectedComponent";
 import {__SERVER_URL__} from "../../../App";
+import CurrentPlaylistManager from "../../common/beans/CurrentPlaylistManager";
 
 export const __MOBILE_URL__ = '/mobile';
 
@@ -49,7 +50,8 @@ class MobileWrapper extends WebSocketConnectedComponent {
 
         if (this.props.wsClient !== nextProps.wsClient && nextProps.wsClient) {
             nextProps.wsClient.subscribe("/topic/lecteur/setCurrentPlaylist", "MobileWrapper",
-                (currentPlaylistManager) => this.props.playlistManagerActions.setPlaylistManager(currentPlaylistManager));
+                (currentPlaylistManager) => this.props.playlistManagerActions.setPlaylistManager(
+                    new CurrentPlaylistManager(currentPlaylistManager)));
             this._loadProperties(nextProps.wsClient);
         }
     }

@@ -18,6 +18,7 @@ export const playlistManager = (state = {}, action) => {
             } else {
                 NotificationManager.info("Musique ajoutée à la playlist", "Playlist", 1500);
             }
+            console.log("Reducer", playlistManager);
             break;
         case "PLAYING_MUSIQUE" :
             playlistManager.setMusiquePlaying(action.payload.musique, action.payload.addMusique);
