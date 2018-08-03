@@ -1,0 +1,27 @@
+#mobile_mainPageContent li.playlistItem {
+    height : 35px !important;
+}
+
+#mobile_mainPageContent li span.classement {
+    display : none !important;
+}
+
+#mobile_mainPageContent li span.titre {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+#mobile_mainPageContent .playlistSortableHelper span.titre {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#mobile_mainPageContent .playlistSortableHelper span.play,
+#mobile_mainPageContent .playlistSortableHelper span.bpm,
+#mobile_mainPageContent .playlistSortableHelper span.classement,
+#mobile_mainPageContent .playlistSortableHelper span.duree,
+#mobile_mainPageContent .playlistSortableHelper span.delete { display : none; }

@@ -1,0 +1,18 @@
+.mobile_confirmDialog .alert-dialog-footer {
+    margin : 20px 0 5px 0;
+    display : flex;
+}
+
+.mobile_confirmDialog .alert-dialog-footer .alert-dialog-button {
+    flex : 1;
+    margin : 0 5px;
+}
+
+.mobile_confirmDialog .alert-dialog-button-ok {
+    background: #0e90d2;
+    color : white;
+}
+
+.mobile_confirmDialog .alert-dialog-footer {
+    padding : 0 10px;
+}
