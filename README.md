@@ -29,11 +29,11 @@ Itunes GUI, Parser and Exporter
         * [NO] Transfert des enfants vers le nouveau (sans perdre les anciens enfants !)
     * [x] Suppression d'une playlist et de ses enfants
     * [x] Refaire le "Enregistrer sous"
-        => BUG Le nouveau nom ne s'affiche pas (la playlist courante ne doit pas être mise à jour).
+        * [ ] BUG Le nouveau nom ne s'affiche pas (la playlist courante ne doit pas être mise à jour).
     * [ ] Refaire les items (drag & drop)
     * [ ] Gérer les musiques en double dans la playlist (marque les 2 comme lus)
     * [ ] Footer avec la durée de la playlist courante
-    * [ ] Le volume reste a dessus du menu des playlists
+    * [ ] Le volume reste au dessus du menu des playlists
     * [ ] Si le lecteur est en train de jouer, demander confirmation avant de lancer manuellement une autre musique (paramétrable)
 
 * Listes / tree de playlist :
@@ -42,13 +42,13 @@ Itunes GUI, Parser and Exporter
     * [ ] Drag d'arborescence => le store n'est pas MAJ
 
 * Liste par genre :
-    * [ ] Avoir un vrai bouton de retour
+    * [ ] Faire un menu gauche pour sélectionner le genre
 
 * Général
     * [x] Sortir d'un loading infini
     * [x] Local storage pour le playlistManager
     * [ ] Reload de la page
-    * [ ] Communications WebSockets pour les fonctions de base (lecture, pause, suivant, volume)
+    * [x] Communications WebSockets pour les fonctions de base (lecture, pause, suivant, volume)
     * [ ] Pouvoir confirmer les confirm dialog via la touche "Entrée"
     * [ ] Gestion des logs Front et Back
     * [ ] Backup réguliers de la BDD
@@ -73,12 +73,12 @@ Itunes GUI, Parser and Exporter
 
 
 
-****** OPTIONALS ******
+### OPTIONALS
 * Appli React Native
     * [ ] Détection de la connection au bon réseau (raspberry)
         * [ ] Détection du lecteur ou du raspberry sur n'importe quel réseau
-    * [ ] Communications WebSockets pour les fonctions de base (lecture, pause, suivant, volume)
-    * [ ] Communications WebSockets pour gérer la playlist courante
+    * [x] Communications WebSockets pour les fonctions de base (lecture, pause, suivant, volume)
+    * [x] Communications WebSockets pour gérer la playlist courante
     * [ ] Communications WebSockets pour des fonctions avancées de contrôle du volume (gain, nivaux)
 
 * Lecteur
