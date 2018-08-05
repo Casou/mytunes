@@ -43,9 +43,6 @@
 }
 
 #lecteurWrapper #lecteurAction button {
-    /*position: absolute;*/
-    /*top: 50%;*/
-    /*transform: translateY(-50%);*/
     display : inline-block;
     margin : auto;
 }

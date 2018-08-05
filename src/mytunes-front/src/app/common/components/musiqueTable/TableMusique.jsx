@@ -17,7 +17,6 @@ import {musiquePropType} from "../../types/MusiqueType";
 import {genrePropType} from "../../types/GenreType";
 import MusiquesActions from "../../../pages/listeMusique/actions/MusiquesActions";
 import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
-import CurrentPlaylistManager from "../../beans/CurrentPlaylistManager";
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
 Object.defineProperty(Array.prototype, "sum", {

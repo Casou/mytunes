@@ -37,7 +37,6 @@ class LecteurDisplay extends React.Component {
                 (this.props.musique && nextProps.musique &&
                     this.props.musique.uniqueId !== nextProps.musique.uniqueId)
             ) {
-            console.log("load", this.props.musique, nextProps.musique);
             this._load(nextProps.musique);
         }
         if (this.props.volume !== nextProps.volume) {
@@ -56,7 +55,7 @@ class LecteurDisplay extends React.Component {
 
     render() {
         const { isPlaying, currentTime } = this.state;
-        const { musique, onSongEnd } = this.props;
+        const { musique, onSongEnd, disabled } = this.props;
 
         return (
             <div id="lecteurDiv">
@@ -64,23 +63,27 @@ class LecteurDisplay extends React.Component {
                     <PrevButton
                         isEnabled={ this.props.musique ? true : false }
                         onClick={ this.props.playPrevSong }
+                        disabled={disabled}
                     />
                     {
                         isPlaying ?
                         <PauseButton
                             isEnabled={ this.props.musique ? true : false }
                             onClick={() => this._pauseWS() }
+                            disabled={disabled}
                         />
                         :
                         <PlayButton
                             isEnabled={ this.props.musique ? true : false }
                             onClick={() => this._playWS() }
+                            disabled={disabled}
                         />
                     }
 
                     <NextButton
                         isEnabled={ this.props.musique ? true : false }
                         onClick={ this.props.onPlayNextSong }
+                        disabled={disabled}
                     />
                 </div>
                 <div id="lecteurDisplay">
@@ -99,6 +102,7 @@ class LecteurDisplay extends React.Component {
                             onSeekStart={time => null }
                             onSeekEnd={time => null }
                             onIntent={time => null }
+                            disabled={disabled}
                         />
                         <TimeMarker
                             totalTime={ musique ? musique.duree : 0 }
@@ -210,7 +214,12 @@ LecteurDisplay.propTypes = {
     onPlaySong : PropTypes.func,
     onPauseSong : PropTypes.func,
     onUpdatePlayTime : PropTypes.func,
-    wsClient : PropTypes.object
+    wsClient : PropTypes.object,
+    disabled : PropTypes.bool.isRequired
+};
+
+LecteurDisplay.defaultProps = {
+    disabled : false
 };
 
 export default LecteurDisplay;

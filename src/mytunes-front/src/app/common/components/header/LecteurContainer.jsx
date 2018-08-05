@@ -62,6 +62,7 @@ class LecteurContainer extends React.Component {
                                 onUpdatePlayTime={ this._onUpdatePlayTime }
                                 onSeekTime ={ this._onSeekPlayTime }
                                 wsClient={ this.props.wsClient }
+                                disabled={playlistManager.musiquePlaying !== null}
                 />
                 <AsideVolumeSlider volume={volume}
                                    onVolumeChange={ this._updateVolume } />

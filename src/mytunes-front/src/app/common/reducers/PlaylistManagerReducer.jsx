@@ -5,6 +5,7 @@ import {randomId} from "../util/Common";
 
 export const playlistManager = (state = {}, action) => {
     let playlistManager = state;
+    let remove = false;
     switch (action.type) {
         case "SET_PLAYLIST_MANAGER" :
             playlistManager = action.payload;
@@ -30,6 +31,7 @@ export const playlistManager = (state = {}, action) => {
             break;
         case "CLEAR_PLAYLIST" :
             playlistManager.clearPlaylist();
+            remove = false;
             break;
         case "TOGGLE_SHUFFLE" :
             playlistManager.toggleShuffle();
@@ -56,13 +58,18 @@ export const playlistManager = (state = {}, action) => {
     }
 
     const newState = ObjectUtil.clone(playlistManager);
-    localStorage.setItem(__LOCAL_STORAGE__PLAYLIST_MANAGER__,
-        JSON.stringify(newState, (key, value) => {
-            if (key === "parent") {
-                return;
-            }
-            return value;
-        }));
+    if (remove) {
+        localStorage.removeItem(__LOCAL_STORAGE__PLAYLIST_MANAGER__);
+    } else {
+        localStorage.setItem(__LOCAL_STORAGE__PLAYLIST_MANAGER__,
+            JSON.stringify(newState, (key, value) => {
+                if (key === "parent") {
+                    return;
+                }
+                return value;
+            }));
+    }
+
     return newState;
 };
 

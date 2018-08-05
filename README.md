@@ -5,7 +5,7 @@ Itunes GUI, Parser and Exporter
 ### MUST HAVE
 
 * Lecteur
-    * [ ] Boutons disabled si pas de musique chargée
+    * [x] Boutons disabled si pas de musique chargée
     * [ ] Locker le lecteur pour éviter des misclicks
 
 * Liste des musiques
