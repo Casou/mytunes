@@ -5,8 +5,8 @@ Itunes GUI, Parser and Exporter
 ### MUST HAVE
 
 * Lecteur
-    * [o] Boutons disabled si pas de musique chargée
-    * [o] Locker le lecteur pour éviter des misclicks
+    * [ ] Boutons disabled si pas de musique chargée
+    * [ ] Locker le lecteur pour éviter des misclicks
 
 * Liste des musiques
     [ ] CSS : ajuster la select box des genres pour que la flèche prenne moins de place
