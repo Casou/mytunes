@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {assign} from "lodash";
 import PlaylistSortableList from "../../../../../common/components/playlist/components/PlaylistSortableList";
@@ -8,7 +9,7 @@ import '../style/MobileCurrentPlaylist.css';
 import ConfirmDialog from "../../../common/components/ConfirmDialog";
 
 
-const MobileCurrentPlaylist = ({playlistManager}) => {
+const MobileCurrentPlaylist = ({playlistManager, wsClient, disableButtons}) => {
     const deleteMusique = (musique) => {
         this.confirmDelete.openDialog(musique);
     };
@@ -16,7 +17,7 @@ const MobileCurrentPlaylist = ({playlistManager}) => {
         this.confirmPlay.openDialog(musique);
     };
     const confirmPlay = (musique) => {
-
+        wsClient.send("/app/action/lecteur/play", musique);
     };
     const confirmDelete = (musique) => {
 
@@ -31,9 +32,11 @@ const MobileCurrentPlaylist = ({playlistManager}) => {
                                   musiquePlaying={playlistManager.musiquePlaying}
                                   deleteMusique={deleteMusique}
                                   playMusique={playMusique}
-                                  helperClass='playlistSortableHelper'
+                                  helperClass='playlistSortableHelper mobilePlaylistSortableHelper'
                                   onSortEnd={ this._sortEnd }
                                   pressDelay={200}
+                                  disableButtons={disableButtons}
+                                  shouldCancelStart={() => disableButtons}
             />
             <ConfirmDialog ref={ instance => this.confirmPlay = instance}
                            message={"Lancer la chanson ? (Coupe la musique courante)"}
@@ -47,9 +50,12 @@ const MobileCurrentPlaylist = ({playlistManager}) => {
     );
 };
 
-MobileCurrentPlaylist.propTypes = {};
+MobileCurrentPlaylist.propTypes = {
+    disableButtons : PropTypes.bool.isRequired
+};
 MobileCurrentPlaylist.defaultProps = {};
 
 export default connect(state => assign({}, {
-    playlistManager: state.playlistManager
+    playlistManager: state.playlistManager,
+    wsClient: state.wsClient
 }), null)(MobileCurrentPlaylist);

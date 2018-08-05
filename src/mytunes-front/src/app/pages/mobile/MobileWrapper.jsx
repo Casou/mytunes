@@ -12,7 +12,7 @@ import {bindActionCreators} from "redux";
 import "../../../style/components/mobile/main.css";
 import Menu from "./common/components/Menu";
 import VolumeSlider from "./common/components/VolumeSlider";
-import CurrentPlaylist from "./pages/currentPlaylist/container/MobileCurrentPlaylist";
+import MobileCurrentPlaylist from "./pages/currentPlaylist/container/MobileCurrentPlaylist";
 import Playlists from "./pages/Playlists";
 import PlaylistManagerActions from "../../common/actions/PlaylistManagerActions";
 import WebSocketConnectedComponent from "../../common/components/websocket/WebSocketConnectedComponent";
@@ -78,7 +78,7 @@ class MobileWrapper extends WebSocketConnectedComponent {
                                                      />}>
 
                         <section id={"mobile_mainPageContent"}>
-                            <Route exact path={__MOBILE_URL__} component={CurrentPlaylist}/>
+                            <Route exact path={__MOBILE_URL__} render={() => <MobileCurrentPlaylist disableButtons={this.state.isLocked} />}/>
                             <Route exact path={__MOBILE_URL__ + "/playlists"} component={Playlists}/>
                         </section>
 

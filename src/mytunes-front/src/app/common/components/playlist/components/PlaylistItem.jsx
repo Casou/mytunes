@@ -8,9 +8,7 @@ import {musiquePropType} from "../../../types/MusiqueType";
 import {formateDuree} from "../../../util/Formatters";
 import Classement from "../../../../pages/listeMusique/components/Classement";
 
-const PlaylistItem = SortableElement((props) => {
-    const {musique, isPlaying, playMusique, deleteMusique} = props;
-
+const PlaylistItem = SortableElement(({musique, isPlaying, playMusique, deleteMusique, disableButtons}) => {
     return (
         <li className={
             cn([
@@ -24,7 +22,9 @@ const PlaylistItem = SortableElement((props) => {
                 {isPlaying ?
                     <FontIcon className="material-icons">equalizer</FontIcon>
                     :
-                    <IconButton onClick={(event) => playMusique(musique, event)}>
+                    <IconButton onClick={(event) => playMusique(musique, event)}
+                                disabled={disableButtons}
+                    >
                         <FontIcon className="material-icons">play_arrow</FontIcon>
                     </IconButton>
                 }
@@ -33,7 +33,9 @@ const PlaylistItem = SortableElement((props) => {
             <span className="classement"><Classement musique={musique} /></span>
             <span className="duree">{musique.duree ? formateDuree(musique.duree) : "-"}</span>
             <span className="delete">
-                <IconButton onClick={(event) => deleteMusique(musique, event)}>
+                <IconButton onClick={(event) => deleteMusique(musique, event)}
+                            disabled={disableButtons}
+                >
                     <FontIcon className="material-icons">delete</FontIcon>
                 </IconButton>
             </span>
@@ -46,7 +48,8 @@ PlaylistItem.propTypes = {
     musique: musiquePropType.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     playMusique: PropTypes.func.isRequired,
-    deleteMusique: PropTypes.func.isRequired
+    deleteMusique: PropTypes.func.isRequired,
+    disableButtons : PropTypes.bool.isRequired
 };
 
 export default PlaylistItem;

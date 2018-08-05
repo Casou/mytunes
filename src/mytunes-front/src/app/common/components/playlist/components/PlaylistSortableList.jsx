@@ -5,7 +5,7 @@ import PlaylistItem from "./PlaylistItem";
 import {musiquePropType} from "../../../types/MusiqueType";
 
 const PlaylistSortableList = SortableContainer((props) => {
-    const { musiques, musiquePlaying, playMusique, deleteMusique } = props;
+    const { musiques, musiquePlaying, playMusique, deleteMusique, disableButtons } = props;
 
     return (
         <ul>
@@ -16,6 +16,7 @@ const PlaylistSortableList = SortableContainer((props) => {
                               isPlaying={musiquePlaying && musique.uniqueId === musiquePlaying.uniqueId}
                               playMusique={playMusique}
                               deleteMusique={deleteMusique}
+                              disableButtons={disableButtons}
                 />
             ))}
         </ul>
@@ -26,7 +27,8 @@ PlaylistSortableList.propTypes = {
     musiques: PropTypes.arrayOf(musiquePropType).isRequired,
     musiquePlaying: PropTypes.shape({type: PropTypes.oneOf([musiquePropType])}),
     playMusique : PropTypes.func.isRequired,
-    deleteMusique : PropTypes.func.isRequired
+    deleteMusique : PropTypes.func.isRequired,
+    disableButtons : PropTypes.bool
 };
 
 export default PlaylistSortableList;

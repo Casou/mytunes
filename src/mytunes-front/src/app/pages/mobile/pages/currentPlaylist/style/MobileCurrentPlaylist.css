@@ -13,15 +13,15 @@
 }
 
 
-#mobile_mainPageContent .playlistSortableHelper span.titre {
+.mobilePlaylistSortableHelper span.titre {
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-#mobile_mainPageContent .playlistSortableHelper span.play,
-#mobile_mainPageContent .playlistSortableHelper span.bpm,
-#mobile_mainPageContent .playlistSortableHelper span.classement,
-#mobile_mainPageContent .playlistSortableHelper span.duree,
-#mobile_mainPageContent .playlistSortableHelper span.delete { display : none; }
+.mobilePlaylistSortableHelper span.play,
+.mobilePlaylistSortableHelper span.bpm,
+.mobilePlaylistSortableHelper span.classement,
+.mobilePlaylistSortableHelper span.duree,
+.mobilePlaylistSortableHelper span.delete { display : none; }

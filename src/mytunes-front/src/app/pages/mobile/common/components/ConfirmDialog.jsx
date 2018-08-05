@@ -20,6 +20,11 @@ class ConfirmDialog extends React.Component {
         this.closeDialog();
     }
 
+    _handleOk() {
+        this.props.onConfirm(this.state.callerObject);
+        this.closeDialog();
+    }
+
     closeDialog() {
         this.setState({ ...this.state, isOpen : false, callerObject : null });
     }
@@ -42,7 +47,7 @@ class ConfirmDialog extends React.Component {
                     <Button onClick={this._handleCancel.bind(this)} className="alert-dialog-button alert-dialog-button-cancel">
                         Annuler
                     </Button>
-                    <Button onClick={this.props.onConfirm} className="alert-dialog-button alert-dialog-button-ok">
+                    <Button onClick={this._handleOk.bind(this)} className="alert-dialog-button alert-dialog-button-ok">
                         OK
                     </Button>
                 </div>
