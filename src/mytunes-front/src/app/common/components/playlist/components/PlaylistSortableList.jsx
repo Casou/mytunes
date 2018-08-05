@@ -16,7 +16,7 @@ const PlaylistSortableList = SortableContainer((props) => {
                               isPlaying={musiquePlaying && musique.uniqueId === musiquePlaying.uniqueId}
                               playMusique={playMusique}
                               deleteMusique={deleteMusique}
-                              disableButtons={disableButtons}
+                              disableButtons={disableButtons || false}
                 />
             ))}
         </ul>

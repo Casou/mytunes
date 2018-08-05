@@ -27,6 +27,7 @@ class PlaylistContainer extends WebSocketConnectedComponent {
 
         this._setComponentName("PlaylistContainer");
         this._addSubscription("/topic/lecteur/play", (response) => this._playMusiqueCallback(response.musique));
+        this._addSubscription("/topic/lecteur/sortCurrentPlaylist", (response) => this._sortEnd(response));
     }
 
 
@@ -34,7 +35,6 @@ class PlaylistContainer extends WebSocketConnectedComponent {
         const { playlistManager, playlistProvider } = this.props;
         const musiquePlaying = playlistManager.musiquePlaying;
 
-        console.log("playlistManager",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  playlistManager);
         return (
             <div id="playlistMenu">
                 <PlaylistHeader shuffle={ playlistManager.shuffle }

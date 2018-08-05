@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {assign} from "lodash";
+import {bindActionCreators} from "redux";
 import PlaylistSortableList from "../../../../../common/components/playlist/components/PlaylistSortableList";
 
 import '../../../../../../style/components/playlistMenu.css';
 import '../style/MobileCurrentPlaylist.css';
 import ConfirmDialog from "../../../common/components/ConfirmDialog";
+import PlaylistManagerActions from "../../../../../common/actions/PlaylistManagerActions";
 
 
-const MobileCurrentPlaylist = ({playlistManager, wsClient, disableButtons}) => {
+const MobileCurrentPlaylist = ({playlistManager, wsClient, disableButtons, playlistManagerActions}) => {
     const deleteMusique = (musique) => {
         this.confirmDelete.openDialog(musique);
     };
@@ -22,8 +24,11 @@ const MobileCurrentPlaylist = ({playlistManager, wsClient, disableButtons}) => {
     const confirmDelete = (musique) => {
 
     };
-    const _sortEnd = () => {
+    const _sortEnd = ({oldIndex, newIndex}) => {
+        if (oldIndex === newIndex) { return; }
 
+        playlistManagerActions.reorderPlaylist(oldIndex, newIndex);
+        wsClient.send("/app/action/lecteur/sortCurrentPlaylist", {oldIndex, newIndex});
     };
 
     return (
@@ -33,7 +38,7 @@ const MobileCurrentPlaylist = ({playlistManager, wsClient, disableButtons}) => {
                                   deleteMusique={deleteMusique}
                                   playMusique={playMusique}
                                   helperClass='playlistSortableHelper mobilePlaylistSortableHelper'
-                                  onSortEnd={ this._sortEnd }
+                                  onSortEnd={ _sortEnd }
                                   pressDelay={200}
                                   disableButtons={disableButtons}
                                   shouldCancelStart={() => disableButtons}
@@ -53,9 +58,10 @@ const MobileCurrentPlaylist = ({playlistManager, wsClient, disableButtons}) => {
 MobileCurrentPlaylist.propTypes = {
     disableButtons : PropTypes.bool.isRequired
 };
-MobileCurrentPlaylist.defaultProps = {};
 
 export default connect(state => assign({}, {
     playlistManager: state.playlistManager,
     wsClient: state.wsClient
-}), null)(MobileCurrentPlaylist);
+}), dispatch => ({
+    playlistManagerActions: bindActionCreators(PlaylistManagerActions, dispatch)
+}))(MobileCurrentPlaylist);

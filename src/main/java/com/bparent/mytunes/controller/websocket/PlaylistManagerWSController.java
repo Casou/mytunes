@@ -4,6 +4,7 @@ import com.bparent.mytunes.controller.websocket.constants.LecteurStatus;
 import com.bparent.mytunes.controller.websocket.dto.LecteurStatusDto;
 import com.bparent.mytunes.dto.MusiqueDTO;
 import com.bparent.mytunes.dto.PlaylistManagerDTO;
+import com.bparent.mytunes.dto.SortPlaylistDTO;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,6 +109,12 @@ public class PlaylistManagerWSController {
     @SendTo("/topic/lecteur/error")
     public MusiqueDTO errorSong(MusiqueDTO musiqueDTO) {
         return musiqueDTO;
+    }
+
+    @MessageMapping("/action/lecteur/sortCurrentPlaylist")
+    @SendTo("/topic/lecteur/sortCurrentPlaylist")
+    public SortPlaylistDTO sortCurrentPlaylist(SortPlaylistDTO sortPlaylistDTO) {
+        return sortPlaylistDTO;
     }
 
 }
