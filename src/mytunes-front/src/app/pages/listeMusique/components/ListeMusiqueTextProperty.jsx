@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "material-ui";
+import { TextField } from "@material-ui/core";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import {__KEYCODE_ENTER__} from "../../../../App";
@@ -18,7 +18,8 @@ const ListeMusiqueTextProperty = (props) => {
   return (
     <TextField
       id = { "input_" + props.uniqueKey }
-      className={ classNames("textField", props.isFetching ? "fetching" : "") } fullWidth={ true } underlineShow={ false }
+      className={ classNames("textField", props.isFetching ? "fetching" : "") }
+      fullWidth={ true }
       name={ props.inputName }
       disabled={ props.isFetching }
       defaultValue={ props.defaultValue }

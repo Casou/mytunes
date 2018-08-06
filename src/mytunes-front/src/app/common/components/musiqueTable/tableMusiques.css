@@ -52,11 +52,16 @@
     height : calc(var(--general-font-size) + 6px) !important;
 }
 
-.VirtualizeTable .textField input:focus {
-    border : 1px solid grey !important;
-    background : white !important;
-    width: 96% !important;
+.VirtualizeTable .textField input {
+    font-size : var(--general-font-size) !important;
 }
+
+.VirtualizeTable .textField > div:before {
+    border : 0 !important;
+}
+
+
+
 
 
 #tableMusiques {
