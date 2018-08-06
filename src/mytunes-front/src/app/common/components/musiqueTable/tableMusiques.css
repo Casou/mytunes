@@ -90,38 +90,40 @@
 
 
 
-#tableMusiques .genre > span {
-    height : 30px !important;
-}
-
-#tableMusiques .genre > span > div,
-#tableMusiques .genre > span > div > div {
-    height : 30px !important;
-    line-height : 30px !important;
-    font-size : 12px !important;
-}
 
 #tableMusiques .genre > span > div {
     width : 100% !important;
+    height : 24px !important;
+    font-size: 12px !important;
+}
+#tableMusiques .genre .selectGenres_icon {
+    top : calc(50% - 14px);
+}
+#tableMusiques .genre .selectGenres_selectMenu {
+    padding-right : 16px !important;
 }
 
-#tableMusiques .genre > span > div > div > div > button {
-    height : 30px !important;
-    padding : 0 !important;
+.selectGenres_menuItem.disabled { color : grey !important; }
+.selectGenres_menuItem.disabled.checked { color : #966090 !important; }
+
+.selectGenres_popover ul { padding : 0; }
+.selectGenres_popover_item {
+    min-width : 100px;
+    line-height : 14px !important;
+    font-size : 14px !important;
+    padding : 10px 15px !important;
 }
 
-#tableMusiques .genre > span > div > div > div:nth-child(1) > div:nth-child(2) {
-    top : 1px !important;
-    height : 30px !important;
-    line-height : 30px !important;
+.selectGenres_popover_item_label {
+    line-height : 24px !important;
 }
 
-#tableMusiques > div > div > div > div > div:nth-child(1) > div > div:nth-child(2) > div > div > div:nth-child(14) > span > div > div:nth-child(3) {
-    margin-top : -30px;
+.selectGenres_popover_item.checked { background-color : #bbcde0 !important; }
+.selectGenres_popover_item.checked:hover,
+.selectGenres_popover_item:hover { background-color : #d5dae0 !important; }
+
+.selectGenres_popover_item_checkbox {
+    height : 100% !important;
+    width : 20px !important;
+    margin-right : 15px !important;
 }
-
-#tableMusiques .genre svg { fill : #a0a0a0 !important; }
-#tableMusiques .genre hr { bottom : 5px !important; border-color : #a0a0a0 !important; }
-
-div[role=menu] span[role=menuitem].disabled { color : grey !important; }
-div[role=menu] span[role=menuitem].disabled.checked { color : #966090 !important; }

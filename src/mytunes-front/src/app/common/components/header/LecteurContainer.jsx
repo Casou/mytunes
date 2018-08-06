@@ -105,7 +105,6 @@ class LecteurContainer extends React.Component {
 
 
     _playNextSongWS() {
-        console.log("play next", this.props.wsClient ? "ok" : "KO");
         if (this.props.wsClient) {
             const nextSong = this.props.playlistManager.getNextSong();
             this.props.wsClient.send("/app/action/lecteur/playNextSong", { musique : nextSong });
@@ -121,7 +120,6 @@ class LecteurContainer extends React.Component {
     }
 
     _playPrevSongWS() {
-        console.log("play prev", this.props.wsClient ? "ok" : "KO");
         if (this.props.wsClient) {
             const prevSong = this.props.playlistManager.getPrevSong();
             this.props.wsClient.send("/app/action/lecteur/playPrevSong", { musique : prevSong });

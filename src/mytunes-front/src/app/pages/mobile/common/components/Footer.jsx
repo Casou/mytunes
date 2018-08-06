@@ -108,7 +108,6 @@ class Footer extends WebSocketConnectedComponent {
     }
 
     _playMusiqueCallback(newMusique) {
-        console.log("_playMusiqueCallback");
         const { musique, timer } = this.state;
 
         this.props.playlistManagerActions.playMusique(newMusique, false);

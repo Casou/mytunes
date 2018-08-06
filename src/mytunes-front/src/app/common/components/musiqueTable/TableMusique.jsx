@@ -8,7 +8,7 @@ import VirtualizeTable from "../../../common/components/virtualizeTable/Virtuali
 
 import {__KEYCODE_ENTER__} from "../../../../App";
 
-import '../../../../style/components/tableMusiques.css';
+import './tableMusiques.css';
 import {compareProperty} from "../../../common/util/Comparators";
 import {formateDuree} from "../../../common/util/Formatters";
 import StateBar from "../../../common/components/stateBar/StateBar";
