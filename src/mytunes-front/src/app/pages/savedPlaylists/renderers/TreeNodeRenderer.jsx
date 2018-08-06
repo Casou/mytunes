@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import {Link} from "react-router-dom";
 import {isDescendant} from './tree-data-utils';
 import './TreeNodeRenderer.css';
+import {__DESKTOP_URL__} from "../../../../App";
 
 class TreeNodeRenderer extends Component {
     render() {
@@ -121,7 +122,7 @@ class TreeNodeRenderer extends Component {
                         >
                             {handle}
 
-                            <Link to={ '/playlists/' + node.id }>
+                            <Link to={ __DESKTOP_URL__ + '/playlists/' + node.id }>
                                 <div
                                     className={classnames(
                                         'rst__rowContents',

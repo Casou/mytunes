@@ -2,6 +2,7 @@ import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import {Drawer, IconButton, MenuItem, Divider} from "material-ui";
 import {Link} from "react-router-dom";
+import {__DESKTOP_URL__} from "../../../../App";
 
 export default class Menu extends React.Component {
   constructor(props) {
@@ -44,16 +45,16 @@ export default class Menu extends React.Component {
           className={ "mainMenu menuDrawer" }
           onRequestChange={ this.setMenuOpeness }
         >
-          <MenuItem containerElement={<Link to="/desktop/musiques" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to={ __DESKTOP_URL__ + "/musiques" } />} onClick={ this.closeMenu }>
             <FontIcon className="material-icons">library_music</FontIcon>
             Liste musiques
           </MenuItem>
-          <MenuItem containerElement={<Link to="/desktop/genres" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to={ __DESKTOP_URL__ + "/genres" } />} onClick={ this.closeMenu }>
             <FontIcon className="material-icons">view_module</FontIcon>
             Liste par genre
           </MenuItem>
           <Divider />
-          <MenuItem containerElement={<Link to="/desktop/playlists" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to={ __DESKTOP_URL__ + "/playlists" } />} onClick={ this.closeMenu }>
               <FontIcon className="material-icons">list</FontIcon>
               Playlists
           </MenuItem>
@@ -67,7 +68,7 @@ export default class Menu extends React.Component {
                 Import / export
             </MenuItem>
           <Divider />
-          <MenuItem containerElement={<Link to="/desktop/parametres" />} onClick={ this.closeMenu }>
+          <MenuItem containerElement={<Link to={ __DESKTOP_URL__ + "/parametres" } />} onClick={ this.closeMenu }>
               <FontIcon className="material-icons">settings</FontIcon>
               Paramètres
           </MenuItem>

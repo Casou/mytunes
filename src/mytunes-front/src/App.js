@@ -27,6 +27,9 @@ export const __SERVER_URL__ = "http://" + __BASIC_URL__;
 export const __WEBSOCKET_URL__ = __SERVER_URL__ + "ws";
 export const __KEYCODE_ENTER__ = 13;
 
+export const __DESKTOP_URL__ = "/desktop";
+export const __MOBILE_URL__ = "/mobile";
+
 export const __LOCAL_STORAGE__PLAYLIST_MANAGER__ = "playlistManager";
 
 class App extends React.Component {
@@ -50,8 +53,8 @@ class App extends React.Component {
                                      ref={ (client) => { this.wsClient = client }} />
 
                     <Route exact path="/" component={RouteWrapper}/>
-                    <Route path="/desktop" component={DesktopWrapper}/>
-                    <Route path="/mobile" component={MobileWrapper}/>
+                    <Route path={ __DESKTOP_URL__ } component={DesktopWrapper}/>
+                    <Route path={ __MOBILE_URL__ } component={MobileWrapper}/>
                 </div>
             </MuiThemeProvider>
         );

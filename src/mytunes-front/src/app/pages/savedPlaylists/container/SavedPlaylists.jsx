@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {assign} from "lodash";
 import {bindActionCreators} from "redux";
 import {arrayMove} from 'react-sortable-hoc';
-import { TextField} from 'material-ui';
+import { TextField } from '@material-ui/core';
 
 import 'react-sortable-tree/style.css';
 import '../../../../style/components/savedPlaylists.css';
