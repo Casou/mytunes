@@ -71,8 +71,10 @@ class SavedPlaylists extends React.Component {
                         :
                         <div id={"musiquesPlaylist"}>
                             <header>
-                                <TextField className="textField" name={"playlistName"} placeholder={"Nom de la playlist"}
-                                           ref={instance => this.inputPlaylistNom = instance }
+                                <TextField className="textField"
+                                           name={"playlistName"}
+                                           placeholder={"Nom de la playlist"}
+                                           inputRef={instance => this.inputPlaylistNom = instance }
                                            value={selectedPlaylist.nom}
                                            onChange={event => {
                                                this.setState({
