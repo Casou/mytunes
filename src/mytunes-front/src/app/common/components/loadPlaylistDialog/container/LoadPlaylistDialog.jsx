@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Dialog, FlatButton } from "material-ui";
-import '../../../../../style/components/loadPlaylistDialog.css';
+import '../style/loadPlaylistDialog.css';
 import LoadPlaylistTreeView from "../component/LoadPlaylistTreeView";
 
 class LoadPlaylistDialog extends React.Component {

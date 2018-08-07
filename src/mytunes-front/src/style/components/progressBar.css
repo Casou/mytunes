@@ -21,13 +21,6 @@
     height: 16px;
     background: var(--slider-active-color);
     border-radius: 100%;
-    transform: scale(0);
-    transition: transform 0.2s;
-}
-
-.ProgressBar.isSeekable:hover .ProgressBar-handle,
-.ProgressBar.isEnabled:hover .ProgressBar-handle {
-    transform: scale(1);
 }
 
 .ProgressBar.isSeekable:hover .ProgressBar-intent,
@@ -70,10 +63,6 @@
 .ProgressBar-handle {
      top: 0;
      margin: -4px 0 0 -8px;
-}
-
-.ProgressBar.isSeekable .ProgressBar:hover .ProgressBar-handle {
-    transform: scale(1);
 }
 
 .ProgressBar.isSeekable .ProgressBar:hover .ProgressBar-intent {

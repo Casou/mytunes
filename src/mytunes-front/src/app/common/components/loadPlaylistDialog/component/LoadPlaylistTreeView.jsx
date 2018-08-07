@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FontIcon, TextField} from "material-ui";
+import {Icon} from "@material-ui/core";
+import {TextField} from "material-ui";
 import {__KEYCODE_ENTER__} from "../../../../../App";
 import PlaylistTreeView from "./PlaylistTreeView";
 
@@ -74,7 +75,7 @@ class LoadPlaylistTreeView extends React.Component {
             <div>
                 { this.props.onFilter ?
                     <div className={"searchPlaylist"}>
-                        <FontIcon className="material-icons">search</FontIcon>
+                        <Icon className="material-icons">search</Icon>
                         <TextField className="textField" name={"searchPlaylist"} placeholder={"Recherche"}
                                    onKeyPress={e => {
                                        if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {

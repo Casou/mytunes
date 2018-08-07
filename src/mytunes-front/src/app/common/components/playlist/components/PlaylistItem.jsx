@@ -1,5 +1,6 @@
 import React from 'react';
-import {FontIcon, IconButton} from "material-ui";
+import {Icon} from "@material-ui/core";
+import {IconButton} from "material-ui";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import { SortableElement } from 'react-sortable-hoc';
@@ -20,12 +21,12 @@ const PlaylistItem = SortableElement(({musique, isPlaying, playMusique, deleteMu
         }>
             <span className="play">
                 {isPlaying ?
-                    <FontIcon className="material-icons">equalizer</FontIcon>
+                    <Icon className="material-icons">equalizer</Icon>
                     :
                     <IconButton onClick={(event) => playMusique(musique, event)}
                                 disabled={disableButtons}
                     >
-                        <FontIcon className="material-icons">play_arrow</FontIcon>
+                        <Icon className="material-icons">play_arrow</Icon>
                     </IconButton>
                 }
             </span>
@@ -36,7 +37,7 @@ const PlaylistItem = SortableElement(({musique, isPlaying, playMusique, deleteMu
                 <IconButton onClick={(event) => deleteMusique(musique, event)}
                             disabled={disableButtons}
                 >
-                    <FontIcon className="material-icons">delete</FontIcon>
+                    <Icon className="material-icons">delete</Icon>
                 </IconButton>
             </span>
         </li>

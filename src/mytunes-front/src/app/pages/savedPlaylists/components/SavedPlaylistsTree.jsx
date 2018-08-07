@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FontIcon } from "material-ui";
+import FontAwesome from 'react-fontawesome';
 import SortableTree from 'react-sortable-tree';
 import TreeNodeRenderer from "../renderers/TreeNodeRenderer";
 import {playlistPropType} from "../../../common/types/PlaylistType";
@@ -32,13 +32,11 @@ class SavedPlaylistsTree extends ScrollHandledComponent {
                                                                               {...rendererProps} /> }
                     generateNodeProps={rowInfo => ({
                         buttons: [
-                            <button
-                                style={{
-                                    verticalAlign: 'middle',
-                                }}
-                                onClick={(e) => this.props.onDeletePlaylist(rowInfo, e)}
+                            <button style={{ verticalAlign: 'middle' }}
+                                    onClick={(e) => this.props.onDeletePlaylist(rowInfo, e)}
+                                    className={"savedPlaylistSortableTree_deleteButton"}
                             >
-                                <FontIcon className="material-icons">delete</FontIcon>
+                                <FontAwesome name={"trash"} className={"material-icons"} />
                             </button>,
                         ],
                     })}

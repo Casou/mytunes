@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ScrollSync, Grid, AutoSizer } from 'react-virtualized';
-import { FontIcon } from 'material-ui';
+import { Icon } from '@material-ui/core';
 import cn from 'classnames';
 import styles from './ScrollSync.example.css';
 import scrollbarSize from 'dom-helpers/util/scrollbarSize';
@@ -163,9 +163,9 @@ export default class VirtualizeTable extends React.PureComponent {
                 {
                     sortable ?
                         sortOrder === "ASC" ?
-                            <FontIcon className="material-icons sortIcon">arrow_drop_up</FontIcon>
+                            <Icon className="material-icons sortIcon">arrow_drop_up</Icon>
                             :
-                            <FontIcon className="material-icons sortIcon">arrow_drop_down</FontIcon>
+                            <Icon className="material-icons sortIcon">arrow_drop_down</Icon>
                         : ""
                 }
             </div>

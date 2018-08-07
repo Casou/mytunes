@@ -9,7 +9,7 @@ Itunes GUI, Parser and Exporter
     * [ ] Locker le lecteur pour éviter des misclicks
 
 * Liste des musiques
-    * [ ] CSS : ajuster la select box des genres pour que la flèche prenne moins de place
+    * [x] CSS : ajuster la select box des genres pour que la flèche prenne moins de place
     * [ ] L'update des propriétés se fait en direct (plutôt que de passer par une phase "fetching")
     * [ ] Etudier le retour à un tableau normal ?
     * [ ] Vérifier la performance d'une recherche dynamique (plutôt qu'appuyer sur Entrée)
@@ -52,6 +52,7 @@ Itunes GUI, Parser and Exporter
     * [ ] Pouvoir confirmer les confirm dialog via la touche "Entrée"
     * [ ] Gestion des logs Front et Back
     * [ ] Backup réguliers de la BDD
+    * [ ] Télécharger les fichiers CSS (font-awesome) et les icones (shortcut icon)
 
 * Playlists intelligentes
     * [ ] Gestion des critères + Recherche
@@ -69,6 +70,7 @@ Itunes GUI, Parser and Exporter
 * Paramètres
     * [ ] Lister des genres
     * [ ] Activer la sécurité sur le playlist menu (confirm dialog si changement de musique manuel)
+    * [ ] Activer les WS / Désactiver les envois de WS mais pas les réceptions / tout désactiver
 
 
 

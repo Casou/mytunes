@@ -1,5 +1,5 @@
 import React from 'react';
-import FontIcon from 'material-ui/FontIcon';
+import { Icon } from '@material-ui/core';
 import {Drawer, IconButton} from "material-ui";
 
 import '../../../../../style/components/playlistMenu.css';
@@ -23,9 +23,9 @@ class PlaylistMenu extends React.Component {
         return (
             <div id={"playlistMenuIcon"}>
                 <IconButton onClick={this._toggleMenu}>
-                    <FontIcon className="material-icons">
+                    <Icon className="material-icons">
                         playlist_play
-                    </FontIcon>
+                    </Icon>
                 </IconButton>
                 <Drawer
                     docked={true}

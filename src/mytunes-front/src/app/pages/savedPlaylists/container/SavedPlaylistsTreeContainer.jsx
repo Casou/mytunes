@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Checkbox} from "material-ui";
+import {Checkbox} from "@material-ui/core";
 
 import {playlistPropType} from "../../../common/types/PlaylistType";
 import ConfirmDialog from "../../../common/components/confirm/ConfirmDialog";
@@ -63,10 +63,10 @@ class SavedPlaylistsTreeContainer extends React.Component {
                                         Etes-vous sûr de vouloir supprimer cette playlist ?
                                        </p>
                                        <div className={"checkbox"}>
-                                           <Checkbox label="Supprimer aussi les enfants"
-                                                     checked={ this.state.confirmCheck }
-                                                     onCheck={ (event, isChecked) => this.setState({...this.state, confirmCheck : isChecked}) }
+                                           <Checkbox checked={ this.state.confirmCheck }
+                                                     onChange={ (event) => this.setState({...this.state, confirmCheck : event.target.checked}) }
                                            />
+                                           Supprimer aussi les enfants
                                        </div>
                                    </div>
                                }

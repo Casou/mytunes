@@ -72,14 +72,20 @@
     color : grey;
 }
 
-.rst__toolbarButton button {
+.savedPlaylistSortableTree_deleteButton {
     padding : 0;
     background-color : transparent;
     border : none;
     cursor : pointer;
+    width : 32px;
+    height : 32px;
 }
 
-.rst__toolbarButton button span {
+.savedPlaylistSortableTree_deleteButton:hover {
+    color : #6265a1;
+}
+
+.savedPlaylistSortableTree_deleteButton span {
     font-size : 15px;
 }
 

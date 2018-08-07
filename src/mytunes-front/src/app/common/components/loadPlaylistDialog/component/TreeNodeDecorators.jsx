@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import Radium from 'radium';
 import { VelocityComponent } from 'velocity-react';
-import {FontIcon} from "material-ui";
+import {Icon} from "@material-ui/core";
 import cn from "classnames";
 
 const Loading = ({ style }) => {
@@ -43,7 +42,7 @@ const Header = ({ node, style }) => {
             ])}
              style={style.base}>
             <div style={style.title}>
-                <FontIcon className="material-icons">{iconType}</FontIcon>
+                <Icon className="material-icons">{iconType}</Icon>
                 {node.name} <span className={"nbMusiques"}>{ node.nbMusiques } musique{ node.nbMusiques > 1 ? "s" : "" }</span>
             </div>
         </div>
@@ -61,7 +60,6 @@ class Container extends React.Component {
 
         return (
             <div onClick={onClick}
-                 ref={ref => this.clickableRef = ref}
                  style={style.container}
                  className={cn("tree-node",
                      [
@@ -86,7 +84,7 @@ class Container extends React.Component {
         return (
             <VelocityComponent animation={animations.toggle.animation}
                                duration={animations.toggle.duration}
-                               ref={ref => this.velocityRef = ref}>
+            >
                 {this.renderToggleDecorator()}
             </VelocityComponent>
         );

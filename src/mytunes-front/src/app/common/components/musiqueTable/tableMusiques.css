@@ -43,7 +43,8 @@
 }
 
 .VirtualizeTable .tableCell.action button span {
-    font-size : 18px !important;
+    font-size : 22px !important;
+    line-height : 22px !important;
 }
 
 .VirtualizeTable .textField {

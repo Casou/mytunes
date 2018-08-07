@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { SortableElement } from 'react-sortable-hoc';
-import { FontIcon, IconButton } from 'material-ui';
+import { IconButton } from 'material-ui';
+import FontAwesome from 'react-fontawesome';
 
 import {musiquePropType} from "../../../common/types/MusiqueType";
 import {formateDuree} from "../../../common/util/Formatters";
@@ -23,7 +24,7 @@ const SavedPlaylistItem = SortableElement((props) => {
             <span className="musiqueCell duree">{musique.duree ? formateDuree(musique.duree) : "-"}</span>
             <span className="musiqueCell delete">
                 <IconButton onClick={() => props.onDelete(musique) }>
-                    <FontIcon className="material-icons">delete</FontIcon>
+                    <FontAwesome name={"trash"} className="material-icons" />
                 </IconButton>
             </span>
         </li>

@@ -11,3 +11,8 @@
     border-top : 1px solid rgb(224, 224, 224);
     border-bottom : 1px solid rgb(224, 224, 224);
 }
+
+.loadPlaylistDialog .searchPlaylist span.material-icons {
+    vertical-align : middle;
+    margin-right : 5px !important;
+}

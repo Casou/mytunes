@@ -1,5 +1,6 @@
 import React from "react";
-import {FontIcon, IconButton} from "material-ui";
+import {IconButton} from "material-ui";
+import {Icon} from "@material-ui/core";
 import ListeMusiqueTextProperty from "../../pages/listeMusique/components/ListeMusiqueTextProperty";
 import Classement from "../../pages/listeMusique/components/Classement";
 import {formateDuree} from "../util/Formatters";
@@ -28,7 +29,7 @@ export class MusiqueRenderer {
             case 0 :
                 return (
                     <IconButton onClick={() => this.onPlaylistAdd(this.musique)}>
-                        <FontIcon className="material-icons">playlist_add</FontIcon>
+                        <Icon className="material-icons">playlist_add</Icon>
                     </IconButton>
                 );
             case 1 :

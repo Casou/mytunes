@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Page, SplitterSide, List, ListItem } from 'react-onsenui';
-import {FontIcon} from "material-ui";
+import {Icon} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
 import '../style/Menu.css';
@@ -34,7 +34,7 @@ class Menu extends React.Component {
                                 onClick={() => this._clickItem(item)}
                                 modifier={item.divider ? "longdivider" : null}
                                 tappable>
-            <FontIcon className="material-icons">{item.icon}</FontIcon>
+            <Icon className="material-icons">{item.icon}</Icon>
             {item.title}
         </ListItem>;
 

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontIcon, IconButton} from "material-ui";
+import {Icon} from "@material-ui/core";
+import {IconButton} from "material-ui";
 import cn from 'classnames';
 import ConfirmDialog from "../../confirm/ConfirmDialog";
 import {playlistManagerPropType} from "../../../types/PlaylistMusiqueType";
@@ -15,7 +16,7 @@ const PlaylistHeader = (props) => {
         <header>
             <div id="playlistMenuHeaderLeftButtons">
                 <IconButton onClick={ props.onToggleShuffle }>
-                    <FontIcon className={cn("material-icons", { "active" : props.shuffle})}>shuffle</FontIcon>
+                    <Icon className={cn("material-icons", { "active" : props.shuffle})}>shuffle</Icon>
                 </IconButton>
             </div>
             <div id="playlistMenuHeaderTitle" title={ nomPlaylist }>
@@ -38,7 +39,7 @@ const PlaylistHeader = (props) => {
                         this.loadPlaylistDialog.handleOpen();
                     }
                 } }>
-                    <FontIcon className={"material-icons"}>input</FontIcon>
+                    <Icon className={"material-icons"}>input</Icon>
                 </IconButton>
                 <ConfirmDialog ref={instance => this.confirmLoadPlaylist = instance }
                                message={"Si vous chargez une nouvelle playlist, les modifications ne seront pas sauvegardées."}
@@ -49,11 +50,11 @@ const PlaylistHeader = (props) => {
                                     onNewPlaylist={ props.onNewPlaylist }
                 />
                 <IconButton className="savePlaylist" onClick={ () => this.savePlaylistDialog.handleOpen() }>
-                    <FontIcon className={cn("material-icons",
+                    <Icon className={cn("material-icons",
                         { "active" : props.playlistManager && !props.playlistManager.playlist && props.playlistManager.musiques.length })}
                     >
                         save
-                    </FontIcon>
+                    </Icon>
                 </IconButton>
                 <SavePlaylistDialog ref={instance => this.savePlaylistDialog = instance }
                                     onConfirm={ props.onSavePlaylist }
@@ -62,7 +63,7 @@ const PlaylistHeader = (props) => {
                                     playlist={ props.playlistManager.playlist }
                 />
                 <IconButton className="clearPlaylist" onClick={ () => this.confirmCleanPlaylist.handleOpen() }>
-                    <FontIcon className={ "material-icons" }>delete_sweep</FontIcon>
+                    <Icon className={ "material-icons" }>delete_sweep</Icon>
                 </IconButton>
                 <ConfirmDialog ref={instance => this.confirmCleanPlaylist = instance }
                                message={"Voulez-vous vider la playlist ?"}

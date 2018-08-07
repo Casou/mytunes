@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {assign} from "lodash";
-import {FontIcon, TextField} from "material-ui";
+import {Icon} from "@material-ui/core";
+import {TextField} from "material-ui";
 import VirtualizeTable from "../../../common/components/virtualizeTable/VirtualizeTable";
 
 import {__KEYCODE_ENTER__} from "../../../../App";
@@ -62,7 +63,7 @@ class TableMusique extends React.Component {
         return (
             <section id="tableMusiques">
                 <section id="searchMusique">
-                    <FontIcon className="material-icons">search</FontIcon>
+                    <Icon className="material-icons">search</Icon>
                     <TextField className="textField" name={"search"} placeholder={"Recherche"}
                                onKeyPress={e => {
                                    if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {

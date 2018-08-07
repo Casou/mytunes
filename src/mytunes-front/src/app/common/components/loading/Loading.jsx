@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FontIcon } from "material-ui";
+import { Icon } from "@material-ui/core";
 import cn from 'classnames';
 import '../../../../style/components/loading.css';
 
 const Loading = (props) => (
     <div id={"loading"} className={cn({ "closed" : !props.open })}>
         <div id={"loadingClose"} onClick={props.onForceClose}>
-            <FontIcon className="material-icons">close</FontIcon>
+            <Icon className="material-icons">close</Icon>
         </div>
         <div id={"loadingContent"}>
             <div id={"loadingContentText"}>

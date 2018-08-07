@@ -4,7 +4,7 @@ import LecteurContainer from "./LecteurContainer";
 
 import PlaylistMenu from "../playlist/container/PlaylistMenu";
 
-const Header = (props) => (
+const Header = () => (
   <header>
     <Menu />
     <LecteurContainer />

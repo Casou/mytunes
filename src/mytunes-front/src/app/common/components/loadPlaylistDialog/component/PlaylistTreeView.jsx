@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Treebeard, theme} from 'react-treebeard';
 import defaultDecorators from './TreeNodeDecorators';
 
-import '../../../../../style/components/treeView.css';
+import '../style/treeView.css';
 
 class PlaylistTreeView extends React.Component {
 
