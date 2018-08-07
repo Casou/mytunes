@@ -1,0 +1,48 @@
+.genre_card {
+    flex : 1;
+    width : 200px;
+    height : 75px !important;
+    margin : 15px !important;
+    text-align : center;
+    cursor : pointer;
+    background-color : white !important;
+}
+
+#listeGenres #chooseGenre {
+    display : flex;
+    flex-flow : row wrap;
+    justify-content : center;
+    align-items: center;
+    align-content: center;
+}
+
+.genre_card * {
+    text-transform: none !important;
+    font-size : 20px;
+}
+.genre_card span {
+    width : 100%;
+    white-space : nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#listeGenres .genre_card > button > div > div > span {
+    font-size : 24px !important;
+    font-weight: bold !important;
+}
+
+#listeGenres #musiqueGenres header h1 {
+    text-align : center;
+    font-size : 25px;
+    height : 36px;
+    line-height : 36px;
+}
+
+.musiqueGenres_retour {
+    float : left;
+    height : 12px !important;
+    background-color : #fafafa !important;
+    margin-left : 10px !important;
+    padding : 0px 20px 0px 10px !important;
+}

@@ -1,14 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import {assign} from "lodash";
-import {RaisedButton} from "material-ui";
+import {Button, Icon} from "@material-ui/core";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
-import '../../../../style/components/listeGenres.css';
+import '../style/listeGenres.css';
 import {musiquePropType} from "../../../common/types/MusiqueType";
 import {genrePropType} from "../../../common/types/GenreType";
 import TableMusique from "../../../common/components/musiqueTable/TableMusique";
+import {__DESKTOP_URL__} from "../../../../App";
 
 class ListeGenres extends React.Component {
 
@@ -44,18 +45,23 @@ class ListeGenres extends React.Component {
                 !genre ?
                     <div id={"chooseGenre"}>
                         { this.props.genres.map(genre => (
-                            <Link to={ '/genres/' + genre.id } key={'genre_' + genre.id} >
-                                <RaisedButton className={"genre_card"}
-                                              label={genre.label}
-                                              style={ { height : 75 } }
-                                />
+                            <Link to={ __DESKTOP_URL__ + '/genres/' + genre.id } key={'genre_' + genre.id} >
+                                <Button variant="contained" classes={{ root : "genre_card"}}>
+                                    {genre.label}
+                                </Button>
                             </Link>
                         ))}
                     </div>
                 :
                     <div id={"musiqueGenres"}>
                         <header>
-                            <h1><Link to={ '/genres' }>{ genre.label }</Link></h1>
+                            <Link to={ __DESKTOP_URL__ + '/genres' }>
+                                <Button variant="contained" classes={{ root : "musiqueGenres_retour"}}>
+                                    <Icon>chevron_left</Icon>
+                                    <span className={"musiqueGenres_retour_labelSpan"}>Retour</span>
+                                </Button>
+                            </Link>
+                            <h1>{ genre.label }</h1>
                         </header>
                         <TableMusique musiques={ this.props.musiques.filter(musique => musique.genreIds.includes(parseInt(genreId, 10)) ) }
                                       headers={ headers }
