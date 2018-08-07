@@ -1,5 +1,19 @@
+#initApp_progress {
+    margin-top : 20px;
+    text-align : center;
+}
+
+#initApp_progress_box {
+    display : inline-block;
+    border : 1px solid #999999;
+    padding : 15px 15px 11px 15px;
+    border-radius : 100px;
+    box-shadow: 2px 2px 4px #404040;
+    background-color : #efefef;
+}
+
 #initLoadingState {
-    padding : 160px 0 0 50px;
+    margin : 100px 0 0 50px;
 }
 
 #initLoadingState li {
