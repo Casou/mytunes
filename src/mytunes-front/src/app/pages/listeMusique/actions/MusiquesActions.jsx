@@ -18,11 +18,6 @@ export default {
   },
   
   updateMusique: (musique, property, value) => (dispatch, getState) => {
-    // dispatch({
-    //   type : "FETCH_MUSIQUE",
-    //   payload : { ...musique, isFetching : { ...musique.isFetching, [property] : true } }
-    // });
-    
     const updatedMusique = { ...musique, [property] : value };
     return RequestUtil.put("musique", updatedMusique)
     .then(() => {
@@ -30,14 +25,7 @@ export default {
         type : "UPDATE_MUSIQUE",
         payload : updatedMusique
       });
-    })
-    .catch(() => {
-      // dispatch({
-      //   type : "FETCH_MUSIQUE",
-      //   payload : { ...musique, isFetching : { ...musique.isFetching, [property] : false } }
-      // });
     });
-    
   }
   
 };

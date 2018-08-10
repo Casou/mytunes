@@ -14,11 +14,38 @@ class PlaylistTreeView extends React.Component {
 
         this.state = {
             cursor : props.playlistSelected ? { id : props.playlistSelected } : null,
-            data : props.playlistSelected ?
-                this._activateNode(props.data, props.playlistSelected)
-                : props.data
+            data : this._mapData(props)
         };
 
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.data !== nextProps.data) {
+            this.setState({
+                ...this.state,
+                data : this._mapData(nextProps)
+            });
+
+        }
+    }
+
+    render() {
+        return (
+            <div className={"playlistTreeView"}>
+                <Treebeard
+                    data={this.state.data}
+                    onToggle={this._onToggle.bind(this)}
+                    decorators={defaultDecorators}
+                    theme={theme}
+                />
+            </div>
+        );
+    }
+
+    _mapData(props) {
+        return props.playlistSelected ?
+            this._activateNode(props.data, props.playlistSelected)
+            : props.data
     }
 
     _activateNode = (data, nodeId) => {
@@ -32,7 +59,7 @@ class PlaylistTreeView extends React.Component {
                 datum.children = this._activateNode(datum.children, nodeId);
             }
             return datum;
-        })
+        });
     };
 
     _onToggle = (node, toggled) => {
@@ -54,19 +81,6 @@ class PlaylistTreeView extends React.Component {
             this.props.onToggle(node);
         }
     };
-
-    render() {
-        return (
-            <div className={"playlistTreeView"}>
-                <Treebeard
-                    data={this.state.data}
-                    onToggle={this._onToggle.bind(this)}
-                    decorators={defaultDecorators}
-                    theme={theme}
-                />
-            </div>
-        );
-    }
 }
 
 PlaylistTreeView.propTypes = {

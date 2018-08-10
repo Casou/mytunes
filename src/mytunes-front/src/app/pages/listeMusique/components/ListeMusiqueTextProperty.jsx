@@ -1,41 +1,39 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import {__KEYCODE_ENTER__} from "../../../../App";
+import ControlledTextField from "../../../common/components/input/ControlledTextField";
 
 const ListeMusiqueTextProperty = (props) => {
-  const _onKeyPress = (event) => {
-    if (props.onlyNumbers && (event.charCode < 48 || event.charCode > 57)) {
-      event.preventDefault();
-    }
-    if (event.charCode === __KEYCODE_ENTER__) {
-      event.preventDefault();
-      props.onChange(event);
-    }
-  };
-  
-  return (
-    <TextField
-      id = { "input_" + props.uniqueKey }
-      className={ classNames("textField", props.isFetching ? "fetching" : "") }
-      fullWidth={ true }
-      name={ props.inputName }
-      disabled={ props.isFetching }
-      defaultValue={ props.defaultValue }
-      onKeyPress={ _onKeyPress }
-      onBlur={ props.onChange }
-    />
-  );
+    const _onKeyPress = (event) => {
+        if (props.onlyNumbers && (event.charCode < 48 || event.charCode > 57)) {
+            event.preventDefault();
+        }
+    };
+
+    const events = new Map();
+    events["blur"] = (e) => props.onChange(e.target.value);
+
+    return (
+        <ControlledTextField
+            id={"input_" + props.uniqueKey}
+            classes={{ root : classNames("textField", { "fetching" : props.isFetching } )}}
+            name={props.inputName}
+            onEnter={props.onChange}
+            onKeyPress={_onKeyPress}
+            defaultValue={props.defaultValue}
+            fullWidth={true}
+            disabled={props.isFetching}
+            events={events}
+        />
+    );
 };
 
 ListeMusiqueTextProperty.propTypes = {
-  uniqueKey : PropTypes.string.isRequired,
-  defaultValue : PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
-  inputName : PropTypes.string,
-  isFetching : PropTypes.bool,
-  onChange : PropTypes.func,
-  onlyNumbers : PropTypes.bool
+    uniqueKey: PropTypes.string.isRequired,
+    inputName: PropTypes.string,
+    isFetching: PropTypes.bool,
+    onChange: PropTypes.func,
+    onlyNumbers: PropTypes.bool
 };
 
 export default ListeMusiqueTextProperty;

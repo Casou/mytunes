@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Icon} from "@material-ui/core";
-import {TextField} from "material-ui";
-import {__KEYCODE_ENTER__} from "../../../../../App";
 import PlaylistTreeView from "./PlaylistTreeView";
+import ControlledTextField from "../../input/ControlledTextField";
 
 class LoadPlaylistTreeView extends React.Component {
     constructor(props) {
@@ -15,6 +14,30 @@ class LoadPlaylistTreeView extends React.Component {
         };
 
         this._onToggle = this._onToggle.bind(this);
+        this._onSearch = this._onSearch.bind(this);
+    }
+
+    render() {
+        const filteredPlaylists = this._mapPlaylists(this._filterPlaylists());
+
+        return (
+            <div>
+                { this.props.onFilter ?
+                    <div className={"searchPlaylist"}>
+                        <Icon className="material-icons">search</Icon>
+                        <ControlledTextField classes={{ root: "textField" }}
+                                             name={"searchPlaylist"}
+                                             placeholder={"Recherche"}
+                                             onEnter={this._onSearch}
+                        />
+                    </div>
+                    :
+                    ""
+                }
+                <PlaylistTreeView data={filteredPlaylists}
+                                  onToggle={ this._onToggle }
+                />
+            </div>);
     }
 
     _onToggle = (node) => {
@@ -68,36 +91,16 @@ class LoadPlaylistTreeView extends React.Component {
         return this.props.playlistProvider.mapHierarchicalPlaylists(allPlaylists, filteredIds);
     }
 
-    render() {
-        const filteredPlaylists = this._mapPlaylists(this._filterPlaylists());
-
-        return (
-            <div>
-                { this.props.onFilter ?
-                    <div className={"searchPlaylist"}>
-                        <Icon className="material-icons">search</Icon>
-                        <TextField className="textField" name={"searchPlaylist"} placeholder={"Recherche"}
-                                   onKeyPress={e => {
-                                       if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
-                                           if (this.props.onFilter) {
-                                                this.props.onFilter();
-                                           }
-                                           this.setState({
-                                               ...this.state,
-                                               filterValue: e.target.value
-                                           });
-                                       }
-                                   }}
-                        />
-                    </div>
-                    :
-                    ""
-                }
-                <PlaylistTreeView data={filteredPlaylists}
-                                  onToggle={ this._onToggle }
-                />
-            </div>);
+    _onSearch(value) {
+        if (this.props.onFilter) {
+            this.props.onFilter();
+        }
+        this.setState({
+            ...this.state,
+            filterValue: value
+        });
     }
+
 }
 
 LoadPlaylistTreeView.propTypes = {

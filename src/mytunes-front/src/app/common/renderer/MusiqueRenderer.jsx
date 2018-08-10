@@ -39,7 +39,7 @@ export class MusiqueRenderer {
                         defaultValue={this.musique.titre}
                         name={"titre"}
                         isFetching={this.musique.isFetching["titre"]}
-                        onChange={(e) => this.onPropertyChange("titre", e.target.value, this.index)}
+                        onChange={(value) => this.onPropertyChange("titre", value, this.index)}
                     />
                 );
             case 2 :
@@ -49,7 +49,7 @@ export class MusiqueRenderer {
                         defaultValue={this.musique.artiste ? this.musique.artiste : ""}
                         name={"artiste"}
                         isFetching={this.musique.isFetching["artiste"]}
-                        onChange={(e) => this.onPropertyChange("artiste", e.target.value, this.index)}
+                        onChange={(value) => this.onPropertyChange("artiste", value, this.index)}
                     />
                 );
             case 3 :
@@ -62,7 +62,7 @@ export class MusiqueRenderer {
                         name={"bpm"}
                         isFetching={this.musique.isFetching["bpm"]}
                         onlyNumbers
-                        onChange={(e) => this.onPropertyChange("bpm", e.target.value * 4, this.index)}
+                        onChange={(value) => this.onPropertyChange("bpm", value * 4, this.index)}
                     />
                 );
             case 5 :
@@ -88,7 +88,7 @@ export class MusiqueRenderer {
                         defaultValue={this.musique.commentaire ? this.musique.commentaire : ""}
                         name={"commentaire"}
                         isFetching={this.musique.isFetching["commentaire"]}
-                        onChange={(e) => this.onPropertyChange("commentaire", e.target.value, this.index)}
+                        onChange={(value) => this.onPropertyChange("commentaire", value, this.index)}
                     />
                 );
             default :
