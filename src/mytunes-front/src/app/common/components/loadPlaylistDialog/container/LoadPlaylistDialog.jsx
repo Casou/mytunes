@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dialog, FlatButton } from "material-ui";
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { FlatButton } from "material-ui";
 import '../style/loadPlaylistDialog.css';
 import LoadPlaylistTreeView from "../component/LoadPlaylistTreeView";
 
@@ -16,40 +17,41 @@ class LoadPlaylistDialog extends React.Component {
 
     render() {
         const actions = [
-            <FlatButton
-                label="Annuler"
-                primary={false}
-                onClick={ () => {
-                    if (this.props.onCancel) {
-                        this.props.onCancel();
-                    }
-                    this.handleClose();
-                }}
+            <FlatButton key={"loadPlaylistDialog_cancelButton"}
+                        label="Annuler"
+                        primary={false}
+                        onClick={ () => {
+                            if (this.props.onCancel) {
+                                this.props.onCancel();
+                            }
+                            this.handleClose();
+                        }}
             />,
-            <FlatButton
-                label="Séletionner"
-                primary={true}
-                disabled={this.state.chosenPlaylistId === null}
-                onClick={ () => {
-                    if (this.props.onSelectPlaylist) {
-                        this.props.onSelectPlaylist(this.state.chosenPlaylistId);
-                    }
-                    this.handleClose();
-                }}
+            <FlatButton key={"loadPlaylistDialog_okButton"}
+                        label="Séletionner"
+                        primary={true}
+                        disabled={this.state.chosenPlaylistId === null}
+                        onClick={ () => {
+                            if (this.props.onSelectPlaylist) {
+                                this.props.onSelectPlaylist(this.state.chosenPlaylistId);
+                            }
+                            this.handleClose();
+                        }}
             />,
         ];
 
         let buttonNewPlaylist = "";
 
         if (this.props.onNewPlaylist) {
-            buttonNewPlaylist = <FlatButton
-                label="Nouvelle playlist"
-                primary={true}
-                onClick={() => {
-                    this.props.onNewPlaylist();
-                    this.handleClose();
-                }}
-            />;
+            buttonNewPlaylist =
+                <FlatButton key={"loadPlaylistDialog_newPlaylistButton"}
+                            label="Nouvelle playlist"
+                            primary={true}
+                            onClick={() => {
+                                this.props.onNewPlaylist();
+                                this.handleClose();
+                            }}
+                />;
         }
 
         const title = <header>
@@ -59,20 +61,25 @@ class LoadPlaylistDialog extends React.Component {
 
         return (
             <Dialog
-                className={"loadPlaylistDialog"}
-                title={ title }
-                actions={actions}
-                modal={false}
+                classes={{
+                    root : "loadPlaylistDialog",
+                    paper : "loadPlaylistDialog_paper"
+                }}
                 open={this.state.open}
-                onRequestClose={this.handleClose}
-                autoScrollBodyContent={true}
+                onClose={this.handleClose}
             >
-                <section>
-                    <LoadPlaylistTreeView playlistProvider={ this.props.playlistProvider }
-                                          onChoosePlaylist={ this._choosePlaylist.bind(this) }
-                                          onFilter={ () => this.setState({...this.state, chosenPlaylistId : null}) }
-                    />
-                </section>
+                <DialogTitle>{title}</DialogTitle>
+                <DialogContent>
+                    <section>
+                        <LoadPlaylistTreeView playlistProvider={ this.props.playlistProvider }
+                                              onChoosePlaylist={ this._choosePlaylist.bind(this) }
+                                              onFilter={ () => this.setState({...this.state, chosenPlaylistId : null}) }
+                        />
+                    </section>
+                </DialogContent>
+                <DialogActions>
+                    {actions}
+                </DialogActions>
             </Dialog>
         );
     }

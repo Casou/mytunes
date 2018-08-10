@@ -48,7 +48,12 @@ class TableMusique extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.playlistManager !== nextProps.playlistManager && nextProps.playlistManager && this.props.wsClient) {
-            this.props.wsClient.send("/app/action/lecteur/setCurrentPlaylist", this.props.playlistManager);
+            const { playlistManager } = this.props;
+            const newPlaylistManager = playlistManager.playlist ?
+                { ...playlistManager, playlist : { ...playlistManager.playlist, parent : null } } :
+                playlistManager;
+
+            this.props.wsClient.send("/app/action/lecteur/setCurrentPlaylist", newPlaylistManager);
         }
     }
 

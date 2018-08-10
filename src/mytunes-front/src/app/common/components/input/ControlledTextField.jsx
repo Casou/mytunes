@@ -22,7 +22,7 @@ class ControlledTextField extends React.Component {
     }
 
     render() {
-        const { name, defaultValue, classes, placeholder, onEnter, onKeyPress, events, ...otherProps } = this.props;
+        const { name, defaultValue, classes, placeholder, onEnter, onKeyPress, events, blurOnEnter, ...otherProps } = this.props;
 
         return (
             <TextField {...otherProps}

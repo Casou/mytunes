@@ -1,3 +1,8 @@
+.loadPlaylistDialog_paper {
+    max-width: unset !important;
+    width : 75%;
+}
+
 .loadPlaylistDialog header h3 {
     display: inline-block;
 }
