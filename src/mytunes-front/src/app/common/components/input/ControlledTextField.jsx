@@ -35,13 +35,15 @@ class ControlledTextField extends React.Component {
     }
 
     _onKeyPress(e) {
-        const {onEnter, onKeyPress, events} = this.props;
+        const {onEnter, onKeyPress, events, blurOnEnter} = this.props;
 
         if (onEnter && (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__)) {
-            if (!events || !events["blur"]) {
+            if (!blurOnEnter && (!events || !events["blur"])) {
                 onEnter(e.target.value);
             }
-            this.searchInput.blur();
+            if (blurOnEnter) {
+                this.searchInput.blur();
+            }
         } else if (onKeyPress) {
             onKeyPress(e);
         }
@@ -54,8 +56,13 @@ ControlledTextField.propTypes = {
     defaultValue : PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     classes : PropTypes.object,
     onEnter : PropTypes.func,
+    blurOnEnter : PropTypes.bool,
     onKeyPress : PropTypes.func,
     events : PropTypes.instanceOf(Map)
+};
+
+ControlledTextField.defaultProps = {
+    blurOnEnter : true
 };
 
 export default ControlledTextField;

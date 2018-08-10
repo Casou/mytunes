@@ -4,12 +4,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {assign} from "lodash";
 import {Icon} from "@material-ui/core";
-import {TextField} from "material-ui";
 import VirtualizeTable from "../../../common/components/virtualizeTable/VirtualizeTable";
-
-import {__KEYCODE_ENTER__} from "../../../../App";
-
-import './tableMusiques.css';
 import {compareProperty} from "../../../common/util/Comparators";
 import {formateDuree} from "../../../common/util/Formatters";
 import StateBar from "../../../common/components/stateBar/StateBar";
@@ -18,6 +13,9 @@ import {musiquePropType} from "../../types/MusiqueType";
 import {genrePropType} from "../../types/GenreType";
 import MusiquesActions from "../../../pages/listeMusique/actions/MusiquesActions";
 import PlaylistManagerActions from "../../actions/PlaylistManagerActions";
+import ControlledTextField from "../input/ControlledTextField";
+
+import './tableMusiques.css';
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
 Object.defineProperty(Array.prototype, "sum", {
@@ -64,12 +62,11 @@ class TableMusique extends React.Component {
             <section id="tableMusiques">
                 <section id="searchMusique">
                     <Icon className="material-icons">search</Icon>
-                    <TextField className="textField" name={"search"} placeholder={"Recherche"}
-                               onKeyPress={e => {
-                                   if (e.which === __KEYCODE_ENTER__ || e.keyCode === __KEYCODE_ENTER__) {
-                                       this._searchMusique(e.target.value);
-                                   }
-                               }}
+                    <ControlledTextField classes={{ root : "textField"}}
+                               name={"search"}
+                               placeholder={"Recherche"}
+                               onEnter={ value => this._searchMusique(value) }
+                               blurOnEnter={false}
                     />
                 </section>
                 <VirtualizeTable headers={this.props.headers}
